@@ -4,7 +4,10 @@
 
 One shared engine · four visual languages · you own the code (shadcn-style intent).
 
-![Softglass — soft glass UI kit hero](./docs/assets/hero.jpg)
+![Softglass — soft glass UI kit hero](./docs/assets/hero.svg)
+
+<!-- Hero is hand-authored SVG (docs/assets/hero.svg), not AI-generated. -->
+
 
 > **Pitch (one line):** Soft glass UI kit with four dialects — pick a language, recolor the brand, ship.
 
@@ -137,7 +140,7 @@ apps/web/                 Playground
 packages/tokens/          CSS engine + 4 languages
 packages/ui/              React components (src → dist)
 registry/                 shadcn-compatible sketch
-docs/assets/hero.jpg      README hero
+docs/assets/hero.svg      README hero (hand-drawn SVG)
 docs/GETTING-STARTED.md   Consumer 3-step guide
 docs/API.md               Props map
 docs/LIMITATIONS.md       Honest v1 limits
