@@ -11,7 +11,7 @@ Versioning follows [SemVer](https://semver.org/).
 
 Minor release: ContextMenu, DatePicker, Vitest smoke suite, overlay portals.
 
-**Ready to ship:** `@softglass/tokens@1.2.0` + `@softglass/ui@1.2.0` (publish/tag when approved).
+**Shipped:** npm `@softglass/tokens@1.2.0` + `@softglass/ui@1.2.0`, GitHub tag `v1.2.0`.
 
 ### Added
 
