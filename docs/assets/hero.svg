@@ -1,193 +1,206 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">Softglass — soft glass design system</title>
-  <desc id="desc">Hand-designed hero: frosted cards, pill buttons, and four visual languages on an Aurora background.</desc>
+  <title id="title">Softglass</title>
+  <desc id="desc">Hand-authored hero matching Softglass Aurora tokens: frost chrome, violet accent, four language chips.</desc>
   <defs>
-    <!-- Aurora-inspired canvas (token palette, not AI) -->
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Exact-ish Aurora token stack -->
+    <linearGradient id="bgBase" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#eef2ff"/>
       <stop offset="45%" stop-color="#f8fafc"/>
       <stop offset="100%" stop-color="#ecfeff"/>
     </linearGradient>
-    <radialGradient id="blobViolet" cx="15%" cy="5%" r="45%">
-      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+    <radialGradient id="orbV" cx="12%" cy="0%" r="48%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.48"/>
+      <stop offset="55%" stop-color="#a78bfa" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="blobMint" cx="90%" cy="12%" r="40%">
-      <stop offset="0%" stop-color="#6ee7b7" stop-opacity="0.38"/>
-      <stop offset="100%" stop-color="#6ee7b7" stop-opacity="0"/>
+    <radialGradient id="orbM" cx="92%" cy="8%" r="42%">
+      <stop offset="0%" stop-color="#6ee7b7" stop-opacity="0.36"/>
+      <stop offset="55%" stop-color="#6ee7b7" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="blobSky" cx="50%" cy="100%" r="45%">
-      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
+    <radialGradient id="orbS" cx="48%" cy="100%" r="46%">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.32"/>
+      <stop offset="55%" stop-color="#7dd3fc" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="glassFill" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.72"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.42"/>
+
+    <!-- Frost / glass materials (token surfaces) -->
+    <linearGradient id="frost" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.96"/>
+      <stop offset="42%" stop-color="#ffffff" stop-opacity="0.90"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.86"/>
     </linearGradient>
-    <linearGradient id="frostFill" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.94"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.82"/>
+    <linearGradient id="frostStrong" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
+      <stop offset="48%" stop-color="#ffffff" stop-opacity="0.94"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.92"/>
     </linearGradient>
-    <linearGradient id="gloss" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/>
-      <stop offset="35%" stop-color="#ffffff" stop-opacity="0"/>
+    <linearGradient id="glossTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>
+      <stop offset="42%" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="accentBtn" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="100%" stop-color="#818cf8"/>
+
+    <!-- Accent = Aurora token #7c3aed -->
+    <linearGradient id="accentSolid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
     </linearGradient>
-    <linearGradient id="chipAurora" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#c4b5fd"/>
-      <stop offset="100%" stop-color="#7dd3fc"/>
+    <linearGradient id="accentGloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="chipObsidian" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e293b"/>
-      <stop offset="100%" stop-color="#0f172a"/>
-    </linearGradient>
-    <linearGradient id="chipMist" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#e2e8f0"/>
-      <stop offset="100%" stop-color="#94a3b8"/>
-    </linearGradient>
-    <linearGradient id="chipPearl" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fde68a"/>
-      <stop offset="100%" stop-color="#fdba74"/>
-    </linearGradient>
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#0f172a" flood-opacity="0.12"/>
+
+    <filter id="elevated" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#6366f1" flood-opacity="0.14"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.06"/>
     </filter>
-    <filter id="softShadowSm" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.1"/>
+    <filter id="soft" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.06"/>
     </filter>
-    <style>
-      .title { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 700; fill: #0f172a; letter-spacing: -0.03em; }
-      .sub { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 500; fill: #475569; }
-      .label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: #0f172a; }
-      .muted { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 500; fill: #64748b; }
-      .btnText { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: #ffffff; }
-      .chipText { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: #0f172a; font-size: 13px; }
-      .chipTextLight { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: #f8fafc; font-size: 13px; }
-      .badge { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: #0369a1; font-size: 12px; }
-    </style>
+
+    <style type="text/css"><![CDATA[
+      .t { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+      .title { font-weight: 700; fill: #0f172a; letter-spacing: -0.03em; }
+      .sub { font-weight: 500; fill: #475569; }
+      .muted { font-weight: 500; fill: #64748b; }
+      .fg { font-weight: 600; fill: #0f172a; }
+      .onAccent { font-weight: 600; fill: #ffffff; }
+      .accent { font-weight: 600; fill: #6d28d9; }
+    ]]></style>
   </defs>
 
-  <!-- Canvas -->
-  <rect width="1280" height="720" fill="url(#bg)"/>
-  <rect width="1280" height="720" fill="url(#blobViolet)"/>
-  <rect width="1280" height="720" fill="url(#blobMint)"/>
-  <rect width="1280" height="720" fill="url(#blobSky)"/>
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bgBase)"/>
+  <rect width="1280" height="720" fill="url(#orbV)"/>
+  <rect width="1280" height="720" fill="url(#orbM)"/>
+  <rect width="1280" height="720" fill="url(#orbS)"/>
 
-  <!-- Decorative soft orbs (cheap, no filter blur) -->
-  <circle cx="180" cy="140" r="90" fill="#a78bfa" opacity="0.12"/>
-  <circle cx="1120" cy="180" r="110" fill="#34d399" opacity="0.1"/>
-  <circle cx="980" cy="560" r="130" fill="#38bdf8" opacity="0.1"/>
+  <!-- Soft blobs (playground style, no heavy blur) -->
+  <circle cx="210" cy="120" r="120" fill="#a78bfa" opacity="0.14"/>
+  <circle cx="1080" cy="160" r="140" fill="#6ee7b7" opacity="0.12"/>
+  <circle cx="900" cy="600" r="150" fill="#7dd3fc" opacity="0.12"/>
 
-  <!-- Left copy block -->
-  <g transform="translate(88, 168)">
-    <rect x="0" y="0" width="86" height="28" rx="14" fill="#e0f2fe" stroke="#bae6fd"/>
-    <text x="43" y="18" text-anchor="middle" class="badge">v1.0 · open source</text>
+  <!-- ========== LEFT: brand ========== -->
+  <g transform="translate(96 150)">
+    <!-- Badge: accent-soft pill (sg-badge-accent language) — short label only -->
+    <g filter="url(#soft)">
+      <rect x="0" y="0" width="64" height="28" rx="999" fill="rgba(124,58,237,0.12)" stroke="rgba(124,58,237,0.18)"/>
+      <rect x="0" y="0" width="64" height="12" rx="999" fill="url(#glossTop)"/>
+      <text x="32" y="18" text-anchor="middle" class="t accent" font-size="12">v1.0</text>
+    </g>
 
-    <text x="0" y="88" class="title" font-size="64">Softglass</text>
-    <text x="0" y="132" class="sub" font-size="22">Open soft-glass design system for Next.js</text>
-    <text x="0" y="168" class="muted" font-size="16">One engine · four languages · you own the code</text>
+    <text x="0" y="92" class="t title" font-size="68">Softglass</text>
+    <text x="0" y="138" class="t sub" font-size="22">Open soft-glass design system for Next.js</text>
+    <text x="0" y="172" class="t muted" font-size="16">One engine · four languages · you own the code</text>
 
-    <!-- Language chips -->
-    <g transform="translate(0, 210)">
-      <g filter="url(#softShadowSm)">
-        <rect width="108" height="36" rx="18" fill="url(#chipAurora)"/>
-        <rect width="108" height="18" rx="18" fill="url(#gloss)"/>
-        <text x="54" y="23" text-anchor="middle" class="chipText">Aurora</text>
+    <!-- Language row: frost chips + color dots (not rainbow candy bars) -->
+    <g transform="translate(0 214)">
+      <!-- Aurora -->
+      <g filter="url(#soft)">
+        <rect width="118" height="40" rx="20" fill="url(#frost)" stroke="rgba(15,23,42,0.1)"/>
+        <rect width="118" height="16" rx="20" fill="url(#glossTop)"/>
+        <circle cx="22" cy="20" r="7" fill="#7c3aed"/>
+        <text x="68" y="25" text-anchor="middle" class="t fg" font-size="14">Aurora</text>
       </g>
-      <g transform="translate(120,0)" filter="url(#softShadowSm)">
-        <rect width="108" height="36" rx="18" fill="url(#chipObsidian)"/>
-        <rect width="108" height="14" rx="18" fill="url(#gloss)" opacity="0.35"/>
-        <text x="54" y="23" text-anchor="middle" class="chipTextLight">Obsidian</text>
+      <!-- Obsidian -->
+      <g transform="translate(130 0)" filter="url(#soft)">
+        <rect width="126" height="40" rx="20" fill="url(#frost)" stroke="rgba(15,23,42,0.1)"/>
+        <rect width="126" height="16" rx="20" fill="url(#glossTop)"/>
+        <circle cx="22" cy="20" r="7" fill="#0f172a"/>
+        <text x="74" y="25" text-anchor="middle" class="t fg" font-size="14">Obsidian</text>
       </g>
-      <g transform="translate(240,0)" filter="url(#softShadowSm)">
-        <rect width="96" height="36" rx="18" fill="url(#chipMist)"/>
-        <rect width="96" height="16" rx="18" fill="url(#gloss)"/>
-        <text x="48" y="23" text-anchor="middle" class="chipText">Mist</text>
+      <!-- Mist -->
+      <g transform="translate(268 0)" filter="url(#soft)">
+        <rect width="100" height="40" rx="20" fill="url(#frost)" stroke="rgba(15,23,42,0.1)"/>
+        <rect width="100" height="16" rx="20" fill="url(#glossTop)"/>
+        <circle cx="22" cy="20" r="7" fill="#94a3b8"/>
+        <text x="60" y="25" text-anchor="middle" class="t fg" font-size="14">Mist</text>
       </g>
-      <g transform="translate(348,0)" filter="url(#softShadowSm)">
-        <rect width="100" height="36" rx="18" fill="url(#chipPearl)"/>
-        <rect width="100" height="16" rx="18" fill="url(#gloss)"/>
-        <text x="50" y="23" text-anchor="middle" class="chipText">Pearl</text>
+      <!-- Pearl -->
+      <g transform="translate(380 0)" filter="url(#soft)">
+        <rect width="104" height="40" rx="20" fill="url(#frost)" stroke="rgba(15,23,42,0.1)"/>
+        <rect width="104" height="16" rx="20" fill="url(#glossTop)"/>
+        <circle cx="22" cy="20" r="7" fill="#f0c48a"/>
+        <text x="62" y="25" text-anchor="middle" class="t fg" font-size="14">Pearl</text>
       </g>
     </g>
 
-    <!-- Install hint pill -->
-    <g transform="translate(0, 280)" filter="url(#softShadowSm)">
-      <rect width="360" height="44" rx="14" fill="url(#frostFill)" stroke="rgba(15,23,42,0.08)"/>
-      <rect width="360" height="16" rx="14" fill="url(#gloss)"/>
-      <text x="20" y="28" class="muted" font-size="15">npm i @softglass/tokens @softglass/ui</text>
-    </g>
-  </g>
-
-  <!-- Right: glass product card -->
-  <g transform="translate(680, 120)" filter="url(#softShadow)">
-    <!-- elevated glass shell -->
-    <rect width="500" height="480" rx="28" fill="url(#glassFill)" stroke="rgba(255,255,255,0.65)" stroke-width="1.5"/>
-    <rect width="500" height="90" rx="28" fill="url(#gloss)"/>
-    <!-- clip bottom of gloss with overlapping solid-ish body already ok -->
-
-    <!-- header chrome -->
-    <rect x="24" y="24" width="452" height="56" rx="16" fill="url(#frostFill)" stroke="rgba(15,23,42,0.08)"/>
-    <circle cx="52" cy="52" r="8" fill="#f87171" opacity="0.9"/>
-    <circle cx="78" cy="52" r="8" fill="#fbbf24" opacity="0.9"/>
-    <circle cx="104" cy="52" r="8" fill="#34d399" opacity="0.9"/>
-    <text x="250" y="58" text-anchor="middle" class="label" font-size="15">Playground · aurora</text>
-
-    <!-- body card -->
-    <g transform="translate(40, 108)">
-      <rect width="420" height="320" rx="22" fill="url(#frostFill)" stroke="rgba(15,23,42,0.07)"/>
-      <rect width="420" height="70" rx="22" fill="url(#gloss)"/>
-
-      <text x="28" y="48" class="label" font-size="20">Ship calm UI</text>
-      <text x="28" y="74" class="muted" font-size="14">Glass for chrome · solid for content</text>
-
-      <!-- fake field -->
-      <g transform="translate(28, 100)">
-        <text x="0" y="0" class="muted" font-size="13">Email</text>
-        <rect y="10" width="364" height="48" rx="16" fill="#ffffff" stroke="rgba(15,23,42,0.1)"/>
-        <rect y="10" width="364" height="18" rx="16" fill="url(#gloss)" opacity="0.5"/>
-        <text x="18" y="40" class="muted" font-size="15">you@brand.com</text>
-      </g>
-
-      <!-- buttons row -->
-      <g transform="translate(28, 186)">
-        <g filter="url(#softShadowSm)">
-          <rect width="132" height="48" rx="24" fill="url(#accentBtn)"/>
-          <rect width="132" height="18" rx="24" fill="url(#gloss)"/>
-          <text x="66" y="30" text-anchor="middle" class="btnText" font-size="15">Continue</text>
-        </g>
-        <g transform="translate(148,0)">
-          <rect width="112" height="48" rx="24" fill="rgba(255,255,255,0.7)" stroke="rgba(15,23,42,0.1)"/>
-          <rect width="112" height="16" rx="24" fill="url(#gloss)"/>
-          <text x="56" y="30" text-anchor="middle" class="label" font-size="15">Ghost</text>
-        </g>
-        <g transform="translate(276,8)">
-          <rect width="72" height="28" rx="14" fill="#e0f2fe"/>
-          <text x="36" y="19" text-anchor="middle" class="badge">soft</text>
-        </g>
-      </g>
-
-      <!-- tabs mock -->
-      <g transform="translate(28, 256)">
-        <rect width="364" height="40" rx="20" fill="rgba(241,245,249,0.9)" stroke="rgba(15,23,42,0.06)"/>
-        <rect x="4" y="4" width="110" height="32" rx="16" fill="#ffffff" filter="url(#softShadowSm)"/>
-        <text x="59" y="25" text-anchor="middle" class="label" font-size="13">Overview</text>
-        <text x="175" y="25" text-anchor="middle" class="muted" font-size="13">Looks</text>
-        <text x="285" y="25" text-anchor="middle" class="muted" font-size="13">Docs</text>
-      </g>
+    <!-- Install: frost field-like, mono-ish -->
+    <g transform="translate(0 286)" filter="url(#soft)">
+      <rect width="420" height="48" rx="16" fill="url(#frostStrong)" stroke="rgba(15,23,42,0.1)"/>
+      <rect width="420" height="18" rx="16" fill="url(#glossTop)"/>
+      <text x="20" y="30" class="t muted" font-size="15">npm i @softglass/tokens @softglass/ui</text>
     </g>
   </g>
 
-  <!-- Floating mini card (badge/alert) -->
-  <g transform="translate(620, 480)" filter="url(#softShadowSm)">
-    <rect width="200" height="72" rx="18" fill="url(#frostFill)" stroke="rgba(56,189,248,0.35)"/>
-    <rect width="200" height="28" rx="18" fill="url(#gloss)"/>
-    <circle cx="28" cy="36" r="8" fill="#38bdf8"/>
-    <text x="48" y="32" class="label" font-size="13">Tokens loaded</text>
-    <text x="48" y="50" class="muted" font-size="12">data-softglass-theme</text>
+  <!-- ========== RIGHT: AppShell-ish product mock ========== -->
+  <g transform="translate(640 88)" filter="url(#elevated)">
+    <!-- Outer glass shell elevated frost -->
+    <rect width="560" height="544" rx="24" fill="url(#frostStrong)" stroke="rgba(15,23,42,0.1)"/>
+    <rect width="560" height="100" rx="24" fill="url(#glossTop)"/>
+
+    <!-- App header Softglass chrome (no OS window dots) -->
+    <g transform="translate(20 20)">
+      <rect width="520" height="56" rx="16" fill="url(#frost)" stroke="rgba(15,23,42,0.1)"/>
+      <rect width="520" height="22" rx="16" fill="url(#glossTop)"/>
+      <text x="20" y="34" class="t title" font-size="16">Softglass</text>
+      <text x="108" y="34" class="t muted" font-size="13">playground</text>
+      <!-- theme badge -->
+      <rect x="400" y="14" width="100" height="28" rx="14" fill="rgba(124,58,237,0.12)" stroke="rgba(124,58,237,0.16)"/>
+      <text x="450" y="32" text-anchor="middle" class="t accent" font-size="12">aurora</text>
+    </g>
+
+    <!-- Inner solid content card -->
+    <g transform="translate(36 100)">
+      <rect width="488" height="400" rx="20" fill="rgba(255,255,255,0.88)" stroke="rgba(15,23,42,0.08)"/>
+      <rect width="488" height="70" rx="20" fill="url(#glossTop)" opacity="0.55"/>
+
+      <text x="28" y="44" class="t title" font-size="22">Ship calm UI</text>
+      <text x="28" y="70" class="t muted" font-size="14">Glass = chrome · solid = long content</text>
+
+      <!-- Field label + input (solid surface) -->
+      <text x="28" y="112" class="t muted" font-size="13">Email</text>
+      <g transform="translate(28 122)">
+        <rect width="432" height="48" rx="16" fill="#ffffff" stroke="rgba(15,23,42,0.1)"/>
+        <rect width="432" height="16" rx="16" fill="url(#glossTop)" opacity="0.4"/>
+        <text x="16" y="30" class="t muted" font-size="15">you@brand.com</text>
+      </g>
+
+      <!-- Buttons: primary violet + ghost frost -->
+      <g transform="translate(28 192)">
+        <g filter="url(#soft)">
+          <rect width="128" height="44" rx="999" fill="url(#accentSolid)"/>
+          <rect width="128" height="16" rx="999" fill="url(#accentGloss)"/>
+          <text x="64" y="28" text-anchor="middle" class="t onAccent" font-size="14">Continue</text>
+        </g>
+        <g transform="translate(140 0)">
+          <rect width="108" height="44" rx="999" fill="url(#frost)" stroke="rgba(15,23,42,0.1)"/>
+          <rect width="108" height="16" rx="999" fill="url(#glossTop)"/>
+          <text x="54" y="28" text-anchor="middle" class="t fg" font-size="14">Ghost</text>
+        </g>
+        <!-- accent badge -->
+        <g transform="translate(264 8)">
+          <rect width="72" height="28" rx="999" fill="rgba(124,58,237,0.12)" stroke="rgba(124,58,237,0.16)"/>
+          <text x="36" y="18" text-anchor="middle" class="t accent" font-size="12">accent</text>
+        </g>
+      </g>
+
+      <!-- Tabs pill list (sg-tabs-list language) -->
+      <g transform="translate(28 268)">
+        <rect width="432" height="44" rx="22" fill="rgba(255,255,255,0.86)" stroke="rgba(15,23,42,0.1)"/>
+        <rect width="432" height="16" rx="22" fill="url(#glossTop)" opacity="0.5"/>
+        <!-- active trigger: accent soft pill -->
+        <rect x="6" y="6" width="120" height="32" rx="16" fill="rgba(124,58,237,0.14)"/>
+        <text x="66" y="27" text-anchor="middle" class="t accent" font-size="13">Overview</text>
+        <text x="190" y="27" text-anchor="middle" class="t muted" font-size="13">Looks</text>
+        <text x="300" y="27" text-anchor="middle" class="t muted" font-size="13">Docs</text>
+        <text x="400" y="27" text-anchor="middle" class="t muted" font-size="13">API</text>
+      </g>
+
+      <!-- Alert info strip -->
+      <g transform="translate(28 336)">
+        <rect width="432" height="44" rx="14" fill="rgba(124,58,237,0.08)" stroke="rgba(124,58,237,0.2)"/>
+        <circle cx="22" cy="22" r="5" fill="#7c3aed"/>
+        <text x="40" y="27" class="t fg" font-size="13">Tokens loaded · theme aurora</text>
+      </g>
+    </g>
   </g>
 </svg>
