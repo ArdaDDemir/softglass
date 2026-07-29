@@ -2,6 +2,7 @@
 
 import {
   Button,
+  ContextMenu,
   DropdownMenu,
   Input,
   Modal,
@@ -15,6 +16,7 @@ export function OverlayDemo() {
   const [open, setOpen] = useState(false);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [lastAction, setLastAction] = useState<string>("—");
+  const [contextAction, setContextAction] = useState<string>("—");
   const { toast } = useToast();
 
   function showToast(variant: ToastVariant) {
@@ -161,6 +163,71 @@ export function OverlayDemo() {
       >
         Last menu action: <strong style={{ color: "var(--sg-fg)" }}>{lastAction}</strong>
       </p>
+
+      <ContextMenu
+        aria-label="File actions"
+        items={[
+          {
+            type: "label",
+            label: "File",
+          },
+          {
+            id: "open",
+            label: "Open",
+            shortcut: "⌘O",
+            onSelect: () => {
+              setContextAction("Open");
+              showToast("default");
+            },
+          },
+          {
+            id: "rename",
+            label: "Rename",
+            onSelect: () => setContextAction("Rename"),
+          },
+          { type: "separator" },
+          {
+            id: "share",
+            label: "Share…",
+            disabled: true,
+          },
+          {
+            id: "delete-ctx",
+            label: "Delete",
+            destructive: true,
+            onSelect: () => {
+              setContextAction("Delete");
+              showToast("danger");
+            },
+          },
+        ]}
+      >
+        <div
+          style={{
+            marginTop: "1.25rem",
+            padding: "1.25rem 1.35rem",
+            borderRadius: "var(--sg-radius-lg)",
+            border: "1px dashed var(--sg-border-frost)",
+            background: "var(--sg-surface-frost)",
+            color: "var(--sg-fg-muted)",
+            fontSize: "var(--sg-text-sm)",
+            lineHeight: 1.5,
+            userSelect: "none",
+            cursor: "context-menu",
+          }}
+        >
+          <strong style={{ color: "var(--sg-fg)", display: "block", marginBottom: "0.35rem" }}>
+            ContextMenu zone
+          </strong>
+          Right-click here (or long-press on touch). Same{" "}
+          <code>items</code> language as DropdownMenu — pointer position, not a
+          button.
+          <span style={{ display: "block", marginTop: "0.5rem" }}>
+            Last context action:{" "}
+            <strong style={{ color: "var(--sg-fg)" }}>{contextAction}</strong>
+          </span>
+        </div>
+      </ContextMenu>
 
       <Modal
         open={open}

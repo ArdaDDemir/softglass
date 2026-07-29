@@ -19,6 +19,7 @@ export type {
   ButtonMotion,
   CardMotion,
   CheckboxMotion,
+  ContextMenuMotion,
   DropdownMenuMotion,
   FieldMotion,
   ModalMotion,
@@ -106,6 +107,15 @@ export type {
   DropdownMenuProps,
   DropdownMenuSeparator,
 } from "./molecules/dropdown-menu";
+
+export { ContextMenu } from "./molecules/context-menu";
+export type {
+  ContextMenuEntry,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuProps,
+  ContextMenuSeparator,
+} from "./molecules/context-menu";
 
 export { ToastProvider, useToast } from "./molecules/toast";
 export type {

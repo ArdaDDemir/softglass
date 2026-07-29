@@ -112,6 +112,13 @@ const registry = {
       "packages/ui/src/molecules/dropdown-menu.tsx",
       { deps: ["button"], extra: [PRESENCE] },
     ),
+    ui(
+      "context-menu",
+      "Context Menu",
+      "Right-click / long-press action menu (same items language as DropdownMenu).",
+      "packages/ui/src/molecules/context-menu.tsx",
+      { extra: [PRESENCE] },
+    ),
     ui("app-shell", "AppShell", "Header + optional sidebar layout.", "packages/ui/src/organisms/app-shell.tsx"),
   ],
 };

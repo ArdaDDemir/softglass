@@ -1,4 +1,4 @@
-# Limitations (v1.1.0)
+# Limitations (v1.1.0 + v1.2a ContextMenu)
 
 Honest scope notes for Softglass. Read this before treating the kit like Radix / Chakra / MUI.
 
@@ -24,7 +24,8 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Select** | Custom listbox-ish menu, keyboard, placement auto, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
 | **Combobox** | Type-to-filter single select; option-only (no free create) | Async remote search; creatable tags; virtualization |
 | **MultiSelect** | Multi value + chips; menu stays open; optional `maxSelected` | Select-all; filter-in-menu; paste list |
-| **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **enter/exit** | Submenus; checkbox/radio items; portal + collision; ContextMenu |
+| **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **enter/exit** | Submenus; checkbox/radio items; portal + collision |
+| **ContextMenu** | Same `items` language; right-click + long-press; fixed at pointer; Escape + outside; **enter/exit** | Nested submenu tree; full OS parity; portal (still parent stacking); pixel-perfect collision |
 | **Popover** | Anchored panel, Escape + outside, non-modal, **enter/exit** | Focus trap option; portal + collision; arrow |
 | **Tooltip** | Hover/focus delay, placements | Touch-first patterns; collision detection against viewport edges (basic only) |
 | **Tabs** | Roving tabindex + arrow/Home/End keys + sliding indicator | Directional content slide; vertical orientation API polish |
@@ -66,8 +67,8 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 ## Known non-goals (still)
 
-- DatePicker, Combobox, DataTable (later sprints / 1.2)
-- ContextMenu (parked after Sprint A)
+- DatePicker, DataTable (later sprints / 1.2+)
+- Nested ContextMenu / DropdownMenu submenus
 - Perfect Select parity with Radix Select
 - Storybook / Chromatic
 - More than 4 core languages

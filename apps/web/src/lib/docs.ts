@@ -558,7 +558,58 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: "motion",
         type: '"none" | "fade" | "scale" | "slide-down"',
         default: '"scale"',
-        description: "Enter recipe (exit = Sprint B).",
+        description: "Enter/exit panel motion (usePresence).",
+      },
+    ],
+  },
+  {
+    id: "context-menu",
+    name: "ContextMenu",
+    layer: "molecule",
+    summary:
+      "Right-click / long-press action menu. Same items language as DropdownMenu; opens at the pointer (fixed), not under a button.",
+    importLine: 'import { ContextMenu } from "@softglass/ui";',
+    example: `<ContextMenu
+  items={[
+    { label: "Open", onSelect: () => {} },
+    { type: "separator" },
+    { label: "Delete", destructive: true, onSelect: () => {} },
+  ]}
+>
+  <div>Right-click me</div>
+</ContextMenu>`,
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "Surface that receives contextmenu + long-press.",
+      },
+      {
+        name: "items",
+        type: "ContextMenuEntry[]",
+        description: "Same shape as DropdownMenu: item | separator | label.",
+      },
+      {
+        name: "open / defaultOpen / onOpenChange",
+        type: "controlled or uncontrolled",
+        description: "Optional controlled open state.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "scale" | "slide-down"',
+        default: '"scale"',
+        description: "Enter/exit panel motion (usePresence).",
+      },
+      {
+        name: "longPressMs",
+        type: "number",
+        default: "500",
+        description: "Touch long-press delay before open.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        description: "Ignores right-click and long-press.",
       },
     ],
   },

@@ -834,6 +834,42 @@
       ]
     },
     {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "Right-click / long-press action menu (same items language as DropdownMenu).",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/context-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/context-menu.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/presence.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/presence.ts"
+        }
+      ]
+    },
+    {
       "name": "app-shell",
       "type": "registry:ui",
       "title": "AppShell",

@@ -13,7 +13,7 @@
 |-------|--------|
 | 1.0.0 | shipped |
 | 1.1.0 | **shipped** (kit + registry + motion + form depth) |
-| **1.2.0** | **sıradaki** — plan yazıldı, kod yok |
+| **1.2.0** | **sıradaki** — 1.2a ContextMenu in progress (branch) |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
 **Hesap disiplini:** gh/npm → kişisel (`ArdaDDemir` / `ardaddemir`); work/Feedemy yok.
@@ -56,12 +56,12 @@
 
 ### Sprint 1.2a — ContextMenu
 
-- [ ] API: `items` (DropdownMenu ile aynı dil) veya trigger + children  
-- [ ] Sağ tık + long-press (touch min)  
-- [ ] Escape / dış tık / focus restore  
-- [ ] look + motion enter/exit (usePresence)  
-- [ ] Playground + API.md + LIMITATIONS  
-- [ ] registry generate/build  
+- [x] API: `items` (DropdownMenu ile aynı dil) + `children` surface  
+- [x] Sağ tık + long-press (touch min)  
+- [x] Escape / dış tık / focus restore  
+- [x] motion enter/exit (usePresence; frost menu chrome)  
+- [x] Playground + API.md + LIMITATIONS  
+- [x] registry generate/build  
 
 **Yapma:** Submenu ağacı, full OS parity.
 

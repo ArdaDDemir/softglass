@@ -1640,6 +1640,23 @@
   vertical-align: middle;
 }
 
+/* —— ContextMenu target (panel rules live after .sg-menu-content) —— */
+/* Avoid display:contents — fixed menu + focus are more reliable with a real box. */
+.sg-context-root {
+  display: block;
+}
+
+.sg-context-target {
+  display: block;
+  outline: none;
+}
+
+.sg-context-target:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 2px;
+  border-radius: var(--sg-radius-md);
+}
+
 .sg-popover-trigger {
   display: inline-flex;
 }
@@ -1737,6 +1754,16 @@
   max-height: min(18rem, 50dvh);
   overflow: auto;
   min-width: 11rem;
+}
+
+/* ContextMenu: fixed at pointer — must beat .sg-menu-content absolute rules */
+.sg-menu-content.sg-context-menu-content {
+  position: fixed;
+  top: auto;
+  bottom: auto;
+  right: auto;
+  translate: none;
+  z-index: var(--sg-z-dropdown);
 }
 
 .sg-menu-item {
