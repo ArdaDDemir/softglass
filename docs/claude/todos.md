@@ -1,9 +1,9 @@
 # Softglass — TODO
 
-> **v1.0.0:** shipped · **v1.1.0:** shipped (2026-07-29) — npm `@softglass/tokens@1.1.0` + `@softglass/ui@1.1.0`, tag `v1.1.0`, PR #1 merged.  
+> **v1.0.0:** shipped · **v1.1.0:** shipped (2026-07-29) · **v1.2.0:** release branch hazır (publish/tag bekliyor).  
 > **v1.1 plan (arşiv):** [v1.1-plan.md](./v1.1-plan.md)  
 > **v1.2 plan (tek kaynak detay):** [v1.2-plan.md](./v1.2-plan.md)  
-> Bu dosya checkbox özeti. **Yeni session:** `main` + `ArdaDDemir/softglass` + kişisel npm/gh.
+> Bu dosya checkbox özeti. **Publish:** kişisel gh/npm (`ArdaDDemir` / `ardaddemir`); work hesabı yok.
 
 ---
 
@@ -13,7 +13,7 @@
 |-------|--------|
 | 1.0.0 | shipped |
 | 1.1.0 | **shipped** (kit + registry + motion + form depth) |
-| **1.2.0** | **sıradaki** — 1.2a–c done; 1.2d portal in progress |
+| **1.2.0** | **release hazır** — kod + version bump; npm/tag **senin onayın** |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
 **Hesap disiplini:** gh/npm → kişisel (`ArdaDDemir` / `ardaddemir`); work/Feedemy yok.
@@ -106,12 +106,14 @@
 
 ### 1.2.0 publish checklist
 
-1. [ ] Version sync `1.2.0` (tokens + ui)  
-2. [ ] CHANGELOG `[1.2.0]`  
-3. [ ] typecheck + build + test + pack:check  
+1. [x] Version sync `1.2.0` (tokens + ui + root + web)  
+2. [x] CHANGELOG `[1.2.0]`  
+3. [x] typecheck + build + test + pack:check (release worktree)  
 4. [ ] `npm whoami` = kişisel; org softglass  
 5. [ ] publish tokens → ui  
 6. [ ] tag `v1.2.0` + push (ArdaDDemir)  
+
+**1.2e nice** bilinçli atlandı (1.2’yi geciktirmesin).
 
 ---
 
