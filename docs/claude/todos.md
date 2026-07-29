@@ -1,9 +1,9 @@
 # Softglass — TODO
 
-> **v1.0.0:** shipped · **v1.1.0:** shipped · **v1.2.0:** shipped (2026-07-29) — npm `@softglass/tokens@1.2.0` + `@softglass/ui@1.2.0`, tag `v1.2.0`.  
-> **v1.1 plan (arşiv):** [v1.1-plan.md](./v1.1-plan.md)  
-> **v1.2 plan (tek kaynak detay):** [v1.2-plan.md](./v1.2-plan.md)  
-> Bu dosya checkbox özeti. **Publish:** kişisel gh/npm (`ArdaDDemir` / `ardaddemir`); work hesabı yok.
+> **v1.0–v1.2:** shipped · **v1.2.0** (2026-07-29) — npm `@softglass/tokens@1.2.0` + `@softglass/ui@1.2.0`, tag `v1.2.0`, PR #2 merged.  
+> **Plan detay:** [v1.3-plan.md](./v1.3-plan.md) · arşiv [v1.2-plan.md](./v1.2-plan.md) · [v1.1-plan.md](./v1.1-plan.md)  
+> Bu dosya checkbox özeti. **Yeni session:** `main` + `ArdaDDemir/softglass` + kişisel npm/gh.  
+> **Kural:** 1.3 Must atomlar bitmeden 1.4 molecule’e geçilmez.
 
 ---
 
@@ -11,149 +11,216 @@
 
 | Sürüm | Durum |
 |-------|--------|
-| 1.0.0 | shipped |
-| 1.1.0 | **shipped** (kit + registry + motion + form depth) |
-| **1.2.0** | **shipped** |
+| 1.0.0 – 1.2.0 | **shipped** |
+| **1.3.0** | **sıradaki** — atom katmanı kapanışı (plan yazıldı, kod yok) |
+| 1.4.0 | molecule seti (1.3 Must sonrası) |
+| 1.5.0 | organism + product patterns |
+| 1.6+ | docs site / visual / theme builder |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
-**Hesap disiplini:** gh/npm → kişisel (`ArdaDDemir` / `ardaddemir`); work/Feedemy yok.
+**Hesap:** gh `ArdaDDemir` · npm `ardaddemir` · work/Feedemy **yok**.
 
 ---
 
-## v1.1 — bitti (özet)
+## v1.2 — bitti (özet)
 
-- [x] A Overlay — Popover, DropdownMenu  
-- [x] B Motion exit — usePresence  
-- [x] C Registry — root registry.json + public/r  
-- [x] D Form — Combobox, MultiSelect  
-- [x] Polish + PR #1 + npm/tag `v1.1.0`  
+- [x] ContextMenu  
+- [x] DatePicker (day/month/year)  
+- [x] Vitest smokes + CI test  
+- [x] Overlay portals (Select/Combobox/MultiSelect/Dropdown/Popover)  
+- [x] npm/tag `v1.2.0`  
 
 ---
 
-## v1.2 — ne yapmalıyız? (önerilen)
+## v1.3 — Atom katmanı kapanışı
 
-> **Ürün cümlesi (öneri):**  
-> *1.2 = ContextMenu + DatePicker (form tamamlayıcı) + minimum test iskeleti; docs site/theme builder şişirmesin.*
+> **Ürün cümlesi:**  
+> *1.3 = form + feedback + link/chip tuğlaları; molecule’e geçmeden atom Must biter.*
 
-### Neden bu sıra?
-
-1. **ContextMenu** — A’da park; DropdownMenu ailesi yarım kalmasın.  
-2. **DatePicker** — D’de bilerek dışarıda; form kit’in en çok istenen eksiği.  
-3. **Vitest iskeleti** — 1–2 smoke test; full suite değil.  
-4. **Overlay portal + collision (hafif)** — Select/menu hâlâ absolute; sticky/overflow edge case.  
-5. **Docs site / Storybook / theme builder** — vitrin; 1.2’yi geciktirmesin → 1.3 veya “nice”.
-
-### Sprint haritası (tek açık sprint)
+### Sprint haritası
 
 ```
-1.2a  ContextMenu (+ belki Dropdown submenu yok)
-  → 1.2b  DatePicker (tek ay / range opsiyonel sonra)
-    → 1.2c  Test iskeleti (Vitest + 2–3 component smoke)
-      → 1.2d  Overlay portal polish (Select/Combobox/MultiSelect/Dropdown/Popover)
-        → 1.2e  (nice) Motion leftovers / README GIF
-          → 1.2.0 publish
+1.3a  Progress + StatusDot
+  → 1.3b  Slider + NumberInput + FileField
+    → 1.3c  Link + Chip + CloseButton + Password/Search + VisuallyHidden
+      → 1.3d  Should atoms (Segmented, Pin, Kbd, …)
+        → 1.3e  Nice / extract
+          → 1.3.0 publish
 ```
 
-### Sprint 1.2a — ContextMenu
+### Sprint 1.3a — Feedback atoms
 
-- [x] API: `items` (DropdownMenu ile aynı dil) + `children` surface  
-- [x] Sağ tık + long-press (touch min)  
-- [x] Escape / dış tık / focus restore  
-- [x] motion enter/exit (usePresence; frost menu chrome)  
-- [x] Playground + API.md + LIMITATIONS  
-- [x] registry generate/build  
+- [ ] `Progress` — linear; value + indeterminate; sizes; softglass surface  
+- [ ] `StatusDot` — semantic statuses  
+- [ ] Playground + API.md + LIMITATIONS  
+- [ ] registry generate/build  
+- [ ] typecheck + test smoke (Progress)  
 
-**Yapma:** Submenu ağacı, full OS parity.
+**Yapma:** charts, KPI dashboard.
 
-### Sprint 1.2b — DatePicker
+### Sprint 1.3b — Form controls
 
-- [x] Tek tarih seçimi (controlled `value` / `onValueChange`, ISO `YYYY-MM-DD`)  
-- [x] Ay navigasyonu; softglass dil (frost panel, solid trigger)  
-- [x] Klavye (oklar / Enter / Escape / PageUp-Down)  
-- [x] `label` / `hint` / `error` field meta  
-- [x] Playground + docs + registry  
-- [x] LIMITATIONS: range, time, locale i18n → 1.3  
+- [ ] `Slider` — controlled value; min/max/step; label/hint/error  
+- [ ] `NumberInput` — steppers; min/max/step  
+- [ ] `FileField` — solid field; basic file name list (no upload backend)  
+- [ ] Playground + docs + registry  
+- [ ] Keyboard basics (Slider arrows)  
 
-**Yapma:** Full calendar suite, timezone engine, RHF adapter.
+**Yapma:** multi-file cloud dropzone, range product.
 
-### Sprint 1.2c — Test iskeleti (kalite min)
+### Sprint 1.3c — Chrome atoms
 
-- [x] Vitest + Testing Library monorepo setup (`packages/ui`)  
-- [x] Smoke: Button, Combobox filter, MultiSelect remove chip  
-- [x] Smoke: usePresence (open → closed unmount)  
-- [x] `npm test` script root’ta  
-- [x] CI’ya `test` adımı (mevcut workflow’a ekle)  
+- [ ] `Link` — href; external optional; softglass text link  
+- [ ] `Chip` — selectable + removable  
+- [ ] `CloseButton` — shared dismiss control  
+- [ ] `PasswordInput` **veya** Input reveal pattern  
+- [ ] `SearchInput` — free text + clear (not Combobox)  
+- [ ] `VisuallyHidden`  
+- [ ] Playground + docs + registry  
 
-**Yapma:** %100 coverage, Chromatic, Playwright full E2E.
+**Yapma:** icon pack, typography kit.
 
-### Sprint 1.2d — Overlay portal polish
+### Sprint 1.3d — Should (1.3.x)
 
-- [x] Select / Combobox / MultiSelect / Dropdown / Popover: body portal + fixed coords  
-- [x] Viewport collision (top/bottom flip + left/right clamp)  
-- [x] Scroll/resize reposition (overflow ancestors via capture scroll)  
-- [x] LIMITATIONS güncelle  
+- [ ] `SegmentedControl`  
+- [ ] `PinInput` (OTP)  
+- [ ] `Kbd` + inline `Code`  
+- [ ] `CircularProgress` (1.3a’da yoksa)  
+- [ ] `NavLink`  
+- [ ] `ListItem`  
+- [ ] `SkipLink`  
+- [ ] `CharacterCount`  
+- [ ] `Fieldset`  
+- [ ] `Icon` wrapper (set yok)  
+- [ ] `Image` framed + fallback  
+- [ ] `Meter`  
+- [ ] `CopyButton`  
+- [ ] `TimeInput` (HH:mm; no TZ)  
+- [ ] `ClientOnly`  
+- [ ] `ScrollArea` (hafif)  
+- [ ] `Rating`  
+- [ ] `AspectRatio`  
 
-**Not:** DatePicker / ContextMenu bu sprint listesinde değil; DatePicker hâlâ absolute. 
+### Sprint 1.3e — Nice
 
-### Sprint 1.2e — Nice (1.2 sonu veya 1.3)
+- [ ] `RangeSlider`  
+- [ ] `ColorSwatch` / basit ColorInput  
+- [ ] `ToggleGroup`  
+- [ ] Chip variants: filter/check (veya Chip API)  
+- [ ] `CountBadge` (veya Badge)  
+- [ ] `Highlight`, `Truncate`  
+- [ ] `LiveRegion`  
+- [ ] DatePicker extract: Calendar / Month / Year (refactor)  
+- [ ] `NativeDateInput` skin  
+- [ ] `Text` / `Heading` (hafif; kit iddiası yok)  
 
-- [ ] Card tilt motion (opsiyonel)  
-- [ ] label-float / directional tabs content  
-- [ ] Combobox: creatable / async search (API iskeleti)  
-- [ ] MultiSelect: filter-in-menu  
-- [ ] Animated README GIF (hero still var)  
-- [ ] Token JSON export (Figma bridge min)  
+### 1.3.0 publish checklist
 
-### 1.2.0 publish checklist
+1. [ ] Version `1.3.0` (tokens + ui)  
+2. [ ] CHANGELOG `[1.3.0]`  
+3. [ ] typecheck + test + build + pack:check  
+4. [ ] npm/gh kişisel hesap  
+5. [ ] publish tokens → ui  
+6. [ ] tag `v1.3.0` + push  
 
-1. [x] Version sync `1.2.0` (tokens + ui + root + web)  
-2. [x] CHANGELOG `[1.2.0]`  
-3. [x] typecheck + build + test + pack:check (release worktree)  
-4. [x] `npm whoami` = kişisel (`ardaddemir`); gh active `ArdaDDemir`  
-5. [x] publish tokens → ui  
-6. [x] tag `v1.2.0` + push (ArdaDDemir)  
+### v1.3 bilinçli YAPMA
 
-**1.2e nice** bilinçli atlandı (1.2’yi geciktirmesin).
-
----
-
-## v1.2 — bilinçli YAPMA
-
+- Icon pack / Lucide clone  
+- Full Typography system / Box-Stack layout kit  
 - DataTable  
-- Full Radix Select rewrite  
-- 4 yeni dil  
-- Framer Motion dependency  
-- Nested modal stack  
-- Storybook + Chromatic full (1.3 vitrin)  
-- Theme builder (canlı accent SaaS)  
-- i18n / RTL suite  
-- Yanlış hesaba push/publish  
+- Framer Motion  
+- Theme builder  
+- Date **range** suite (1.5/1.6)  
+- Storybook+Chromatic full (1.6)  
+- Yanlış hesaba push  
 
 ---
 
-## v1.3+ backlog (not; 1.2 değil)
+## v1.4 — Molekül seti (1.3 Must sonrası)
 
-- Docs marketing site / Storybook  
-- Visual regression (Chromatic veya ucuz alternatif)  
-- Date range + time picker  
-- Theme builder  
-- Figma tokens pipeline  
-- Community languages process  
+> Atom 1.3a–c bitmeden **başlama**.
+
+### 1.4a — Disclosure & nav
+
+- [ ] Accordion / Collapsible  
+- [ ] Breadcrumb  
+- [ ] Pagination  
+
+### 1.4b — Surface
+
+- [ ] EmptyState  
+- [ ] Sheet / Drawer  
+- [ ] HoverCard  
+
+### 1.4c — Structure
+
+- [ ] Stepper (basit wizard)  
+- [ ] Toolbar  
+- [ ] List (ListItem üstüne)  
+- [ ] Stat / metric tile  
+
+### 1.4d — Overlay/form polish
+
+- [ ] DatePicker body portal  
+- [ ] Combobox creatable / async iskelet (nice)  
+- [ ] MultiSelect filter-in-menu  
+
+### 1.4 YAPMA
+
+- Command palette full, Menubar OS, nested modals, DataTable  
+
+---
+
+## v1.5 — Organism & patterns
+
+### 1.5a — Shell
+
+- [ ] AppShell: collapse sidebar, mobile drawer polish  
+- [ ] PageHeader (title + actions + crumbs)  
+
+### 1.5b — Composite
+
+- [ ] SettingsSection pattern  
+- [ ] CommandPalette minimal (search + list)  
+- [ ] Auth/settings playground recipes (composite export opsiyonel)  
+
+### 1.5c — Quality
+
+- [ ] Daha fazla smoke test (Slider, Progress, Chip…)  
+- [ ] TimePicker **veya** Date range (birini seç)  
+- [ ] API + LIMITATIONS refresh  
+
+### 1.5 YAPMA
+
+- Full DataTable, Theme builder SaaS, zorunlu Storybook farm  
+
+---
+
+## v1.6+ backlog (platform / vitrin)
+
+- [ ] Docs marketing site / Storybook  
+- [ ] Visual regression (Chromatic veya ucuz)  
+- [ ] Theme builder  
+- [ ] Token JSON / Figma bridge  
+- [ ] i18n / RTL suite  
+- [ ] Community languages  
+- [ ] Full calendar suite (range + time + locale packs)  
 
 ---
 
 ## Yeni session başlangıç komutu
 
 ```text
-Softglass v1.2 — docs/claude/todos.md + v1.2-plan.md
+Softglass v1.3 — docs/claude/todos.md + v1.3-plan.md
 Repo: ArdaDDemir/softglass (kişisel gh/npm)
-İlk sprint: 1.2a ContextMenu
+İlk sprint: 1.3a Progress + StatusDot
 main'den worktree; work hesabına push yok
+Atom Must bitmeden molecule yok
 ```
 
 ---
 
-## Eski arşiv (1.0 / 1.1 detay)
+## Arşiv
 
-v1.0 Must/Should ve v1.1 sprint checkbox detayları → [v1.1-plan.md](./v1.1-plan.md) + git history.  
-Bu dosyada aktif odak **yalnızca 1.2**.
+v1.0–v1.2 detay → [v1.2-plan.md](./v1.2-plan.md) + [v1.1-plan.md](./v1.1-plan.md) + git history.  
+Aktif odak: **1.3 atomları**.
