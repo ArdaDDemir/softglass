@@ -5,9 +5,13 @@ All notable changes to Softglass are documented here.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versioning follows [SemVer](https://semver.org/).
 
-## [Unreleased] — 1.1.0 (ready to ship after PR)
+## [Unreleased]
 
-Minor release candidate: overlays, motion exit, registry path, form depth. npm packages still **1.0.0** until publish.
+## [1.1.0] — 2026-07-29
+
+Minor release: overlays, motion exit, registry path, form depth.
+
+**Shipped:** npm `@softglass/tokens@1.1.0` + `@softglass/ui@1.1.0`, GitHub tag `v1.1.0`.
 
 ### Added
 

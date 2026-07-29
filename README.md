@@ -58,7 +58,7 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 **Live packages**
 
 - [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
-- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.0.0`
+- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.1.0`
 
 ### Brand override (colors only)
 
@@ -168,7 +168,7 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.0.0 — shipped** · **v1.1.0 — code ready (branch), not published yet**
+**v1.1.0 — shipped** (npm + GitHub tag)
 
 - [x] Four languages as CSS tokens  
 - [x] Core UI kit + look + motion  
@@ -177,18 +177,18 @@ CONTRIBUTING.md           PR rules
 - [x] Consumer getting-started + limitations + changelog  
 - [x] CI workflow (typecheck + build + pack dry-run)  
 - [x] npm org **`softglass`**  
-- [x] Published **`@softglass/tokens@1.0.0`** + **`@softglass/ui@1.0.0`**  
-- [x] GitHub public repo + tag **`v1.0.0`** ([ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass))  
+- [x] Published **`@softglass/tokens@1.1.0`** + **`@softglass/ui@1.1.0`**  
+- [x] GitHub public repo + tag **`v1.1.0`** ([ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass))  
 - [x] README hero visual  
 - [x] shadcn registry path — root `registry.json` + `npm run registry:build` + [docs/REGISTRY.md](./docs/REGISTRY.md)  
-- [x] v1.1 kit: Popover, DropdownMenu, Combobox, MultiSelect, exit motion *(publish = separate step)*
+- [x] v1.1 kit: Popover, DropdownMenu, Combobox, MultiSelect, exit motion
 
 ## Package naming
 
 | Package | npm | Notes |
 | --- | --- | --- |
-| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.0.0** public | CSS engine + 4 languages |
-| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.0.0** public | React components (peer: react, tokens) |
+| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.1.0** public | CSS engine + 4 languages |
+| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.1.0** public | React components (peer: react, tokens) |
 | `softglass` (unscoped) | unused | we ship **scoped** packages only |
 
 Install:

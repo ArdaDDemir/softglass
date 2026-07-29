@@ -1,4 +1,4 @@
-# Softglass API reference (v1.0.0)
+# Softglass API reference (v1.1.0)
 
 Import once in your app root:
 
