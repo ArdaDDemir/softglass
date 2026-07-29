@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@import "../../../../packages/tokens/src/index.css";
+
+@theme inline {
+  --font-sans: var(--sg-font-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--sg-font-sans);
+}
+
+/* Docs layout — responsive without styled-jsx */
+.docs-layout {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+}
+
+@media (max-width: 720px) {
+  .docs-layout {
+    grid-template-columns: 1fr;
+  }
+}

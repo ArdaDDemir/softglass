@@ -1,0 +1,67 @@
+/**
+ * Language 4 — Pearl Soft
+ * Warm cream glass, friendly consumer surfaces.
+ */
+[data-softglass-theme="pearl"] {
+  color-scheme: light;
+
+  --sg-bg: #fff7f2;
+  --sg-bg-image: radial-gradient(
+      1000px 520px at 0% 0%,
+      rgba(253, 186, 116, 0.35),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 480px at 100% 10%,
+      rgba(186, 230, 253, 0.4),
+      transparent 50%
+    ),
+    radial-gradient(
+      700px 400px at 50% 100%,
+      rgba(251, 207, 232, 0.35),
+      transparent 55%
+    ),
+    linear-gradient(165deg, #fffaf5 0%, #fff7f2 40%, #f0f9ff 100%);
+
+  --sg-fg: #292524;
+  --sg-fg-muted: #57534e;
+  --sg-fg-subtle: #78716c;
+
+  --sg-surface-solid: rgba(255, 253, 250, 0.94);
+  --sg-surface-glass: rgba(255, 255, 255, 0.5);
+  --sg-surface-glass-elevated: rgba(255, 255, 255, 0.68);
+  /* Readable frosted chrome (select / tabs / menus) */
+  --sg-surface-frost: rgba(255, 252, 248, 0.9);
+  --sg-surface-frost-strong: rgba(255, 253, 250, 0.97);
+  --sg-border-frost: rgba(68, 64, 60, 0.12);
+
+  --sg-border-subtle: rgba(68, 64, 60, 0.1);
+  --sg-border-glass: rgba(255, 255, 255, 0.62);
+
+  --sg-accent: #f43f5e;
+  --sg-accent-hover: #e11d48;
+  --sg-accent-fg: #ffffff;
+  --sg-accent-soft: rgba(244, 63, 94, 0.12);
+
+  --sg-ring: #fb7185;
+  --sg-ring-soft: rgba(251, 113, 133, 0.28);
+
+  --sg-gloss-highlight: rgba(255, 255, 255, 0.8);
+
+  --sg-shadow-soft: 0 8px 24px rgba(120, 53, 15, 0.06);
+  --sg-shadow-glass: 0 12px 36px rgba(244, 63, 94, 0.08),
+    0 2px 8px rgba(68, 64, 60, 0.04);
+  --sg-shadow-elevated: 0 20px 48px rgba(244, 63, 94, 0.1),
+    0 4px 12px rgba(68, 64, 60, 0.05);
+  --sg-shadow-toast: 0 4px 14px rgba(68, 64, 60, 0.1),
+    0 1px 3px rgba(244, 63, 94, 0.06);
+
+  --sg-glass-blur: 16px;
+  --sg-glass-blur-mobile: 10px;
+  --sg-glass-saturate: 1.3;
+  --sg-blob-opacity: 0.55;
+
+  --sg-success: #16a34a;
+  --sg-warning: #d97706;
+  --sg-danger: #e11d48;
+}

@@ -1,0 +1,67 @@
+/**
+ * Language 1 — Aurora Glass
+ * Calm pastel gradients + frosted glass. Default eye-friendly dialect.
+ */
+[data-softglass-theme="aurora"] {
+  color-scheme: light;
+
+  --sg-bg: #eef2ff;
+  --sg-bg-image: radial-gradient(
+      1200px 600px at 10% -10%,
+      rgba(167, 139, 250, 0.45),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 500px at 90% 10%,
+      rgba(110, 231, 183, 0.35),
+      transparent 50%
+    ),
+    radial-gradient(
+      800px 500px at 50% 100%,
+      rgba(125, 211, 252, 0.3),
+      transparent 55%
+    ),
+    linear-gradient(165deg, #eef2ff 0%, #f8fafc 45%, #ecfeff 100%);
+
+  --sg-fg: #0f172a;
+  --sg-fg-muted: #475569;
+  --sg-fg-subtle: #64748b;
+
+  --sg-surface-solid: rgba(255, 255, 255, 0.88);
+  --sg-surface-glass: rgba(255, 255, 255, 0.42);
+  --sg-surface-glass-elevated: rgba(255, 255, 255, 0.58);
+  /* Readable frosted chrome (select / tabs / menus) */
+  --sg-surface-frost: rgba(255, 255, 255, 0.86);
+  --sg-surface-frost-strong: rgba(255, 255, 255, 0.94);
+  --sg-border-frost: rgba(15, 23, 42, 0.1);
+
+  --sg-border-subtle: rgba(15, 23, 42, 0.08);
+  --sg-border-glass: rgba(255, 255, 255, 0.55);
+
+  --sg-accent: #7c3aed;
+  --sg-accent-hover: #6d28d9;
+  --sg-accent-fg: #ffffff;
+  --sg-accent-soft: rgba(124, 58, 237, 0.12);
+
+  --sg-ring: #8b5cf6;
+  --sg-ring-soft: rgba(139, 92, 246, 0.25);
+
+  --sg-gloss-highlight: rgba(255, 255, 255, 0.65);
+
+  --sg-shadow-soft: 0 8px 28px rgba(15, 23, 42, 0.06);
+  --sg-shadow-glass: 0 10px 40px rgba(99, 102, 241, 0.1),
+    0 2px 8px rgba(15, 23, 42, 0.04);
+  --sg-shadow-elevated: 0 18px 50px rgba(99, 102, 241, 0.14),
+    0 4px 14px rgba(15, 23, 42, 0.06);
+  --sg-shadow-toast: 0 4px 14px rgba(15, 23, 42, 0.1),
+    0 1px 3px rgba(99, 102, 241, 0.08);
+
+  --sg-glass-blur: 18px;
+  --sg-glass-blur-mobile: 12px;
+  --sg-glass-saturate: 1.4;
+  --sg-blob-opacity: 0.5;
+
+  --sg-success: #059669;
+  --sg-warning: #d97706;
+  --sg-danger: #dc2626;
+}

@@ -1,0 +1,68 @@
+/**
+ * Language 2 — Obsidian Gloss
+ * Dark premium glass, specular rims, night-friendly.
+ */
+[data-softglass-theme="obsidian"] {
+  color-scheme: dark;
+
+  --sg-bg: #070b14;
+  --sg-bg-image: radial-gradient(
+      900px 500px at 15% 0%,
+      rgba(56, 189, 248, 0.18),
+      transparent 55%
+    ),
+    radial-gradient(
+      800px 480px at 90% 20%,
+      rgba(168, 85, 247, 0.16),
+      transparent 50%
+    ),
+    radial-gradient(
+      700px 420px at 50% 100%,
+      rgba(245, 158, 11, 0.08),
+      transparent 55%
+    ),
+    linear-gradient(170deg, #070b14 0%, #0b1220 50%, #0a0f1a 100%);
+
+  --sg-fg: #e8eef9;
+  --sg-fg-muted: #94a3b8;
+  --sg-fg-subtle: #64748b;
+
+  --sg-surface-solid: rgba(15, 23, 42, 0.92);
+  --sg-surface-glass: rgba(255, 255, 255, 0.06);
+  --sg-surface-glass-elevated: rgba(255, 255, 255, 0.1);
+  /* Readable frosted chrome (select / tabs / menus) */
+  --sg-surface-frost: rgba(15, 23, 42, 0.9);
+  --sg-surface-frost-strong: rgba(12, 18, 32, 0.96);
+  --sg-border-frost: rgba(148, 163, 184, 0.22);
+
+  --sg-border-subtle: rgba(148, 163, 184, 0.14);
+  --sg-border-glass: rgba(255, 255, 255, 0.14);
+
+  --sg-accent: #22d3ee;
+  --sg-accent-hover: #67e8f9;
+  --sg-accent-fg: #042f2e;
+  --sg-accent-soft: rgba(34, 211, 238, 0.14);
+
+  --sg-ring: #22d3ee;
+  --sg-ring-soft: rgba(34, 211, 238, 0.28);
+
+  --sg-gloss-highlight: rgba(255, 255, 255, 0.14);
+
+  --sg-shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --sg-shadow-glass: 0 12px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --sg-shadow-elevated: 0 22px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --sg-shadow-toast: 0 4px 16px rgba(0, 0, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.28);
+
+  --sg-glass-blur: 20px;
+  --sg-glass-blur-mobile: 12px;
+  --sg-glass-saturate: 1.5;
+  --sg-blob-opacity: 0.65;
+
+  --sg-success: #34d399;
+  --sg-warning: #fbbf24;
+  --sg-danger: #f87171;
+}

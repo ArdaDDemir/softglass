@@ -1,0 +1,226 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "softglass",
+  "homepage": "https://github.com/ArdaDDemir/softglass",
+  "items": [
+    {
+      "name": "tokens",
+      "type": "registry:style",
+      "title": "Softglass Tokens",
+      "description": "Shared soft-glass engine + 4 visual languages (Aurora, Obsidian, Mist, Pearl).",
+      "files": [
+        {
+          "path": "packages/tokens/src/base.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "packages/tokens/src/themes/aurora.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "packages/tokens/src/themes/obsidian.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "packages/tokens/src/themes/mist.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "packages/tokens/src/themes/pearl.css",
+          "type": "registry:style"
+        },
+        {
+          "path": "packages/tokens/src/index.css",
+          "type": "registry:style"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Soft pill button — primary solid, ghost glass.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Solid-surface input with label, hint, and error.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Soft pill badge with semantic variants.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/badge.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Card with solid | glass | glass-elevated surfaces.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "app-shell",
+      "type": "registry:ui",
+      "title": "AppShell",
+      "description": "Responsive header + optional sidebar + main layout.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/organisms/app-shell.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "Glass elevated dialog with backdrop blur, Escape, and focus restore.",
+      "registryDependencies": ["tokens", "button"],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/modal.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Glass toast provider + useToast imperative API.",
+      "registryDependencies": ["tokens", "button"],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/toast.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Soft pill avatar with image or initials fallback + group.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/avatar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Accessible soft glass switch control.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/switch.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Custom glass dropdown matching button language + keyboard a11y.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Pill tablist on glass with accent active state.",
+      "registryDependencies": ["tokens"],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/tabs.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    }
+  ]
+}

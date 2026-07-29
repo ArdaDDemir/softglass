@@ -1,0 +1,602 @@
+/**
+ * Looks + motion layer
+ * Design types (look) + micro-interactions for all controls.
+ * Respects prefers-reduced-motion.
+ */
+
+:root {
+  --sg-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --sg-ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --sg-motion-fast: 160ms;
+  --sg-motion-med: 240ms;
+}
+
+/* —— Shared transition surfaces (recipes live in motion-recipes.css) —— */
+.sg-btn,
+.sg-select-trigger,
+.sg-select-option,
+.sg-tabs-trigger,
+.sg-check-control,
+.sg-switch,
+.sg-badge,
+.sg-shell-nav-item {
+  transition:
+    transform var(--sg-motion-fast) var(--sg-ease-spring),
+    background var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth),
+    box-shadow var(--sg-motion-med) var(--sg-ease-smooth),
+    color var(--sg-motion-fast) var(--sg-ease-smooth),
+    opacity var(--sg-motion-fast) var(--sg-ease-smooth),
+    filter var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+/* Nav + select chrome keep a light lift (not part of atom motion menus) */
+.sg-select-trigger:hover:not(:disabled),
+.sg-shell-nav-item:hover {
+  transform: translateY(-1px);
+}
+
+.sg-select-trigger:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+
+.sg-check-control {
+  transition:
+    transform var(--sg-motion-fast) var(--sg-ease-spring),
+    background var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth),
+    box-shadow var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-check-root:hover .sg-check-control:not([data-checked="true"]) {
+  border-color: color-mix(in srgb, var(--sg-accent) 40%, var(--sg-border-frost));
+}
+
+.sg-check-root:not([data-motion="none"]):hover
+  .sg-check-control:not([data-checked="true"]) {
+  transform: scale(1.06);
+}
+
+.sg-card {
+  transition:
+    transform var(--sg-motion-med) var(--sg-ease-smooth),
+    box-shadow var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+/* Default tooltip closed/open poses — refined by data-motion recipes */
+.sg-tooltip {
+  transition:
+    opacity var(--sg-motion-fast) var(--sg-ease-smooth),
+    visibility var(--sg-motion-fast) var(--sg-ease-smooth),
+    transform var(--sg-motion-med) var(--sg-ease-spring);
+  transform: translateX(-50%) translateY(4px) scale(0.96);
+}
+
+.sg-tooltip[data-open="true"] {
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.sg-tooltip[data-placement="bottom"] {
+  transform: translateX(-50%) translateY(-4px) scale(0.96);
+}
+
+.sg-tooltip[data-placement="bottom"][data-open="true"] {
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.sg-select-menu {
+  transform-origin: top center;
+}
+
+.sg-select-option {
+  transition:
+    transform var(--sg-motion-fast) var(--sg-ease-spring),
+    background var(--sg-motion-fast) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth),
+    color var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+.sg-select-option:hover:not(:disabled):not([data-selected="true"]),
+.sg-select-option[data-highlighted="true"]:not([data-selected="true"]) {
+  transform: translateX(2px);
+}
+
+.sg-avatar {
+  transition:
+    transform var(--sg-motion-fast) var(--sg-ease-spring),
+    box-shadow var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-switch-thumb {
+  transition: transform var(--sg-motion-med) var(--sg-ease-spring),
+    background var(--sg-motion-fast) var(--sg-ease-smooth),
+    box-shadow var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+@keyframes sg-pop {
+  0% {
+    transform: scale(0.86);
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes sg-sheen {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes sg-pulse-soft {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--sg-accent) 35%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--sg-accent) 0%, transparent);
+  }
+}
+
+/* ========== BUTTON LOOKS ========== */
+/* look works with variant — solid is default (no extra class) */
+
+.sg-btn-look-soft.sg-btn-primary {
+  background: var(--sg-accent-soft);
+  color: var(--sg-fg);
+  border-color: color-mix(in srgb, var(--sg-accent) 22%, transparent);
+  box-shadow: none;
+}
+
+.sg-btn-look-soft.sg-btn-primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--sg-accent) 22%, transparent);
+}
+
+.sg-btn-look-soft.sg-btn-danger {
+  background: color-mix(in srgb, var(--sg-danger) 14%, transparent);
+  color: var(--sg-danger);
+  box-shadow: none;
+}
+
+.sg-btn-look-glass {
+  background: var(--sg-surface-frost) !important;
+  color: var(--sg-fg) !important;
+  border-color: var(--sg-border-frost) !important;
+  box-shadow: inset 0 1px 0 var(--sg-gloss-highlight), var(--sg-shadow-soft) !important;
+}
+
+.sg-btn-look-glass:hover:not(:disabled) {
+  background: var(--sg-surface-frost-strong) !important;
+  transform: translateY(-2px);
+}
+
+.sg-btn-look-gradient.sg-btn-primary,
+.sg-btn-look-gradient.sg-btn-danger {
+  background-image: linear-gradient(
+    125deg,
+    var(--sg-accent) 0%,
+    color-mix(in srgb, var(--sg-accent) 55%, #fff) 45%,
+    var(--sg-accent-hover) 100%
+  ) !important;
+  background-size: 160% 160%;
+  border-color: transparent !important;
+  color: var(--sg-accent-fg) !important;
+  box-shadow: var(--sg-shadow-soft), inset 0 1px 0 var(--sg-gloss-highlight);
+}
+
+.sg-btn-look-gradient.sg-btn-danger {
+  background-image: linear-gradient(
+    125deg,
+    var(--sg-danger),
+    color-mix(in srgb, var(--sg-danger) 60%, #fbbf24)
+  ) !important;
+}
+
+.sg-btn-look-gradient:hover:not(:disabled) {
+  background-position: 100% 50%;
+  filter: brightness(1.05);
+}
+
+.sg-btn-look-neon {
+  background: transparent !important;
+  color: var(--sg-accent) !important;
+  border-color: var(--sg-accent) !important;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--sg-accent) 30%, transparent),
+    0 0 18px color-mix(in srgb, var(--sg-accent) 28%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--sg-accent) 12%, transparent) !important;
+}
+
+.sg-btn-look-neon:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--sg-accent) 12%, transparent) !important;
+  box-shadow:
+    0 0 0 1px var(--sg-accent),
+    0 0 28px color-mix(in srgb, var(--sg-accent) 45%, transparent) !important;
+  animation: sg-pulse-soft 1.6s ease-in-out infinite;
+}
+
+.sg-btn-look-neon.sg-btn-danger {
+  color: var(--sg-danger) !important;
+  border-color: var(--sg-danger) !important;
+}
+
+/* ========== RADIO LOOKS ========== */
+/* 1) dot — default (already) */
+
+/* 2) card — selectable panel */
+.sg-check-root[data-look="card"] {
+  display: flex;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: var(--sg-radius-md);
+  border: var(--sg-border-width) solid var(--sg-border-frost);
+  background: var(--sg-surface-frost);
+  box-shadow: inset 0 1px 0 var(--sg-gloss-highlight);
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.sg-check-root[data-look="card"]:hover {
+  border-color: color-mix(in srgb, var(--sg-accent) 35%, var(--sg-border-frost));
+  transform: translateY(-1px);
+  box-shadow: var(--sg-shadow-soft);
+}
+
+.sg-check-root[data-look="card"]:has(input:checked),
+.sg-check-root[data-look="card"][data-checked="true"] {
+  border-color: var(--sg-accent);
+  background: var(--sg-accent-soft);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--sg-accent) 35%, transparent),
+    var(--sg-shadow-soft);
+}
+
+.sg-check-root[data-look="card"] .sg-check-control {
+  margin-top: 0;
+}
+
+.sg-check-group[data-look="card"] {
+  gap: 0.65rem;
+}
+
+/* 3) chip — horizontal pills */
+.sg-check-group[data-look="chip"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sg-check-root[data-look="chip"] {
+  padding: 0.45rem 0.85rem 0.45rem 0.55rem;
+  border-radius: var(--sg-radius-pill);
+  border: var(--sg-border-width) solid var(--sg-border-frost);
+  background: var(--sg-surface-frost);
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.sg-check-root[data-look="chip"] .sg-check-control {
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0;
+}
+
+.sg-check-root[data-look="chip"]:has(input:checked),
+.sg-check-root[data-look="chip"][data-checked="true"] {
+  background: var(--sg-accent);
+  border-color: transparent;
+  color: var(--sg-accent-fg);
+  box-shadow: inset 0 1px 0 var(--sg-gloss-highlight);
+  animation: sg-pop var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-check-root[data-look="chip"]:has(input:checked) .sg-check-label,
+.sg-check-root[data-look="chip"][data-checked="true"] .sg-check-label {
+  color: var(--sg-accent-fg);
+}
+
+.sg-check-root[data-look="chip"]:has(input:checked) .sg-check-hint,
+.sg-check-root[data-look="chip"][data-checked="true"] .sg-check-hint {
+  color: color-mix(in srgb, var(--sg-accent-fg) 80%, transparent);
+}
+
+.sg-check-root[data-look="chip"]:has(input:checked) .sg-check-control,
+.sg-check-root[data-look="chip"][data-checked="true"] .sg-check-control {
+  background: color-mix(in srgb, #fff 22%, transparent);
+  border-color: transparent;
+}
+
+/* ========== CHECKBOX LOOKS ========== */
+.sg-check-root[data-look="pill"] {
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--sg-radius-pill);
+  border: var(--sg-border-width) solid var(--sg-border-frost);
+  background: var(--sg-surface-frost);
+  align-items: center;
+}
+
+.sg-check-root[data-look="pill"]:has(input:checked) {
+  background: var(--sg-accent-soft);
+  border-color: color-mix(in srgb, var(--sg-accent) 40%, transparent);
+}
+
+.sg-check-root[data-look="pill"] .sg-check-control {
+  border-radius: var(--sg-radius-pill);
+  margin-top: 0;
+}
+
+/* ========== SWITCH LOOKS ========== */
+.sg-switch[data-look="ios"] {
+  width: 3rem;
+  height: 1.75rem;
+  background: color-mix(in srgb, var(--sg-fg-muted) 28%, transparent);
+  border: none;
+}
+
+.sg-switch[data-look="ios"] .sg-switch-thumb {
+  width: 1.4rem;
+  height: 1.4rem;
+  left: 0.18rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.sg-switch[data-look="ios"][data-checked="true"] {
+  background: var(--sg-success);
+}
+
+.sg-switch[data-look="ios"][data-checked="true"] .sg-switch-thumb {
+  transform: translate(1.2rem, -50%);
+}
+
+.sg-switch[data-look="minimal"] {
+  width: 2.4rem;
+  height: 0.55rem;
+  background: var(--sg-border-subtle);
+  border: none;
+  box-shadow: none;
+}
+
+.sg-switch[data-look="minimal"] .sg-switch-thumb {
+  width: 1rem;
+  height: 1rem;
+  left: 0;
+  background: var(--sg-surface-frost-strong);
+  border: 2px solid var(--sg-border-frost);
+}
+
+.sg-switch[data-look="minimal"][data-checked="true"] {
+  background: color-mix(in srgb, var(--sg-accent) 45%, transparent);
+}
+
+.sg-switch[data-look="minimal"][data-checked="true"] .sg-switch-thumb {
+  background: var(--sg-accent);
+  border-color: transparent;
+  transform: translate(1.35rem, -50%);
+}
+
+/* ========== BADGE LOOKS ========== */
+.sg-badge-look-outline {
+  background: transparent;
+  border-color: currentColor;
+  opacity: 0.95;
+}
+
+.sg-badge-look-glow {
+  box-shadow: 0 0 14px color-mix(in srgb, var(--sg-accent) 35%, transparent);
+  animation: sg-pulse-soft 2.4s ease-in-out infinite;
+}
+
+.sg-badge-look-solid.sg-badge:not(.sg-badge-accent):not(.sg-badge-success):not(
+    .sg-badge-warning
+  ):not(.sg-badge-danger) {
+  background: var(--sg-fg);
+  color: var(--sg-bg);
+  border-color: transparent;
+}
+
+/* ========== FIELD LOOKS (input / textarea) ========== */
+.sg-input[data-look="underline"],
+.sg-textarea[data-look="underline"] {
+  border-radius: 0;
+  border-width: 0 0 2px;
+  border-color: var(--sg-border-subtle);
+  background: transparent;
+  box-shadow: none;
+  padding-left: 0.15rem;
+  padding-right: 0.15rem;
+}
+
+.sg-input[data-look="underline"]:focus,
+.sg-textarea[data-look="underline"]:focus {
+  border-color: var(--sg-accent);
+  box-shadow: none;
+}
+
+.sg-input[data-look="filled"],
+.sg-textarea[data-look="filled"] {
+  background: var(--sg-accent-soft);
+  border-color: transparent;
+}
+
+.sg-input[data-look="filled"]:focus,
+.sg-textarea[data-look="filled"]:focus {
+  background: var(--sg-surface-solid);
+  border-color: var(--sg-accent);
+}
+
+.sg-input[data-look="ghost"],
+.sg-textarea[data-look="ghost"] {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.sg-input[data-look="ghost"]:hover,
+.sg-textarea[data-look="ghost"]:hover {
+  background: var(--sg-accent-soft);
+}
+
+.sg-input[data-look="ghost"]:focus,
+.sg-textarea[data-look="ghost"]:focus {
+  background: var(--sg-surface-solid);
+  border-color: var(--sg-border-subtle);
+  box-shadow: 0 0 0 3px var(--sg-ring-soft);
+}
+
+/* ========== SELECT LOOKS ========== */
+.sg-select-trigger[data-look="soft"] {
+  background: var(--sg-accent-soft);
+  border-color: color-mix(in srgb, var(--sg-accent) 20%, transparent);
+}
+
+.sg-select-trigger[data-look="glass"] {
+  background: var(--sg-surface-frost);
+  border-color: var(--sg-border-frost);
+}
+
+.sg-select-trigger[data-look="gradient"] {
+  background-image: linear-gradient(
+    120deg,
+    var(--sg-accent-soft),
+    var(--sg-surface-frost-strong)
+  );
+  border-color: color-mix(in srgb, var(--sg-accent) 25%, transparent);
+}
+
+/* ========== TABS LOOKS ========== */
+.sg-tabs-list[data-look="underline"] {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--sg-border-subtle);
+  border-radius: 0;
+  padding: 0;
+  gap: 0.25rem;
+  box-shadow: none;
+  width: 100%;
+}
+
+.sg-tabs-list[data-look="underline"] .sg-tabs-trigger {
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+}
+
+.sg-tabs-list[data-look="underline"] .sg-tabs-trigger[data-active="true"] {
+  background: transparent;
+  color: var(--sg-accent);
+  border-bottom-color: var(--sg-accent);
+  box-shadow: none;
+}
+
+.sg-tabs-list[data-look="underline"]
+  .sg-tabs-trigger[data-active="true"]:hover:not(:disabled) {
+  background: transparent;
+  color: var(--sg-accent-hover);
+}
+
+.sg-tabs-list[data-look="segmented"] {
+  width: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  border-radius: var(--sg-radius-md);
+  padding: 0.3rem;
+}
+
+.sg-tabs-list[data-look="segmented"] .sg-tabs-trigger {
+  justify-content: center;
+  width: 100%;
+  border-radius: var(--sg-radius-sm);
+}
+
+/* ========== AVATAR LOOKS ========== */
+.sg-avatar[data-look="rounded"] {
+  border-radius: var(--sg-radius-md);
+}
+
+.sg-avatar[data-look="soft"] {
+  border-radius: var(--sg-radius-lg);
+  box-shadow: var(--sg-shadow-soft);
+  border-width: 2px;
+}
+
+/* ========== TOOLTIP LOOKS ========== */
+.sg-tooltip[data-look="solid"] {
+  background: var(--sg-fg);
+  color: var(--sg-bg);
+  border-color: transparent;
+}
+
+.sg-tooltip[data-look="solid"] .sg-tooltip-arrow {
+  background: var(--sg-fg);
+  border-color: transparent;
+}
+
+.sg-tooltip[data-look="accent"] {
+  background: var(--sg-accent);
+  color: var(--sg-accent-fg);
+  border-color: transparent;
+}
+
+.sg-tooltip[data-look="accent"] .sg-tooltip-arrow {
+  background: var(--sg-accent);
+  border-color: transparent;
+}
+
+/* ========== CARD LOOKS ========== */
+.sg-card[data-look="flat"] {
+  box-shadow: none;
+}
+
+.sg-card[data-look="raised"] {
+  box-shadow: var(--sg-shadow-elevated);
+}
+
+.sg-card[data-look="outline"] {
+  box-shadow: none;
+  background: transparent;
+  border-color: var(--sg-border-frost);
+}
+
+.sg-card[data-look="glow"] {
+  box-shadow:
+    var(--sg-shadow-soft),
+    0 0 0 1px color-mix(in srgb, var(--sg-accent) 20%, transparent),
+    0 12px 40px color-mix(in srgb, var(--sg-accent) 18%, transparent);
+}
+
+.sg-card[data-look="glow"]:hover {
+  box-shadow:
+    var(--sg-shadow-elevated),
+    0 0 0 1px color-mix(in srgb, var(--sg-accent) 35%, transparent),
+    0 16px 48px color-mix(in srgb, var(--sg-accent) 28%, transparent);
+}
+
+/* Modal/Toast enter recipes live in motion-recipes.css via data-motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .sg-select-trigger,
+  .sg-select-option,
+  .sg-shell-nav-item,
+  .sg-check-root[data-look="card"],
+  .sg-check-root[data-look="chip"] {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .sg-select-trigger:hover:not(:disabled) {
+    transform: none !important;
+  }
+
+  .sg-btn-look-neon:hover:not(:disabled),
+  .sg-badge-look-glow {
+    animation: none !important;
+  }
+}

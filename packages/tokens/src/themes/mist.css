@@ -1,0 +1,51 @@
+/**
+ * Language 3 — Mist Panel
+ * Structural frosted chrome (OS-like). Dense product UIs.
+ */
+[data-softglass-theme="mist"] {
+  color-scheme: light;
+
+  --sg-bg: #f1f5f9;
+  --sg-bg-image: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+
+  --sg-fg: #0f172a;
+  --sg-fg-muted: #475569;
+  --sg-fg-subtle: #64748b;
+
+  --sg-surface-solid: #ffffff;
+  --sg-surface-glass: rgba(255, 255, 255, 0.72);
+  --sg-surface-glass-elevated: rgba(255, 255, 255, 0.86);
+  /* Readable frosted chrome (select / tabs / menus) */
+  --sg-surface-frost: rgba(255, 255, 255, 0.9);
+  --sg-surface-frost-strong: rgba(255, 255, 255, 0.97);
+  --sg-border-frost: rgba(15, 23, 42, 0.12);
+
+  --sg-border-subtle: rgba(15, 23, 42, 0.1);
+  --sg-border-glass: rgba(255, 255, 255, 0.7);
+
+  --sg-accent: #2563eb;
+  --sg-accent-hover: #1d4ed8;
+  --sg-accent-fg: #ffffff;
+  --sg-accent-soft: rgba(37, 99, 235, 0.1);
+
+  --sg-ring: #3b82f6;
+  --sg-ring-soft: rgba(59, 130, 246, 0.22);
+
+  --sg-gloss-highlight: rgba(255, 255, 255, 0.75);
+
+  --sg-shadow-soft: 0 4px 16px rgba(15, 23, 42, 0.06);
+  --sg-shadow-glass: 0 8px 28px rgba(15, 23, 42, 0.08);
+  --sg-shadow-elevated: 0 14px 40px rgba(15, 23, 42, 0.1);
+  --sg-shadow-toast: 0 3px 12px rgba(15, 23, 42, 0.08),
+    0 1px 2px rgba(15, 23, 42, 0.05);
+
+  /* More opaque chrome, functional blur */
+  --sg-glass-blur: 22px;
+  --sg-glass-blur-mobile: 14px;
+  --sg-glass-saturate: 1.2;
+  --sg-blob-opacity: 0.25;
+
+  --sg-success: #16a34a;
+  --sg-warning: #ca8a04;
+  --sg-danger: #dc2626;
+}

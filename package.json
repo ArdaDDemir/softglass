@@ -1,0 +1,23 @@
+{
+  "name": "@softglass/root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Open soft-glass design system for Next.js — 4 visual languages, shadcn-style ownership.",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run build:ui && npm run dev -w @softglass/web",
+    "dev:ui": "npm run dev -w @softglass/ui",
+    "build": "npm run build:ui && npm run build -w @softglass/web",
+    "build:ui": "npm run build -w @softglass/ui",
+    "typecheck": "npm run typecheck -w @softglass/ui",
+    "lint": "npm run lint -w @softglass/web",
+    "pack:check": "npm run pack:check -w @softglass/tokens && npm run pack:check -w @softglass/ui"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

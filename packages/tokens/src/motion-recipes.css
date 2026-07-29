@@ -1,0 +1,533 @@
+/**
+ * Motion recipes — driven by data-motion on each control.
+ * Defaults are set in React (MOTION_DEFAULTS). Reduced-motion hard-stops below.
+ */
+
+/* —— Button —— */
+.sg-btn[data-motion="none"] {
+  transition: background var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth),
+    color var(--sg-motion-fast) var(--sg-ease-smooth),
+    box-shadow var(--sg-motion-med) var(--sg-ease-smooth) !important;
+}
+
+.sg-btn[data-motion="none"]:hover:not(:disabled),
+.sg-btn[data-motion="none"]:active:not(:disabled) {
+  transform: none !important;
+}
+
+.sg-btn[data-motion="lift"]:hover:not(:disabled):not(.sg-btn-loading) {
+  transform: translateY(-1px);
+}
+
+.sg-btn[data-motion="lift"]:active:not(:disabled):not(.sg-btn-loading) {
+  transform: translateY(1px) scale(0.98);
+}
+
+.sg-btn[data-motion="press"]:hover:not(:disabled):not(.sg-btn-loading) {
+  transform: none;
+}
+
+.sg-btn[data-motion="press"]:active:not(:disabled):not(.sg-btn-loading) {
+  transform: scale(0.96);
+}
+
+.sg-btn[data-motion="sheen"] {
+  background-size: 200% 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.sg-btn[data-motion="sheen"]:hover:not(:disabled):not(.sg-btn-loading) {
+  animation: sg-sheen 0.9s var(--sg-ease-smooth);
+  transform: translateY(-1px);
+}
+
+.sg-btn[data-motion="ripple"] {
+  position: relative;
+  overflow: hidden;
+}
+
+.sg-btn[data-motion="ripple"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--sg-ripple-x, 50%) var(--sg-ripple-y, 50%),
+    color-mix(in srgb, #fff 35%, transparent) 0%,
+    transparent 55%
+  );
+  opacity: 0;
+  transform: scale(0.2);
+  pointer-events: none;
+  transition:
+    opacity var(--sg-motion-fast) var(--sg-ease-smooth),
+    transform var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-btn[data-motion="ripple"]:active:not(:disabled)::after {
+  opacity: 1;
+  transform: scale(1.6);
+  transition: none;
+}
+
+/* —— Checkbox / Radio control face —— */
+.sg-check-root[data-motion="none"] .sg-check-control,
+.sg-check-root[data-motion="none"] {
+  animation: none !important;
+  transition: background var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth) !important;
+}
+
+.sg-check-root[data-motion="none"]:hover .sg-check-control {
+  transform: none !important;
+}
+
+.sg-check-root[data-motion="pop"] .sg-check-control[data-checked="true"] {
+  animation: sg-pop var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-check-root[data-motion="bounce"] .sg-check-control[data-checked="true"] {
+  animation: sg-bounce-check var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-check-root[data-motion="fade-in"] .sg-check-mark,
+.sg-check-root[data-motion="fade-in"] .sg-check-dot {
+  transition: opacity var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-check-root[data-motion="fade-in"] .sg-check-control:not([data-checked="true"]) .sg-check-mark,
+.sg-check-root[data-motion="fade-in"] .sg-check-control:not([data-checked="true"]) .sg-check-dot {
+  opacity: 0;
+}
+
+.sg-check-root[data-motion="draw"] .sg-check-mark path {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  transition: stroke-dashoffset var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-check-root[data-motion="draw"]
+  .sg-check-control[data-checked="true"]
+  .sg-check-mark
+  path {
+  stroke-dashoffset: 0;
+}
+
+.sg-check-root[data-motion="dot-scale"] .sg-check-dot {
+  transition: transform var(--sg-motion-med) var(--sg-ease-spring);
+  transform: scale(0);
+}
+
+.sg-check-root[data-motion="dot-scale"]
+  .sg-check-control[data-checked="true"]
+  .sg-check-dot {
+  transform: scale(1);
+}
+
+.sg-check-root[data-motion="ring-expand"] .sg-check-control {
+  transition:
+    box-shadow var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth),
+    background var(--sg-motion-med) var(--sg-ease-smooth),
+    transform var(--sg-motion-fast) var(--sg-ease-spring);
+}
+
+.sg-check-root[data-motion="ring-expand"]
+  .sg-check-control[data-checked="true"] {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--sg-accent) 22%, transparent);
+}
+
+/* —— Switch —— */
+.sg-switch[data-motion="none"] .sg-switch-thumb {
+  transition: background var(--sg-motion-fast) var(--sg-ease-smooth) !important;
+  transition-property: background !important;
+}
+
+.sg-switch[data-motion="snap"] .sg-switch-thumb {
+  transition: transform 120ms linear, background var(--sg-motion-fast) linear;
+}
+
+.sg-switch[data-motion="spring"] .sg-switch-thumb {
+  transition: transform var(--sg-motion-med) var(--sg-ease-spring),
+    background var(--sg-motion-fast) var(--sg-ease-smooth),
+    box-shadow var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+.sg-switch[data-motion="elastic"] .sg-switch-thumb {
+  transition: transform 320ms cubic-bezier(0.34, 1.7, 0.64, 1),
+    background var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+/* —— Field (input / textarea) —— */
+.sg-input[data-motion="none"]:focus,
+.sg-textarea[data-motion="none"]:focus {
+  box-shadow: 0 0 0 3px var(--sg-ring-soft);
+  transition: none;
+}
+
+.sg-input[data-motion="ring"],
+.sg-textarea[data-motion="ring"] {
+  transition:
+    box-shadow var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth),
+    background var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-input[data-motion="glow"]:focus,
+.sg-textarea[data-motion="glow"]:focus {
+  box-shadow:
+    0 0 0 3px var(--sg-ring-soft),
+    0 0 18px color-mix(in srgb, var(--sg-accent) 28%, transparent);
+}
+
+.sg-input[data-motion="underline-grow"],
+.sg-textarea[data-motion="underline-grow"] {
+  background-image: linear-gradient(var(--sg-accent), var(--sg-accent));
+  background-size: 0% 2px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition:
+    background-size var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth),
+    box-shadow var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+.sg-input[data-motion="underline-grow"]:focus,
+.sg-textarea[data-motion="underline-grow"]:focus {
+  background-size: 100% 2px;
+}
+
+/* —— Select menu open —— */
+.sg-select-menu[data-motion="none"] {
+  animation: none !important;
+}
+
+.sg-select-menu[data-motion="fade"] {
+  animation: sg-fade-in var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+.sg-select-menu[data-motion="scale"] {
+  animation: sg-scale-in var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-select-menu[data-motion="slide-down"] {
+  animation: sg-slide-down-in var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-select-trigger[data-motion="scale"] .sg-select-chevron,
+.sg-select-trigger[data-open="true"] .sg-select-chevron {
+  transition: transform var(--sg-motion-fast) var(--sg-ease-spring);
+}
+
+/* —— Tooltip —— */
+.sg-tooltip[data-motion="none"] {
+  transition: opacity var(--sg-motion-fast) linear, visibility 0s linear !important;
+  transform: translateX(-50%) translateY(0) scale(1) !important;
+}
+
+.sg-tooltip[data-motion="fade"] {
+  transition: opacity var(--sg-motion-fast) var(--sg-ease-smooth),
+    visibility var(--sg-motion-fast) var(--sg-ease-smooth);
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+.sg-tooltip[data-motion="scale"] {
+  transition:
+    opacity var(--sg-motion-fast) var(--sg-ease-smooth),
+    visibility var(--sg-motion-fast) var(--sg-ease-smooth),
+    transform var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-tooltip[data-motion="slide"][data-placement="top"],
+.sg-tooltip[data-motion="slide"]:not([data-placement]) {
+  transform: translateX(-50%) translateY(6px) scale(1);
+}
+
+.sg-tooltip[data-motion="slide"][data-placement="top"][data-open="true"],
+.sg-tooltip[data-motion="slide"]:not([data-placement])[data-open="true"] {
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.sg-tooltip[data-motion="slide"][data-placement="bottom"] {
+  transform: translateX(-50%) translateY(-6px) scale(1);
+}
+
+.sg-tooltip[data-motion="slide"][data-placement="bottom"][data-open="true"] {
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* —— Badge —— */
+.sg-badge[data-motion="none"] {
+  animation: none !important;
+}
+
+.sg-badge[data-motion="pulse"] {
+  animation: sg-pulse-soft 2.4s ease-in-out infinite;
+}
+
+.sg-badge[data-motion="pop-in"] {
+  animation: sg-pop var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-badge[data-motion="shimmer"] {
+  background-size: 200% 100%;
+  animation: sg-sheen 2.2s linear infinite;
+}
+
+/* —— Avatar —— */
+.sg-avatar[data-motion="none"]:hover {
+  transform: none !important;
+}
+
+.sg-avatar[data-motion="lift"]:hover {
+  transform: scale(1.05);
+}
+
+.sg-avatar[data-motion="ring-pulse"] {
+  animation: sg-pulse-soft 2.2s ease-in-out infinite;
+}
+
+.sg-avatar[data-motion="status-ping"] {
+  position: relative;
+}
+
+.sg-avatar[data-motion="status-ping"]::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--sg-success);
+  border: 2px solid var(--sg-bg);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--sg-success) 45%, transparent);
+  animation: sg-status-ping 1.8s ease-out infinite;
+}
+
+/* —— Tabs —— */
+.sg-tabs-list {
+  position: relative;
+}
+
+.sg-tabs-indicator {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: var(--sg-accent);
+  box-shadow: inset 0 1px 0 var(--sg-gloss-highlight);
+  width: var(--sg-tabs-iw, 0px);
+  height: var(--sg-tabs-ih, 0px);
+  transform: translate3d(var(--sg-tabs-ix, 0px), var(--sg-tabs-iy, 0px), 0);
+  transition:
+    transform var(--sg-motion-med) var(--sg-ease-spring),
+    width var(--sg-motion-med) var(--sg-ease-spring),
+    height var(--sg-motion-med) var(--sg-ease-smooth),
+    opacity var(--sg-motion-fast) var(--sg-ease-smooth);
+  will-change: transform, width;
+}
+
+.sg-tabs-list[data-motion="none"] .sg-tabs-indicator,
+.sg-tabs-list[data-motion="fade"] .sg-tabs-indicator {
+  display: none;
+}
+
+.sg-tabs-list[data-motion="slide"] .sg-tabs-trigger {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.sg-tabs-list[data-motion="slide"] .sg-tabs-trigger[data-active="true"] {
+  background: transparent;
+  color: var(--sg-accent-fg);
+  box-shadow: none;
+}
+
+.sg-tabs-list[data-motion="slide"]
+  .sg-tabs-trigger[data-active="true"]:hover:not(:disabled) {
+  background: transparent;
+  color: var(--sg-accent-fg);
+}
+
+/* Underline look: indicator is a bottom bar (X only) */
+.sg-tabs-list[data-look="underline"][data-motion="slide"] .sg-tabs-indicator {
+  height: 2px !important;
+  top: auto;
+  bottom: 0;
+  border-radius: 999px;
+  box-shadow: none;
+  background: var(--sg-accent);
+  transform: translate3d(var(--sg-tabs-ix, 0px), 0, 0);
+}
+
+.sg-tabs-list[data-look="underline"][data-motion="slide"]
+  .sg-tabs-trigger[data-active="true"] {
+  color: var(--sg-accent);
+  border-bottom-color: transparent;
+}
+
+.sg-tabs-list[data-look="underline"][data-motion="slide"]
+  .sg-tabs-trigger[data-active="true"]:hover:not(:disabled) {
+  color: var(--sg-accent-hover);
+}
+
+.sg-tabs-list[data-look="segmented"][data-motion="slide"] .sg-tabs-indicator {
+  border-radius: var(--sg-radius-sm);
+}
+
+.sg-tabs-list[data-motion="fade"] .sg-tabs-trigger {
+  transition:
+    background var(--sg-motion-med) var(--sg-ease-smooth),
+    color var(--sg-motion-med) var(--sg-ease-smooth),
+    border-color var(--sg-motion-fast) var(--sg-ease-smooth),
+    box-shadow var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-tabs-list[data-motion="none"] .sg-tabs-trigger {
+  transition: none !important;
+}
+
+.sg-tabs-content[data-motion="fade"],
+.sg-tabs-content[data-motion="slide"] {
+  animation: sg-fade-in var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-tabs-content[data-motion="none"] {
+  animation: none !important;
+}
+
+/* —— Modal —— */
+.sg-modal-root[data-motion="none"] .sg-modal-panel,
+.sg-modal-root[data-motion="none"] .sg-modal-backdrop {
+  animation: none !important;
+}
+
+.sg-modal-root[data-motion="scale"] .sg-modal-panel {
+  animation: sg-scale-in var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-modal-root[data-motion="fade"] .sg-modal-panel {
+  animation: sg-fade-in var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-modal-root[data-motion="slide-up"] .sg-modal-panel {
+  animation: sg-slide-up-in var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+/* —— Toast —— */
+.sg-toast[data-motion="none"] {
+  animation: none !important;
+}
+
+.sg-toast[data-motion="slide-in"] {
+  animation: sg-toast-in var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-toast[data-motion="pop"] {
+  animation: sg-pop var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+/* —— Card —— */
+.sg-card[data-motion="none"].sg-card-hoverable:hover {
+  transform: none !important;
+}
+
+.sg-card[data-motion="lift"].sg-card-hoverable:hover {
+  transform: translateY(-2px);
+}
+
+.sg-card[data-motion="glow-pulse"] {
+  animation: sg-pulse-soft 2.8s ease-in-out infinite;
+}
+
+/* —— Shared keyframes (motion pack) —— */
+@keyframes sg-bounce-check {
+  0% {
+    transform: scale(0.7);
+  }
+  50% {
+    transform: scale(1.14);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes sg-slide-down-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sg-slide-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sg-status-ping {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--sg-success) 45%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--sg-success) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--sg-success) 0%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sg-btn,
+  .sg-check-control,
+  .sg-check-root,
+  .sg-switch,
+  .sg-switch-thumb,
+  .sg-input,
+  .sg-textarea,
+  .sg-select-menu,
+  .sg-tooltip,
+  .sg-badge,
+  .sg-avatar,
+  .sg-tabs-indicator,
+  .sg-tabs-trigger,
+  .sg-tabs-content,
+  .sg-modal-panel,
+  .sg-modal-backdrop,
+  .sg-toast,
+  .sg-card {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .sg-btn:hover,
+  .sg-btn:active,
+  .sg-avatar:hover,
+  .sg-card-hoverable:hover,
+  .sg-check-root:hover .sg-check-control {
+    transform: none !important;
+  }
+
+  .sg-tabs-indicator {
+    transition: none !important;
+  }
+
+  .sg-avatar[data-motion="status-ping"]::after {
+    animation: none !important;
+  }
+}

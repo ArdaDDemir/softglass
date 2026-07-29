@@ -1,0 +1,64 @@
+{
+  "name": "@softglass/tokens",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Design tokens for Softglass — soft glass, 4 languages.",
+  "license": "MIT",
+  "author": "Softglass contributors",
+  "homepage": "https://github.com/ArdaDDemir/softglass#readme",
+  "bugs": {
+    "url": "https://github.com/ArdaDDemir/softglass/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArdaDDemir/softglass.git",
+    "directory": "packages/tokens"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./src/index.css",
+  "style": "./src/index.css",
+  "exports": {
+    ".": {
+      "style": "./src/index.css",
+      "default": "./src/index.css"
+    },
+    "./styles.css": "./src/index.css",
+    "./base": "./src/base.css",
+    "./base.css": "./src/base.css",
+    "./looks": "./src/looks-and-motion.css",
+    "./looks.css": "./src/looks-and-motion.css",
+    "./motion": "./src/motion-recipes.css",
+    "./motion.css": "./src/motion-recipes.css",
+    "./themes/*": "./src/themes/*",
+    "./aurora": "./src/themes/aurora.css",
+    "./obsidian": "./src/themes/obsidian.css",
+    "./mist": "./src/themes/mist.css",
+    "./pearl": "./src/themes/pearl.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "pack:check": "npm pack --dry-run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "design-tokens",
+    "css",
+    "css-variables",
+    "glassmorphism",
+    "softglass",
+    "design-system",
+    "soft-ui"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
