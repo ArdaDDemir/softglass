@@ -4,6 +4,8 @@
 
 One shared engine · four visual languages · you own the code (shadcn-style intent).
 
+![Softglass — soft glass UI kit hero](./docs/assets/hero.jpg)
+
 > **Pitch (one line):** Soft glass UI kit with four dialects — pick a language, recolor the brand, ship.
 
 | Language | ID | Mood |
@@ -50,6 +52,11 @@ import { Button, Card, Input } from "@softglass/ui";
 
 Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 
+**Live packages**
+
+- [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
+- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.0.0`
+
 ### Brand override (colors only)
 
 ```css
@@ -73,7 +80,7 @@ So you do not rebuild UI per project. You pick a language and recolor.
 
 - **MIT** license — use, fork, ship commercially  
 - **Copy ownership path** — registry sketch in `registry/` (CLI install later)  
-- **npm packages today** — `@softglass/tokens` + `@softglass/ui` with `dist` builds  
+- **npm packages today** — `@softglass/tokens` + `@softglass/ui` with dual CJS/ESM `dist`  
 - **Not a locked theme kit** — CSS variables you can edit  
 
 ## Components (`@softglass/ui` v1)
@@ -130,6 +137,7 @@ apps/web/                 Playground
 packages/tokens/          CSS engine + 4 languages
 packages/ui/              React components (src → dist)
 registry/                 shadcn-compatible sketch
+docs/assets/hero.jpg      README hero
 docs/GETTING-STARTED.md   Consumer 3-step guide
 docs/API.md               Props map
 docs/LIMITATIONS.md       Honest v1 limits
@@ -148,29 +156,33 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.0.0 — publish-ready preparation**
+**v1.0.0 — shipped**
 
 - [x] Four languages as CSS tokens  
 - [x] Core UI kit + look + motion  
-- [x] Dual `dist` for `@softglass/ui` (ESM `.mjs` + CJS `.js`, `.d.mts`/`.d.ts`) — Radix-style  
+- [x] Dual `dist` for `@softglass/ui` (ESM `.mjs` + CJS `.js`, `.d.mts`/`.d.ts`)  
 - [x] Publish-oriented `package.json` (conditional exports, files, peerDeps+Meta, LICENSE)  
 - [x] Consumer getting-started + limitations + changelog  
 - [x] CI workflow (typecheck + build + pack dry-run)  
-- [x] Create npm org **`softglass`** (owner = personal account)  
-- [ ] First publish `@softglass/tokens` + `@softglass/ui` (manual, after GitHub)  
-- [ ] GitHub public remote + tag `v1.0.0` (manual — no auto-push)  
-- [ ] README hero screenshot / GIF  
-- [ ] Full shadcn registry host + CLI install  
+- [x] npm org **`softglass`**  
+- [x] Published **`@softglass/tokens@1.0.0`** + **`@softglass/ui@1.0.0`**  
+- [x] GitHub public repo + tag **`v1.0.0`** ([ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass))  
+- [x] README hero visual  
+- [ ] Full shadcn registry host + CLI install *(v1.1+)*  
 
 ## Package naming
 
 | Package | npm | Notes |
 | --- | --- | --- |
-| `@softglass/tokens` | not published yet | org `softglass` ready |
-| `@softglass/ui` | not published yet | org `softglass` ready |
-| `softglass` (unscoped) | free | we still use scoped packages |
+| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.0.0** public | CSS engine + 4 languages |
+| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.0.0** public | React components (peer: react, tokens) |
+| `softglass` (unscoped) | unused | we ship **scoped** packages only |
 
-CLI must be logged in as the **personal** user who owns the `softglass` org before publish.
+Install:
+
+```bash
+npm install @softglass/tokens @softglass/ui
+```
 
 ## Contributing
 

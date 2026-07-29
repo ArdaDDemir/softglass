@@ -9,6 +9,8 @@ Versioning follows [SemVer](https://semver.org/).
 
 First public release of the soft-glass design system for Next.js.
 
+**Shipped:** npm `@softglass/tokens` + `@softglass/ui`, GitHub [ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) tag `v1.0.0`, README hero.
+
 ### Added
 
 #### Packages

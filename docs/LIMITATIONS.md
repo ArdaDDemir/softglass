@@ -46,16 +46,19 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 | Path | Status |
 | --- | --- |
-| npm `@softglass/tokens` + `@softglass/ui` | Ready to publish (see publish checklist) |
+| npm `@softglass/tokens` + `@softglass/ui` | **Published 1.0.0** |
 | shadcn-style registry CLI | Sketch only (`registry/registry.json`) — not a full install path yet |
 | Docs marketing site | Playground app in-repo; separate docs site later |
 
 ## Package name decision
 
 - Brand: **Softglass**
-- Scoped packages: **`@softglass/tokens`**, **`@softglass/ui`**
-- npm **organization** `softglass` created (publish still pending)
-- Prefer scoped packages even if unscoped `softglass` is free
+- Scoped packages live on npm:
+  - [`@softglass/tokens@1.0.0`](https://www.npmjs.com/package/@softglass/tokens)
+  - [`@softglass/ui@1.0.0`](https://www.npmjs.com/package/@softglass/ui)
+- Org: **`softglass`** (owner: personal npm account)
+- Source: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.0.0`
+- Prefer scoped packages; unscoped `softglass` is intentionally unused
 
 ## Known non-goals for v1
 

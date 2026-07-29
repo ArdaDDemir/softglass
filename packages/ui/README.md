@@ -8,6 +8,8 @@ React components for [Softglass](https://github.com/ArdaDDemir/softglass) — so
 npm install @softglass/ui @softglass/tokens
 ```
 
+**Status:** published **`1.0.0`** on [npm](https://www.npmjs.com/package/@softglass/ui).
+
 **Peers:** `react` + `react-dom` ^18 || ^19, and `@softglass/tokens` ^1 (styles).
 
 ## Usage
