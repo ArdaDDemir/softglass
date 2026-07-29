@@ -19,8 +19,10 @@ export type {
   ButtonMotion,
   CardMotion,
   CheckboxMotion,
+  DropdownMenuMotion,
   FieldMotion,
   ModalMotion,
+  PopoverMotion,
   RadioMotion,
   SelectMotion,
   SwitchMotion,
@@ -56,6 +58,12 @@ export type { SwitchProps } from "./atoms/switch";
 export { Select } from "./atoms/select";
 export type { SelectOption, SelectProps, SelectSize } from "./atoms/select";
 
+export { Combobox } from "./atoms/combobox";
+export type { ComboboxProps } from "./atoms/combobox";
+
+export { MultiSelect } from "./atoms/multi-select";
+export type { MultiSelectProps } from "./atoms/multi-select";
+
 export { Checkbox } from "./atoms/checkbox";
 export type { CheckboxProps } from "./atoms/checkbox";
 
@@ -80,6 +88,24 @@ export type { CardPadding, CardProps, CardSurface } from "./molecules/card";
 
 export { Modal, ModalFooter } from "./molecules/modal";
 export type { ModalProps, ModalSize } from "./molecules/modal";
+
+export { Popover } from "./molecules/popover";
+export type {
+  PopoverAlign,
+  PopoverPlacement,
+  PopoverProps,
+} from "./molecules/popover";
+
+export { DropdownMenu } from "./molecules/dropdown-menu";
+export type {
+  DropdownMenuAlign,
+  DropdownMenuEntry,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPlacement,
+  DropdownMenuProps,
+  DropdownMenuSeparator,
+} from "./molecules/dropdown-menu";
 
 export { ToastProvider, useToast } from "./molecules/toast";
 export type {

@@ -41,7 +41,7 @@ const SECTIONS: { id: SectionId; label: string }[] = [
   { id: "looks", label: "Looks · motion" },
   { id: "buttons", label: "Button props" },
   { id: "docs", label: "Docs / API" },
-  { id: "overlays", label: "Modal · Toast" },
+  { id: "overlays", label: "Modal · Menu · Toast" },
   { id: "controls", label: "Controls" },
 ];
 

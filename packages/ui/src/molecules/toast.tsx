@@ -3,6 +3,7 @@
 import { Button } from "../atoms/button";
 import { cn } from "../lib/cn";
 import { MOTION_DEFAULTS, type ToastMotion } from "../lib/motion";
+import { exitDurationForMotion } from "../lib/presence";
 import {
   createContext,
   useCallback,
@@ -10,6 +11,7 @@ import {
   useEffect,
   useMemo,
   useState,
+  type CSSProperties,
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
@@ -57,7 +59,7 @@ export type ToastProviderProps = {
 /**
  * Molecule system — Toast
  * Glass notifications via `useToast().toast({ title, description, variant })`.
- * Viewport is portaled to `document.body` so app chrome cannot clip the stack.
+ * Stack reflows with gap; leave uses presence-style delay matched to CSS exit.
  */
 export function ToastProvider({
   children,
@@ -71,16 +73,30 @@ export function ToastProvider({
     setMounted(true);
   }, []);
 
-  const dismiss = useCallback((id: string) => {
-    setItems((current) =>
-      current.map((item) =>
-        item.id === id ? { ...item, leaving: true } : item,
-      ),
-    );
-    window.setTimeout(() => {
-      setItems((current) => current.filter((item) => item.id !== id));
-    }, 160);
-  }, []);
+  const dismiss = useCallback(
+    (id: string) => {
+      let leaveMs = exitDurationForMotion(motion);
+
+      setItems((current) => {
+        const target = current.find((item) => item.id === id);
+        if (!target || target.leaving) {
+          leaveMs = -1;
+          return current;
+        }
+        leaveMs = exitDurationForMotion(target.motion ?? motion);
+        return current.map((item) =>
+          item.id === id ? { ...item, leaving: true } : item,
+        );
+      });
+
+      if (leaveMs < 0) return;
+
+      window.setTimeout(() => {
+        setItems((current) => current.filter((item) => item.id !== id));
+      }, leaveMs);
+    },
+    [motion],
+  );
 
   const toast = useCallback(
     (input: ToastInput) => {
@@ -125,11 +141,12 @@ export function ToastProvider({
     createPortal(
       <ol
         className={cn("sg-toast-viewport", positionClass)}
+        data-position={position}
         aria-live="polite"
         aria-relevant="additions text"
         aria-atomic="false"
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li
             key={item.id}
             className={cn(
@@ -139,6 +156,12 @@ export function ToastProvider({
             )}
             data-leaving={item.leaving || undefined}
             data-motion={item.motion ?? motion}
+            data-stack-index={index}
+            style={
+              {
+                ["--sg-toast-i" as string]: String(index),
+              } as CSSProperties
+            }
           >
             <div>
               <p className="sg-toast-title">{item.title}</p>
@@ -153,6 +176,7 @@ export function ToastProvider({
               iconOnly
               className="sg-toast-close"
               aria-label="Dismiss notification"
+              disabled={item.leaving}
               onClick={() => dismiss(item.id)}
             >
               ×

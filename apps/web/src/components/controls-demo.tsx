@@ -11,7 +11,9 @@ import {
   CardHeader,
   CardTitle,
   Checkbox,
+  Combobox,
   Input,
+  MultiSelect,
   Radio,
   RadioGroup,
   Select,
@@ -26,12 +28,32 @@ import {
 } from "@softglass/ui";
 import { useState } from "react";
 
+const CITY_OPTIONS = [
+  { value: "ist", label: "Istanbul" },
+  { value: "ank", label: "Ankara" },
+  { value: "izm", label: "Izmir" },
+  { value: "ant", label: "Antalya" },
+  { value: "brs", label: "Bursa" },
+  { value: "ada", label: "Adana" },
+];
+
+const TAG_OPTIONS = [
+  { value: "glass", label: "Glass" },
+  { value: "soft", label: "Soft" },
+  { value: "a11y", label: "A11y" },
+  { value: "motion", label: "Motion" },
+  { value: "tokens", label: "Tokens" },
+  { value: "next", label: "Next.js" },
+];
+
 export function ControlsDemo() {
   const { toast } = useToast();
   const [glassChrome, setGlassChrome] = useState(true);
   const [language, setLanguage] = useState("aurora");
   const [plan, setPlan] = useState("pro");
   const [marketing, setMarketing] = useState(true);
+  const [city, setCity] = useState("ist");
+  const [tags, setTags] = useState<string[]>(["glass", "soft"]);
 
   return (
     <div style={{ display: "grid", gap: "1rem" }}>
@@ -72,10 +94,10 @@ export function ControlsDemo() {
 
       <Card surface="solid" as="section" id="forms-extra">
         <CardHeader>
-          <CardTitle>Select · Switch · Input</CardTitle>
+          <CardTitle>Select · Combobox · MultiSelect · Switch · Input</CardTitle>
           <CardDescription>
-            Select is a custom glass dropdown (same language as buttons). Input
-            stays solid for typing contrast.
+            Select = pick. Combobox = type to filter. MultiSelect = chips.
+            Input stays solid for typing contrast.
           </CardDescription>
         </CardHeader>
         <CardContent style={{ display: "grid", gap: "1rem" }}>
@@ -100,6 +122,23 @@ export function ControlsDemo() {
               { value: "pro", label: "Pro" },
               { value: "team", label: "Team" },
             ]}
+          />
+          <Combobox
+            label="City (Combobox)"
+            hint="Type to filter — single value, options only."
+            value={city}
+            onValueChange={setCity}
+            options={CITY_OPTIONS}
+            placeholder="Search cities…"
+          />
+          <MultiSelect
+            label="Tags (MultiSelect)"
+            hint="Chips toggle; menu stays open. Max 4."
+            value={tags}
+            onValueChange={setTags}
+            options={TAG_OPTIONS}
+            maxSelected={4}
+            placeholder="Pick tags…"
           />
           <div
             style={{

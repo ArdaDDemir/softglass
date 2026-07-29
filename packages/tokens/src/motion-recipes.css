@@ -198,20 +198,28 @@
   background-size: 100% 2px;
 }
 
-/* —— Select menu open —— */
-.sg-select-menu[data-motion="none"] {
+/* —— Select / Popover / DropdownMenu panel open —— */
+.sg-select-menu[data-motion="none"],
+.sg-popover-content[data-motion="none"],
+.sg-menu-content[data-motion="none"] {
   animation: none !important;
 }
 
-.sg-select-menu[data-motion="fade"] {
+.sg-select-menu[data-motion="fade"],
+.sg-popover-content[data-motion="fade"],
+.sg-menu-content[data-motion="fade"] {
   animation: sg-fade-in var(--sg-motion-fast) var(--sg-ease-smooth);
 }
 
-.sg-select-menu[data-motion="scale"] {
+.sg-select-menu[data-motion="scale"],
+.sg-popover-content[data-motion="scale"],
+.sg-menu-content[data-motion="scale"] {
   animation: sg-scale-in var(--sg-motion-med) var(--sg-ease-spring);
 }
 
-.sg-select-menu[data-motion="slide-down"] {
+.sg-select-menu[data-motion="slide-down"],
+.sg-popover-content[data-motion="slide-down"],
+.sg-menu-content[data-motion="slide-down"] {
   animation: sg-slide-down-in var(--sg-motion-med) var(--sg-ease-smooth);
 }
 
@@ -419,6 +427,63 @@
   animation: sg-slide-up-in var(--sg-motion-med) var(--sg-ease-spring);
 }
 
+/* Modal exit (presence holds mount ~200ms) */
+.sg-modal-root[data-state="closed"] .sg-modal-backdrop {
+  animation: sg-fade-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-modal-root[data-state="closed"][data-motion="scale"] .sg-modal-panel {
+  animation: sg-scale-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-modal-root[data-state="closed"][data-motion="fade"] .sg-modal-panel {
+  animation: sg-fade-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-modal-root[data-state="closed"][data-motion="slide-up"] .sg-modal-panel {
+  animation: sg-slide-up-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-modal-root[data-state="closed"][data-motion="none"] .sg-modal-panel,
+.sg-modal-root[data-state="closed"][data-motion="none"] .sg-modal-backdrop {
+  animation: none !important;
+}
+
+/* Overlay menus / popover exit */
+.sg-select-menu[data-state="closed"],
+.sg-popover-content[data-state="closed"],
+.sg-menu-content[data-state="closed"] {
+  pointer-events: none;
+}
+
+.sg-select-menu[data-state="closed"][data-motion="scale"],
+.sg-popover-content[data-state="closed"][data-motion="scale"],
+.sg-menu-content[data-state="closed"][data-motion="scale"],
+.sg-select-menu[data-state="closed"]:not([data-motion]),
+.sg-popover-content[data-state="closed"]:not([data-motion]),
+.sg-menu-content[data-state="closed"]:not([data-motion]) {
+  animation: sg-overlay-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-select-menu[data-state="closed"][data-motion="fade"],
+.sg-popover-content[data-state="closed"][data-motion="fade"],
+.sg-menu-content[data-state="closed"][data-motion="fade"] {
+  animation: sg-fade-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-select-menu[data-state="closed"][data-motion="slide-down"],
+.sg-popover-content[data-state="closed"][data-motion="slide-down"],
+.sg-menu-content[data-state="closed"][data-motion="slide-down"] {
+  animation: sg-slide-down-out var(--sg-duration-normal) var(--sg-ease-out)
+    forwards;
+}
+
+.sg-select-menu[data-state="closed"][data-motion="none"],
+.sg-popover-content[data-state="closed"][data-motion="none"],
+.sg-menu-content[data-state="closed"][data-motion="none"] {
+  animation: none !important;
+}
+
 /* —— Toast —— */
 .sg-toast[data-motion="none"] {
   animation: none !important;
@@ -430,6 +495,37 @@
 
 .sg-toast[data-motion="pop"] {
   animation: sg-pop var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+/* Stack reflow — siblings ease when a toast leaves */
+.sg-toast-viewport {
+  transition: gap var(--sg-motion-fast) var(--sg-ease-smooth);
+}
+
+.sg-toast {
+  transition:
+    transform var(--sg-motion-med) var(--sg-ease-spring),
+    opacity var(--sg-motion-fast) var(--sg-ease-smooth),
+    margin var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-toast[data-leaving="true"] {
+  pointer-events: none;
+}
+
+.sg-toast[data-leaving="true"][data-motion="slide-in"],
+.sg-toast[data-leaving="true"]:not([data-motion]) {
+  animation: sg-toast-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-toast[data-leaving="true"][data-motion="pop"] {
+  animation: sg-toast-pop-out var(--sg-duration-normal) var(--sg-ease-out)
+    forwards;
+}
+
+.sg-toast[data-leaving="true"][data-motion="none"] {
+  animation: none !important;
+  opacity: 0;
 }
 
 /* —— Card —— */
@@ -480,6 +576,70 @@
   }
 }
 
+@keyframes sg-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sg-scale-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+@keyframes sg-slide-up-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@keyframes sg-slide-down-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes sg-overlay-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+
+@keyframes sg-toast-pop-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
 @keyframes sg-status-ping {
   0% {
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--sg-success) 45%, transparent);
@@ -501,6 +661,11 @@
   .sg-input,
   .sg-textarea,
   .sg-select-menu,
+  .sg-popover-content,
+  .sg-menu-content,
+  .sg-select-menu[data-state="closed"],
+  .sg-popover-content[data-state="closed"],
+  .sg-menu-content[data-state="closed"],
   .sg-tooltip,
   .sg-badge,
   .sg-avatar,

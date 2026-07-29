@@ -171,56 +171,59 @@ export function LooksDemo() {
         </CardContent>
       </Card>
 
-      <Card surface="glass" as="section">
+      <Card surface="glass" as="section" style={{ overflow: "visible" }}>
         <CardHeader>
           <CardTitle>Field looks · Select looks</CardTitle>
+          <CardDescription>
+            One select per row so open menus are not cramped under the next card.
+          </CardDescription>
         </CardHeader>
-        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+        <CardContent style={{ display: "grid", gap: "0.85rem", overflow: "visible" }}>
           <Input look="solid" label="Solid" placeholder="Default field" />
           <Input look="underline" label="Underline" placeholder="Minimal line" />
           <Input look="filled" label="Filled" placeholder="Soft fill" />
           <Input look="ghost" label="Ghost" placeholder="Bare until focus" />
           <Textarea look="filled" label="Filled textarea" rows={2} />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-              gap: "0.65rem",
-            }}
-          >
-            <Select
-              look="solid"
-              placeholder="solid select"
-              options={[
-                { value: "1", label: "One" },
-                { value: "2", label: "Two" },
-              ]}
-            />
-            <Select
-              look="soft"
-              placeholder="soft select"
-              options={[
-                { value: "1", label: "One" },
-                { value: "2", label: "Two" },
-              ]}
-            />
-            <Select
-              look="glass"
-              placeholder="glass select"
-              options={[
-                { value: "1", label: "One" },
-                { value: "2", label: "Two" },
-              ]}
-            />
-            <Select
-              look="gradient"
-              placeholder="gradient select"
-              options={[
-                { value: "1", label: "One" },
-                { value: "2", label: "Two" },
-              ]}
-            />
-          </div>
+          <Select
+            look="solid"
+            label="Select · solid"
+            placeholder="solid select"
+            options={[
+              { value: "1", label: "One" },
+              { value: "2", label: "Two" },
+              { value: "3", label: "Three" },
+            ]}
+          />
+          <Select
+            look="soft"
+            label="Select · soft"
+            placeholder="soft select"
+            options={[
+              { value: "1", label: "One" },
+              { value: "2", label: "Two" },
+              { value: "3", label: "Three" },
+            ]}
+          />
+          <Select
+            look="glass"
+            label="Select · glass"
+            placeholder="glass select"
+            options={[
+              { value: "1", label: "One" },
+              { value: "2", label: "Two" },
+              { value: "3", label: "Three" },
+            ]}
+          />
+          <Select
+            look="gradient"
+            label="Select · gradient"
+            placeholder="gradient select"
+            options={[
+              { value: "1", label: "One" },
+              { value: "2", label: "Two" },
+              { value: "3", label: "Three" },
+            ]}
+          />
         </CardContent>
       </Card>
 

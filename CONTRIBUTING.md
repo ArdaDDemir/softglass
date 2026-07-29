@@ -30,6 +30,13 @@ npm run build
 npm run pack:check
 ```
 
+If you touch components or tokens used by the registry:
+
+```bash
+npm run registry:validate
+npm run registry:build
+```
+
 ## Package versions
 
 `@softglass/tokens` and `@softglass/ui` share the same **major.minor** for a release train (e.g. both `1.0.0`). Bump both when shipping a public release.
@@ -46,11 +53,13 @@ npm run pack:check
 - Export from `packages/ui/src/index.ts`
 - Rebuild UI (`npm run build:ui`) so playground `dist` stays in sync
 - Note a11y limits in `docs/LIMITATIONS.md` when you know them
+- New public components: add to `scripts/generate-registry.mjs`, then `registry:validate` + `registry:build`
 
-## What not to land in v1 PRs
+## What not to land without discussion
 
-- DatePicker / DataTable / mega menus
-- Framer Motion dependency
-- Extra languages beyond the core four without discussion
+- DatePicker / DataTable / mega menus  
+- Framer Motion dependency  
+- Extra languages beyond the core four  
+- Sprint E (Storybook / Vitest suite) mixed into a kit feature PR
 
 Thanks for keeping the glass soft and the scope sharp.

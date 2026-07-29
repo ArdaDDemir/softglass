@@ -41,6 +41,11 @@ export type ToastMotion = MotionNone | "slide-in" | "pop";
 
 export type CardMotion = MotionNone | "lift" | "glow-pulse";
 
+/** Popover / DropdownMenu panel enter (same recipe set as Select menu). */
+export type PopoverMotion = MotionNone | "fade" | "scale" | "slide-down";
+
+export type DropdownMenuMotion = MotionNone | "fade" | "scale" | "slide-down";
+
 /** Defaults — preserve current product feel. */
 export const MOTION_DEFAULTS = {
   button: "lift",
@@ -56,4 +61,6 @@ export const MOTION_DEFAULTS = {
   modal: "scale",
   toast: "slide-in",
   card: "lift",
+  popover: "scale",
+  dropdownMenu: "scale",
 } as const satisfies Record<string, string>;

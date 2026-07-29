@@ -95,12 +95,16 @@ So you do not rebuild UI per project. You pick a language and recolor.
 | Atom | `Badge` / `Avatar` | status + identity |
 | Atom | `Switch` / `Checkbox` / `Radio` | soft controls |
 | Atom | `Select` | custom glass dropdown |
+| Atom | `Combobox` | type-to-filter single select — *1.1 Sprint D* |
+| Atom | `MultiSelect` | multi value + chips — *1.1 Sprint D* |
 | Atom | `Tooltip` | frost/solid/accent looks |
 | Atom | `Spinner` / `Skeleton` / `Separator` | status & layout |
 | Atom | `Alert` | info / success / warning / danger callout |
 | Atom | `Label` / `FormField` | form composition |
 | Molecule | `Card` | solid / glass / elevated |
 | Molecule | `Modal` | portal, Escape, focus trap |
+| Molecule | `DropdownMenu` | action menu (items API) — *1.1 Sprint A* |
+| Molecule | `Popover` | anchored content panel — *1.1 Sprint A* |
 | Molecule | `Toast` | provider + hook |
 | Molecule | `Tabs` | pill / underline / segmented + keyboard |
 | Organism | `AppShell` | header + optional sidebar |
@@ -132,6 +136,8 @@ npm run dev        # http://localhost:3000
 | `npm run build` | UI + Next production build |
 | `npm run typecheck` | UI TypeScript |
 | `npm run pack:check` | `npm pack --dry-run` for both packages |
+| `npm run registry:validate` | Generate + validate `registry.json` |
+| `npm run registry:build` | Emit `apps/web/public/r/*.json` |
 
 ## Repo map
 
@@ -139,9 +145,12 @@ npm run dev        # http://localhost:3000
 apps/web/                 Playground
 packages/tokens/          CSS engine + 4 languages
 packages/ui/              React components (src → dist)
-registry/                 shadcn-compatible sketch
+registry.json             GitHub / shadcn registry entry (root)
+registry/                 Synced catalog + notes
+apps/web/public/r/        Built registry items (`npm run registry:build`)
 docs/assets/hero.svg      README hero (hand-drawn SVG)
 docs/GETTING-STARTED.md   Consumer 3-step guide
+docs/REGISTRY.md          shadcn CLI / copy path
 docs/API.md               Props map
 docs/LIMITATIONS.md       Honest v1 limits
 docs/LANGUAGES.md         Dialect guide
@@ -159,7 +168,7 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.0.0 — shipped**
+**v1.0.0 — shipped** · **v1.1.0 — code ready (branch), not published yet**
 
 - [x] Four languages as CSS tokens  
 - [x] Core UI kit + look + motion  
@@ -171,7 +180,8 @@ CONTRIBUTING.md           PR rules
 - [x] Published **`@softglass/tokens@1.0.0`** + **`@softglass/ui@1.0.0`**  
 - [x] GitHub public repo + tag **`v1.0.0`** ([ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass))  
 - [x] README hero visual  
-- [ ] Full shadcn registry host + CLI install *(v1.1+)*  
+- [x] shadcn registry path — root `registry.json` + `npm run registry:build` + [docs/REGISTRY.md](./docs/REGISTRY.md)  
+- [x] v1.1 kit: Popover, DropdownMenu, Combobox, MultiSelect, exit motion *(publish = separate step)*
 
 ## Package naming
 

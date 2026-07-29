@@ -20,11 +20,15 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 | Component | Current behavior | Not yet |
 | --- | --- | --- |
-| **Modal** | Portal + Escape + backdrop close + basic **focus trap** + focus restore | Full WAI-ARIA dialog pattern tests; scroll-lock edge cases on iOS Safari; exit animation |
-| **Select** | Custom listbox-ish menu, keyboard (arrows/Home/End/Enter/Space/Escape), placement auto | Virtualization for 500+ options; multi-select; typeahead search; native form autofill parity |
+| **Modal** | Portal + Escape + backdrop + focus trap + **enter/exit** (`data-state` presence) | Full WAI-ARIA dialog tests; scroll-lock edge cases on iOS Safari |
+| **Select** | Custom listbox-ish menu, keyboard, placement auto, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
+| **Combobox** | Type-to-filter single select; option-only (no free create) | Async remote search; creatable tags; virtualization |
+| **MultiSelect** | Multi value + chips; menu stays open; optional `maxSelected` | Select-all; filter-in-menu; paste list |
+| **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **enter/exit** | Submenus; checkbox/radio items; portal + collision; ContextMenu |
+| **Popover** | Anchored panel, Escape + outside, non-modal, **enter/exit** | Focus trap option; portal + collision; arrow |
 | **Tooltip** | Hover/focus delay, placements | Touch-first patterns; collision detection against viewport edges (basic only) |
 | **Tabs** | Roving tabindex + arrow/Home/End keys + sliding indicator | Directional content slide; vertical orientation API polish |
-| **Toast** | Stack + variants + auto-dismiss | Swipe-to-dismiss; action buttons API; stacked motion choreography |
+| **Toast** | Stack + variants + auto-dismiss + leave + bottom stack reflow | Swipe-to-dismiss; action buttons API |
 | **FormField** | Layout only (label/hint/error) | Schema validation; RHF/Formik adapters |
 | **Glass surfaces** | Frost-first (cheap); optional blur | Guaranteed WCAG contrast on every glass+text combo without solid surfaces |
 
@@ -39,7 +43,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 ## Motion system
 
 - CSS-first recipes via `data-motion` (no Framer Motion dependency).
-- **Exit** animations for Modal/Select are incomplete (enter is wired).
+- **Exit** animations use presence (~200ms hold) + CSS; `motion="none"` and `prefers-reduced-motion` skip the hold.
 - Do not block product work waiting for motion perfection — treat motion as delight, not contract.
 
 ## Distribution model
@@ -47,7 +51,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | Path | Status |
 | --- | --- |
 | npm `@softglass/tokens` + `@softglass/ui` | **Published 1.0.0** |
-| shadcn-style registry CLI | Sketch only (`registry/registry.json`) — not a full install path yet |
+| shadcn-style registry CLI | Root `registry.json` + `shadcn build` → `apps/web/public/r`; GitHub install after push — see [REGISTRY.md](./REGISTRY.md) |
 | Docs marketing site | Playground app in-repo; separate docs site later |
 
 ## Package name decision
@@ -60,9 +64,10 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 - Source: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.0.0`
 - Prefer scoped packages; unscoped `softglass` is intentionally unused
 
-## Known non-goals for v1
+## Known non-goals (still)
 
-- DatePicker, Combobox, DropdownMenu, DataTable
+- DatePicker, Combobox, DataTable (later sprints / 1.2)
+- ContextMenu (parked after Sprint A)
 - Perfect Select parity with Radix Select
 - Storybook / Chromatic
 - More than 4 core languages

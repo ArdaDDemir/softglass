@@ -143,9 +143,23 @@ export default function Page() {
 
 ---
 
+## Optional: copy components (shadcn registry)
+
+Prefer npm for most apps. To **own the source** in your repo instead:
+
+```bash
+npx shadcn@latest add ArdaDDemir/softglass/tokens
+npx shadcn@latest add ArdaDDemir/softglass/button
+```
+
+Full walkthrough: [REGISTRY.md](./REGISTRY.md).
+
+---
+
 ## Next reads
 
 - [LIMITATIONS.md](./LIMITATIONS.md) — what v1 does **not** claim
 - [API.md](./API.md) — props map
 - [LANGUAGES.md](./LANGUAGES.md) — the four dialects
 - [PUBLIC-MODEL.md](./PUBLIC-MODEL.md) — open / shadcn-style intent
+- [REGISTRY.md](./REGISTRY.md) — shadcn CLI / GitHub registry

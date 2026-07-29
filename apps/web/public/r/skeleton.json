@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "title": "Skeleton",
+  "description": "Loading placeholder block.",
+  "registryDependencies": [
+    "tokens"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/atoms/skeleton.tsx",
+      "content": "import { cn } from \"../lib/cn\";\r\nimport type { CSSProperties, HTMLAttributes } from \"react\";\r\n\r\nexport type SkeletonProps = HTMLAttributes<HTMLDivElement> & {\r\n  /** Optional fixed width (number = px, or CSS string). */\r\n  width?: number | string;\r\n  /** Optional fixed height (number = px, or CSS string). */\r\n  height?: number | string;\r\n  /** Circle avatar placeholder. */\r\n  circle?: boolean;\r\n  /** Rounded pill shape. */\r\n  rounded?: \"sm\" | \"md\" | \"lg\" | \"full\";\r\n};\r\n\r\n/**\r\n * Atom — Skeleton\r\n * Soft shimmer placeholder while content loads.\r\n */\r\nexport function Skeleton({\r\n  className,\r\n  width,\r\n  height,\r\n  circle = false,\r\n  rounded = \"md\",\r\n  style,\r\n  ...props\r\n}: SkeletonProps) {\r\n  const inline: CSSProperties = {\r\n    ...style,\r\n    width: width === undefined ? style?.width : typeof width === \"number\" ? `${width}px` : width,\r\n    height:\r\n      height === undefined ? style?.height : typeof height === \"number\" ? `${height}px` : height,\r\n  };\r\n\r\n  return (\r\n    <div\r\n      className={cn(\r\n        \"sg-skeleton\",\r\n        circle && \"sg-skeleton-circle\",\r\n        !circle && rounded === \"sm\" && \"sg-skeleton-rounded-sm\",\r\n        !circle && rounded === \"md\" && \"sg-skeleton-rounded-md\",\r\n        !circle && rounded === \"lg\" && \"sg-skeleton-rounded-lg\",\r\n        !circle && rounded === \"full\" && \"sg-skeleton-rounded-full\",\r\n        className,\r\n      )}\r\n      style={inline}\r\n      aria-hidden=\"true\"\r\n      {...props}\r\n    />\r\n  );\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/softglass/atoms/skeleton.tsx"
+    },
+    {
+      "path": "packages/ui/src/lib/cn.ts",
+      "content": "/** Values allowed in `cn(...)` — only strings survive. */\r\n// eslint-disable-next-line @typescript-eslint/no-explicit-any\r\ntype ClassValue = string | false | null | undefined | 0 | 0n | boolean;\r\n\r\n/**\r\n * Tiny class merger — no runtime deps.\r\n * Prefer this over pulling tailwind-merge until we need conflict resolution.\r\n */\r\nexport function cn(...parts: ClassValue[]): string {\r\n  return parts.filter((part): part is string => typeof part === \"string\" && part.length > 0).join(\" \");\r\n}\r\n",
+      "type": "registry:lib",
+      "target": "components/softglass/lib/cn.ts"
+    },
+    {
+      "path": "packages/ui/src/lib/looks.ts",
+      "content": "/** Shared visual “look” languages across controls. */\r\n\r\nexport type ButtonLook = \"solid\" | \"soft\" | \"glass\" | \"gradient\" | \"neon\";\r\n\r\nexport type RadioLook = \"dot\" | \"card\" | \"chip\";\r\n\r\nexport type CheckboxLook = \"box\" | \"card\" | \"pill\";\r\n\r\nexport type SwitchLook = \"track\" | \"ios\" | \"minimal\";\r\n\r\nexport type BadgeLook = \"soft\" | \"solid\" | \"outline\" | \"glow\";\r\n\r\nexport type FieldLook = \"solid\" | \"underline\" | \"filled\" | \"ghost\";\r\n\r\nexport type SelectLook = \"solid\" | \"soft\" | \"glass\" | \"gradient\";\r\n\r\nexport type TabsLook = \"pill\" | \"underline\" | \"segmented\";\r\n\r\nexport type AvatarLook = \"circle\" | \"rounded\" | \"soft\";\r\n\r\nexport type TooltipLook = \"frost\" | \"solid\" | \"accent\";\r\n\r\nexport type CardLook = \"flat\" | \"raised\" | \"outline\" | \"glow\";\r\n",
+      "type": "registry:lib",
+      "target": "components/softglass/lib/looks.ts"
+    },
+    {
+      "path": "packages/ui/src/lib/motion.ts",
+      "content": "/**\r\n * Motion recipes — component-specific animation menus.\r\n * Parallel to `look` (visual surface). Always pair with `prefers-reduced-motion`.\r\n *\r\n * Defaults match the pre-motion global micro-interactions so existing UIs\r\n * keep the same feel when no prop is passed.\r\n */\r\n\r\n/** Shared “off” token used on every control. */\r\nexport type MotionNone = \"none\";\r\n\r\nexport type ButtonMotion = MotionNone | \"lift\" | \"press\" | \"sheen\" | \"ripple\";\r\n\r\nexport type CheckboxMotion = MotionNone | \"pop\" | \"draw\" | \"fade-in\" | \"bounce\";\r\n\r\nexport type RadioMotion = MotionNone | \"pop\" | \"dot-scale\" | \"ring-expand\";\r\n\r\nexport type SwitchMotion = MotionNone | \"snap\" | \"spring\" | \"elastic\";\r\n\r\nexport type FieldMotion = MotionNone | \"ring\" | \"underline-grow\" | \"glow\";\r\n\r\nexport type SelectMotion = MotionNone | \"fade\" | \"scale\" | \"slide-down\";\r\n\r\nexport type TooltipMotion = MotionNone | \"fade\" | \"scale\" | \"slide\";\r\n\r\nexport type BadgeMotion = MotionNone | \"pulse\" | \"pop-in\" | \"shimmer\";\r\n\r\nexport type AvatarMotion = MotionNone | \"lift\" | \"ring-pulse\" | \"status-ping\";\r\n\r\n/**\r\n * Tabs indicator + content enter.\r\n * - none: instant active swap\r\n * - fade: soft cross-fade on active chrome / content\r\n * - slide: moving pill or underline indicator (content still fades)\r\n */\r\nexport type TabsMotion = MotionNone | \"fade\" | \"slide\";\r\n\r\nexport type ModalMotion = MotionNone | \"scale\" | \"fade\" | \"slide-up\";\r\n\r\nexport type ToastMotion = MotionNone | \"slide-in\" | \"pop\";\r\n\r\nexport type CardMotion = MotionNone | \"lift\" | \"glow-pulse\";\r\n\r\n/** Popover / DropdownMenu panel enter (same recipe set as Select menu). */\r\nexport type PopoverMotion = MotionNone | \"fade\" | \"scale\" | \"slide-down\";\r\n\r\nexport type DropdownMenuMotion = MotionNone | \"fade\" | \"scale\" | \"slide-down\";\r\n\r\n/** Defaults — preserve current product feel. */\r\nexport const MOTION_DEFAULTS = {\r\n  button: \"lift\",\r\n  checkbox: \"pop\",\r\n  radio: \"pop\",\r\n  switch: \"spring\",\r\n  field: \"ring\",\r\n  select: \"scale\",\r\n  tooltip: \"scale\",\r\n  badge: \"none\",\r\n  avatar: \"lift\",\r\n  tabs: \"slide\",\r\n  modal: \"scale\",\r\n  toast: \"slide-in\",\r\n  card: \"lift\",\r\n  popover: \"scale\",\r\n  dropdownMenu: \"scale\",\r\n} as const satisfies Record<string, string>;\r\n",
+      "type": "registry:lib",
+      "target": "components/softglass/lib/motion.ts"
+    }
+  ],
+  "type": "registry:ui"
+}
