@@ -4,6 +4,10 @@ import { cn } from "../lib/cn";
 import { MOTION_DEFAULTS, type DropdownMenuMotion } from "../lib/motion";
 import { exitDurationForMotion, usePresence } from "../lib/presence";
 import {
+  eventInside,
+  useFloatingPortal,
+} from "../lib/use-floating-portal";
+import {
   cloneElement,
   isValidElement,
   useCallback,
@@ -16,6 +20,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 
 export type DropdownMenuPlacement = "auto" | "bottom" | "top";
 export type DropdownMenuAlign = "start" | "center" | "end";
@@ -106,13 +111,34 @@ export function DropdownMenu({
   const [uncontrolled, setUncontrolled] = useState(defaultOpen);
   const open = isControlled ? Boolean(openProp) : uncontrolled;
 
-  const [side, setSide] = useState<"bottom" | "top">("bottom");
   const [highlight, setHighlight] = useState(-1);
   const { mounted: menuMounted, exiting: menuExiting, state: menuState } =
     usePresence(open, { durationMs: exitDurationForMotion(motion) });
 
   const rootRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
+  const resolveTriggerEl = useCallback((): HTMLElement | null => {
+    return (
+      rootRef.current?.querySelector<HTMLElement>('[aria-haspopup="menu"]') ??
+      null
+    );
+  }, []);
+
+  // Floating needs a stable RefObject — keep it in sync with the trigger node.
+  const triggerRef = useRef<HTMLElement | null>(null);
+  triggerRef.current = resolveTriggerEl();
+
+  const { portalReady, floatingStyle, side } = useFloatingPortal({
+    open,
+    mounted: menuMounted,
+    triggerRef,
+    panelRef: listRef,
+    placement,
+    align,
+    matchWidth: false,
+    flipMinSpace: 220,
+  });
 
   const actionIndexes = useMemo(
     () =>
@@ -132,23 +158,8 @@ export function DropdownMenu({
   );
 
   const focusTrigger = useCallback(() => {
-    const el = rootRef.current?.querySelector<HTMLElement>(
-      '[aria-haspopup="menu"]',
-    );
-    el?.focus();
-  }, []);
-
-  const resolveSide = useCallback(() => {
-    if (placement === "top") return "top" as const;
-    if (placement === "bottom") return "bottom" as const;
-    const el = rootRef.current?.querySelector<HTMLElement>(
-      '[aria-haspopup="menu"]',
-    );
-    if (!el) return "bottom" as const;
-    const rect = el.getBoundingClientRect();
-    const spaceBelow = window.innerHeight - rect.bottom;
-    return spaceBelow < 220 && rect.top > spaceBelow ? "top" : "bottom";
-  }, [placement]);
+    resolveTriggerEl()?.focus();
+  }, [resolveTriggerEl]);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -157,16 +168,16 @@ export function DropdownMenu({
 
   const openMenu = useCallback(() => {
     if (disabled) return;
-    setSide(resolveSide());
+    triggerRef.current = resolveTriggerEl();
     setHighlight(actionIndexes[0] ?? -1);
     setOpen(true);
-  }, [actionIndexes, disabled, resolveSide, setOpen]);
+  }, [actionIndexes, disabled, resolveTriggerEl]);
 
   useEffect(() => {
     if (!open || menuExiting) return;
 
     function onPointerDown(event: MouseEvent) {
-      if (!rootRef.current?.contains(event.target as Node)) {
+      if (!eventInside(event.target, rootRef.current, listRef.current)) {
         close();
       }
     }
@@ -298,69 +309,76 @@ export function DropdownMenu({
     <div className={cn("sg-menu-root", className)} ref={rootRef}>
       {triggerNode}
 
-      {menuMounted ? (
-        <div
-          ref={listRef}
-          id={menuId}
-          role="menu"
-          aria-label={ariaLabel}
-          className={cn("sg-menu-content", contentClassName)}
-          data-placement={side}
-          data-align={align}
-          data-motion={motion}
-          data-state={menuState}
-          tabIndex={-1}
-        >
-          {items.map((entry, index) => {
-            if (entry.type === "separator") {
-              return (
-                <div
-                  key={entry.id ?? `sep-${index}`}
-                  role="separator"
-                  className="sg-menu-separator"
-                />
-              );
-            }
+      {menuMounted && portalReady
+        ? createPortal(
+            <div
+              ref={listRef}
+              id={menuId}
+              role="menu"
+              aria-label={ariaLabel}
+              className={cn("sg-menu-content", contentClassName)}
+              data-placement={side}
+              data-align={align}
+              data-motion={motion}
+              data-state={menuState}
+              data-portaled=""
+              style={floatingStyle}
+              tabIndex={-1}
+            >
+              {items.map((entry, index) => {
+                if (entry.type === "separator") {
+                  return (
+                    <div
+                      key={entry.id ?? `sep-${index}`}
+                      role="separator"
+                      className="sg-menu-separator"
+                    />
+                  );
+                }
 
-            if (entry.type === "label") {
-              return (
-                <div
-                  key={entry.id ?? `label-${index}`}
-                  className="sg-menu-label"
-                  role="presentation"
-                >
-                  {entry.label}
-                </div>
-              );
-            }
+                if (entry.type === "label") {
+                  return (
+                    <div
+                      key={entry.id ?? `label-${index}`}
+                      className="sg-menu-label"
+                      role="presentation"
+                    >
+                      {entry.label}
+                    </div>
+                  );
+                }
 
-            const item = entry;
-            const highlighted = index === highlight;
+                const item = entry;
+                const highlighted = index === highlight;
 
-            return (
-              <button
-                key={item.id ?? `item-${index}`}
-                type="button"
-                role="menuitem"
-                data-index={index}
-                className="sg-menu-item"
-                data-highlighted={highlighted || undefined}
-                data-destructive={item.destructive || undefined}
-                disabled={item.disabled}
-                onMouseEnter={() => {
-                  if (!item.disabled) setHighlight(index);
-                }}
-                onClick={() => selectIndex(index)}
-              >
-                <span className="sg-menu-item-label">{item.label}</span>
-                {item.shortcut ? (
-                  <span className="sg-menu-item-shortcut">{item.shortcut}</span>
-                ) : null}
-              </button>
-            );
-          })}
-        </div>
-      ) : null}
+                return (
+                  <button
+                    key={item.id ?? `item-${index}`}
+                    type="button"
+                    role="menuitem"
+                    data-index={index}
+                    className="sg-menu-item"
+                    data-highlighted={highlighted || undefined}
+                    data-destructive={item.destructive || undefined}
+                    disabled={item.disabled}
+                    onMouseEnter={() => {
+                      if (!item.disabled) setHighlight(index);
+                    }}
+                    onClick={() => selectIndex(index)}
+                  >
+                    <span className="sg-menu-item-label">{item.label}</span>
+                    {item.shortcut ? (
+                      <span className="sg-menu-item-shortcut">
+                        {item.shortcut}
+                      </span>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }

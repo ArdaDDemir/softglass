@@ -4,6 +4,10 @@ import { cn } from "../lib/cn";
 import { MOTION_DEFAULTS, type PopoverMotion } from "../lib/motion";
 import { exitDurationForMotion, usePresence } from "../lib/presence";
 import {
+  eventInside,
+  useFloatingPortal,
+} from "../lib/use-floating-portal";
+import {
   useCallback,
   useEffect,
   useId,
@@ -11,6 +15,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 
 export type PopoverPlacement = "auto" | "bottom" | "top";
 export type PopoverAlign = "start" | "center" | "end";
@@ -41,7 +46,8 @@ export type PopoverProps = {
 /**
  * Molecule — Popover
  * Floating frost panel anchored to a trigger. Not a menu (use DropdownMenu).
- * Escape + outside click close by default. No focus trap (non-modal).
+ * Portaled to body with viewport collision. Escape + outside click by default.
+ * No focus trap (non-modal).
  */
 export function Popover({
   open: openProp,
@@ -64,11 +70,22 @@ export function Popover({
   const [uncontrolled, setUncontrolled] = useState(defaultOpen);
   const open = isControlled ? openProp : uncontrolled;
 
-  const [side, setSide] = useState<"bottom" | "top">("bottom");
   const { mounted: panelMounted, exiting: panelExiting, state: panelState } =
     usePresence(open, { durationMs: exitDurationForMotion(motion) });
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerWrapRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  const { portalReady, floatingStyle, side } = useFloatingPortal({
+    open,
+    mounted: panelMounted,
+    triggerRef: triggerWrapRef,
+    panelRef,
+    placement,
+    align,
+    matchWidth: false,
+    flipMinSpace: 200,
+  });
 
   const setOpen = useCallback(
     (next: boolean) => {
@@ -78,20 +95,9 @@ export function Popover({
     [isControlled, onOpenChange],
   );
 
-  const resolveSide = useCallback(() => {
-    if (placement === "top") return "top" as const;
-    if (placement === "bottom") return "bottom" as const;
-    const el = triggerWrapRef.current;
-    if (!el) return "bottom" as const;
-    const rect = el.getBoundingClientRect();
-    const spaceBelow = window.innerHeight - rect.bottom;
-    return spaceBelow < 200 && rect.top > spaceBelow ? "top" : "bottom";
-  }, [placement]);
-
   const openPanel = useCallback(() => {
-    setSide(resolveSide());
     setOpen(true);
-  }, [resolveSide, setOpen]);
+  }, [setOpen]);
 
   const closePanel = useCallback(() => {
     setOpen(false);
@@ -107,7 +113,13 @@ export function Popover({
 
     function onPointerDown(event: MouseEvent) {
       if (!closeOnOutside) return;
-      if (!rootRef.current?.contains(event.target as Node)) {
+      if (
+        !eventInside(
+          event.target,
+          rootRef.current,
+          panelRef.current,
+        )
+      ) {
         closePanel();
       }
     }
@@ -139,9 +151,11 @@ export function Popover({
         data-open={open || undefined}
         onClick={(event) => {
           if (panelExiting) return;
-          // Allow nested interactive to fire first; toggle on trigger chrome click.
           const target = event.target as HTMLElement;
-          if (target.closest("button, a, [role='button']") || target === event.currentTarget) {
+          if (
+            target.closest("button, a, [role='button']") ||
+            target === event.currentTarget
+          ) {
             toggle();
           }
         }}
@@ -155,21 +169,27 @@ export function Popover({
         {trigger}
       </div>
 
-      {panelMounted ? (
-        <div
-          id={panelId}
-          role="dialog"
-          aria-modal="false"
-          aria-label={ariaLabel}
-          className={cn("sg-popover-content", contentClassName)}
-          data-placement={side}
-          data-align={align}
-          data-motion={motion}
-          data-state={panelState}
-        >
-          {children}
-        </div>
-      ) : null}
+      {panelMounted && portalReady
+        ? createPortal(
+            <div
+              ref={panelRef}
+              id={panelId}
+              role="dialog"
+              aria-modal="false"
+              aria-label={ariaLabel}
+              className={cn("sg-popover-content", contentClassName)}
+              data-placement={side}
+              data-align={align}
+              data-motion={motion}
+              data-state={panelState}
+              data-portaled=""
+              style={floatingStyle}
+            >
+              {children}
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }

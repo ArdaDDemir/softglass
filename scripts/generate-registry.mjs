@@ -18,6 +18,11 @@ const LIB = [
 ];
 
 const PRESENCE = file("packages/ui/src/lib/presence.ts", "registry:lib");
+const FLOATING = file("packages/ui/src/lib/floating.ts", "registry:lib");
+const FLOATING_HOOK = file(
+  "packages/ui/src/lib/use-floating-portal.ts",
+  "registry:lib",
+);
 
 function file(path, type, extra = {}) {
   const target = path
@@ -69,21 +74,21 @@ const registry = {
     ui("checkbox", "Checkbox", "Soft checkbox with looks + motion.", "packages/ui/src/atoms/checkbox.tsx"),
     ui("radio", "Radio", "Radio + RadioGroup with looks.", "packages/ui/src/atoms/radio.tsx"),
     ui("select", "Select", "Custom glass listbox (not native OS menu).", "packages/ui/src/atoms/select.tsx", {
-      extra: [PRESENCE],
+      extra: [PRESENCE, FLOATING, FLOATING_HOOK],
     }),
     ui(
       "combobox",
       "Combobox",
       "Searchable single-select (type to filter).",
       "packages/ui/src/atoms/combobox.tsx",
-      { extra: [PRESENCE] },
+      { extra: [PRESENCE, FLOATING, FLOATING_HOOK] },
     ),
     ui(
       "multi-select",
       "Multi Select",
       "Multi value select with chips; menu stays open while picking.",
       "packages/ui/src/atoms/multi-select.tsx",
-      { extra: [PRESENCE] },
+      { extra: [PRESENCE, FLOATING, FLOATING_HOOK] },
     ),
     ui(
       "date-picker",
@@ -110,14 +115,14 @@ const registry = {
       extra: [PRESENCE],
     }),
     ui("popover", "Popover", "Anchored non-modal frost panel.", "packages/ui/src/molecules/popover.tsx", {
-      extra: [PRESENCE],
+      extra: [PRESENCE, FLOATING, FLOATING_HOOK],
     }),
     ui(
       "dropdown-menu",
       "Dropdown Menu",
       "Action menu with items API + keyboard.",
       "packages/ui/src/molecules/dropdown-menu.tsx",
-      { deps: ["button"], extra: [PRESENCE] },
+      { deps: ["button"], extra: [PRESENCE, FLOATING, FLOATING_HOOK] },
     ),
     ui(
       "context-menu",

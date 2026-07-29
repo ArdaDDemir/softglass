@@ -4,6 +4,10 @@ import { cn } from "../lib/cn";
 import type { SelectLook } from "../lib/looks";
 import { MOTION_DEFAULTS, type SelectMotion } from "../lib/motion";
 import { exitDurationForMotion, usePresence } from "../lib/presence";
+import {
+  eventInside,
+  useFloatingPortal,
+} from "../lib/use-floating-portal";
 import type { SelectOption, SelectSize } from "./select";
 import {
   useCallback,
@@ -15,6 +19,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 
 export type { SelectLook, SelectMotion, SelectOption, SelectSize };
 
@@ -110,7 +115,6 @@ export function Combobox({
   const selected = options.find((o) => o.value === current);
   const [query, setQuery] = useState(selected?.label ?? "");
   const [open, setOpen] = useState(false);
-  const [menuPlacement, setMenuPlacement] = useState<"bottom" | "top">("bottom");
   const [highlight, setHighlight] = useState(-1);
 
   const { mounted: menuMounted, exiting: menuExiting, state: menuState } =
@@ -119,6 +123,16 @@ export function Combobox({
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+
+  const { portalReady, floatingStyle, side: menuPlacement } = useFloatingPortal({
+    open,
+    mounted: menuMounted,
+    triggerRef: rootRef,
+    panelRef: listRef,
+    placement,
+    matchWidth: true,
+    flipMinSpace: 220,
+  });
 
   // Sync display text when controlled value changes externally (while closed).
   useEffect(() => {
@@ -160,20 +174,15 @@ export function Combobox({
 
   const openMenu = useCallback(() => {
     if (disabled) return;
-    if (placement === "top") setMenuPlacement("top");
-    else if (placement === "bottom") setMenuPlacement("bottom");
-    else if (rootRef.current) {
-      const rect = rootRef.current.getBoundingClientRect();
-      const spaceBelow = window.innerHeight - rect.bottom;
-      setMenuPlacement(spaceBelow < 220 && rect.top > spaceBelow ? "top" : "bottom");
-    }
     setOpen(true);
-  }, [disabled, placement]);
+  }, [disabled]);
 
   useEffect(() => {
     if (!open || menuExiting) return;
     function onPointerDown(event: MouseEvent) {
-      if (!rootRef.current?.contains(event.target as Node)) close();
+      if (!eventInside(event.target, rootRef.current, listRef.current)) {
+        close();
+      }
     }
     function onDocKeyDown(event: globalThis.KeyboardEvent) {
       if (event.key === "Escape") {
@@ -304,54 +313,59 @@ export function Combobox({
         </span>
       </div>
 
-      {menuMounted ? (
-        <ul
-          ref={listRef}
-          id={listboxId}
-          role="listbox"
-          aria-label={typeof label === "string" ? label : "Options"}
-          className="sg-select-menu"
-          data-placement={menuPlacement}
-          data-motion={motion}
-          data-state={menuState}
-          tabIndex={-1}
-        >
-          {filtered.length === 0 ? (
-            <li className="sg-combobox-empty" role="presentation">
-              {emptyMessage}
-            </li>
-          ) : (
-            filtered.map((opt, index) => {
-              const isSelected = opt.value === current;
-              const highlighted = index === highlight;
-              return (
-                <li key={opt.value} role="presentation">
-                  <button
-                    type="button"
-                    id={`${listboxId}-opt-${index}`}
-                    role="option"
-                    data-index={index}
-                    className="sg-select-option"
-                    aria-selected={isSelected}
-                    data-selected={isSelected || undefined}
-                    data-highlighted={highlighted || undefined}
-                    disabled={opt.disabled}
-                    onMouseEnter={() => {
-                      if (!opt.disabled) setHighlight(index);
-                    }}
-                    onClick={() => selectIndex(index)}
-                  >
-                    <span>{opt.label}</span>
-                    <span className="sg-select-check" aria-hidden="true">
-                      <CheckIcon />
-                    </span>
-                  </button>
+      {menuMounted && portalReady
+        ? createPortal(
+            <ul
+              ref={listRef}
+              id={listboxId}
+              role="listbox"
+              aria-label={typeof label === "string" ? label : "Options"}
+              className="sg-select-menu"
+              data-placement={menuPlacement}
+              data-motion={motion}
+              data-state={menuState}
+              data-portaled=""
+              style={floatingStyle}
+              tabIndex={-1}
+            >
+              {filtered.length === 0 ? (
+                <li className="sg-combobox-empty" role="presentation">
+                  {emptyMessage}
                 </li>
-              );
-            })
-          )}
-        </ul>
-      ) : null}
+              ) : (
+                filtered.map((opt, index) => {
+                  const isSelected = opt.value === current;
+                  const highlighted = index === highlight;
+                  return (
+                    <li key={opt.value} role="presentation">
+                      <button
+                        type="button"
+                        id={`${listboxId}-opt-${index}`}
+                        role="option"
+                        data-index={index}
+                        className="sg-select-option"
+                        aria-selected={isSelected}
+                        data-selected={isSelected || undefined}
+                        data-highlighted={highlighted || undefined}
+                        disabled={opt.disabled}
+                        onMouseEnter={() => {
+                          if (!opt.disabled) setHighlight(index);
+                        }}
+                        onClick={() => selectIndex(index)}
+                      >
+                        <span>{opt.label}</span>
+                        <span className="sg-select-check" aria-hidden="true">
+                          <CheckIcon />
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })
+              )}
+            </ul>,
+            document.body,
+          )
+        : null}
     </div>
   );
 

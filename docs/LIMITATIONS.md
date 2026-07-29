@@ -21,13 +21,13 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | Component | Current behavior | Not yet |
 | --- | --- | --- |
 | **Modal** | Portal + Escape + backdrop + focus trap + **enter/exit** (`data-state` presence) | Full WAI-ARIA dialog tests; scroll-lock edge cases on iOS Safari |
-| **Select** | Custom listbox-ish menu, keyboard, placement auto, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
-| **Combobox** | Type-to-filter single select; option-only (no free create) | Async remote search; creatable tags; virtualization |
-| **MultiSelect** | Multi value + chips; menu stays open; optional `maxSelected` | Select-all; filter-in-menu; paste list |
-| **DatePicker** | Single ISO `YYYY-MM-DD`; solid trigger + frost panel; **day + month + year grids**; arrows / Enter / Esc; `label`/`hint`/`error`; optional `min`/`max` | Range; time; locale packs / full i18n; typing into field; portal |
-| **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **enter/exit** | Submenus; checkbox/radio items; portal + collision |
-| **ContextMenu** | Same `items` language; right-click + long-press; fixed at pointer; Escape + outside; **enter/exit** | Nested submenu tree; full OS parity; portal (still parent stacking); pixel-perfect collision |
-| **Popover** | Anchored panel, Escape + outside, non-modal, **enter/exit** | Focus trap option; portal + collision; arrow |
+| **Select** | Custom listbox-ish menu, keyboard, placement auto, **body portal + flip/clamp**, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
+| **Combobox** | Type-to-filter single select; option-only (no free create); **body portal** | Async remote search; creatable tags; virtualization |
+| **MultiSelect** | Multi value + chips; menu stays open; optional `maxSelected`; **body portal** | Select-all; filter-in-menu; paste list |
+| **DatePicker** | Single ISO `YYYY-MM-DD`; solid trigger + frost panel; **day + month + year grids**; arrows / Enter / Esc; `label`/`hint`/`error`; optional `min`/`max` | Range; time; locale packs / full i18n; typing into field; **portal** (still absolute to field) |
+| **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **body portal + collision**, **enter/exit** | Submenus; checkbox/radio items |
+| **ContextMenu** | Same `items` language; right-click + long-press; fixed at pointer; Escape + outside; **enter/exit** | Nested submenu tree; full OS parity; Floating UI-level collision |
+| **Popover** | Anchored panel, Escape + outside, non-modal, **body portal + collision**, **enter/exit** | Focus trap option; arrow |
 | **Tooltip** | Hover/focus delay, placements | Touch-first patterns; collision detection against viewport edges (basic only) |
 | **Tabs** | Roving tabindex + arrow/Home/End keys + sliding indicator | Directional content slide; vertical orientation API polish |
 | **Toast** | Stack + variants + auto-dismiss + leave + bottom stack reflow | Swipe-to-dismiss; action buttons API |

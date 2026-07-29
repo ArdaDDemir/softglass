@@ -1374,6 +1374,32 @@
   animation-name: sg-select-in-top;
 }
 
+/* Portaled panels (v1.2d): fixed coords from JS — ignore absolute anchors */
+.sg-select-menu[data-portaled],
+.sg-popover-content[data-portaled],
+.sg-menu-content[data-portaled] {
+  position: fixed;
+  right: auto;
+  bottom: auto;
+  /* top/left/width come from inline style */
+  translate: none;
+  z-index: calc(var(--sg-z-dropdown) + 40);
+}
+
+.sg-select-menu[data-portaled] {
+  /* matchWidth sets width; drop stretch-to-parent */
+  left: auto;
+  right: auto;
+}
+
+.sg-select-menu[data-portaled][data-placement="top"],
+.sg-popover-content[data-portaled][data-placement="top"],
+.sg-menu-content[data-portaled][data-placement="top"] {
+  top: auto; /* still overridden by inline top */
+  bottom: auto;
+  animation-name: sg-select-in-top;
+}
+
 .sg-select-option {
   display: flex;
   align-items: center;
