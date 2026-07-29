@@ -405,6 +405,54 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     ],
   },
   {
+    id: "date-picker",
+    name: "DatePicker",
+    layer: "atom",
+    summary:
+      "Single calendar date. Solid trigger + frost panel. Click month/year in the header to jump, then pick a day. Value is ISO YYYY-MM-DD. No range/time.",
+    importLine: 'import { DatePicker } from "@softglass/ui";',
+    example: `<DatePicker
+  label="Launch date"
+  value={date}
+  onValueChange={setDate}
+  hint="Header: month + year pickers."
+/>`,
+    props: [
+      {
+        name: "value / defaultValue",
+        type: "string (YYYY-MM-DD)",
+        description: "Controlled or uncontrolled ISO date.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string) => void",
+        description: "Fires with ISO date on pick.",
+      },
+      {
+        name: "label / hint / error",
+        type: "ReactNode",
+        description: "Same field meta as Input / Select.",
+      },
+      {
+        name: "min / max",
+        type: "string (YYYY-MM-DD)",
+        description: "Inclusive bounds; out-of-range days disabled.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "scale" | "slide-down"',
+        default: '"scale"',
+        description: "Calendar panel enter/exit.",
+      },
+      {
+        name: "placement",
+        type: '"auto" | "bottom" | "top"',
+        default: '"auto"',
+        description: "Panel side relative to trigger.",
+      },
+    ],
+  },
+  {
     id: "switch",
     name: "Switch",
     layer: "atom",
@@ -558,7 +606,58 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: "motion",
         type: '"none" | "fade" | "scale" | "slide-down"',
         default: '"scale"',
-        description: "Enter recipe (exit = Sprint B).",
+        description: "Enter/exit panel motion (usePresence).",
+      },
+    ],
+  },
+  {
+    id: "context-menu",
+    name: "ContextMenu",
+    layer: "molecule",
+    summary:
+      "Right-click / long-press action menu. Same items language as DropdownMenu; opens at the pointer (fixed), not under a button.",
+    importLine: 'import { ContextMenu } from "@softglass/ui";',
+    example: `<ContextMenu
+  items={[
+    { label: "Open", onSelect: () => {} },
+    { type: "separator" },
+    { label: "Delete", destructive: true, onSelect: () => {} },
+  ]}
+>
+  <div>Right-click me</div>
+</ContextMenu>`,
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "Surface that receives contextmenu + long-press.",
+      },
+      {
+        name: "items",
+        type: "ContextMenuEntry[]",
+        description: "Same shape as DropdownMenu: item | separator | label.",
+      },
+      {
+        name: "open / defaultOpen / onOpenChange",
+        type: "controlled or uncontrolled",
+        description: "Optional controlled open state.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "scale" | "slide-down"',
+        default: '"scale"',
+        description: "Enter/exit panel motion (usePresence).",
+      },
+      {
+        name: "longPressMs",
+        type: "number",
+        default: "500",
+        description: "Touch long-press delay before open.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        description: "Ignores right-click and long-press.",
       },
     ],
   },

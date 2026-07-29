@@ -19,6 +19,8 @@ export type {
   ButtonMotion,
   CardMotion,
   CheckboxMotion,
+  ContextMenuMotion,
+  DatePickerMotion,
   DropdownMenuMotion,
   FieldMotion,
   ModalMotion,
@@ -64,6 +66,12 @@ export type { ComboboxProps } from "./atoms/combobox";
 export { MultiSelect } from "./atoms/multi-select";
 export type { MultiSelectProps } from "./atoms/multi-select";
 
+export { DatePicker } from "./atoms/date-picker";
+export type {
+  DatePickerProps,
+  DatePickerSize,
+} from "./atoms/date-picker";
+
 export { Checkbox } from "./atoms/checkbox";
 export type { CheckboxProps } from "./atoms/checkbox";
 
@@ -106,6 +114,15 @@ export type {
   DropdownMenuProps,
   DropdownMenuSeparator,
 } from "./molecules/dropdown-menu";
+
+export { ContextMenu } from "./molecules/context-menu";
+export type {
+  ContextMenuEntry,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuProps,
+  ContextMenuSeparator,
+} from "./molecules/context-menu";
 
 export { ToastProvider, useToast } from "./molecules/toast";
 export type {

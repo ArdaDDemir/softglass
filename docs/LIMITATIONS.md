@@ -1,4 +1,4 @@
-# Limitations (v1.1.0)
+# Limitations (v1.2.0)
 
 Honest scope notes for Softglass. Read this before treating the kit like Radix / Chakra / MUI.
 
@@ -12,7 +12,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 - A full application framework
 - A pixel-perfect clone of every Radix primitive
-- A data-table / date-picker / form-validation suite (v1.1+)
+- A data-table / form-validation / full calendar suite (v1.1+)
 
 ---
 
@@ -21,11 +21,13 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | Component | Current behavior | Not yet |
 | --- | --- | --- |
 | **Modal** | Portal + Escape + backdrop + focus trap + **enter/exit** (`data-state` presence) | Full WAI-ARIA dialog tests; scroll-lock edge cases on iOS Safari |
-| **Select** | Custom listbox-ish menu, keyboard, placement auto, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
-| **Combobox** | Type-to-filter single select; option-only (no free create) | Async remote search; creatable tags; virtualization |
-| **MultiSelect** | Multi value + chips; menu stays open; optional `maxSelected` | Select-all; filter-in-menu; paste list |
-| **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **enter/exit** | Submenus; checkbox/radio items; portal + collision; ContextMenu |
-| **Popover** | Anchored panel, Escape + outside, non-modal, **enter/exit** | Focus trap option; portal + collision; arrow |
+| **Select** | Custom listbox-ish menu, keyboard, placement auto, **body portal + flip/clamp**, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
+| **Combobox** | Type-to-filter single select; option-only (no free create); **body portal** | Async remote search; creatable tags; virtualization |
+| **MultiSelect** | Multi value + chips; menu stays open; optional `maxSelected`; **body portal** | Select-all; filter-in-menu; paste list |
+| **DatePicker** | Single ISO `YYYY-MM-DD`; solid trigger + frost panel; **day + month + year grids**; arrows / Enter / Esc; `label`/`hint`/`error`; optional `min`/`max` | Range; time; locale packs / full i18n; typing into field; **portal** (still absolute to field) |
+| **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **body portal + collision**, **enter/exit** | Submenus; checkbox/radio items |
+| **ContextMenu** | Same `items` language; right-click + long-press; fixed at pointer; Escape + outside; **enter/exit** | Nested submenu tree; full OS parity; Floating UI-level collision |
+| **Popover** | Anchored panel, Escape + outside, non-modal, **body portal + collision**, **enter/exit** | Focus trap option; arrow |
 | **Tooltip** | Hover/focus delay, placements | Touch-first patterns; collision detection against viewport edges (basic only) |
 | **Tabs** | Roving tabindex + arrow/Home/End keys + sliding indicator | Directional content slide; vertical orientation API polish |
 | **Toast** | Stack + variants + auto-dismiss + leave + bottom stack reflow | Swipe-to-dismiss; action buttons API |
@@ -50,7 +52,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 | Path | Status |
 | --- | --- |
-| npm `@softglass/tokens` + `@softglass/ui` | **Published 1.1.0** |
+| npm `@softglass/tokens` + `@softglass/ui` | **Published 1.2.0** |
 | shadcn-style registry CLI | Root `registry.json` + `shadcn build` → `apps/web/public/r`; GitHub install after push — see [REGISTRY.md](./REGISTRY.md) |
 | Docs marketing site | Playground app in-repo; separate docs site later |
 
@@ -58,16 +60,17 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 - Brand: **Softglass**
 - Scoped packages live on npm:
-  - [`@softglass/tokens@1.1.0`](https://www.npmjs.com/package/@softglass/tokens)
-  - [`@softglass/ui@1.1.0`](https://www.npmjs.com/package/@softglass/ui)
+  - [`@softglass/tokens@1.2.0`](https://www.npmjs.com/package/@softglass/tokens)
+  - [`@softglass/ui@1.2.0`](https://www.npmjs.com/package/@softglass/ui)
 - Org: **`softglass`** (owner: personal npm account)
-- Source: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.1.0`
+- Source: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.2.0`
 - Prefer scoped packages; unscoped `softglass` is intentionally unused
 
 ## Known non-goals (still)
 
-- DatePicker, Combobox, DataTable (later sprints / 1.2)
-- ContextMenu (parked after Sprint A)
+- Date **range** / time picker / timezone engine
+- DataTable
+- Nested ContextMenu / DropdownMenu submenus
 - Perfect Select parity with Radix Select
 - Storybook / Chromatic
 - More than 4 core languages

@@ -1,9 +1,9 @@
 # Softglass — TODO
 
-> **v1.0.0:** shipped · **v1.1.0:** shipped (2026-07-29) — npm `@softglass/tokens@1.1.0` + `@softglass/ui@1.1.0`, tag `v1.1.0`, PR #1 merged.  
+> **v1.0.0:** shipped · **v1.1.0:** shipped · **v1.2.0:** shipped (2026-07-29) — npm `@softglass/tokens@1.2.0` + `@softglass/ui@1.2.0`, tag `v1.2.0`.  
 > **v1.1 plan (arşiv):** [v1.1-plan.md](./v1.1-plan.md)  
 > **v1.2 plan (tek kaynak detay):** [v1.2-plan.md](./v1.2-plan.md)  
-> Bu dosya checkbox özeti. **Yeni session:** `main` + `ArdaDDemir/softglass` + kişisel npm/gh.
+> Bu dosya checkbox özeti. **Publish:** kişisel gh/npm (`ArdaDDemir` / `ardaddemir`); work hesabı yok.
 
 ---
 
@@ -13,7 +13,7 @@
 |-------|--------|
 | 1.0.0 | shipped |
 | 1.1.0 | **shipped** (kit + registry + motion + form depth) |
-| **1.2.0** | **sıradaki** — plan yazıldı, kod yok |
+| **1.2.0** | **shipped** |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
 **Hesap disiplini:** gh/npm → kişisel (`ArdaDDemir` / `ardaddemir`); work/Feedemy yok.
@@ -56,42 +56,44 @@
 
 ### Sprint 1.2a — ContextMenu
 
-- [ ] API: `items` (DropdownMenu ile aynı dil) veya trigger + children  
-- [ ] Sağ tık + long-press (touch min)  
-- [ ] Escape / dış tık / focus restore  
-- [ ] look + motion enter/exit (usePresence)  
-- [ ] Playground + API.md + LIMITATIONS  
-- [ ] registry generate/build  
+- [x] API: `items` (DropdownMenu ile aynı dil) + `children` surface  
+- [x] Sağ tık + long-press (touch min)  
+- [x] Escape / dış tık / focus restore  
+- [x] motion enter/exit (usePresence; frost menu chrome)  
+- [x] Playground + API.md + LIMITATIONS  
+- [x] registry generate/build  
 
 **Yapma:** Submenu ağacı, full OS parity.
 
 ### Sprint 1.2b — DatePicker
 
-- [ ] Tek tarih seçimi (controlled `value` / `onValueChange`)  
-- [ ] Ay navigasyonu; softglass dil (frost panel, solid input)  
-- [ ] Klavye (oklar / Enter / Escape)  
-- [ ] `label` / `hint` / `error` field meta  
-- [ ] Playground + docs + registry  
-- [ ] LIMITATIONS: range, time, locale i18n → 1.3  
+- [x] Tek tarih seçimi (controlled `value` / `onValueChange`, ISO `YYYY-MM-DD`)  
+- [x] Ay navigasyonu; softglass dil (frost panel, solid trigger)  
+- [x] Klavye (oklar / Enter / Escape / PageUp-Down)  
+- [x] `label` / `hint` / `error` field meta  
+- [x] Playground + docs + registry  
+- [x] LIMITATIONS: range, time, locale i18n → 1.3  
 
 **Yapma:** Full calendar suite, timezone engine, RHF adapter.
 
 ### Sprint 1.2c — Test iskeleti (kalite min)
 
-- [ ] Vitest + Testing Library monorepo setup (`packages/ui`)  
-- [ ] Smoke: Button, Combobox filter, MultiSelect remove chip  
-- [ ] Smoke: usePresence (open → closed unmount)  
-- [ ] `npm test` script root’ta  
-- [ ] CI’ya `test` adımı (mevcut workflow’a ekle)  
+- [x] Vitest + Testing Library monorepo setup (`packages/ui`)  
+- [x] Smoke: Button, Combobox filter, MultiSelect remove chip  
+- [x] Smoke: usePresence (open → closed unmount)  
+- [x] `npm test` script root’ta  
+- [x] CI’ya `test` adımı (mevcut workflow’a ekle)  
 
 **Yapma:** %100 coverage, Chromatic, Playwright full E2E.
 
 ### Sprint 1.2d — Overlay portal polish
 
-- [ ] Select / Combobox / MultiSelect / Dropdown / Popover: body portal veya floating positioning  
-- [ ] Viewport collision (top/bottom flip zaten var; left/right + flip improve)  
-- [ ] Sticky header / overflow parent smoke  
-- [ ] LIMITATIONS güncelle  
+- [x] Select / Combobox / MultiSelect / Dropdown / Popover: body portal + fixed coords  
+- [x] Viewport collision (top/bottom flip + left/right clamp)  
+- [x] Scroll/resize reposition (overflow ancestors via capture scroll)  
+- [x] LIMITATIONS güncelle  
+
+**Not:** DatePicker / ContextMenu bu sprint listesinde değil; DatePicker hâlâ absolute. 
 
 ### Sprint 1.2e — Nice (1.2 sonu veya 1.3)
 
@@ -104,12 +106,14 @@
 
 ### 1.2.0 publish checklist
 
-1. [ ] Version sync `1.2.0` (tokens + ui)  
-2. [ ] CHANGELOG `[1.2.0]`  
-3. [ ] typecheck + build + test + pack:check  
-4. [ ] `npm whoami` = kişisel; org softglass  
-5. [ ] publish tokens → ui  
-6. [ ] tag `v1.2.0` + push (ArdaDDemir)  
+1. [x] Version sync `1.2.0` (tokens + ui + root + web)  
+2. [x] CHANGELOG `[1.2.0]`  
+3. [x] typecheck + build + test + pack:check (release worktree)  
+4. [x] `npm whoami` = kişisel (`ardaddemir`); gh active `ArdaDDemir`  
+5. [x] publish tokens → ui  
+6. [x] tag `v1.2.0` + push (ArdaDDemir)  
+
+**1.2e nice** bilinçli atlandı (1.2’yi geciktirmesin).
 
 ---
 

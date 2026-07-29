@@ -46,6 +46,12 @@ export type PopoverMotion = MotionNone | "fade" | "scale" | "slide-down";
 
 export type DropdownMenuMotion = MotionNone | "fade" | "scale" | "slide-down";
 
+/** ContextMenu panel — same recipes as DropdownMenu / Popover. */
+export type ContextMenuMotion = MotionNone | "fade" | "scale" | "slide-down";
+
+/** DatePicker calendar panel — same recipes as Select. */
+export type DatePickerMotion = MotionNone | "fade" | "scale" | "slide-down";
+
 /** Defaults — preserve current product feel. */
 export const MOTION_DEFAULTS = {
   button: "lift",
@@ -63,4 +69,6 @@ export const MOTION_DEFAULTS = {
   card: "lift",
   popover: "scale",
   dropdownMenu: "scale",
+  contextMenu: "scale",
+  datePicker: "scale",
 } as const satisfies Record<string, string>;

@@ -1,6 +1,6 @@
 {
   "name": "@softglass/ui",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": false,
   "description": "Softglass atomic React components — soft glass, theme via tokens.",
   "license": "MIT",
@@ -44,11 +44,13 @@
     "build": "tsup && node ./scripts/ensure-use-client.mjs",
     "dev": "tsup --watch --onSuccess \"node ./scripts/ensure-use-client.mjs\"",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepack": "npm run build",
     "pack:check": "npm pack --dry-run"
   },
   "peerDependencies": {
-    "@softglass/tokens": "^1.1.0",
+    "@softglass/tokens": "^1.2.0",
     "@types/react": "*",
     "@types/react-dom": "*",
     "react": "^18.0.0 || ^19.0.0 || ^19.0.0-rc",
@@ -63,12 +65,18 @@
     }
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.5.2",
+    "jsdom": "^26.1.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "tsup": "^8.5.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18"

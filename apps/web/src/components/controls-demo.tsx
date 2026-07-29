@@ -12,6 +12,7 @@ import {
   CardTitle,
   Checkbox,
   Combobox,
+  DatePicker,
   Input,
   MultiSelect,
   Radio,
@@ -54,6 +55,7 @@ export function ControlsDemo() {
   const [marketing, setMarketing] = useState(true);
   const [city, setCity] = useState("ist");
   const [tags, setTags] = useState<string[]>(["glass", "soft"]);
+  const [launchDate, setLaunchDate] = useState("");
 
   return (
     <div style={{ display: "grid", gap: "1rem" }}>
@@ -94,10 +96,12 @@ export function ControlsDemo() {
 
       <Card surface="solid" as="section" id="forms-extra">
         <CardHeader>
-          <CardTitle>Select · Combobox · MultiSelect · Switch · Input</CardTitle>
+          <CardTitle>
+            Select · Combobox · MultiSelect · DatePicker · Switch · Input
+          </CardTitle>
           <CardDescription>
             Select = pick. Combobox = type to filter. MultiSelect = chips.
-            Input stays solid for typing contrast.
+            DatePicker = single ISO date. Input stays solid for typing contrast.
           </CardDescription>
         </CardHeader>
         <CardContent style={{ display: "grid", gap: "1rem" }}>
@@ -139,6 +143,17 @@ export function ControlsDemo() {
             options={TAG_OPTIONS}
             maxSelected={4}
             placeholder="Pick tags…"
+          />
+          <DatePicker
+            label="Launch date"
+            hint={
+              launchDate
+                ? `ISO value: ${launchDate}`
+                : "Click month or year in the header to jump — then pick a day. Value is YYYY-MM-DD."
+            }
+            value={launchDate}
+            onValueChange={setLaunchDate}
+            placeholder="Pick a launch day…"
           />
           <div
             style={{

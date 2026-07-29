@@ -7,6 +7,31 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-07-29
+
+Minor release: ContextMenu, DatePicker, Vitest smoke suite, overlay portals.
+
+**Shipped:** npm `@softglass/tokens@1.2.0` + `@softglass/ui@1.2.0`, GitHub tag `v1.2.0`.
+
+### Added
+
+- **`ContextMenu`** — right-click + long-press; same `items` language as DropdownMenu; pointer-fixed panel; enter/exit
+- **`DatePicker`** — single ISO `YYYY-MM-DD`; solid trigger + frost calendar; day / month / year grids; keyboard; field meta; optional `min`/`max`
+- **Vitest smoke suite** (`packages/ui`) — Button, Combobox filter, MultiSelect chip remove, `usePresence`; root `npm test` + CI step
+- Shared **floating portal** helpers (`floating.ts`, `useFloatingPortal`)
+
+### Changed
+
+- **Select / Combobox / MultiSelect / DropdownMenu / Popover** — panels portaled to `document.body` with fixed positioning, top/bottom flip, left/right viewport clamp, scroll/resize reposition
+- Docs: API, LIMITATIONS, registry entries for ContextMenu + DatePicker
+- CI runs unit smoke tests before build
+
+### Not in 1.2 (parked)
+
+- Date range / time / locale packs
+- DatePicker portal (still absolute to field)
+- Nested menu subtrees, Storybook/docs site, theme builder (1.3+)
+
 ## [1.1.0] — 2026-07-29
 
 Minor release: overlays, motion exit, registry path, form depth.

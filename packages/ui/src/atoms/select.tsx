@@ -5,6 +5,10 @@ import type { SelectLook } from "../lib/looks";
 import { MOTION_DEFAULTS, type SelectMotion } from "../lib/motion";
 import { exitDurationForMotion, usePresence } from "../lib/presence";
 import {
+  eventInside,
+  useFloatingPortal,
+} from "../lib/use-floating-portal";
+import {
   useCallback,
   useEffect,
   useId,
@@ -14,6 +18,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 
 export type SelectSize = "sm" | "md" | "lg";
 export type { SelectLook, SelectMotion };
@@ -117,7 +122,6 @@ export function Select({
   const current = isControlled ? value : uncontrolled;
 
   const [open, setOpen] = useState(false);
-  const [menuPlacement, setMenuPlacement] = useState<"bottom" | "top">("bottom");
   const [highlight, setHighlight] = useState<number>(-1);
   const { mounted: menuMounted, exiting: menuExiting, state: menuState } =
     usePresence(open, { durationMs: exitDurationForMotion(motion) });
@@ -125,6 +129,16 @@ export function Select({
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+
+  const { portalReady, floatingStyle, side: menuPlacement } = useFloatingPortal({
+    open,
+    mounted: menuMounted,
+    triggerRef,
+    panelRef: listRef,
+    placement,
+    matchWidth: true,
+    flipMinSpace: 220,
+  });
 
   const enabledIndexes = useMemo(
     () =>
@@ -156,16 +170,6 @@ export function Select({
   const openMenu = useCallback(() => {
     if (disabled) return;
 
-    if (placement === "top") {
-      setMenuPlacement("top");
-    } else if (placement === "bottom") {
-      setMenuPlacement("bottom");
-    } else if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const spaceBelow = window.innerHeight - rect.bottom;
-      setMenuPlacement(spaceBelow < 220 && rect.top > spaceBelow ? "top" : "bottom");
-    }
-
     const selectedIndex = options.findIndex((opt) => opt.value === current);
     const start =
       selectedIndex >= 0 && !options[selectedIndex]?.disabled
@@ -174,13 +178,15 @@ export function Select({
 
     setHighlight(start);
     setOpen(true);
-  }, [current, disabled, enabledIndexes, options, placement]);
+  }, [current, disabled, enabledIndexes, options]);
 
   useEffect(() => {
     if (!open || menuExiting) return;
 
     function onPointerDown(event: MouseEvent) {
-      if (!rootRef.current?.contains(event.target as Node)) {
+      if (
+        !eventInside(event.target, rootRef.current, listRef.current)
+      ) {
         close();
       }
     }
@@ -296,47 +302,52 @@ export function Select({
         </span>
       </button>
 
-      {menuMounted ? (
-        <ul
-          ref={listRef}
-          id={listboxId}
-          role="listbox"
-          aria-labelledby={selectId}
-          className="sg-select-menu"
-          data-placement={menuPlacement}
-          data-motion={motion}
-          data-state={menuState}
-          tabIndex={-1}
-        >
-          {options.map((opt, index) => {
-            const selected = opt.value === current;
-            const highlighted = index === highlight;
-            return (
-              <li key={opt.value} role="presentation">
-                <button
-                  type="button"
-                  role="option"
-                  data-index={index}
-                  className="sg-select-option"
-                  aria-selected={selected}
-                  data-selected={selected || undefined}
-                  data-highlighted={highlighted || undefined}
-                  disabled={opt.disabled}
-                  onMouseEnter={() => {
-                    if (!opt.disabled) setHighlight(index);
-                  }}
-                  onClick={() => selectIndex(index)}
-                >
-                  <span>{opt.label}</span>
-                  <span className="sg-select-check" aria-hidden="true">
-                    <CheckIcon />
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      ) : null}
+      {menuMounted && portalReady
+        ? createPortal(
+            <ul
+              ref={listRef}
+              id={listboxId}
+              role="listbox"
+              aria-labelledby={selectId}
+              className="sg-select-menu"
+              data-placement={menuPlacement}
+              data-motion={motion}
+              data-state={menuState}
+              data-portaled=""
+              style={floatingStyle}
+              tabIndex={-1}
+            >
+              {options.map((opt, index) => {
+                const selected = opt.value === current;
+                const highlighted = index === highlight;
+                return (
+                  <li key={opt.value} role="presentation">
+                    <button
+                      type="button"
+                      role="option"
+                      data-index={index}
+                      className="sg-select-option"
+                      aria-selected={selected}
+                      data-selected={selected || undefined}
+                      data-highlighted={highlighted || undefined}
+                      disabled={opt.disabled}
+                      onMouseEnter={() => {
+                        if (!opt.disabled) setHighlight(index);
+                      }}
+                      onClick={() => selectIndex(index)}
+                    >
+                      <span>{opt.label}</span>
+                      <span className="sg-select-check" aria-hidden="true">
+                        <CheckIcon />
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>,
+            document.body,
+          )
+        : null}
     </div>
   );
 
