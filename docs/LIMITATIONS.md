@@ -1,4 +1,4 @@
-# Limitations (v1.1.0 + v1.2a ContextMenu)
+# Limitations (v1.1.0 + v1.2a/b ContextMenu · DatePicker)
 
 Honest scope notes for Softglass. Read this before treating the kit like Radix / Chakra / MUI.
 
@@ -12,7 +12,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 - A full application framework
 - A pixel-perfect clone of every Radix primitive
-- A data-table / date-picker / form-validation suite (v1.1+)
+- A data-table / form-validation / full calendar suite (v1.1+)
 
 ---
 
@@ -24,6 +24,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Select** | Custom listbox-ish menu, keyboard, placement auto, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
 | **Combobox** | Type-to-filter single select; option-only (no free create) | Async remote search; creatable tags; virtualization |
 | **MultiSelect** | Multi value + chips; menu stays open; optional `maxSelected` | Select-all; filter-in-menu; paste list |
+| **DatePicker** | Single ISO `YYYY-MM-DD`; solid trigger + frost panel; **day + month + year grids**; arrows / Enter / Esc; `label`/`hint`/`error`; optional `min`/`max` | Range; time; locale packs / full i18n; typing into field; portal |
 | **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **enter/exit** | Submenus; checkbox/radio items; portal + collision |
 | **ContextMenu** | Same `items` language; right-click + long-press; fixed at pointer; Escape + outside; **enter/exit** | Nested submenu tree; full OS parity; portal (still parent stacking); pixel-perfect collision |
 | **Popover** | Anchored panel, Escape + outside, non-modal, **enter/exit** | Focus trap option; portal + collision; arrow |
@@ -67,7 +68,8 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 ## Known non-goals (still)
 
-- DatePicker, DataTable (later sprints / 1.2+)
+- Date **range** / time picker / timezone engine
+- DataTable
 - Nested ContextMenu / DropdownMenu submenus
 - Perfect Select parity with Radix Select
 - Storybook / Chromatic

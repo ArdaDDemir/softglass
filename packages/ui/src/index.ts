@@ -20,6 +20,7 @@ export type {
   CardMotion,
   CheckboxMotion,
   ContextMenuMotion,
+  DatePickerMotion,
   DropdownMenuMotion,
   FieldMotion,
   ModalMotion,
@@ -64,6 +65,12 @@ export type { ComboboxProps } from "./atoms/combobox";
 
 export { MultiSelect } from "./atoms/multi-select";
 export type { MultiSelectProps } from "./atoms/multi-select";
+
+export { DatePicker } from "./atoms/date-picker";
+export type {
+  DatePickerProps,
+  DatePickerSize,
+} from "./atoms/date-picker";
 
 export { Checkbox } from "./atoms/checkbox";
 export type { CheckboxProps } from "./atoms/checkbox";

@@ -85,6 +85,13 @@ const registry = {
       "packages/ui/src/atoms/multi-select.tsx",
       { extra: [PRESENCE] },
     ),
+    ui(
+      "date-picker",
+      "Date Picker",
+      "Single ISO date calendar — solid trigger + frost month panel.",
+      "packages/ui/src/atoms/date-picker.tsx",
+      { extra: [PRESENCE] },
+    ),
     ui("tooltip", "Tooltip", "Frost tooltip on hover/focus.", "packages/ui/src/atoms/tooltip.tsx"),
     ui("alert", "Alert", "Inline callout — info / success / warning / danger.", "packages/ui/src/atoms/alert.tsx"),
     ui("label", "Label", "Form label with required mark.", "packages/ui/src/atoms/label.tsx"),

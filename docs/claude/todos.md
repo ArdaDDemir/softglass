@@ -13,7 +13,7 @@
 |-------|--------|
 | 1.0.0 | shipped |
 | 1.1.0 | **shipped** (kit + registry + motion + form depth) |
-| **1.2.0** | **sıradaki** — 1.2a ContextMenu in progress (branch) |
+| **1.2.0** | **sıradaki** — 1.2a done (commit); 1.2b DatePicker in progress |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
 **Hesap disiplini:** gh/npm → kişisel (`ArdaDDemir` / `ardaddemir`); work/Feedemy yok.
@@ -67,12 +67,12 @@
 
 ### Sprint 1.2b — DatePicker
 
-- [ ] Tek tarih seçimi (controlled `value` / `onValueChange`)  
-- [ ] Ay navigasyonu; softglass dil (frost panel, solid input)  
-- [ ] Klavye (oklar / Enter / Escape)  
-- [ ] `label` / `hint` / `error` field meta  
-- [ ] Playground + docs + registry  
-- [ ] LIMITATIONS: range, time, locale i18n → 1.3  
+- [x] Tek tarih seçimi (controlled `value` / `onValueChange`, ISO `YYYY-MM-DD`)  
+- [x] Ay navigasyonu; softglass dil (frost panel, solid trigger)  
+- [x] Klavye (oklar / Enter / Escape / PageUp-Down)  
+- [x] `label` / `hint` / `error` field meta  
+- [x] Playground + docs + registry  
+- [x] LIMITATIONS: range, time, locale i18n → 1.3  
 
 **Yapma:** Full calendar suite, timezone engine, RHF adapter.
 

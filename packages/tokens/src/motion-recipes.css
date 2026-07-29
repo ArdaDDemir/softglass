@@ -198,28 +198,32 @@
   background-size: 100% 2px;
 }
 
-/* —— Select / Popover / DropdownMenu panel open —— */
+/* —— Select / Popover / DropdownMenu / DatePicker panel open —— */
 .sg-select-menu[data-motion="none"],
 .sg-popover-content[data-motion="none"],
-.sg-menu-content[data-motion="none"] {
+.sg-menu-content[data-motion="none"],
+.sg-datepicker-panel[data-motion="none"] {
   animation: none !important;
 }
 
 .sg-select-menu[data-motion="fade"],
 .sg-popover-content[data-motion="fade"],
-.sg-menu-content[data-motion="fade"] {
+.sg-menu-content[data-motion="fade"],
+.sg-datepicker-panel[data-motion="fade"] {
   animation: sg-fade-in var(--sg-motion-fast) var(--sg-ease-smooth);
 }
 
 .sg-select-menu[data-motion="scale"],
 .sg-popover-content[data-motion="scale"],
-.sg-menu-content[data-motion="scale"] {
+.sg-menu-content[data-motion="scale"],
+.sg-datepicker-panel[data-motion="scale"] {
   animation: sg-scale-in var(--sg-motion-med) var(--sg-ease-spring);
 }
 
 .sg-select-menu[data-motion="slide-down"],
 .sg-popover-content[data-motion="slide-down"],
-.sg-menu-content[data-motion="slide-down"] {
+.sg-menu-content[data-motion="slide-down"],
+.sg-datepicker-panel[data-motion="slide-down"] {
   animation: sg-slide-down-in var(--sg-motion-med) var(--sg-ease-smooth);
 }
 
@@ -449,38 +453,44 @@
   animation: none !important;
 }
 
-/* Overlay menus / popover exit */
+/* Overlay menus / popover / datepicker exit */
 .sg-select-menu[data-state="closed"],
 .sg-popover-content[data-state="closed"],
-.sg-menu-content[data-state="closed"] {
+.sg-menu-content[data-state="closed"],
+.sg-datepicker-panel[data-state="closed"] {
   pointer-events: none;
 }
 
 .sg-select-menu[data-state="closed"][data-motion="scale"],
 .sg-popover-content[data-state="closed"][data-motion="scale"],
 .sg-menu-content[data-state="closed"][data-motion="scale"],
+.sg-datepicker-panel[data-state="closed"][data-motion="scale"],
 .sg-select-menu[data-state="closed"]:not([data-motion]),
 .sg-popover-content[data-state="closed"]:not([data-motion]),
-.sg-menu-content[data-state="closed"]:not([data-motion]) {
+.sg-menu-content[data-state="closed"]:not([data-motion]),
+.sg-datepicker-panel[data-state="closed"]:not([data-motion]) {
   animation: sg-overlay-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
 }
 
 .sg-select-menu[data-state="closed"][data-motion="fade"],
 .sg-popover-content[data-state="closed"][data-motion="fade"],
-.sg-menu-content[data-state="closed"][data-motion="fade"] {
+.sg-menu-content[data-state="closed"][data-motion="fade"],
+.sg-datepicker-panel[data-state="closed"][data-motion="fade"] {
   animation: sg-fade-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
 }
 
 .sg-select-menu[data-state="closed"][data-motion="slide-down"],
 .sg-popover-content[data-state="closed"][data-motion="slide-down"],
-.sg-menu-content[data-state="closed"][data-motion="slide-down"] {
+.sg-menu-content[data-state="closed"][data-motion="slide-down"],
+.sg-datepicker-panel[data-state="closed"][data-motion="slide-down"] {
   animation: sg-slide-down-out var(--sg-duration-normal) var(--sg-ease-out)
     forwards;
 }
 
 .sg-select-menu[data-state="closed"][data-motion="none"],
 .sg-popover-content[data-state="closed"][data-motion="none"],
-.sg-menu-content[data-state="closed"][data-motion="none"] {
+.sg-menu-content[data-state="closed"][data-motion="none"],
+.sg-datepicker-panel[data-state="closed"][data-motion="none"] {
   animation: none !important;
 }
 
@@ -663,9 +673,11 @@
   .sg-select-menu,
   .sg-popover-content,
   .sg-menu-content,
+  .sg-datepicker-panel,
   .sg-select-menu[data-state="closed"],
   .sg-popover-content[data-state="closed"],
   .sg-menu-content[data-state="closed"],
+  .sg-datepicker-panel[data-state="closed"],
   .sg-tooltip,
   .sg-badge,
   .sg-avatar,

@@ -405,6 +405,54 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     ],
   },
   {
+    id: "date-picker",
+    name: "DatePicker",
+    layer: "atom",
+    summary:
+      "Single calendar date. Solid trigger + frost panel. Click month/year in the header to jump, then pick a day. Value is ISO YYYY-MM-DD. No range/time.",
+    importLine: 'import { DatePicker } from "@softglass/ui";',
+    example: `<DatePicker
+  label="Launch date"
+  value={date}
+  onValueChange={setDate}
+  hint="Header: month + year pickers."
+/>`,
+    props: [
+      {
+        name: "value / defaultValue",
+        type: "string (YYYY-MM-DD)",
+        description: "Controlled or uncontrolled ISO date.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string) => void",
+        description: "Fires with ISO date on pick.",
+      },
+      {
+        name: "label / hint / error",
+        type: "ReactNode",
+        description: "Same field meta as Input / Select.",
+      },
+      {
+        name: "min / max",
+        type: "string (YYYY-MM-DD)",
+        description: "Inclusive bounds; out-of-range days disabled.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "scale" | "slide-down"',
+        default: '"scale"',
+        description: "Calendar panel enter/exit.",
+      },
+      {
+        name: "placement",
+        type: '"auto" | "bottom" | "top"',
+        default: '"auto"',
+        description: "Panel side relative to trigger.",
+      },
+    ],
+  },
+  {
     id: "switch",
     name: "Switch",
     layer: "atom",

@@ -57,7 +57,7 @@ Parallel to `look`: each control has a **component-specific** motion menu. Set v
 | Radio | `none` `pop` `dot-scale` `ring-expand` | `pop` |
 | Switch | `none` `snap` `spring` `elastic` | `spring` |
 | Input / Textarea | `none` `ring` `underline-grow` `glow` | `ring` |
-| Select (menu) | `none` `fade` `scale` `slide-down` | `scale` |
+| Select / DatePicker (panel) | `none` `fade` `scale` `slide-down` | `scale` |
 | Popover / DropdownMenu / ContextMenu | `none` `fade` `scale` `slide-down` | `scale` |
 | Tooltip | `none` `fade` `scale` `slide` | `scale` |
 | Badge | `none` `pulse` `pop-in` `shimmer` | `none` |
@@ -94,6 +94,7 @@ See the live **Docs** tab in the playground for prop tables.
 | `Select` | `options` `value` `onValueChange` `placeholder` `size` `label` `hint` `error` |
 | `Combobox` | `options` `value` `onValueChange` `filterOption` `emptyMessage` (+ Select field meta) |
 | `MultiSelect` | `options` `value: string[]` `onValueChange` `maxSelected` (+ chips) |
+| `DatePicker` | `value` `onValueChange` (ISO `YYYY-MM-DD`) `min` `max` `label` `hint` `error` `motion` |
 | `Switch` | `checked` `onCheckedChange` `label` `hint` |
 | `Modal` | `open` `onOpenChange` `title` `description` `footer` `size` |
 | `DropdownMenu` | `trigger` `items` `placement` `align` `motion` `open` `onOpenChange` |

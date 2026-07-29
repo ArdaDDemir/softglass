@@ -1225,7 +1225,9 @@
 .sg-select-root:has([data-open="true"]),
 .sg-select-root:has([aria-expanded="true"]),
 .sg-combobox-root:has([aria-expanded="true"]),
-.sg-multiselect-root:has([data-open="true"]) {
+.sg-multiselect-root:has([data-open="true"]),
+.sg-datepicker-root:has([data-open="true"]),
+.sg-datepicker-root:has([aria-expanded="true"]) {
   z-index: calc(var(--sg-z-dropdown) + 20);
   isolation: isolate;
 }
@@ -1437,6 +1439,372 @@
 
 .sg-select-option[data-selected="true"] .sg-select-check {
   opacity: 1;
+}
+
+/* —— DatePicker (v1.2b) — solid trigger + frost month panel —— */
+.sg-datepicker-root {
+  position: relative;
+  width: 100%;
+}
+
+.sg-datepicker-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-3);
+  width: 100%;
+  min-height: var(--sg-touch-min);
+  padding: 0.625rem 0.9rem 0.625rem 1.15rem;
+  border-radius: var(--sg-radius-pill);
+  border: var(--sg-border-width) solid var(--sg-border-subtle);
+  /* Solid field for typing contrast — calendar chrome stays frost */
+  background: var(--sg-surface-solid);
+  color: var(--sg-fg);
+  font-family: var(--sg-font-sans);
+  font-size: var(--sg-text-sm);
+  font-weight: var(--sg-font-weight-semibold);
+  letter-spacing: var(--sg-tracking-tight);
+  line-height: 1.2;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: inset 0 1px 0 var(--sg-gloss-highlight), var(--sg-shadow-soft);
+  transition:
+    background var(--sg-duration-fast) var(--sg-ease-out),
+    border-color var(--sg-duration-fast) var(--sg-ease-out),
+    box-shadow var(--sg-duration-fast) var(--sg-ease-out);
+}
+
+.sg-datepicker-trigger:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--sg-accent) 28%, var(--sg-border-subtle));
+}
+
+.sg-datepicker-trigger:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 2px;
+}
+
+.sg-datepicker-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sg-datepicker-trigger[data-open="true"] {
+  border-color: color-mix(in srgb, var(--sg-accent) 40%, var(--sg-border-subtle));
+  box-shadow:
+    inset 0 1px 0 var(--sg-gloss-highlight),
+    0 0 0 3px var(--sg-ring-soft);
+}
+
+.sg-datepicker-trigger[aria-invalid="true"] {
+  border-color: var(--sg-danger);
+  box-shadow:
+    inset 0 1px 0 var(--sg-gloss-highlight),
+    0 0 0 3px color-mix(in srgb, var(--sg-danger) 22%, transparent);
+}
+
+.sg-datepicker-trigger-sm {
+  min-height: 2.25rem;
+  padding: 0.4rem 0.75rem 0.4rem 0.9rem;
+  font-size: var(--sg-text-xs);
+}
+
+.sg-datepicker-trigger-lg {
+  min-height: 3rem;
+  padding: 0.75rem 1rem 0.75rem 1.35rem;
+  font-size: var(--sg-text-base);
+}
+
+.sg-datepicker-value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sg-datepicker-value[data-placeholder="true"] {
+  color: var(--sg-fg-muted);
+  font-weight: var(--sg-font-weight-medium);
+}
+
+.sg-datepicker-icon {
+  flex-shrink: 0;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: var(--sg-radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sg-accent-soft);
+  color: var(--sg-fg);
+}
+
+.sg-datepicker-icon svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  display: block;
+}
+
+.sg-datepicker-panel {
+  position: absolute;
+  z-index: var(--sg-z-dropdown);
+  top: calc(100% + 0.4rem);
+  left: 0;
+  width: min(19.5rem, 100vw - 1.5rem);
+  margin: 0;
+  padding: var(--sg-space-3);
+  border-radius: var(--sg-radius-lg);
+  border: var(--sg-border-width) solid var(--sg-border-frost);
+  background-color: var(--sg-surface-frost-strong);
+  background-image: linear-gradient(
+    180deg,
+    var(--sg-gloss-highlight) 0%,
+    transparent 36%
+  );
+  box-shadow: var(--sg-shadow-elevated);
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  color: var(--sg-fg);
+  animation: sg-select-in var(--sg-duration-fast) var(--sg-ease-out);
+}
+
+.sg-datepicker-panel[data-placement="top"] {
+  top: auto;
+  bottom: calc(100% + 0.4rem);
+  animation-name: sg-select-in-top;
+}
+
+.sg-datepicker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-2);
+  margin-bottom: var(--sg-space-3);
+}
+
+.sg-datepicker-caption {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.sg-datepicker-caption-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.55rem;
+  border: var(--sg-border-width) solid transparent;
+  border-radius: var(--sg-radius-pill);
+  background: transparent;
+  color: var(--sg-fg);
+  font-family: var(--sg-font-sans);
+  font-size: var(--sg-text-sm);
+  font-weight: var(--sg-font-weight-semibold);
+  letter-spacing: var(--sg-tracking-tight);
+  cursor: pointer;
+  transition:
+    background var(--sg-duration-fast) var(--sg-ease-out),
+    border-color var(--sg-duration-fast) var(--sg-ease-out);
+}
+
+.sg-datepicker-caption-btn:hover {
+  background: var(--sg-accent-soft);
+  border-color: color-mix(in srgb, var(--sg-accent) 18%, transparent);
+}
+
+.sg-datepicker-caption-btn:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 1px;
+}
+
+.sg-datepicker-caption-btn-wide {
+  flex: 1;
+}
+
+/* Month / year choice grid (same frost language as day cells) */
+.sg-datepicker-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+  min-height: 12.5rem;
+}
+
+.sg-datepicker-picker-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.4rem;
+  border: var(--sg-border-width) solid transparent;
+  border-radius: var(--sg-radius-pill);
+  background: transparent;
+  color: var(--sg-fg);
+  font-family: var(--sg-font-sans);
+  font-size: var(--sg-text-sm);
+  font-weight: var(--sg-font-weight-medium);
+  cursor: pointer;
+  transition:
+    background var(--sg-duration-fast) var(--sg-ease-out),
+    color var(--sg-duration-fast) var(--sg-ease-out),
+    border-color var(--sg-duration-fast) var(--sg-ease-out);
+}
+
+.sg-datepicker-picker-cell:hover:not(:disabled):not([data-selected="true"]) {
+  background: var(--sg-accent-soft);
+  border-color: color-mix(in srgb, var(--sg-accent) 18%, transparent);
+}
+
+.sg-datepicker-picker-cell[data-today="true"]:not([data-selected="true"]) {
+  border-color: color-mix(in srgb, var(--sg-accent) 45%, transparent);
+  font-weight: var(--sg-font-weight-semibold);
+}
+
+.sg-datepicker-picker-cell[data-selected="true"] {
+  background: var(--sg-accent);
+  color: var(--sg-accent-fg);
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 var(--sg-gloss-highlight);
+  font-weight: var(--sg-font-weight-semibold);
+}
+
+.sg-datepicker-picker-cell[data-selected="true"]:hover:not(:disabled) {
+  background: var(--sg-accent-hover);
+  color: var(--sg-accent-fg);
+}
+
+.sg-datepicker-picker-cell:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.sg-datepicker-picker-cell:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 1px;
+}
+
+.sg-datepicker-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: var(--sg-border-width) solid transparent;
+  border-radius: var(--sg-radius-pill);
+  background: transparent;
+  color: var(--sg-fg);
+  cursor: pointer;
+  transition:
+    background var(--sg-duration-fast) var(--sg-ease-out),
+    border-color var(--sg-duration-fast) var(--sg-ease-out);
+}
+
+.sg-datepicker-nav:hover {
+  background: var(--sg-accent-soft);
+  border-color: color-mix(in srgb, var(--sg-accent) 18%, transparent);
+}
+
+.sg-datepicker-nav:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 1px;
+}
+
+.sg-datepicker-nav svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+.sg-datepicker-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.sg-datepicker-weekday {
+  text-align: center;
+  font-size: var(--sg-text-xs);
+  font-weight: var(--sg-font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sg-fg-muted);
+  padding: 0.2rem 0;
+}
+
+.sg-datepicker-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.sg-datepicker-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.15rem;
+}
+
+.sg-datepicker-day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.15rem;
+  width: 100%;
+  padding: 0;
+  border: var(--sg-border-width) solid transparent;
+  border-radius: var(--sg-radius-pill);
+  background: transparent;
+  color: var(--sg-fg);
+  font-family: var(--sg-font-sans);
+  font-size: var(--sg-text-sm);
+  font-weight: var(--sg-font-weight-medium);
+  cursor: pointer;
+  transition:
+    background var(--sg-duration-fast) var(--sg-ease-out),
+    color var(--sg-duration-fast) var(--sg-ease-out),
+    border-color var(--sg-duration-fast) var(--sg-ease-out);
+}
+
+.sg-datepicker-day:hover:not(:disabled):not([data-selected="true"]) {
+  background: var(--sg-accent-soft);
+  border-color: color-mix(in srgb, var(--sg-accent) 18%, transparent);
+}
+
+.sg-datepicker-day[data-outside="true"] {
+  color: var(--sg-fg-muted);
+  opacity: 0.55;
+}
+
+.sg-datepicker-day[data-today="true"]:not([data-selected="true"]) {
+  border-color: color-mix(in srgb, var(--sg-accent) 45%, transparent);
+  font-weight: var(--sg-font-weight-semibold);
+}
+
+.sg-datepicker-day[data-selected="true"] {
+  background: var(--sg-accent);
+  color: var(--sg-accent-fg);
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 var(--sg-gloss-highlight);
+  font-weight: var(--sg-font-weight-semibold);
+  opacity: 1;
+}
+
+.sg-datepicker-day[data-selected="true"]:hover:not(:disabled) {
+  background: var(--sg-accent-hover);
+  color: var(--sg-accent-fg);
+}
+
+.sg-datepicker-day:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.sg-datepicker-day:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 1px;
 }
 
 .sg-select-check svg {
