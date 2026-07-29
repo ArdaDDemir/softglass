@@ -1,170 +1,155 @@
 # Softglass — TODO
 
-> **v1.0.0:** shipped (2026-07-29).  
-> **v1.1 planı (tek kaynak):** [v1.1-plan.md](./v1.1-plan.md) — sprint’ler, DoD, yapma listesi orada.  
-> Bu dosya checkbox özeti; detay planda.
+> **v1.0.0:** shipped · **v1.1.0:** shipped (2026-07-29) — npm `@softglass/tokens@1.1.0` + `@softglass/ui@1.1.0`, tag `v1.1.0`, PR #1 merged.  
+> **v1.1 plan (arşiv):** [v1.1-plan.md](./v1.1-plan.md)  
+> **v1.2 plan (tek kaynak detay):** [v1.2-plan.md](./v1.2-plan.md)  
+> Bu dosya checkbox özeti. **Yeni session:** `main` + `ArdaDDemir/softglass` + kişisel npm/gh.
 
 ---
 
-## A) Must — v1 çıkış (bitti)
+## Şu an durum
 
-- [x] Paket adı + npm scope `@softglass/*`
-- [x] `dist` dual CJS+ESM + d.ts/d.mts
-- [x] Publish-ready package.json
-- [x] Consumer GETTING-STARTED
-- [x] GitHub + tag `v1.0.0`
-- [x] CHANGELOG + LIMITATIONS
-- [x] npm publish tokens + ui
-- [x] Consumer smoke
-- [x] README hero (hand SVG)
+| Sürüm | Durum |
+|-------|--------|
+| 1.0.0 | shipped |
+| 1.1.0 | **shipped** (kit + registry + motion + form depth) |
+| **1.2.0** | **sıradaki** — plan yazıldı, kod yok |
 
----
-
-## B) Should — v1 kalite (bitti)
-
-- [x] A11y (Tabs, Modal focus trap)
-- [x] Contrast notları
-- [x] Form kit minimi + Alert/Skeleton/Spinner
-- [x] Playground Get started
-- [x] CI
-- [x] Version sync `1.0.0`
-
-### B2) Visual bugs (bitti)
-
-- [x] Modal center / portal
-- [x] Toast stack shadow
+**Repo:** https://github.com/ArdaDDemir/softglass  
+**Hesap disiplini:** gh/npm → kişisel (`ArdaDDemir` / `ardaddemir`); work/Feedemy yok.
 
 ---
 
-## C) v1.1 — sprint checklist
+## v1.1 — bitti (özet)
 
-> Sıra: **A → B → C → D → E**. Aynı anda tek sprint.  
-> Detay: [v1.1-plan.md](./v1.1-plan.md).
-
-### Sprint A — Overlay ailesi
-
-- [x] API kararı (isim, portal yok v1, controlled opsiyonel)
-- [x] `Popover`
-- [x] `DropdownMenu`
-- [x] Playground + API.md + LIMITATIONS
-- [x] (Opsiyonel) `ContextMenu` — **bilinçli hayır** (park)
-- [ ] Self-review (plan §7) — kullanıcı / taze session
-
-### Sprint B — Motion polish
-
-- [x] Exit pattern — `usePresence` + `data-state` / `data-leaving`
-- [x] Modal exit
-- [x] Select / Dropdown / Popover exit
-- [x] Toast stack motion (leave duration sync, bottom column-reverse, reflow)
-- [x] Reduced-motion → duration 0
-- [ ] (Opsiyonel) Card tilt / label-float / directional tabs — park
-
-### C2) Motion — v1’den kalan
-
-- [x] Dalga 0–5 (kısmi)
-- [x] Exit animations → **Sprint B**
-- [x] Toast stack motion → **Sprint B**
-- [ ] Card tilt → park
-- [ ] label-float / directional tabs → park
-
-### Sprint C — Registry install path
-
-- [x] Schema + item path/target (generate script, 24 items)
-- [x] Host stratejisi — **GitHub root registry** + built `public/r`
-- [x] Validate: `npm run registry:validate` yeşil
-- [x] Build: `npm run registry:build` → button/tokens content+target
-- [x] Smoke: built JSON → target path’lere yazıldı (tokens + button)
-- [x] REGISTRY.md + GETTING-STARTED + README + PUBLIC-MODEL
-- [ ] Self-review / GitHub’da `list ArdaDDemir/softglass` (push sonrası)
-
-### Sprint D — Form derinliği
-
-- [x] Combobox (type-to-filter, option-only)
-- [x] MultiSelect (chips + maxSelected)
-- [ ] (Sonra / 1.2) DatePicker — ayrı mini-plan
-
-### Sprint E — Kalite & vitrin (1.1 sonu veya 1.2)
-
-- [ ] Vitest + Testing Library
-- [ ] Visual regression
-- [ ] Storybook / docs site
-- [ ] Figma / token JSON
-- [ ] Animated README GIF
-- [ ] Theme builder
+- [x] A Overlay — Popover, DropdownMenu  
+- [x] B Motion exit — usePresence  
+- [x] C Registry — root registry.json + public/r  
+- [x] D Form — Combobox, MultiSelect  
+- [x] Polish + PR #1 + npm/tag `v1.1.0`  
 
 ---
 
-## D) Ürün / iletişim (v1 bitti)
+## v1.2 — ne yapmalıyız? (önerilen)
 
-- [x] İsim Softglass
-- [x] Pitch
-- [x] README hero still
-- [x] “Ne değil?”
-- [x] CONTRIBUTING
+> **Ürün cümlesi (öneri):**  
+> *1.2 = ContextMenu + DatePicker (form tamamlayıcı) + minimum test iskeleti; docs site/theme builder şişirmesin.*
+
+### Neden bu sıra?
+
+1. **ContextMenu** — A’da park; DropdownMenu ailesi yarım kalmasın.  
+2. **DatePicker** — D’de bilerek dışarıda; form kit’in en çok istenen eksiği.  
+3. **Vitest iskeleti** — 1–2 smoke test; full suite değil.  
+4. **Overlay portal + collision (hafif)** — Select/menu hâlâ absolute; sticky/overflow edge case.  
+5. **Docs site / Storybook / theme builder** — vitrin; 1.2’yi geciktirmesin → 1.3 veya “nice”.
+
+### Sprint haritası (tek açık sprint)
+
+```
+1.2a  ContextMenu (+ belki Dropdown submenu yok)
+  → 1.2b  DatePicker (tek ay / range opsiyonel sonra)
+    → 1.2c  Test iskeleti (Vitest + 2–3 component smoke)
+      → 1.2d  Overlay portal polish (Select/Combobox/MultiSelect/Dropdown/Popover)
+        → 1.2e  (nice) Motion leftovers / README GIF
+          → 1.2.0 publish
+```
+
+### Sprint 1.2a — ContextMenu
+
+- [ ] API: `items` (DropdownMenu ile aynı dil) veya trigger + children  
+- [ ] Sağ tık + long-press (touch min)  
+- [ ] Escape / dış tık / focus restore  
+- [ ] look + motion enter/exit (usePresence)  
+- [ ] Playground + API.md + LIMITATIONS  
+- [ ] registry generate/build  
+
+**Yapma:** Submenu ağacı, full OS parity.
+
+### Sprint 1.2b — DatePicker
+
+- [ ] Tek tarih seçimi (controlled `value` / `onValueChange`)  
+- [ ] Ay navigasyonu; softglass dil (frost panel, solid input)  
+- [ ] Klavye (oklar / Enter / Escape)  
+- [ ] `label` / `hint` / `error` field meta  
+- [ ] Playground + docs + registry  
+- [ ] LIMITATIONS: range, time, locale i18n → 1.3  
+
+**Yapma:** Full calendar suite, timezone engine, RHF adapter.
+
+### Sprint 1.2c — Test iskeleti (kalite min)
+
+- [ ] Vitest + Testing Library monorepo setup (`packages/ui`)  
+- [ ] Smoke: Button, Combobox filter, MultiSelect remove chip  
+- [ ] Smoke: usePresence (open → closed unmount)  
+- [ ] `npm test` script root’ta  
+- [ ] CI’ya `test` adımı (mevcut workflow’a ekle)  
+
+**Yapma:** %100 coverage, Chromatic, Playwright full E2E.
+
+### Sprint 1.2d — Overlay portal polish
+
+- [ ] Select / Combobox / MultiSelect / Dropdown / Popover: body portal veya floating positioning  
+- [ ] Viewport collision (top/bottom flip zaten var; left/right + flip improve)  
+- [ ] Sticky header / overflow parent smoke  
+- [ ] LIMITATIONS güncelle  
+
+### Sprint 1.2e — Nice (1.2 sonu veya 1.3)
+
+- [ ] Card tilt motion (opsiyonel)  
+- [ ] label-float / directional tabs content  
+- [ ] Combobox: creatable / async search (API iskeleti)  
+- [ ] MultiSelect: filter-in-menu  
+- [ ] Animated README GIF (hero still var)  
+- [ ] Token JSON export (Figma bridge min)  
+
+### 1.2.0 publish checklist
+
+1. [ ] Version sync `1.2.0` (tokens + ui)  
+2. [ ] CHANGELOG `[1.2.0]`  
+3. [ ] typecheck + build + test + pack:check  
+4. [ ] `npm whoami` = kişisel; org softglass  
+5. [ ] publish tokens → ui  
+6. [ ] tag `v1.2.0` + push (ArdaDDemir)  
 
 ---
 
-## E) Yapma (scope — 1.1’de de geçerli)
+## v1.2 — bilinçli YAPMA
 
-- DataTable şişirmesi
-- Radix-seviyesi Select full clone (ihtiyaç + 1.2 kararı)
-- 4 dil daha
-- Framer Motion dependency
-- Nested dialog stack
-- Yanlış hesaba push / publish
-- Plansız “yoldayken ufak fix” (kapsam dışı → park + ayrı task)
-
----
-
-## Publish checklist (v1.0 — bitti)
-
-1. [x] npm org `softglass`
-2. [x] `npm whoami` kişisel
-3. [x] org owner
-4. [x] GitHub `ArdaDDemir/softglass`
-5. [x] repository URL’ler
-6. [x] commit + push + tag `v1.0.0`
-7. [x] pack:check
-8. [x] npm publish tokens → ui
-9. [x] consumer smoke test
-
-### v1.1 publish (sprint’ler bitince — henüz değil)
-
-1. [ ] Version sync `1.1.0` (tokens + ui)
-2. [ ] CHANGELOG `[1.1.0]`
-3. [ ] typecheck + build + pack:check
-4. [ ] Consumer smoke (npm veya local pack)
-5. [ ] Tag `v1.1.0` + publish — **sadece kullanıcı onayıyla**
+- DataTable  
+- Full Radix Select rewrite  
+- 4 yeni dil  
+- Framer Motion dependency  
+- Nested modal stack  
+- Storybook + Chromatic full (1.3 vitrin)  
+- Theme builder (canlı accent SaaS)  
+- i18n / RTL suite  
+- Yanlış hesaba push/publish  
 
 ---
 
-## Plan onay kutuları (kilitli — 2026-07-29)
+## v1.3+ backlog (not; 1.2 değil)
 
-- [x] 1.1.0 kapsamı: **`A+B`**
-- [x] ContextMenu Sprint A’da mı? **H**
-- [x] Registry host tercihi: **C’de**
-- [x] İlk sprint: **A**
+- Docs marketing site / Storybook  
+- Visual regression (Chromatic veya ucuz alternatif)  
+- Date range + time picker  
+- Theme builder  
+- Figma tokens pipeline  
+- Community languages process  
 
 ---
 
-## Şu an bitti (v1)
+## Yeni session başlangıç komutu
 
-- 4 dil, UI kit, look+motion, playground, docs, MIT
-- npm + GitHub + hero
-- Smoke: Next 16 + React 19 consumer build OK
+```text
+Softglass v1.2 — docs/claude/todos.md + v1.2-plan.md
+Repo: ArdaDDemir/softglass (kişisel gh/npm)
+İlk sprint: 1.2a ContextMenu
+main'den worktree; work hesabına push yok
+```
 
-## Polish (PR öncesi)
+---
 
-- [x] MultiSelect chip remove + larger X + placeholder align  
-- [x] Select menu stacking above cards  
-- [x] Looks demo selects one-per-row  
-- [x] CHANGELOG Unreleased tidy (1.1 candidate)  
-- [x] README / CONTRIBUTING registry scripts  
-- [x] typecheck + build:ui  
+## Eski arşiv (1.0 / 1.1 detay)
 
-## Şu an sıradaki
-
-1. [x] A–D + polish  
-2. **PR aç** (kullanıcı onayı — push yok otomatik)  
-3. **1.1.0 publish** (version bump + npm/tag — ayrı onay)  
-4. E / DatePicker — 1.1 sonrası
+v1.0 Must/Should ve v1.1 sprint checkbox detayları → [v1.1-plan.md](./v1.1-plan.md) + git history.  
+Bu dosyada aktif odak **yalnızca 1.2**.
