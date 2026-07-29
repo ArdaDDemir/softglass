@@ -48,6 +48,8 @@ Most components accept a **`look`** prop — visual language independent of sema
 
 Parallel to `look`: each control has a **component-specific** motion menu. Set via `motion="…"` → `data-motion`. CSS-first (`motion-recipes.css`). All recipes stop under `prefers-reduced-motion`.
 
+**Exit (v1.1 Sprint B):** overlays keep the node mounted briefly (`data-state="closed"` / toast `data-leaving`) so exit keyframes can finish. `motion="none"` unmounts immediately.
+
 | Component | motion options | Default |
 | --- | --- | --- |
 | Button | `none` `lift` `press` `sheen` `ripple` | `lift` |
@@ -56,6 +58,7 @@ Parallel to `look`: each control has a **component-specific** motion menu. Set v
 | Switch | `none` `snap` `spring` `elastic` | `spring` |
 | Input / Textarea | `none` `ring` `underline-grow` `glow` | `ring` |
 | Select (menu) | `none` `fade` `scale` `slide-down` | `scale` |
+| Popover / DropdownMenu | `none` `fade` `scale` `slide-down` | `scale` |
 | Tooltip | `none` `fade` `scale` `slide` | `scale` |
 | Badge | `none` `pulse` `pop-in` `shimmer` | `none` |
 | Avatar | `none` `lift` `ring-pulse` `status-ping` | `lift` |
@@ -89,8 +92,12 @@ See the live **Docs** tab in the playground for prop tables.
 | `Badge` | `variant` `size` `dot` |
 | `Card` | `surface` `blur` `padding` `hoverable` `clickable` `as` |
 | `Select` | `options` `value` `onValueChange` `placeholder` `size` `label` `hint` `error` |
+| `Combobox` | `options` `value` `onValueChange` `filterOption` `emptyMessage` (+ Select field meta) |
+| `MultiSelect` | `options` `value: string[]` `onValueChange` `maxSelected` (+ chips) |
 | `Switch` | `checked` `onCheckedChange` `label` `hint` |
 | `Modal` | `open` `onOpenChange` `title` `description` `footer` `size` |
+| `DropdownMenu` | `trigger` `items` `placement` `align` `motion` `open` `onOpenChange` |
+| `Popover` | `trigger` `children` `placement` `align` `motion` `open` `onOpenChange` |
 | `Toast` | `toast({ title, description, variant, duration })` via `useToast` |
 | `Tabs` | `value` `defaultValue` `onValueChange` + Trigger/Content `value` |
 | `Avatar` | `src` `fallback` `size` |

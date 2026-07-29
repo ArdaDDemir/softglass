@@ -2,8 +2,10 @@
 
 import {
   Button,
+  DropdownMenu,
   Input,
   Modal,
+  Popover,
   useToast,
   type ToastVariant,
 } from "@softglass/ui";
@@ -11,6 +13,8 @@ import { useState } from "react";
 
 export function OverlayDemo() {
   const [open, setOpen] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [lastAction, setLastAction] = useState<string>("—");
   const { toast } = useToast();
 
   function showToast(variant: ToastVariant) {
@@ -42,7 +46,7 @@ export function OverlayDemo() {
 
   return (
     <>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem", alignItems: "center" }}>
         <Button type="button" onClick={() => setOpen(true)}>
           Open modal
         </Button>
@@ -59,6 +63,104 @@ export function OverlayDemo() {
           Toast danger
         </Button>
       </div>
+
+      <div
+        style={{
+          marginTop: "1.25rem",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0.75rem",
+          alignItems: "flex-start",
+        }}
+      >
+        <DropdownMenu
+          aria-label="Project actions"
+          trigger={<Button type="button" variant="outline">Actions ▾</Button>}
+          items={[
+            {
+              type: "label",
+              label: "Project",
+            },
+            {
+              id: "edit",
+              label: "Edit",
+              shortcut: "⌘E",
+              onSelect: () => {
+                setLastAction("Edit");
+                showToast("default");
+              },
+            },
+            {
+              id: "duplicate",
+              label: "Duplicate",
+              onSelect: () => setLastAction("Duplicate"),
+            },
+            { type: "separator" },
+            {
+              id: "archive",
+              label: "Archive",
+              disabled: true,
+            },
+            {
+              id: "delete",
+              label: "Delete",
+              destructive: true,
+              onSelect: () => {
+                setLastAction("Delete");
+                showToast("danger");
+              },
+            },
+          ]}
+        />
+
+        <Popover
+          aria-label="Quick note"
+          open={popoverOpen}
+          onOpenChange={setPopoverOpen}
+          trigger={<Button type="button" variant="secondary">Popover</Button>}
+        >
+          <p
+            style={{
+              margin: "0 0 0.75rem",
+              fontSize: "var(--sg-text-sm)",
+              fontWeight: 600,
+            }}
+          >
+            Quick note
+          </p>
+          <p
+            style={{
+              margin: "0 0 0.85rem",
+              color: "var(--sg-fg-muted)",
+              fontSize: "var(--sg-text-sm)",
+              lineHeight: 1.45,
+            }}
+          >
+            Popover = free content panel. DropdownMenu = action list. Select =
+            pick a value.
+          </p>
+          <Button
+            type="button"
+            size="sm"
+            onClick={() => {
+              setPopoverOpen(false);
+              showToast("success");
+            }}
+          >
+            Got it
+          </Button>
+        </Popover>
+      </div>
+
+      <p
+        style={{
+          margin: "0.85rem 0 0",
+          color: "var(--sg-fg-muted)",
+          fontSize: "var(--sg-text-sm)",
+        }}
+      >
+        Last menu action: <strong style={{ color: "var(--sg-fg)" }}>{lastAction}</strong>
+      </p>
 
       <Modal
         open={open}

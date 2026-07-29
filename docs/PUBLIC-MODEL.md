@@ -12,7 +12,7 @@ Softglass is designed to be **open to everyone**, in the same spirit as [shadcn/
 
 ## Phases
 
-### Phase 0 — Foundation (current)
+### Phase 0 — Foundation
 
 - Token package (`packages/tokens`)
 - Four languages
@@ -27,11 +27,12 @@ Ship first components as source files:
 - Document props + a11y  
 - Each item listed in `registry/`
 
-### Phase 2 — Registry install
+### Phase 2 — Registry install *(v1.1 Sprint C — done in tree)*
 
-- Host registry JSON (docs site or GitHub raw / Vercel)  
-- Users run: `npx shadcn add …` against Softglass registry  
-- Optional: submit to shadcn public registry index later  
+- Root [`registry.json`](../registry.json) for **GitHub registry** (`ArdaDDemir/softglass/<item>`)
+- Built static items: `apps/web/public/r/*.json` (`npm run registry:build`)
+- Docs: [REGISTRY.md](./REGISTRY.md)
+- Optional later: submit to shadcn public registry index  
 
 ### Phase 3 — Docs site
 

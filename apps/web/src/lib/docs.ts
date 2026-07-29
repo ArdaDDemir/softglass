@@ -335,6 +335,76 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     ],
   },
   {
+    id: "combobox",
+    name: "Combobox",
+    layer: "atom",
+    summary:
+      "Searchable single-select. Type to filter options; value must be one of the options (no free create).",
+    importLine: 'import { Combobox } from "@softglass/ui";',
+    example: `<Combobox
+  label="City"
+  options={cities}
+  value={city}
+  onValueChange={setCity}
+  placeholder="Search…"
+/>`,
+    props: [
+      {
+        name: "options",
+        type: "SelectOption[]",
+        description: "Same shape as Select.",
+      },
+      {
+        name: "value / onValueChange",
+        type: "string / (v: string) => void",
+        description: "Controlled selection.",
+      },
+      {
+        name: "filterOption",
+        type: "(option, query) => boolean",
+        description: "Custom filter; default substring on label/value.",
+      },
+      {
+        name: "emptyMessage",
+        type: "string",
+        default: '"No matches"',
+        description: "Empty filter state.",
+      },
+    ],
+  },
+  {
+    id: "multi-select",
+    name: "MultiSelect",
+    layer: "atom",
+    summary:
+      "Multi value glass select with removable chips. Menu stays open while toggling options.",
+    importLine: 'import { MultiSelect } from "@softglass/ui";',
+    example: `<MultiSelect
+  label="Tags"
+  options={tags}
+  value={selected}
+  onValueChange={setSelected}
+  maxSelected={4}
+/>`,
+    props: [
+      {
+        name: "value",
+        type: "string[]",
+        description: "Controlled selected values.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string[]) => void",
+        description: "Fires on toggle / chip remove.",
+      },
+      {
+        name: "maxSelected",
+        type: "number",
+        description: "Soft cap — extra options disable when full.",
+      },
+    ],
+  },
+  {
     id: "switch",
     name: "Switch",
     layer: "atom",
@@ -438,6 +508,109 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         type: "boolean",
         default: "true",
         description: "Escape key closes.",
+      },
+    ],
+  },
+  {
+    id: "dropdown-menu",
+    name: "DropdownMenu",
+    layer: "molecule",
+    summary:
+      "Action menu (not value pick — use Select). Frost panel, keyboard arrows, destructive items. Pass a Button as trigger (props merge; no nested buttons).",
+    importLine: 'import { DropdownMenu, Button } from "@softglass/ui";',
+    example: `<DropdownMenu
+  trigger={<Button variant="outline">Actions</Button>}
+  items={[
+    { label: "Edit", onSelect: () => {} },
+    { type: "separator" },
+    { label: "Delete", destructive: true, onSelect: () => {} },
+  ]}
+/>`,
+    props: [
+      {
+        name: "trigger",
+        type: "ReactNode",
+        description: "Prefer a single Button element; ARIA + click are merged in.",
+      },
+      {
+        name: "items",
+        type: "DropdownMenuEntry[]",
+        description: "item | separator | label entries.",
+      },
+      {
+        name: "open / defaultOpen / onOpenChange",
+        type: "controlled or uncontrolled",
+        description: "Optional controlled open state.",
+      },
+      {
+        name: "placement",
+        type: '"auto" | "bottom" | "top"',
+        default: '"auto"',
+        description: "Panel side strategy.",
+      },
+      {
+        name: "align",
+        type: '"start" | "center" | "end"',
+        default: '"start"',
+        description: "Horizontal alignment to trigger.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "scale" | "slide-down"',
+        default: '"scale"',
+        description: "Enter recipe (exit = Sprint B).",
+      },
+    ],
+  },
+  {
+    id: "popover",
+    name: "Popover",
+    layer: "molecule",
+    summary:
+      "Free-form frost panel anchored to a trigger. Escape + outside click. Non-modal (no focus trap) — use Modal for blocking dialogs.",
+    importLine: 'import { Popover, Button } from "@softglass/ui";',
+    example: `<Popover trigger={<Button>Info</Button>} aria-label="Details">
+  <p>Any content — text, form bits, links.</p>
+</Popover>`,
+    props: [
+      {
+        name: "trigger",
+        type: "ReactNode",
+        description: "Click target that toggles the panel.",
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "Panel body.",
+      },
+      {
+        name: "open / defaultOpen / onOpenChange",
+        type: "controlled or uncontrolled",
+        description: "Optional controlled open state.",
+      },
+      {
+        name: "placement",
+        type: '"auto" | "bottom" | "top"',
+        default: '"auto"',
+        description: "Panel side strategy.",
+      },
+      {
+        name: "align",
+        type: '"start" | "center" | "end"',
+        default: '"start"',
+        description: "Horizontal alignment.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "scale" | "slide-down"',
+        default: '"scale"',
+        description: "Enter recipe.",
+      },
+      {
+        name: "closeOnOutside / closeOnEscape",
+        type: "boolean",
+        default: "true",
+        description: "Dismiss behavior.",
       },
     ],
   },

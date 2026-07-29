@@ -3,6 +3,7 @@
 import { Button } from "../atoms/button";
 import { cn } from "../lib/cn";
 import { MOTION_DEFAULTS, type ModalMotion } from "../lib/motion";
+import { exitDurationForMotion, usePresence } from "../lib/presence";
 import {
   useEffect,
   useId,
@@ -24,7 +25,7 @@ export type ModalProps = {
   children?: ReactNode;
   footer?: ReactNode;
   size?: ModalSize;
-  /** Enter motion: none | scale | fade | slide-up */
+  /** Enter / exit motion: none | scale | fade | slide-up */
   motion?: ModalMotion;
   /** Close when backdrop is clicked (default true). */
   closeOnBackdrop?: boolean;
@@ -37,8 +38,7 @@ export type ModalProps = {
 /**
  * Molecule — Modal
  * Glass elevated dialog over a frosted backdrop.
- * Portaled to `document.body` so sticky headers / overflow parents cannot trap it.
- * Controlled: parent owns `open` / `onOpenChange`.
+ * Portaled to `document.body`. Enter + exit via `data-state` + motion recipes.
  */
 export function Modal({
   open,
@@ -58,27 +58,47 @@ export function Modal({
   const descriptionId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
+  const { mounted, exiting, state } = usePresence(open, {
+    durationMs: exitDurationForMotion(motion),
+  });
 
   useEffect(() => {
-    setMounted(true);
+    setPortalReady(true);
   }, []);
 
+  // Capture focus origin when opening.
   useEffect(() => {
     if (!open) return;
-
     previouslyFocused.current =
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
+  }, [open]);
 
+  // Body scroll lock for entire presence (including exit).
+  useEffect(() => {
+    if (!mounted) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mounted]);
+
+  // Restore focus after unmount.
+  useEffect(() => {
+    if (mounted) return;
+    previouslyFocused.current?.focus?.();
+  }, [mounted]);
+
+  // Focus trap + Escape only while fully open (not exiting).
+  useEffect(() => {
+    if (!open || exiting) return;
 
     const FOCUSABLE =
       'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-    // Focus first control after portal paint.
     const focusTimer = window.setTimeout(() => {
       const panel = panelRef.current;
       const focusable = panel?.querySelector<HTMLElement>(FOCUSABLE);
@@ -92,7 +112,6 @@ export function Modal({
         return;
       }
 
-      // Basic focus trap — keep Tab cycling inside the dialog.
       if (event.key !== "Tab") return;
       const panel = panelRef.current;
       if (!panel) return;
@@ -125,25 +144,26 @@ export function Modal({
     document.addEventListener("keydown", onKeyDown);
     return () => {
       window.clearTimeout(focusTimer);
-      document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKeyDown);
-      previouslyFocused.current?.focus?.();
     };
-  }, [open, closeOnEscape, onOpenChange]);
+  }, [open, exiting, closeOnEscape, onOpenChange]);
 
-  if (!open || !mounted) return null;
+  if (!mounted || !portalReady) return null;
 
   return createPortal(
     <div
       className={cn("sg-modal-root", className)}
       role="presentation"
       data-motion={motion}
+      data-state={state}
     >
       <button
         type="button"
         className="sg-modal-backdrop"
         aria-label="Close dialog"
+        tabIndex={exiting ? -1 : undefined}
         onClick={() => {
+          if (exiting) return;
           if (closeOnBackdrop) onOpenChange(false);
         }}
       />
@@ -179,6 +199,7 @@ export function Modal({
             iconOnly
             className="sg-modal-close"
             aria-label="Close"
+            disabled={exiting}
             onClick={() => onOpenChange(false)}
           >
             ×

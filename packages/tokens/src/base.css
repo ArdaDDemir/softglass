@@ -788,7 +788,8 @@
   padding: var(--sg-space-5);
   border-radius: var(--sg-radius-lg);
   color: var(--sg-fg);
-  contain: layout style;
+  /* Avoid layout containment — it traps absolute select/menus under next cards */
+  overflow: visible;
 }
 
 .sg-card-sm {
@@ -1217,6 +1218,18 @@
   width: 100%;
 }
 
+/*
+ * Open menus must stack above following sibling cards (card paint order).
+ * Without this, absolute menus render under the next .sg-card in the page.
+ */
+.sg-select-root:has([data-open="true"]),
+.sg-select-root:has([aria-expanded="true"]),
+.sg-combobox-root:has([aria-expanded="true"]),
+.sg-multiselect-root:has([data-open="true"]) {
+  z-index: calc(var(--sg-z-dropdown) + 20);
+  isolation: isolate;
+}
+
 .sg-select-trigger {
   display: inline-flex;
   align-items: center;
@@ -1432,6 +1445,171 @@
   display: block;
 }
 
+/* —— Combobox / MultiSelect (v1.1 Sprint D) —— */
+.sg-combobox-trigger {
+  cursor: text;
+  gap: var(--sg-space-2);
+}
+
+.sg-combobox-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.sg-combobox-input::placeholder {
+  color: var(--sg-fg-muted);
+  opacity: 1;
+}
+
+.sg-combobox-input:disabled {
+  cursor: not-allowed;
+}
+
+.sg-combobox-empty {
+  padding: 0.65rem 0.85rem;
+  font-size: var(--sg-text-sm);
+  color: var(--sg-fg-muted);
+  list-style: none;
+}
+
+.sg-multiselect-trigger {
+  height: auto;
+  min-height: var(--sg-touch-min);
+  /* Center placeholder + chips with caret (flex-start left "Pick tags" too high) */
+  align-items: center;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  cursor: pointer;
+}
+
+.sg-multiselect-trigger[data-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.sg-multiselect-caret {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0.2rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  border-radius: var(--sg-radius-pill);
+}
+
+.sg-multiselect-caret:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 1px;
+}
+
+.sg-multiselect-caret:disabled {
+  cursor: not-allowed;
+}
+
+.sg-multiselect-chips {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  min-width: 0;
+  min-height: 1.75rem;
+  text-align: left;
+}
+
+/* Empty-state placeholder — sit on the same optical line as normal select text */
+.sg-multiselect-chips .sg-select-value[data-placeholder="true"] {
+  display: flex;
+  align-items: center;
+  min-height: 1.75rem;
+  line-height: 1.35;
+  padding: 0;
+}
+
+.sg-multiselect-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  max-width: 100%;
+  /* Extra right padding so X hit area fits comfortably */
+  padding: 0.2rem 0.15rem 0.2rem 0.6rem;
+  border-radius: var(--sg-radius-pill);
+  border: var(--sg-border-width) solid
+    color-mix(in srgb, var(--sg-accent) 22%, var(--sg-border-frost));
+  background: var(--sg-accent-soft);
+  color: var(--sg-fg);
+  font-size: var(--sg-text-xs);
+  font-weight: var(--sg-font-weight-medium);
+  line-height: 1.2;
+}
+
+.sg-multiselect-chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 0.1rem;
+}
+
+.sg-multiselect-chip-x {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Visible control ~28px — easy finger/mouse target */
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sg-fg) 6%, transparent);
+  cursor: pointer;
+  color: var(--sg-fg-muted);
+  line-height: 1;
+  font-size: 1.05rem;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+/* Invisible expanded hit box beyond the visible circle */
+.sg-multiselect-chip-x::before {
+  content: "";
+  position: absolute;
+  inset: -0.2rem;
+  border-radius: 999px;
+}
+
+.sg-multiselect-chip-x:hover:not(:disabled) {
+  color: var(--sg-fg);
+  background: color-mix(in srgb, var(--sg-fg) 12%, transparent);
+}
+
+.sg-multiselect-chip-x:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 1px;
+}
+
+.sg-multiselect-trigger .sg-select-chevron {
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
 @keyframes sg-select-in {
   from {
     opacity: 0;
@@ -1452,6 +1630,193 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* —— Popover + DropdownMenu (overlay family, v1.1 Sprint A) —— */
+.sg-popover-root,
+.sg-menu-root {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.sg-popover-trigger {
+  display: inline-flex;
+}
+
+.sg-menu-trigger-fallback {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sg-space-2);
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: var(--sg-radius-pill);
+  border: var(--sg-border-width) solid var(--sg-border-frost);
+  background: var(--sg-surface-frost);
+  color: var(--sg-fg);
+  font-family: var(--sg-font-sans);
+  font-size: var(--sg-text-sm);
+  font-weight: var(--sg-font-weight-medium);
+  cursor: pointer;
+}
+
+.sg-menu-trigger-fallback:hover:not(:disabled) {
+  background: var(--sg-surface-frost-strong);
+}
+
+.sg-menu-trigger-fallback:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sg-popover-content,
+.sg-menu-content {
+  position: absolute;
+  z-index: var(--sg-z-dropdown);
+  min-width: 12rem;
+  max-width: min(20rem, 90vw);
+  margin: 0;
+  padding: var(--sg-space-2);
+  border-radius: var(--sg-radius-lg);
+  border: var(--sg-border-width) solid var(--sg-border-frost);
+  background-color: var(--sg-surface-frost-strong);
+  background-image: linear-gradient(
+    180deg,
+    var(--sg-gloss-highlight) 0%,
+    transparent 36%
+  );
+  box-shadow: var(--sg-shadow-elevated);
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  color: var(--sg-fg);
+  animation: sg-select-in var(--sg-duration-fast) var(--sg-ease-out);
+}
+
+.sg-popover-content {
+  padding: var(--sg-space-4);
+  min-width: 14rem;
+}
+
+.sg-popover-content[data-placement="bottom"],
+.sg-menu-content[data-placement="bottom"] {
+  top: calc(100% + 0.4rem);
+  bottom: auto;
+}
+
+.sg-popover-content[data-placement="top"],
+.sg-menu-content[data-placement="top"] {
+  top: auto;
+  bottom: calc(100% + 0.4rem);
+  animation-name: sg-select-in-top;
+}
+
+.sg-popover-content[data-align="start"],
+.sg-menu-content[data-align="start"] {
+  left: 0;
+  right: auto;
+}
+
+.sg-popover-content[data-align="center"],
+.sg-menu-content[data-align="center"] {
+  left: 50%;
+  right: auto;
+  /* `translate` is independent of enter animation `transform` */
+  translate: -50% 0;
+}
+
+.sg-popover-content[data-align="end"],
+.sg-menu-content[data-align="end"] {
+  left: auto;
+  right: 0;
+}
+
+.sg-menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-height: min(18rem, 50dvh);
+  overflow: auto;
+  min-width: 11rem;
+}
+
+.sg-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sg-space-3);
+  width: 100%;
+  min-height: 2.35rem;
+  padding: 0.45rem 0.85rem;
+  border: var(--sg-border-width) solid transparent;
+  border-radius: var(--sg-radius-pill);
+  background: transparent;
+  color: var(--sg-fg);
+  font-family: var(--sg-font-sans);
+  font-size: var(--sg-text-sm);
+  font-weight: var(--sg-font-weight-medium);
+  letter-spacing: var(--sg-tracking-tight);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--sg-duration-fast) var(--sg-ease-out),
+    color var(--sg-duration-fast) var(--sg-ease-out),
+    border-color var(--sg-duration-fast) var(--sg-ease-out);
+}
+
+.sg-menu-item:hover:not(:disabled),
+.sg-menu-item[data-highlighted="true"]:not(:disabled) {
+  background: var(--sg-accent-soft);
+  border-color: color-mix(in srgb, var(--sg-accent) 18%, transparent);
+}
+
+.sg-menu-item[data-destructive="true"] {
+  color: var(--sg-danger, #e11d48);
+}
+
+.sg-menu-item[data-destructive="true"]:hover:not(:disabled),
+.sg-menu-item[data-destructive="true"][data-highlighted="true"]:not(:disabled) {
+  background: color-mix(in srgb, var(--sg-danger, #e11d48) 14%, transparent);
+  border-color: color-mix(in srgb, var(--sg-danger, #e11d48) 22%, transparent);
+  color: var(--sg-danger, #e11d48);
+}
+
+.sg-menu-item:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sg-menu-item:focus-visible {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 1px;
+}
+
+.sg-menu-item-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.sg-menu-item-shortcut {
+  flex-shrink: 0;
+  font-size: var(--sg-text-xs);
+  color: var(--sg-fg-muted);
+  font-weight: var(--sg-font-weight-medium);
+  letter-spacing: 0.02em;
+}
+
+.sg-menu-separator {
+  height: 1px;
+  margin: 0.3rem 0.4rem;
+  background: var(--sg-border-frost);
+  border: 0;
+}
+
+.sg-menu-label {
+  padding: 0.4rem 0.85rem 0.25rem;
+  font-size: var(--sg-text-xs);
+  font-weight: var(--sg-font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sg-fg-muted);
 }
 
 /* —— Modal —— */
@@ -1566,6 +1931,13 @@
 .sg-toast-viewport-top-right {
   top: var(--sg-space-4);
   right: var(--sg-space-4);
+  flex-direction: column;
+}
+
+/* Newest toast sits closest to the corner (stack grows upward) */
+.sg-toast-viewport-bottom-right,
+.sg-toast-viewport-bottom-center {
+  flex-direction: column-reverse;
 }
 
 .sg-toast-viewport-bottom-right {
@@ -1607,9 +1979,7 @@
   /* enter: motion-recipes.css via data-motion */
 }
 
-.sg-toast[data-leaving="true"] {
-  animation: sg-toast-out var(--sg-duration-fast) var(--sg-ease-out) forwards;
-}
+/* leave recipes live in motion-recipes.css (data-leaving + data-motion) */
 
 .sg-toast-title {
   margin: 0;
@@ -1675,9 +2045,13 @@
 }
 
 @keyframes sg-toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
   to {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
 }
 

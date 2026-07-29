@@ -5,6 +5,32 @@ All notable changes to Softglass are documented here.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versioning follows [SemVer](https://semver.org/).
 
+## [Unreleased] — 1.1.0 (ready to ship after PR)
+
+Minor release candidate: overlays, motion exit, registry path, form depth. npm packages still **1.0.0** until publish.
+
+### Added
+
+- **`Popover`** — anchored non-modal frost panel (`trigger` + children)
+- **`DropdownMenu`** — action menu (`items`: item / separator / label); `Button` trigger merge
+- **`Combobox`** — type-to-filter single-select (option-only, no free create)
+- **`MultiSelect`** — multi value + chips, optional `maxSelected`
+- **`usePresence`** — shared exit hold for open overlays
+- Root **`registry.json`** + `scripts/generate-registry.mjs` + built `apps/web/public/r/*`
+- Docs: [REGISTRY.md](./docs/REGISTRY.md), API / LIMITATIONS / GETTING-STARTED updates
+
+### Changed
+
+- **Modal / Select / DropdownMenu / Popover** — enter **and** exit motion (`data-state`)
+- **Toast** — leave duration sync, bottom stack `column-reverse`, reflow transitions
+- **Card** — drop `contain: layout` so absolute menus are not trapped
+- **Select open** — higher stacking so menus paint above following cards
+- **MultiSelect** chips — larger remove hit target; placeholder vertically centered
+
+### Parked (not in 1.1)
+
+- ContextMenu, DatePicker, Card tilt, label-float, Vitest/Storybook/docs site (Sprint E / 1.2)
+
 ## [1.0.0] — 2026-07-29
 
 First public release of the soft-glass design system for Next.js.
