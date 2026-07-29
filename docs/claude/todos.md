@@ -13,7 +13,7 @@
 |-------|--------|
 | 1.0.0 | shipped |
 | 1.1.0 | **shipped** (kit + registry + motion + form depth) |
-| **1.2.0** | **sıradaki** — 1.2a done (commit); 1.2b DatePicker in progress |
+| **1.2.0** | **sıradaki** — 1.2a/b done (commits); 1.2c tests in progress |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
 **Hesap disiplini:** gh/npm → kişisel (`ArdaDDemir` / `ardaddemir`); work/Feedemy yok.
@@ -78,11 +78,11 @@
 
 ### Sprint 1.2c — Test iskeleti (kalite min)
 
-- [ ] Vitest + Testing Library monorepo setup (`packages/ui`)  
-- [ ] Smoke: Button, Combobox filter, MultiSelect remove chip  
-- [ ] Smoke: usePresence (open → closed unmount)  
-- [ ] `npm test` script root’ta  
-- [ ] CI’ya `test` adımı (mevcut workflow’a ekle)  
+- [x] Vitest + Testing Library monorepo setup (`packages/ui`)  
+- [x] Smoke: Button, Combobox filter, MultiSelect remove chip  
+- [x] Smoke: usePresence (open → closed unmount)  
+- [x] `npm test` script root’ta  
+- [x] CI’ya `test` adımı (mevcut workflow’a ekle)  
 
 **Yapma:** %100 coverage, Chromatic, Playwright full E2E.
 

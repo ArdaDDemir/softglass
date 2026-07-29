@@ -14,6 +14,7 @@
     "build": "npm run build:ui && npm run build -w @softglass/web",
     "build:ui": "npm run build -w @softglass/ui",
     "typecheck": "npm run typecheck -w @softglass/ui",
+    "test": "npm run test -w @softglass/ui",
     "lint": "npm run lint -w @softglass/web",
     "pack:check": "npm run pack:check -w @softglass/tokens && npm run pack:check -w @softglass/ui",
     "registry:generate": "node ./scripts/generate-registry.mjs",

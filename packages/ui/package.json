@@ -44,6 +44,8 @@
     "build": "tsup && node ./scripts/ensure-use-client.mjs",
     "dev": "tsup --watch --onSuccess \"node ./scripts/ensure-use-client.mjs\"",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepack": "npm run build",
     "pack:check": "npm pack --dry-run"
   },
@@ -63,12 +65,18 @@
     }
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.5.2",
+    "jsdom": "^26.1.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "tsup": "^8.5.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18"

@@ -26,6 +26,9 @@ jobs:
       - name: Typecheck UI
         run: npm run typecheck
 
+      - name: Unit smoke tests
+        run: npm test
+
       - name: Build packages + playground
         run: npm run build
 
