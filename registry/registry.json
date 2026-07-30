@@ -1995,6 +1995,131 @@
       ]
     },
     {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Single disclosure panel — open / defaultOpen / onOpenChange.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/collapsible.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/collapsible.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Single or multiple panels via items[] API.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/accordion.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/accordion.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Path trail — reuses Link; last item is current page.",
+      "registryDependencies": [
+        "tokens",
+        "link"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/breadcrumb.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/breadcrumb.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Page / pageCount / onPageChange — compact or full list.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/pagination.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/pagination.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
       "name": "modal",
       "type": "registry:ui",
       "title": "Modal",

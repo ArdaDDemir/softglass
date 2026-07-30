@@ -40,6 +40,9 @@ Most components accept a **`look`** prop — visual language independent of sema
 | Input / Textarea | `solid` `underline` `filled` `ghost` |
 | Select | `solid` `soft` `glass` `gradient` |
 | Tabs | `pill` `underline` `segmented` |
+| Collapsible / Accordion | `soft` `solid` `glass` `outline` `ghost` |
+| Breadcrumb | `plain` `soft` `pill` |
+| Pagination | `soft` `solid` `ghost` `glass` |
 | Avatar | `circle` `rounded` `soft` |
 | Tooltip | `frost` `solid` `accent` |
 | Card | `flat` `raised` `outline` `glow` |
@@ -82,6 +85,7 @@ Parallel to `look`: each control has a **component-specific** motion menu. Set v
 | Badge | `none` `pulse` `pop-in` `shimmer` | `none` |
 | Avatar | `none` `lift` `ring-pulse` `status-ping` | `lift` |
 | Tabs | `none` `fade` `slide` | **`slide`** |
+| Collapsible / Accordion | `none` `fade` `height` | **`height`** |
 | Modal | `none` `scale` `fade` `slide-up` | `scale` |
 | Toast | `none` `slide-in` `pop` | `slide-in` |
 | Card | `none` `lift` `glow-pulse` | `lift` |
@@ -121,6 +125,10 @@ See the live **Docs** tab in the playground for prop tables.
 | `Popover` | `trigger` `children` `placement` `align` `motion` `open` `onOpenChange` |
 | `Toast` | `toast({ title, description, variant, duration })` via `useToast` |
 | `Tabs` | `value` `defaultValue` `onValueChange` + Trigger/Content `value` |
+| `Collapsible` | `open` `defaultOpen` `onOpenChange` `trigger` `look` `motion` |
+| `Accordion` | `items[]` `type` `value` `defaultValue` `onValueChange` `collapsible` `look` |
+| `Breadcrumb` | `items[{ label, href? }]` `look` `separator` `size` |
+| `Pagination` | `page` `pageCount` `onPageChange` `compact` `siblingCount` `look` |
 | `Avatar` | `src` `fallback` `size` |
 | `Checkbox` | `checked` `onCheckedChange` `label` `hint` |
 | `Radio` / `RadioGroup` | `value` `onValueChange` `name` + child `value` |

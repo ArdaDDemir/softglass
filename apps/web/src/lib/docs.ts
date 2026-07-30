@@ -1743,4 +1743,206 @@ toast({ title: "Saved", variant: "success", description: "All good." });`,
       },
     ],
   },
+  {
+    id: "collapsible",
+    name: "Collapsible",
+    layer: "molecule",
+    summary:
+      "Single disclosure panel — open / defaultOpen / onOpenChange + trigger body.",
+    importLine: 'import { Collapsible } from "@softglass/ui";',
+    example: `<Collapsible
+  trigger="Gizlilik notu"
+  defaultOpen={false}
+  look="soft"
+>
+  Bu paneli sadece gerekince aç.
+</Collapsible>`,
+    props: [
+      {
+        name: "trigger",
+        type: "ReactNode",
+        description: "Button label / node.",
+      },
+      {
+        name: "open / defaultOpen / onOpenChange",
+        type: "boolean / boolean / (open: boolean) => void",
+        description: "Controlled or uncontrolled open state.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "outline" | "ghost"',
+        default: '"soft"',
+        description: "Surface language (frost card → flush list).",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "height"',
+        default: '"height"',
+        description: "Open motion recipe (height uses CSS grid collapse).",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Locks the trigger.",
+      },
+    ],
+  },
+  {
+    id: "accordion",
+    name: "Accordion",
+    layer: "molecule",
+    summary:
+      "FAQ-style panels via items[] — type single | multiple (Select/Dropdown language).",
+    importLine: 'import { Accordion } from "@softglass/ui";',
+    example: `<Accordion
+  type="single"
+  defaultValue="a"
+  look="soft"
+  items={[
+    { value: "a", trigger: "What is Softglass?", content: "A soft-glass kit." },
+    { value: "b", trigger: "Is it free?", content: "MIT." },
+  ]}
+/>`,
+    props: [
+      {
+        name: "items",
+        type: "{ value, trigger, content, disabled? }[]",
+        description: "Panel definitions (items API first).",
+      },
+      {
+        name: "type",
+        type: '"single" | "multiple"',
+        default: '"single"',
+        description: "One open panel vs many.",
+      },
+      {
+        name: "value / defaultValue / onValueChange",
+        type: "string | string[]",
+        description: "Controlled or uncontrolled open values.",
+      },
+      {
+        name: "collapsible",
+        type: "boolean",
+        default: "true",
+        description: "When type=single, allow closing the open item.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "outline" | "ghost"',
+        default: '"soft"',
+        description: "Surface language.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "height"',
+        default: '"height"',
+        description: "Panel open motion.",
+      },
+    ],
+  },
+  {
+    id: "breadcrumb",
+    name: "Breadcrumb",
+    layer: "molecule",
+    summary:
+      "Path trail. Navigable crumbs reuse Link; last item is current page.",
+    importLine: 'import { Breadcrumb } from "@softglass/ui";',
+    example: `<Breadcrumb
+  look="soft"
+  items={[
+    { label: "Home", href: "/" },
+    { label: "Docs", href: "/docs" },
+    { label: "Accordion" },
+  ]}
+/>
+<Breadcrumb look="pill" items={…} />`,
+    props: [
+      {
+        name: "items",
+        type: "{ label, href? }[]",
+        description: "Crumbs. Omit href on current page.",
+      },
+      {
+        name: "look",
+        type: '"plain" | "soft" | "pill"',
+        default: '"plain"',
+        description: "plain path · soft tray · pill chips.",
+      },
+      {
+        name: "separator",
+        type: "ReactNode",
+        default: '"/"',
+        description: "Between crumbs (pill defaults to · when /).",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        default: '"md"',
+        description: "Type scale.",
+      },
+    ],
+  },
+  {
+    id: "pagination",
+    name: "Pagination",
+    layer: "molecule",
+    summary:
+      "Known total pages — page / pageCount / onPageChange (compact or numbered).",
+    importLine: 'import { Pagination } from "@softglass/ui";',
+    example: `<Pagination
+  page={page}
+  pageCount={12}
+  onPageChange={setPage}
+  look="soft"
+/>
+<Pagination page={page} pageCount={12} onPageChange={setPage} look="glass" compact />`,
+    props: [
+      {
+        name: "page",
+        type: "number",
+        description: "1-based current page.",
+      },
+      {
+        name: "pageCount",
+        type: "number",
+        description: "Total pages.",
+      },
+      {
+        name: "onPageChange",
+        type: "(page: number) => void",
+        description: "Fires when user picks a page.",
+      },
+      {
+        name: "compact",
+        type: "boolean",
+        default: "false",
+        description: "Prev/next + status only.",
+      },
+      {
+        name: "siblingCount",
+        type: "number",
+        default: "1",
+        description: "Pages around current in full mode.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "ghost" | "glass"',
+        default: '"soft"',
+        description: "soft/glass = pill tray; solid = loose buttons.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        default: '"md"',
+        description: "Control density.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Locks all controls.",
+      },
+    ],
+  },
 ];

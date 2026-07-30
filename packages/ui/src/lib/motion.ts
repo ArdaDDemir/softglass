@@ -52,6 +52,11 @@ export type ContextMenuMotion = MotionNone | "fade" | "scale" | "slide-down";
 /** DatePicker calendar panel — same recipes as Select. */
 export type DatePickerMotion = MotionNone | "fade" | "scale" | "slide-down";
 
+/** Collapsible / Accordion panel open motion. */
+export type CollapsibleMotion = MotionNone | "fade" | "height";
+
+export type AccordionMotion = CollapsibleMotion;
+
 /** Defaults — preserve current product feel. */
 export const MOTION_DEFAULTS = {
   button: "lift",
@@ -71,4 +76,6 @@ export const MOTION_DEFAULTS = {
   dropdownMenu: "scale",
   contextMenu: "scale",
   datePicker: "scale",
+  collapsible: "height",
+  accordion: "height",
 } as const satisfies Record<string, string>;

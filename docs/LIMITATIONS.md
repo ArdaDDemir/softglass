@@ -30,6 +30,10 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Popover** | Anchored panel, Escape + outside, non-modal, **body portal + collision**, **enter/exit** | Focus trap option; arrow |
 | **Tooltip** | Hover/focus delay, placements | Touch-first patterns; collision detection against viewport edges (basic only) |
 | **Tabs** | Roving tabindex + arrow/Home/End keys + sliding indicator | Directional content slide; vertical orientation API polish |
+| **Collapsible** | Single panel; controlled/uncontrolled; look + motion; closed = unmounted | Compound Trigger/Content API; measured height slide |
+| **Accordion** | `items[]` API; single \| multiple; closed panels unmounted (perf) | Nested accordion; compound Root/Item later |
+| **Breadcrumb** | `items` + `Link` reuse; last = current | Auto-collapse overflow / ellipsis middle crumbs |
+| **Pagination** | Known `pageCount`; compact or numbered list | Cursor/infinite API; URL sync helpers |
 | **Toast** | Stack + variants + auto-dismiss + leave + bottom stack reflow | Swipe-to-dismiss; action buttons API |
 | **FormField** | Layout only (label/hint/error) | Schema validation; RHF/Formik adapters |
 | **Progress** | Linear; looks + variants; indeterminate CSS | Buffered/secondary value |

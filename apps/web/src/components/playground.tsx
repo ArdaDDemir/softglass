@@ -7,11 +7,13 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { COMPONENT_DOCS } from "@/lib/docs";
 import { SOFTGLASS_THEMES } from "@/lib/themes";
 import {
+  Accordion,
   Alert,
   AppShell,
   AspectRatio,
   Avatar,
   Badge,
+  Breadcrumb,
   Button,
   Card,
   CardContent,
@@ -25,6 +27,7 @@ import {
   ClientOnly,
   CloseButton,
   Code,
+  Collapsible,
   CopyButton,
   Fieldset,
   FileField,
@@ -37,6 +40,7 @@ import {
   Meter,
   NavLink,
   NumberInput,
+  Pagination,
   PasswordInput,
   PinInput,
   Progress,
@@ -66,7 +70,7 @@ import {
   RangeSlider,
   Text,
 } from "@softglass/ui";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 
 type SectionId =
   | "overview"
@@ -78,6 +82,7 @@ type SectionId =
   | "chrome"
   | "should"
   | "nice"
+  | "disclosure-nav"
   | "docs"
   | "overlays"
   | "controls";
@@ -92,6 +97,7 @@ const SECTIONS: { id: SectionId; label: string }[] = [
   { id: "chrome", label: "Link · Chip · Fields" },
   { id: "should", label: "Should · 1.3d" },
   { id: "nice", label: "Nice · 1.3e" },
+  { id: "disclosure-nav", label: "1.4a · Disclosure & nav" },
   { id: "docs", label: "Docs / API" },
   { id: "overlays", label: "Modal · Menu · Toast" },
   { id: "controls", label: "Controls" },
@@ -204,6 +210,7 @@ export function Playground() {
           {section === "chrome" ? <ChromeAtomsSection /> : null}
           {section === "should" ? <ShouldAtomsSection /> : null}
           {section === "nice" ? <NiceAtomsSection /> : null}
+          {section === "disclosure-nav" ? <DisclosureNavSection /> : null}
           {section === "docs" ? (
             <DocsSection
               docId={docId}
@@ -1755,6 +1762,209 @@ function ButtonPropsSection() {
         />
       </CardContent>
     </Card>
+  );
+}
+
+/** v1.4a — disclosure + nav molecules (Collapsible, Accordion, Breadcrumb, Pagination). */
+const DISCLOSURE_FAQ = [
+  {
+    value: "what",
+    trigger: "What is Softglass?",
+    content:
+      "A soft-glass UI kit: tokens + React atoms/molecules for Next.js.",
+  },
+  {
+    value: "free",
+    trigger: "Is it free?",
+    content: "Yes — MIT. Publish only from personal npm ardaddemir.",
+  },
+  {
+    value: "portal",
+    trigger: "Does Accordion use a portal?",
+    content: "No — disclosure stays in flow. Overlays (Sheet, Popover) do.",
+    disabled: true,
+  },
+] as const;
+
+const CRUMB_PATH = [
+  { label: "Home", href: "#" },
+  { label: "Docs", href: "#" },
+  { label: "Accordion" },
+];
+
+const LOOK_CHIP: CSSProperties = {
+  fontSize: "var(--sg-text-xs)",
+  color: "var(--sg-fg-muted)",
+};
+
+/** One live instance per molecule — look switcher, no N× glass stack. */
+function DisclosureNavSection() {
+  const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [page, setPage] = useState(2);
+  const [accLook, setAccLook] = useState<
+    "soft" | "solid" | "glass" | "outline" | "ghost"
+  >("soft");
+  const [colLook, setColLook] = useState<
+    "soft" | "solid" | "glass" | "outline" | "ghost"
+  >("soft");
+  const [crumbLook, setCrumbLook] = useState<"plain" | "soft" | "pill">("soft");
+  const [pagLook, setPagLook] = useState<"soft" | "solid" | "ghost" | "glass">(
+    "soft",
+  );
+
+  return (
+    <>
+      <Card surface="solid" as="section" id="section-accordion">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4a
+          </Badge>
+          <CardTitle>Accordion</CardTitle>
+          <CardDescription>
+            Tek instance + look switcher (5× kopya yok). Edge: disabled item.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            {(["soft", "solid", "glass", "outline", "ghost"] as const).map(
+              (look) => (
+                <Button
+                  key={look}
+                  size="sm"
+                  variant={accLook === look ? "primary" : "secondary"}
+                  onClick={() => setAccLook(look)}
+                >
+                  {look}
+                </Button>
+              ),
+            )}
+          </div>
+          <div style={LOOK_CHIP}>look = {accLook}</div>
+          <Accordion
+            key={accLook}
+            type="single"
+            defaultValue="what"
+            look={accLook}
+            items={[...DISCLOSURE_FAQ]}
+          />
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-collapsible">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4a
+          </Badge>
+          <CardTitle>Collapsible</CardTitle>
+          <CardDescription>
+            Controlled panel + one edge (disabled). Look switcher.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            {(["soft", "solid", "glass", "outline", "ghost"] as const).map(
+              (look) => (
+                <Button
+                  key={look}
+                  size="sm"
+                  variant={colLook === look ? "primary" : "secondary"}
+                  onClick={() => setColLook(look)}
+                >
+                  {look}
+                </Button>
+              ),
+            )}
+          </div>
+          <Collapsible
+            key={colLook}
+            trigger="Gizlilik notu"
+            open={privacyOpen}
+            onOpenChange={setPrivacyOpen}
+            look={colLook}
+          >
+            Glass chrome is for chrome, not long body copy. Prefer solid for
+            dense text.
+          </Collapsible>
+          <Collapsible trigger="Disabled edge" disabled look={colLook}>
+            Hidden when disabled.
+          </Collapsible>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-breadcrumb">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4a
+          </Badge>
+          <CardTitle>Breadcrumb</CardTitle>
+          <CardDescription>
+            plain · soft · pill — single path, switch look.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            {(["plain", "soft", "pill"] as const).map((look) => (
+              <Button
+                key={look}
+                size="sm"
+                variant={crumbLook === look ? "primary" : "secondary"}
+                onClick={() => setCrumbLook(look)}
+              >
+                {look}
+              </Button>
+            ))}
+          </div>
+          <Breadcrumb
+            look={crumbLook}
+            separator={crumbLook === "plain" ? "/" : "›"}
+            items={CRUMB_PATH}
+          />
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-pagination">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4a
+          </Badge>
+          <CardTitle>Pagination</CardTitle>
+          <CardDescription>
+            soft · solid · ghost · glass — one list + compact edge.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            {(["soft", "solid", "ghost", "glass"] as const).map((look) => (
+              <Button
+                key={look}
+                size="sm"
+                variant={pagLook === look ? "primary" : "secondary"}
+                onClick={() => setPagLook(look)}
+              >
+                {look}
+              </Button>
+            ))}
+          </div>
+          <div style={LOOK_CHIP}>
+            page {page} / 10 · look = {pagLook}
+          </div>
+          <Pagination
+            page={page}
+            pageCount={10}
+            onPageChange={setPage}
+            look={pagLook}
+          />
+          <Pagination
+            page={page}
+            pageCount={5}
+            onPageChange={setPage}
+            compact
+            look={pagLook}
+            size="sm"
+          />
+        </CardContent>
+      </Card>
+    </>
   );
 }
 

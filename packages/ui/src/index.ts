@@ -1,15 +1,19 @@
 export { cn } from "./lib/cn";
 export type {
+  AccordionLook,
   AvatarLook,
   BadgeLook,
+  BreadcrumbLook,
   ButtonLook,
   CardLook,
   CheckboxLook,
+  CollapsibleLook,
   FieldLook,
   ChipLook,
   CloseButtonLook,
   FileFieldLook,
   NumberInputLook,
+  PaginationLook,
   ProgressLook,
   RadioLook,
   SelectLook,
@@ -21,11 +25,13 @@ export type {
 } from "./lib/looks";
 export { MOTION_DEFAULTS } from "./lib/motion";
 export type {
+  AccordionMotion,
   AvatarMotion,
   BadgeMotion,
   ButtonMotion,
   CardMotion,
   CheckboxMotion,
+  CollapsibleMotion,
   ContextMenuMotion,
   DatePickerMotion,
   DropdownMenuMotion,
@@ -145,6 +151,29 @@ export type {
   TabsProps,
   TabsTriggerProps,
 } from "./molecules/tabs";
+
+export { Collapsible } from "./molecules/collapsible";
+export type { CollapsibleProps } from "./molecules/collapsible";
+
+export { Accordion } from "./molecules/accordion";
+export type {
+  AccordionItem,
+  AccordionProps,
+  AccordionType,
+} from "./molecules/accordion";
+
+export { Breadcrumb } from "./molecules/breadcrumb";
+export type {
+  BreadcrumbItem,
+  BreadcrumbProps,
+  BreadcrumbSize,
+} from "./molecules/breadcrumb";
+
+export { Pagination } from "./molecules/pagination";
+export type {
+  PaginationProps,
+  PaginationSize,
+} from "./molecules/pagination";
 
 export { AppShell, ShellNav, ShellNavItem } from "./organisms/app-shell";
 export type { AppShellProps, ShellNavItemProps } from "./organisms/app-shell";

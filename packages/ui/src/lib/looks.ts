@@ -43,3 +43,17 @@ export type ChipLook = "soft" | "solid" | "outline" | "glass" | "glow";
 /** CloseButton chrome */
 export type CloseButtonLook = "ghost" | "soft" | "solid" | "danger";
 
+/**
+ * Collapsible / Accordion disclosure surface
+ * soft = frost card · solid = long content · glass = chrome · outline = border only · ghost = flush list
+ */
+export type CollapsibleLook = "soft" | "solid" | "glass" | "outline" | "ghost";
+
+export type AccordionLook = CollapsibleLook;
+
+/** Breadcrumb chrome: plain path · soft tray · pill chips */
+export type BreadcrumbLook = "plain" | "soft" | "pill";
+
+/** Pagination control chrome */
+export type PaginationLook = "soft" | "solid" | "ghost" | "glass";
+

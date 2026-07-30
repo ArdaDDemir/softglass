@@ -243,6 +243,31 @@ const registry = {
     ui("text", "Text / Heading", "Lightweight text helpers.", "packages/ui/src/atoms/text.tsx"),
     ui("card", "Card", "Solid | glass | elevated surfaces.", "packages/ui/src/molecules/card.tsx"),
     ui("tabs", "Tabs", "Pill / underline / segmented tabs + keyboard.", "packages/ui/src/molecules/tabs.tsx"),
+    ui(
+      "collapsible",
+      "Collapsible",
+      "Single disclosure panel — open / defaultOpen / onOpenChange.",
+      "packages/ui/src/molecules/collapsible.tsx",
+    ),
+    ui(
+      "accordion",
+      "Accordion",
+      "Single or multiple panels via items[] API.",
+      "packages/ui/src/molecules/accordion.tsx",
+    ),
+    ui(
+      "breadcrumb",
+      "Breadcrumb",
+      "Path trail — reuses Link; last item is current page.",
+      "packages/ui/src/molecules/breadcrumb.tsx",
+      { deps: ["link"] },
+    ),
+    ui(
+      "pagination",
+      "Pagination",
+      "Page / pageCount / onPageChange — compact or full list.",
+      "packages/ui/src/molecules/pagination.tsx",
+    ),
     ui("modal", "Modal", "Portaled dialog, focus trap, enter/exit motion.", "packages/ui/src/molecules/modal.tsx", {
       deps: ["button"],
       extra: [PRESENCE],
