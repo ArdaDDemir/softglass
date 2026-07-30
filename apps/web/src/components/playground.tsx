@@ -28,7 +28,9 @@ import {
   CloseButton,
   Code,
   Collapsible,
+  Combobox,
   CopyButton,
+  DatePicker,
   EmptyState,
   Fieldset,
   FileField,
@@ -41,6 +43,7 @@ import {
   List,
   ListItem,
   Meter,
+  MultiSelect,
   NavLink,
   NumberInput,
   Pagination,
@@ -95,6 +98,7 @@ type SectionId =
   | "disclosure-nav"
   | "surface"
   | "structure"
+  | "form-polish"
   | "docs"
   | "overlays"
   | "controls";
@@ -112,6 +116,7 @@ const SECTIONS: { id: SectionId; label: string }[] = [
   { id: "disclosure-nav", label: "1.4a · Disclosure & nav" },
   { id: "surface", label: "1.4b · Surface" },
   { id: "structure", label: "1.4c · Structure" },
+  { id: "form-polish", label: "1.4d · Form polish" },
   { id: "docs", label: "Docs / API" },
   { id: "overlays", label: "Modal · Menu · Toast" },
   { id: "controls", label: "Controls" },
@@ -227,6 +232,7 @@ export function Playground() {
           {section === "disclosure-nav" ? <DisclosureNavSection /> : null}
           {section === "surface" ? <SurfaceSection /> : null}
           {section === "structure" ? <StructureSection /> : null}
+          {section === "form-polish" ? <FormPolishSection /> : null}
           {section === "docs" ? (
             <DocsSection
               docId={docId}
@@ -1812,6 +1818,131 @@ const LOOK_CHIP: CSSProperties = {
   fontSize: "var(--sg-text-xs)",
   color: "var(--sg-fg-muted)",
 };
+
+/** v1.4d — DatePicker portal + MultiSelect filter + Combobox async. */
+function FormPolishSection() {
+  const [date, setDate] = useState("");
+  const [tags, setTags] = useState<string[]>(["react"]);
+  const [city, setCity] = useState("");
+  const [asyncOpts, setAsyncOpts] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const [asyncLoading, setAsyncLoading] = useState(false);
+
+  const manyOptions = Array.from({ length: 28 }, (_, i) => ({
+    value: `t${i}`,
+    label:
+      i === 0
+        ? "react"
+        : i === 1
+          ? "typescript"
+          : i === 2
+            ? "design-system"
+            : `tag-${i + 1}`,
+  }));
+
+  return (
+    <>
+      <Card surface="solid" as="section" id="section-datepicker-portal">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4d
+          </Badge>
+          <CardTitle>DatePicker · body portal</CardTitle>
+          <CardDescription>
+            Panel mounts on <code>document.body</code> with flip/clamp. Scroll
+            the box — calendar stays positioned.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div
+            style={{
+              maxHeight: 180,
+              overflow: "auto",
+              padding: "1rem",
+              borderRadius: "var(--sg-radius-md)",
+              border: "1px solid var(--sg-border-subtle)",
+              background: "var(--sg-surface-frost)",
+            }}
+          >
+            <p style={{ marginTop: 0, color: "var(--sg-fg-muted)", fontSize: "var(--sg-text-sm)" }}>
+              Scrollable container (portal proof)
+            </p>
+            <div style={{ height: 120 }} />
+            <DatePicker
+              label="Due date"
+              value={date}
+              onValueChange={setDate}
+              placement="auto"
+            />
+            <div style={{ height: 200 }} />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-multiselect-filter">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4d
+          </Badge>
+          <CardTitle>MultiSelect · filter-in-menu</CardTitle>
+          <CardDescription>20+ options — type in the menu to narrow.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <MultiSelect
+            label="Tags"
+            options={manyOptions}
+            value={tags}
+            onValueChange={setTags}
+            filterable
+            filterPlaceholder="Filter tags…"
+          />
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-combobox-async">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4d
+          </Badge>
+          <CardTitle>Combobox · async skeleton</CardTitle>
+          <CardDescription>
+            <code>onSearch</code> + <code>loading</code> — fake delay demo.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Combobox
+            label="City (async)"
+            options={asyncOpts}
+            value={city}
+            onValueChange={setCity}
+            loading={asyncLoading}
+            loadingMessage="Searching…"
+            searchDebounceMs={250}
+            emptyMessage="Type to search…"
+            onSearch={(q) => {
+              const query = q.trim();
+              if (!query) {
+                setAsyncOpts([]);
+                setAsyncLoading(false);
+                return;
+              }
+              setAsyncLoading(true);
+              window.setTimeout(() => {
+                setAsyncOpts([
+                  { value: `${query}-1`, label: `${query} City` },
+                  { value: `${query}-2`, label: `${query} Harbor` },
+                  { value: `${query}-3`, label: `${query} Hills` },
+                ]);
+                setAsyncLoading(false);
+              }, 400);
+            }}
+          />
+        </CardContent>
+      </Card>
+    </>
+  );
+}
 
 /** v1.4c — Stepper + Toolbar + List + Stat (look switchers, structural recipes). */
 function StructureSection() {

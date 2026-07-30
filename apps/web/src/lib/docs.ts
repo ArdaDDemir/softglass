@@ -339,13 +339,15 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: "Combobox",
     layer: "atom",
     summary:
-      "Searchable single-select. Type to filter options; value must be one of the options (no free create).",
+      "Searchable single-select. Local filter or async via onSearch + loading.",
     importLine: 'import { Combobox } from "@softglass/ui";',
     example: `<Combobox
   label="City"
   options={cities}
   value={city}
   onValueChange={setCity}
+  onSearch={setQuery}
+  loading={busy}
   placeholder="Search…"
 />`,
     props: [
@@ -362,7 +364,17 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         name: "filterOption",
         type: "(option, query) => boolean",
-        description: "Custom filter; default substring on label/value.",
+        description: "Local filter (skipped when onSearch is set).",
+      },
+      {
+        name: "onSearch",
+        type: "(query: string) => void",
+        description: "Debounced async search hook.",
+      },
+      {
+        name: "loading / loadingMessage",
+        type: "boolean / string",
+        description: "Async empty-state while searching.",
       },
       {
         name: "emptyMessage",
@@ -377,13 +389,14 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: "MultiSelect",
     layer: "atom",
     summary:
-      "Multi value glass select with removable chips. Menu stays open while toggling options.",
+      "Multi chips + body portal. Filter-in-menu narrows options (default on).",
     importLine: 'import { MultiSelect } from "@softglass/ui";',
     example: `<MultiSelect
   label="Tags"
   options={tags}
   value={selected}
   onValueChange={setSelected}
+  filterable
   maxSelected={4}
 />`,
     props: [
@@ -398,6 +411,12 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         description: "Fires on toggle / chip remove.",
       },
       {
+        name: "filterable",
+        type: "boolean",
+        default: "true",
+        description: "Show filter input inside the menu.",
+      },
+      {
         name: "maxSelected",
         type: "number",
         description: "Soft cap — extra options disable when full.",
@@ -409,13 +428,13 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: "DatePicker",
     layer: "atom",
     summary:
-      "Single calendar date. Solid trigger + frost panel. Click month/year in the header to jump, then pick a day. Value is ISO YYYY-MM-DD. No range/time.",
+      "Single ISO date. Day/month/year grids. Panel is body-portaled with flip/clamp (Select language).",
     importLine: 'import { DatePicker } from "@softglass/ui";',
     example: `<DatePicker
   label="Launch date"
   value={date}
   onValueChange={setDate}
-  hint="Header: month + year pickers."
+  placement="auto"
 />`,
     props: [
       {

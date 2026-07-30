@@ -122,9 +122,9 @@ See the live **Docs** tab in the playground for prop tables.
 | `Badge` | `variant` `size` `dot` |
 | `Card` | `surface` `blur` `padding` `hoverable` `clickable` `as` |
 | `Select` | `options` `value` `onValueChange` `placeholder` `size` `label` `hint` `error` |
-| `Combobox` | `options` `value` `onValueChange` `filterOption` `emptyMessage` (+ Select field meta) |
-| `MultiSelect` | `options` `value: string[]` `onValueChange` `maxSelected` (+ chips) |
-| `DatePicker` | `value` `onValueChange` (ISO `YYYY-MM-DD`) `min` `max` `label` `hint` `error` `motion` |
+| `Combobox` | `options` `onSearch` `loading` `filterOption` `emptyMessage` |
+| `MultiSelect` | `options` `value[]` `filterable` `filterPlaceholder` `maxSelected` |
+| `DatePicker` | `value` `onValueChange` (ISO) `min` `max` `placement` — **body portal** |
 | `Switch` | `checked` `onCheckedChange` `label` `hint` |
 | `Modal` | `open` `onOpenChange` `title` `description` `footer` `size` |
 | `DropdownMenu` | `trigger` `items` `placement` `align` `motion` `open` `onOpenChange` |

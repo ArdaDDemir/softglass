@@ -93,9 +93,9 @@ const registry = {
     ui(
       "date-picker",
       "Date Picker",
-      "Single ISO date calendar — solid trigger + frost month panel.",
+      "Single ISO date calendar — body portal + flip/clamp panel.",
       "packages/ui/src/atoms/date-picker.tsx",
-      { extra: [PRESENCE] },
+      { extra: [PRESENCE, FLOATING, FLOATING_HOOK] },
     ),
     ui("tooltip", "Tooltip", "Frost tooltip on hover/focus.", "packages/ui/src/atoms/tooltip.tsx"),
     ui("alert", "Alert", "Inline callout — info / success / warning / danger.", "packages/ui/src/atoms/alert.tsx"),

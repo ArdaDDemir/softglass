@@ -22,9 +22,9 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | --- | --- | --- |
 | **Modal** | Portal + Escape + backdrop + focus trap + **enter/exit** (`data-state` presence) | Full WAI-ARIA dialog tests; scroll-lock edge cases on iOS Safari |
 | **Select** | Custom listbox-ish menu, keyboard, placement auto, **body portal + flip/clamp**, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
-| **Combobox** | Type-to-filter single select; option-only (no free create); **body portal** | Async remote search; creatable tags; virtualization |
-| **MultiSelect** | Multi value + chips; menu stays open; optional `maxSelected`; **body portal** | Select-all; filter-in-menu; paste list |
-| **DatePicker** | Single ISO `YYYY-MM-DD`; solid trigger + frost panel; **day + month + year grids**; arrows / Enter / Esc; `label`/`hint`/`error`; optional `min`/`max` | Range; time; locale packs / full i18n; typing into field; **portal** (still absolute to field) |
+| **Combobox** | Type-to-filter; option-only; body portal; **`onSearch` + `loading` async skeleton** | Creatable free-form; full data layer / cancellation |
+| **MultiSelect** | Multi chips; body portal; **filter-in-menu** (default on) | Select-all; paste list |
+| **DatePicker** | Single ISO `YYYY-MM-DD`; day/month/year grids; **body portal + flip/clamp** (Select language); min/max | Range; time; locale packs / full i18n; typing into field |
 | **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **body portal + collision**, **enter/exit** | Submenus; checkbox/radio items |
 | **ContextMenu** | Same `items` language; right-click + long-press; fixed at pointer; Escape + outside; **enter/exit** | Nested submenu tree; full OS parity; Floating UI-level collision |
 | **Popover** | Anchored panel, Escape + outside, non-modal, **body portal + collision**, **enter/exit** | Focus trap option; arrow |
@@ -56,7 +56,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **SearchInput** | Free text + clear | Command palette; async suggestions |
 | **TimeInput** | Custom HH:mm Softglass UI | Timezone / seconds / range |
 | **NativeDateInput** | Custom day/month/year steppers (YYYY-MM-DD) | Full calendar suite (use DatePicker) |
-| **DatePicker** | Day/month/year grids; field meta | Portal body; range; locale packs |
+| **DatePicker** | Day/month/year grids; body portal | Range; locale packs; Calendar extract |
 | **Rating** | SVG stars + shell | Half-stars; custom icon sets |
 | **Glass surfaces** | Frost-first (cheap); optional blur | Guaranteed WCAG on every glass+text combo |
 

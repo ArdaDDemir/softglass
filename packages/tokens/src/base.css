@@ -1592,12 +1592,23 @@
   -webkit-backdrop-filter: blur(22px) saturate(1.35);
   color: var(--sg-fg);
   animation: sg-select-in var(--sg-duration-fast) var(--sg-ease-out);
+  box-sizing: border-box;
 }
 
 .sg-datepicker-panel[data-placement="top"] {
   top: auto;
   bottom: calc(100% + 0.4rem);
   animation-name: sg-select-in-top;
+}
+
+/* Body portal — fixed coords from useFloatingPortal (Select language) */
+.sg-datepicker-panel[data-portaled] {
+  position: fixed;
+  top: auto;
+  left: auto;
+  bottom: auto;
+  right: auto;
+  margin: 0;
 }
 
 .sg-datepicker-header {
@@ -7896,4 +7907,49 @@
 @media (prefers-reduced-motion: reduce) {
   .sg-stepper-indicator { transition: none !important; }
   .sg-stepper-trigger:not(:disabled):hover .sg-stepper-indicator { transform: none; }
+}
+/* MultiSelect in-menu filter (v1.4d) */
+.sg-multiselect-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  max-height: min(20rem, 70vh);
+}
+.sg-multiselect-filter {
+  flex-shrink: 0;
+  padding: 0.45rem 0.5rem;
+  border-bottom: var(--sg-border-width) solid var(--sg-border-frost);
+  background: color-mix(in srgb, var(--sg-surface-solid) 55%, transparent);
+}
+.sg-multiselect-filter-input {
+  appearance: none;
+  width: 100%;
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--sg-radius-sm);
+  border: var(--sg-border-width) solid var(--sg-border-subtle);
+  background: var(--sg-surface-solid);
+  color: var(--sg-fg);
+  font-family: var(--sg-font-sans);
+  font-size: var(--sg-text-sm);
+  box-sizing: border-box;
+}
+.sg-multiselect-filter-input:focus {
+  outline: 2px solid var(--sg-ring);
+  outline-offset: 1px;
+}
+.sg-multiselect-options {
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  overflow: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.sg-combobox-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0.85;
 }
