@@ -43,6 +43,7 @@ Most components accept a **`look`** prop — visual language independent of sema
 | Collapsible / Accordion | `soft` `solid` `glass` `outline` `ghost` |
 | Breadcrumb | `plain` `soft` `pill` |
 | Pagination | `soft` `solid` `ghost` `glass` |
+| EmptyState | `solid` `soft` `outline` |
 | Avatar | `circle` `rounded` `soft` |
 | Tooltip | `frost` `solid` `accent` |
 | Card | `flat` `raised` `outline` `glow` |
@@ -86,6 +87,8 @@ Parallel to `look`: each control has a **component-specific** motion menu. Set v
 | Avatar | `none` `lift` `ring-pulse` `status-ping` | `lift` |
 | Tabs | `none` `fade` `slide` | **`slide`** |
 | Collapsible / Accordion | `none` `fade` `height` | **`height`** |
+| Sheet | `none` `slide` `fade` | **`slide`** |
+| HoverCard | `none` `fade` `scale` `slide-down` | **`scale`** |
 | Modal | `none` `scale` `fade` `slide-up` | `scale` |
 | Toast | `none` `slide-in` `pop` | `slide-in` |
 | Card | `none` `lift` `glow-pulse` | `lift` |
@@ -129,6 +132,9 @@ See the live **Docs** tab in the playground for prop tables.
 | `Accordion` | `items[]` `type` `value` `defaultValue` `onValueChange` `collapsible` `look` |
 | `Breadcrumb` | `items[{ label, href? }]` `look` `separator` `size` |
 | `Pagination` | `page` `pageCount` `onPageChange` `compact` `siblingCount` `look` |
+| `EmptyState` | `icon` `title` `description` `actions` `look` `size` |
+| `Sheet` | `open` `onOpenChange` `title` `side` `motion` `footer` |
+| `HoverCard` | `trigger` `children` `openDelay` `closeDelay` `placement` |
 | `Avatar` | `src` `fallback` `size` |
 | `Checkbox` | `checked` `onCheckedChange` `label` `hint` |
 | `Radio` / `RadioGroup` | `value` `onValueChange` `name` + child `value` |

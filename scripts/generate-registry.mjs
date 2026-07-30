@@ -268,6 +268,26 @@ const registry = {
       "Page / pageCount / onPageChange — compact or full list.",
       "packages/ui/src/molecules/pagination.tsx",
     ),
+    ui(
+      "empty-state",
+      "Empty State",
+      "Zero-data surface — icon / title / description / actions.",
+      "packages/ui/src/molecules/empty-state.tsx",
+    ),
+    ui(
+      "sheet",
+      "Sheet",
+      "Edge panel (Drawer) — left | right | bottom; portal + presence.",
+      "packages/ui/src/molecules/sheet.tsx",
+      { deps: ["button"], extra: [PRESENCE] },
+    ),
+    ui(
+      "hover-card",
+      "Hover Card",
+      "Delayed preview panel — open/close delay; Popover family.",
+      "packages/ui/src/molecules/hover-card.tsx",
+      { extra: [PRESENCE, FLOATING, FLOATING_HOOK] },
+    ),
     ui("modal", "Modal", "Portaled dialog, focus trap, enter/exit motion.", "packages/ui/src/molecules/modal.tsx", {
       deps: ["button"],
       extra: [PRESENCE],

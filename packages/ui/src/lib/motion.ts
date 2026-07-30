@@ -57,6 +57,12 @@ export type CollapsibleMotion = MotionNone | "fade" | "height";
 
 export type AccordionMotion = CollapsibleMotion;
 
+/** Sheet edge panel enter/exit. */
+export type SheetMotion = MotionNone | "slide" | "fade";
+
+/** HoverCard panel (Popover family). */
+export type HoverCardMotion = MotionNone | "fade" | "scale" | "slide-down";
+
 /** Defaults — preserve current product feel. */
 export const MOTION_DEFAULTS = {
   button: "lift",
@@ -78,4 +84,6 @@ export const MOTION_DEFAULTS = {
   datePicker: "scale",
   collapsible: "height",
   accordion: "height",
+  sheet: "slide",
+  hoverCard: "scale",
 } as const satisfies Record<string, string>;

@@ -34,6 +34,9 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Accordion** | `items[]` API; single \| multiple; closed panels unmounted (perf) | Nested accordion; compound Root/Item later |
 | **Breadcrumb** | `items` + `Link` reuse; last = current | Auto-collapse overflow / ellipsis middle crumbs |
 | **Pagination** | Known `pageCount`; compact or numbered list | Cursor/infinite API; URL sync helpers |
+| **EmptyState** | Icon / title / description / actions; solid default | Full empty-template pack / illustrations library |
+| **Sheet** | left \| right \| bottom; portal + presence + focus trap | Nested sheet stack; full mobile OS bottom-sheet physics |
+| **HoverCard** | openDelay / closeDelay; portal + flip | Touch-first long-press parity; arrow pointer |
 | **Toast** | Stack + variants + auto-dismiss + leave + bottom stack reflow | Swipe-to-dismiss; action buttons API |
 | **FormField** | Layout only (label/hint/error) | Schema validation; RHF/Formik adapters |
 | **Progress** | Linear; looks + variants; indeterminate CSS | Buffered/secondary value |

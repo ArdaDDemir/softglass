@@ -29,8 +29,10 @@ import {
   Code,
   Collapsible,
   CopyButton,
+  EmptyState,
   Fieldset,
   FileField,
+  HoverCard,
   Icon,
   Image,
   Input,
@@ -49,6 +51,7 @@ import {
   SearchInput,
   SegmentedControl,
   Separator,
+  Sheet,
   ShellNav,
   ShellNavItem,
   Skeleton,
@@ -83,6 +86,7 @@ type SectionId =
   | "should"
   | "nice"
   | "disclosure-nav"
+  | "surface"
   | "docs"
   | "overlays"
   | "controls";
@@ -98,6 +102,7 @@ const SECTIONS: { id: SectionId; label: string }[] = [
   { id: "should", label: "Should · 1.3d" },
   { id: "nice", label: "Nice · 1.3e" },
   { id: "disclosure-nav", label: "1.4a · Disclosure & nav" },
+  { id: "surface", label: "1.4b · Surface" },
   { id: "docs", label: "Docs / API" },
   { id: "overlays", label: "Modal · Menu · Toast" },
   { id: "controls", label: "Controls" },
@@ -211,6 +216,7 @@ export function Playground() {
           {section === "should" ? <ShouldAtomsSection /> : null}
           {section === "nice" ? <NiceAtomsSection /> : null}
           {section === "disclosure-nav" ? <DisclosureNavSection /> : null}
+          {section === "surface" ? <SurfaceSection /> : null}
           {section === "docs" ? (
             <DocsSection
               docId={docId}
@@ -1796,6 +1802,156 @@ const LOOK_CHIP: CSSProperties = {
   fontSize: "var(--sg-text-xs)",
   color: "var(--sg-fg-muted)",
 };
+
+/** v1.4b — EmptyState + Sheet + HoverCard (single live instances). */
+function SurfaceSection() {
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetSide, setSheetSide] = useState<"left" | "right" | "bottom">(
+    "right",
+  );
+  const [emptyLook, setEmptyLook] = useState<"solid" | "soft" | "outline">(
+    "solid",
+  );
+
+  return (
+    <>
+      <Card surface="solid" as="section" id="section-empty-state">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4b
+          </Badge>
+          <CardTitle>EmptyState</CardTitle>
+          <CardDescription>
+            solid · soft · outline — zero-data CTA surface.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            {(["solid", "soft", "outline"] as const).map((look) => (
+              <Button
+                key={look}
+                size="sm"
+                variant={emptyLook === look ? "primary" : "secondary"}
+                onClick={() => setEmptyLook(look)}
+              >
+                {look}
+              </Button>
+            ))}
+          </div>
+          <EmptyState
+            look={emptyLook}
+            icon={<span aria-hidden>📁</span>}
+            title="Henüz proje yok"
+            description="İlk projeni oluştur; Softglass solid surface uzun metin için."
+            actions={
+              <>
+                <Button size="sm">Create project</Button>
+                <Button size="sm" variant="ghost">
+                  Import
+                </Button>
+              </>
+            }
+          />
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-sheet">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4b
+          </Badge>
+          <CardTitle>Sheet</CardTitle>
+          <CardDescription>
+            Edge panel — left · right · bottom. Escape / backdrop closes.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+            {(["right", "left", "bottom"] as const).map((side) => (
+              <Button
+                key={side}
+                size="sm"
+                variant={sheetSide === side ? "primary" : "secondary"}
+                onClick={() => setSheetSide(side)}
+              >
+                {side}
+              </Button>
+            ))}
+          </div>
+          <Button onClick={() => setSheetOpen(true)}>Open settings sheet</Button>
+          <Sheet
+            open={sheetOpen}
+            onOpenChange={setSheetOpen}
+            side={sheetSide}
+            title="Settings"
+            description="Account preferences (demo)"
+            footer={
+              <>
+                <Button variant="ghost" onClick={() => setSheetOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => setSheetOpen(false)}>Save</Button>
+              </>
+            }
+          >
+            <div style={{ display: "grid", gap: "0.75rem" }}>
+              <Input label="Display name" defaultValue="Ada" />
+              <Input label="Email" defaultValue="ada@example.com" />
+              <p style={{ margin: 0, color: "var(--sg-fg-muted)", fontSize: "var(--sg-text-sm)" }}>
+                Sheet = Modal kardeşi: portal, presence, focus trap, body scroll
+                lock. Drawer adı docs alias.
+              </p>
+            </div>
+          </Sheet>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-hover-card">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4b
+          </Badge>
+          <CardTitle>HoverCard</CardTitle>
+          <CardDescription>
+            Delayed preview on link / avatar. openDelay 280 · closeDelay 160.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", alignItems: "center" }}>
+          <HoverCard
+            trigger={
+              <Link href="#ada" look="accent">
+                @ada
+              </Link>
+            }
+            aria-label="Ada preview"
+          >
+            <div style={{ display: "grid", gap: "0.35rem" }}>
+              <div style={{ display: "flex", gap: "0.65rem", alignItems: "center" }}>
+                <Avatar fallback="AL" size="sm" />
+                <strong>Ada Lovelace</strong>
+              </div>
+              <p style={{ margin: 0, color: "var(--sg-fg-muted)" }}>
+                Mathematician · first programmer
+              </p>
+            </div>
+          </HoverCard>
+
+          <HoverCard
+            trigger={<Avatar fallback="SG" size="md" />}
+            openDelay={200}
+            closeDelay={120}
+            aria-label="Softglass preview"
+          >
+            <div style={{ display: "grid", gap: "0.25rem" }}>
+              <strong>Softglass</strong>
+              <span style={{ color: "var(--sg-fg-muted)" }}>v1.4 surface molecules</span>
+            </div>
+          </HoverCard>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
 
 /** One live instance per molecule — look switcher, no N× glass stack. */
 function DisclosureNavSection() {

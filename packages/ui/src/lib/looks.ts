@@ -57,3 +57,6 @@ export type BreadcrumbLook = "plain" | "soft" | "pill";
 /** Pagination control chrome */
 export type PaginationLook = "soft" | "solid" | "ghost" | "glass";
 
+/** EmptyState surface */
+export type EmptyStateLook = "solid" | "soft" | "outline";
+

@@ -8,6 +8,7 @@ export type {
   CardLook,
   CheckboxLook,
   CollapsibleLook,
+  EmptyStateLook,
   FieldLook,
   ChipLook,
   CloseButtonLook,
@@ -36,10 +37,12 @@ export type {
   DatePickerMotion,
   DropdownMenuMotion,
   FieldMotion,
+  HoverCardMotion,
   ModalMotion,
   PopoverMotion,
   RadioMotion,
   SelectMotion,
+  SheetMotion,
   SwitchMotion,
   TabsMotion,
   ToastMotion,
@@ -174,6 +177,22 @@ export type {
   PaginationProps,
   PaginationSize,
 } from "./molecules/pagination";
+
+export { EmptyState } from "./molecules/empty-state";
+export type {
+  EmptyStateProps,
+  EmptyStateSize,
+} from "./molecules/empty-state";
+
+export { Sheet } from "./molecules/sheet";
+export type { SheetProps, SheetSide } from "./molecules/sheet";
+
+export { HoverCard } from "./molecules/hover-card";
+export type {
+  HoverCardAlign,
+  HoverCardPlacement,
+  HoverCardProps,
+} from "./molecules/hover-card";
 
 export { AppShell, ShellNav, ShellNavItem } from "./organisms/app-shell";
 export type { AppShellProps, ShellNavItemProps } from "./organisms/app-shell";

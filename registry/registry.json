@@ -2120,6 +2120,120 @@
       ]
     },
     {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "Zero-data surface — icon / title / description / actions.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/empty-state.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/empty-state.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Edge panel (Drawer) — left | right | bottom; portal + presence.",
+      "registryDependencies": [
+        "tokens",
+        "button"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/sheet.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/sheet.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/presence.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/presence.ts"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "Delayed preview panel — open/close delay; Popover family.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/hover-card.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/hover-card.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/presence.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/presence.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/floating.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/floating.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/use-floating-portal.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/use-floating-portal.ts"
+        }
+      ]
+    },
+    {
       "name": "modal",
       "type": "registry:ui",
       "title": "Modal",

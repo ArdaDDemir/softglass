@@ -1945,4 +1945,150 @@ toast({ title: "Saved", variant: "success", description: "All good." });`,
       },
     ],
   },
+  {
+    id: "empty-state",
+    name: "EmptyState",
+    layer: "molecule",
+    summary:
+      "Zero-data surface — icon / title / description / actions. Solid default for readable copy.",
+    importLine: 'import { EmptyState, Button } from "@softglass/ui";',
+    example: `<EmptyState
+  icon={<span>📁</span>}
+  title="Henüz proje yok"
+  description="İlk projeni oluşturarak başla."
+  actions={<Button>Create project</Button>}
+  look="solid"
+/>`,
+    props: [
+      {
+        name: "icon",
+        type: "ReactNode",
+        description: "Optional leading mark.",
+      },
+      {
+        name: "title",
+        type: "ReactNode",
+        description: "Primary empty message.",
+      },
+      {
+        name: "description",
+        type: "ReactNode",
+        description: "Supporting copy.",
+      },
+      {
+        name: "actions",
+        type: "ReactNode",
+        description: "CTA row (usually Button).",
+      },
+      {
+        name: "look",
+        type: '"solid" | "soft" | "outline"',
+        default: '"solid"',
+        description: "Surface language.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Padding / type scale.",
+      },
+    ],
+  },
+  {
+    id: "sheet",
+    name: "Sheet",
+    layer: "molecule",
+    summary:
+      "Edge panel (Drawer alias in docs) — portal + usePresence + focus trap.",
+    importLine: 'import { Sheet, Button } from "@softglass/ui";',
+    example: `<Sheet
+  open={open}
+  onOpenChange={setOpen}
+  title="Settings"
+  side="right"
+  description="Account preferences"
+>
+  …
+</Sheet>`,
+    props: [
+      {
+        name: "open / onOpenChange",
+        type: "boolean / (open: boolean) => void",
+        description: "Controlled open state.",
+      },
+      {
+        name: "title",
+        type: "ReactNode",
+        description: "Dialog title (required for a11y).",
+      },
+      {
+        name: "side",
+        type: '"left" | "right" | "bottom"',
+        default: '"right"',
+        description: "Edge placement.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "slide" | "fade"',
+        default: '"slide"',
+        description: "Enter / exit recipe.",
+      },
+      {
+        name: "description / footer / children",
+        type: "ReactNode",
+        description: "Optional regions.",
+      },
+      {
+        name: "closeOnBackdrop / closeOnEscape",
+        type: "boolean",
+        default: "true",
+        description: "Dismiss behavior.",
+      },
+    ],
+  },
+  {
+    id: "hover-card",
+    name: "HoverCard",
+    layer: "molecule",
+    summary:
+      "Delayed preview (Popover family) — openDelay / closeDelay + body portal.",
+    importLine: 'import { HoverCard, Avatar } from "@softglass/ui";',
+    example: `<HoverCard
+  trigger={<a href="#u">@ada</a>}
+  openDelay={280}
+  closeDelay={160}
+>
+  <strong>Ada Lovelace</strong>
+  <p>Mathematician</p>
+</HoverCard>`,
+    props: [
+      {
+        name: "trigger",
+        type: "ReactNode",
+        description: "Hover / focus target.",
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "Preview body.",
+      },
+      {
+        name: "openDelay / closeDelay",
+        type: "number",
+        default: "280 / 160",
+        description: "Milliseconds.",
+      },
+      {
+        name: "placement / align",
+        type: "auto|top|bottom / start|center|end",
+        description: "Floating placement (portal).",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "scale" | "slide-down"',
+        default: '"scale"',
+        description: "Panel enter recipe.",
+      },
+    ],
+  },
 ];
