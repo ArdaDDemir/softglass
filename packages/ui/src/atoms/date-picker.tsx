@@ -4,6 +4,10 @@ import { cn } from "../lib/cn";
 import { MOTION_DEFAULTS, type DatePickerMotion } from "../lib/motion";
 import { exitDurationForMotion, usePresence } from "../lib/presence";
 import {
+  eventInside,
+  useFloatingPortal,
+} from "../lib/use-floating-portal";
+import {
   useCallback,
   useEffect,
   useId,
@@ -13,6 +17,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 
 export type DatePickerSize = "sm" | "md" | "lg";
 export type { DatePickerMotion };
@@ -331,7 +336,6 @@ export function DatePicker({
   const todayYmd = parseISO(today)!;
 
   const [open, setOpen] = useState(false);
-  const [menuPlacement, setMenuPlacement] = useState<"bottom" | "top">("bottom");
   const [panelMode, setPanelMode] = useState<PanelMode>("day");
   const [view, setView] = useState(() => {
     const base = selected ?? parseISO(today)!;
@@ -349,6 +353,18 @@ export function DatePicker({
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  const { portalReady, floatingStyle, side: menuPlacement } = useFloatingPortal({
+    open,
+    mounted: panelMounted,
+    triggerRef,
+    panelRef,
+    placement,
+    align: "start",
+    matchWidth: false,
+    flipMinSpace: 320,
+    gap: 6,
+  });
 
   const cells = useMemo(
     () => buildMonthGrid(view.y, view.m),
@@ -378,16 +394,6 @@ export function DatePicker({
   const openPanel = useCallback(() => {
     if (disabled) return;
 
-    if (placement === "top") {
-      setMenuPlacement("top");
-    } else if (placement === "bottom") {
-      setMenuPlacement("bottom");
-    } else if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const spaceBelow = window.innerHeight - rect.bottom;
-      setMenuPlacement(spaceBelow < 320 && rect.top > spaceBelow ? "top" : "bottom");
-    }
-
     const base =
       parseISO(current) ??
       parseISO(clampISO(today, min, max)) ??
@@ -397,13 +403,15 @@ export function DatePicker({
     setFocusISO(toISO(base.y, base.m, base.d));
     setPanelMode("day");
     setOpen(true);
-  }, [current, disabled, max, min, placement, today]);
+  }, [current, disabled, max, min, today]);
 
   useEffect(() => {
     if (!open || panelExiting) return;
 
     function onPointerDown(event: MouseEvent) {
-      if (!rootRef.current?.contains(event.target as Node)) {
+      if (
+        !eventInside(event.target, rootRef.current, panelRef.current)
+      ) {
         close();
       }
     }
@@ -630,7 +638,8 @@ export function DatePicker({
         </span>
       </button>
 
-      {panelMounted ? (
+      {panelMounted && portalReady
+        ? createPortal(
         <div
           ref={panelRef}
           id={panelId}
@@ -648,6 +657,8 @@ export function DatePicker({
           data-motion={motion}
           data-state={panelState}
           data-mode={panelMode}
+          data-portaled=""
+          style={floatingStyle}
         >
           <div className="sg-datepicker-header">
             <button
@@ -814,8 +825,10 @@ export function DatePicker({
               })}
             </div>
           ) : null}
-        </div>
-      ) : null}
+        </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 

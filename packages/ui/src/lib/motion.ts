@@ -52,6 +52,17 @@ export type ContextMenuMotion = MotionNone | "fade" | "scale" | "slide-down";
 /** DatePicker calendar panel — same recipes as Select. */
 export type DatePickerMotion = MotionNone | "fade" | "scale" | "slide-down";
 
+/** Collapsible / Accordion panel open motion. */
+export type CollapsibleMotion = MotionNone | "fade" | "height";
+
+export type AccordionMotion = CollapsibleMotion;
+
+/** Sheet edge panel enter/exit. */
+export type SheetMotion = MotionNone | "slide" | "fade";
+
+/** HoverCard panel (Popover family). */
+export type HoverCardMotion = MotionNone | "fade" | "scale" | "slide-down";
+
 /** Defaults — preserve current product feel. */
 export const MOTION_DEFAULTS = {
   button: "lift",
@@ -71,4 +82,8 @@ export const MOTION_DEFAULTS = {
   dropdownMenu: "scale",
   contextMenu: "scale",
   datePicker: "scale",
+  collapsible: "height",
+  accordion: "height",
+  sheet: "slide",
+  hoverCard: "scale",
 } as const satisfies Record<string, string>;

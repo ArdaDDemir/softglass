@@ -339,13 +339,15 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: "Combobox",
     layer: "atom",
     summary:
-      "Searchable single-select. Type to filter options; value must be one of the options (no free create).",
+      "Searchable single-select. Local filter or async via onSearch + loading.",
     importLine: 'import { Combobox } from "@softglass/ui";',
     example: `<Combobox
   label="City"
   options={cities}
   value={city}
   onValueChange={setCity}
+  onSearch={setQuery}
+  loading={busy}
   placeholder="Search…"
 />`,
     props: [
@@ -362,7 +364,17 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         name: "filterOption",
         type: "(option, query) => boolean",
-        description: "Custom filter; default substring on label/value.",
+        description: "Local filter (skipped when onSearch is set).",
+      },
+      {
+        name: "onSearch",
+        type: "(query: string) => void",
+        description: "Debounced async search hook.",
+      },
+      {
+        name: "loading / loadingMessage",
+        type: "boolean / string",
+        description: "Async empty-state while searching.",
       },
       {
         name: "emptyMessage",
@@ -377,13 +389,14 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: "MultiSelect",
     layer: "atom",
     summary:
-      "Multi value glass select with removable chips. Menu stays open while toggling options.",
+      "Multi chips + body portal. Filter-in-menu narrows options (default on).",
     importLine: 'import { MultiSelect } from "@softglass/ui";',
     example: `<MultiSelect
   label="Tags"
   options={tags}
   value={selected}
   onValueChange={setSelected}
+  filterable
   maxSelected={4}
 />`,
     props: [
@@ -398,6 +411,12 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         description: "Fires on toggle / chip remove.",
       },
       {
+        name: "filterable",
+        type: "boolean",
+        default: "true",
+        description: "Show filter input inside the menu.",
+      },
+      {
         name: "maxSelected",
         type: "number",
         description: "Soft cap — extra options disable when full.",
@@ -409,13 +428,13 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: "DatePicker",
     layer: "atom",
     summary:
-      "Single calendar date. Solid trigger + frost panel. Click month/year in the header to jump, then pick a day. Value is ISO YYYY-MM-DD. No range/time.",
+      "Single ISO date. Day/month/year grids. Panel is body-portaled with flip/clamp (Select language).",
     importLine: 'import { DatePicker } from "@softglass/ui";',
     example: `<DatePicker
   label="Launch date"
   value={date}
   onValueChange={setDate}
-  hint="Header: month + year pickers."
+  placement="auto"
 />`,
     props: [
       {
@@ -1168,6 +1187,554 @@ toast({ title: "Saved", variant: "success", description: "All good." });`,
     ],
   },
   {
+    id: "progress",
+    name: "Progress",
+    layer: "atom",
+    summary:
+      "Linear progress bar — set value for determinate, omit for indeterminate.",
+    importLine: 'import { Progress } from "@softglass/ui";',
+    example: `<Progress value={64} label="Upload" />
+<Progress size="sm" />`,
+    props: [
+      {
+        name: "value",
+        type: "number | null",
+        description: "Current value. Omit / null → indeterminate animation.",
+      },
+      {
+        name: "max",
+        type: "number",
+        default: "100",
+        description: "Upper bound for value.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Track thickness.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "accent" | "striped"',
+        default: '"soft"',
+        description: "Track / fill chrome language.",
+      },
+      {
+        name: "variant",
+        type: '"accent" | "success" | "warning" | "danger" | "muted"',
+        default: '"accent"',
+        description: "Semantic fill color.",
+      },
+      {
+        name: "label",
+        type: "string",
+        default: '"Progress"',
+        description: "Accessible name (aria-label).",
+      },
+    ],
+  },
+  {
+    id: "status-dot",
+    name: "StatusDot",
+    layer: "atom",
+    summary:
+      "Tiny presence indicator — semantic statuses or a custom color.",
+    importLine: 'import { StatusDot } from "@softglass/ui";',
+    example: `<StatusDot status="online" look="glow" />
+<StatusDot status="busy" look="outline" pulse={false} />
+<StatusDot color="#6366f1" look="solid" label="Custom" />`,
+    props: [
+      {
+        name: "status",
+        type: '"online" | "busy" | "offline" | "away"',
+        default: '"online"',
+        description: "Semantic color (success / danger / muted / warning).",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "outline" | "glow"',
+        default: '"soft"',
+        description: "Dot chrome (ring / hollow / glow).",
+      },
+      {
+        name: "color",
+        type: "string",
+        description: "CSS color override (wins over status fill).",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Dot diameter.",
+      },
+      {
+        name: "pulse",
+        type: "boolean",
+        default: "true when status=online",
+        description: "Soft ping ring.",
+      },
+      {
+        name: "label",
+        type: "string",
+        description: "Screen reader name (defaults from status).",
+      },
+    ],
+  },
+  {
+    id: "slider",
+    name: "Slider",
+    layer: "atom",
+    summary: "Single-value range with field meta. Arrow keys work (native range).",
+    importLine: 'import { Slider } from "@softglass/ui";',
+    example: `<Slider
+  label="Opacity"
+  value={40}
+  onValueChange={setOpacity}
+  min={0}
+  max={100}
+  step={1}
+/>`,
+    props: [
+      {
+        name: "value / defaultValue",
+        type: "number",
+        description: "Controlled or uncontrolled value.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: number) => void",
+        description: "Fires on drag / keyboard change.",
+      },
+      {
+        name: "min / max / step",
+        type: "number",
+        default: "0 / 100 / 1",
+        description: "Range bounds and increment.",
+      },
+      {
+        name: "label / hint / error",
+        type: "ReactNode",
+        description: "Field meta (same language as Input).",
+      },
+      {
+        name: "showValue",
+        type: "boolean",
+        default: "true",
+        description: "Show numeric value next to label.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Track thickness / thumb size.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "accent"',
+        default: '"soft"',
+        description: "Track / thumb visual language.",
+      },
+    ],
+  },
+  {
+    id: "number-input",
+    name: "NumberInput",
+    layer: "atom",
+    summary: "Numeric field with +/− steppers, min/max/step, field meta.",
+    importLine: 'import { NumberInput } from "@softglass/ui";',
+    example: `<NumberInput
+  label="Quantity"
+  value={qty}
+  onValueChange={setQty}
+  min={1}
+  max={99}
+  step={1}
+/>`,
+    props: [
+      {
+        name: "value / defaultValue",
+        type: "number | null",
+        description: "Empty field → null.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: number | null) => void",
+        description: "Controlled updates.",
+      },
+      {
+        name: "min / max / step",
+        type: "number",
+        default: "step=1",
+        description: "Bounds + stepper delta.",
+      },
+      {
+        name: "hideSteppers",
+        type: "boolean",
+        default: "false",
+        description: "Hide custom +/− buttons.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "outline" | "ghost"',
+        default: '"soft"',
+        description: "Shell + stepper visual language.",
+      },
+      {
+        name: "label / hint / error",
+        type: "ReactNode",
+        description: "Field meta.",
+      },
+    ],
+  },
+  {
+    id: "file-field",
+    name: "FileField",
+    layer: "atom",
+    summary:
+      "Solid file picker with basic name list. No upload / cloud backend.",
+    importLine: 'import { FileField } from "@softglass/ui";',
+    example: `<FileField
+  label="Avatar"
+  accept="image/*"
+  onFilesChange={setFiles}
+  hint="PNG or JPG, max ~2MB (you enforce)."
+/>`,
+    props: [
+      {
+        name: "files / onFilesChange",
+        type: "File[] / (files: File[]) => void",
+        description: "Controlled list of selected File objects.",
+      },
+      {
+        name: "multiple",
+        type: "boolean",
+        default: "false",
+        description: "Allow more than one file.",
+      },
+      {
+        name: "accept",
+        type: "string",
+        description: "Native accept filter (e.g. image/*).",
+      },
+      {
+        name: "buttonLabel / emptyLabel",
+        type: "string",
+        description: "Trigger + empty summary copy.",
+      },
+      {
+        name: "clearable",
+        type: "boolean",
+        default: "true",
+        description: "Show remove / clear controls.",
+      },
+      {
+        name: "look",
+        type: '"solid" | "soft" | "dashed" | "ghost"',
+        default: '"solid"',
+        description: "Trigger surface language (dashed ≈ dropzone chrome, no upload).",
+      },
+      {
+        name: "label / hint / error",
+        type: "ReactNode",
+        description: "Field meta.",
+      },
+    ],
+  },
+  {
+    id: "link",
+    name: "Link",
+    layer: "atom",
+    summary: "Text link. Plain <a href> — wrap with next/link in App Router as needed.",
+    importLine: 'import { Link } from "@softglass/ui";',
+    example: `<Link href="/docs">Docs</Link>
+<Link href="https://example.com" external>External</Link>`,
+    props: [
+      {
+        name: "href",
+        type: "string",
+        description: "Required destination.",
+      },
+      {
+        name: "external",
+        type: "boolean",
+        default: "false",
+        description: "target=_blank + rel=noopener noreferrer + ↗ cue.",
+      },
+      {
+        name: "look",
+        type: '"accent" | "muted" | "subtle" | "underline"',
+        default: '"accent"',
+        description: "Text style language.",
+      },
+    ],
+  },
+  {
+    id: "chip",
+    name: "Chip",
+    layer: "atom",
+    summary: "Selectable and/or removable pill for filters and tags.",
+    importLine: 'import { Chip } from "@softglass/ui";',
+    example: `<Chip selected onSelectedChange={setOn}>Aurora</Chip>
+<Chip removable onRemove={remove}>Tag</Chip>`,
+    props: [
+      {
+        name: "selected / onSelectedChange",
+        type: "boolean / (v: boolean) => void",
+        description: "Toggle selection (aria-pressed).",
+      },
+      {
+        name: "removable / onRemove",
+        type: "boolean / () => void",
+        description: "Dismiss control (CloseButton).",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "outline" | "glass" | "glow"',
+        default: '"soft"',
+        description: "Visual language.",
+      },
+      {
+        name: "interactive",
+        type: "boolean",
+        default: "true",
+        description: "False → static tag (still can remove).",
+      },
+    ],
+  },
+  {
+    id: "close-button",
+    name: "CloseButton",
+    layer: "atom",
+    summary: "Shared dismiss control for Chip and chrome.",
+    importLine: 'import { CloseButton } from "@softglass/ui";',
+    example: `<CloseButton look="soft" onClick={onClose} label="Dismiss" />`,
+    props: [
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Hit target size.",
+      },
+      {
+        name: "look",
+        type: '"ghost" | "soft" | "solid" | "danger"',
+        default: '"ghost"',
+        description: "Chrome language.",
+      },
+      {
+        name: "label",
+        type: "string",
+        default: '"Close"',
+        description: "aria-label.",
+      },
+    ],
+  },
+  {
+    id: "password-input",
+    name: "PasswordInput",
+    layer: "atom",
+    summary: "Password field with Show / Hide + multi-look shells.",
+    importLine: 'import { PasswordInput } from "@softglass/ui";',
+    example: `<PasswordInput label="Password" look="soft" requiredMark />`,
+    props: [
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "outline" | "ghost"',
+        default: '"soft"',
+        description: "Shell language.",
+      },
+      {
+        name: "revealed / onRevealedChange",
+        type: "boolean / (v: boolean) => void",
+        description: "Controlled visibility of characters.",
+      },
+      {
+        name: "label / hint / error",
+        type: "ReactNode",
+        description: "Field meta (same as Input).",
+      },
+    ],
+  },
+  {
+    id: "search-input",
+    name: "SearchInput",
+    layer: "atom",
+    summary: "Free-text search with clear + multi-look shells. Not Combobox.",
+    importLine: 'import { SearchInput } from "@softglass/ui";',
+    example: `<SearchInput
+  label="Search"
+  look="soft"
+  value={q}
+  onValueChange={setQ}
+/>`,
+    props: [
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "outline" | "ghost"',
+        default: '"soft"',
+        description: "Shell language.",
+      },
+      {
+        name: "value / onValueChange",
+        type: "string / (v: string) => void",
+        description: "Controlled text.",
+      },
+      {
+        name: "clearable",
+        type: "boolean",
+        default: "true",
+        description: "Show clear control when non-empty.",
+      },
+      {
+        name: "label / hint / error",
+        type: "ReactNode",
+        description: "Field meta.",
+      },
+    ],
+  },
+  {
+    id: "visually-hidden",
+    name: "VisuallyHidden",
+    layer: "atom",
+    summary: "Hide content visually; keep it for assistive tech.",
+    importLine: 'import { VisuallyHidden } from "@softglass/ui";',
+    example: `<button type="button">
+  <VisuallyHidden>Close dialog</VisuallyHidden>
+  <span aria-hidden>×</span>
+</button>`,
+    props: [
+      {
+        name: "as",
+        type: '"span" | "div" | "legend"',
+        default: '"span"',
+        description: "Element type.",
+      },
+    ],
+  },
+  {
+    id: "circular-progress",
+    name: "CircularProgress",
+    layer: "atom",
+    summary: "Ring progress — value or indeterminate spin.",
+    importLine: 'import { CircularProgress } from "@softglass/ui";',
+    example: `<CircularProgress value={72} label="Upload" />
+<CircularProgress label="Loading" />`,
+    props: [
+      {
+        name: "value",
+        type: "number | null",
+        description: "Omit → indeterminate.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Ring diameter.",
+      },
+      {
+        name: "variant",
+        type: '"accent" | "success" | "warning" | "danger" | "muted"',
+        default: '"accent"',
+        description: "Stroke color.",
+      },
+      {
+        name: "showValue",
+        type: "boolean",
+        default: "true",
+        description: "Center percent when determinate.",
+      },
+    ],
+  },
+  {
+    id: "segmented-control",
+    name: "SegmentedControl",
+    layer: "atom",
+    summary: "Single-select segmented buttons (role=radiogroup).",
+    importLine: 'import { SegmentedControl } from "@softglass/ui";',
+    example: `<SegmentedControl
+  label="Range"
+  value={v}
+  onValueChange={setV}
+  options={[
+    { value: "day", label: "Day" },
+    { value: "week", label: "Week" },
+  ]}
+/>`,
+    props: [
+      {
+        name: "options",
+        type: "{ value, label, disabled? }[]",
+        description: "Segments.",
+      },
+      {
+        name: "value / onValueChange",
+        type: "string / (v: string) => void",
+        description: "Controlled selection.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "outline"',
+        default: '"soft"',
+        description: "Track language.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Density.",
+      },
+    ],
+  },
+  {
+    id: "kbd",
+    name: "Kbd",
+    layer: "atom",
+    summary: "Keyboard key glyph.",
+    importLine: 'import { Kbd } from "@softglass/ui";',
+    example: `Press <Kbd>⌘</Kbd> <Kbd>K</Kbd>`,
+    props: [
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        default: '"md"',
+        description: "Key size.",
+      },
+    ],
+  },
+  {
+    id: "code",
+    name: "Code",
+    layer: "atom",
+    summary: "Inline or block monospace — not a highlighter.",
+    importLine: 'import { Code } from "@softglass/ui";',
+    example: `<Code>npm i @softglass/ui</Code>
+<Code block>{\`const x = 1;\`}</Code>`,
+    props: [
+      {
+        name: "block",
+        type: "boolean",
+        default: "false",
+        description: "Pre-like block.",
+      },
+    ],
+  },
+  {
+    id: "skip-link",
+    name: "SkipLink",
+    layer: "atom",
+    summary: "Skip to content — off-screen until focused.",
+    importLine: 'import { SkipLink } from "@softglass/ui";',
+    example: `<SkipLink href="#main" />`,
+    props: [
+      {
+        name: "href",
+        type: "string",
+        default: '"#main"',
+        description: "Target id.",
+      },
+    ],
+  },
+  {
     id: "form-field",
     name: "FormField / Label",
     layer: "atom",
@@ -1192,6 +1759,527 @@ toast({ title: "Saved", variant: "success", description: "All good." });`,
         type: "boolean",
         default: "false",
         description: "Asterisk on label.",
+      },
+    ],
+  },
+  {
+    id: "collapsible",
+    name: "Collapsible",
+    layer: "molecule",
+    summary:
+      "Single disclosure panel — open / defaultOpen / onOpenChange + trigger body.",
+    importLine: 'import { Collapsible } from "@softglass/ui";',
+    example: `<Collapsible
+  trigger="Gizlilik notu"
+  defaultOpen={false}
+  look="soft"
+>
+  Bu paneli sadece gerekince aç.
+</Collapsible>`,
+    props: [
+      {
+        name: "trigger",
+        type: "ReactNode",
+        description: "Button label / node.",
+      },
+      {
+        name: "open / defaultOpen / onOpenChange",
+        type: "boolean / boolean / (open: boolean) => void",
+        description: "Controlled or uncontrolled open state.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "outline" | "ghost"',
+        default: '"soft"',
+        description: "Surface language (frost card → flush list).",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "height"',
+        default: '"height"',
+        description: "Open motion recipe (height uses CSS grid collapse).",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Locks the trigger.",
+      },
+    ],
+  },
+  {
+    id: "accordion",
+    name: "Accordion",
+    layer: "molecule",
+    summary:
+      "FAQ-style panels via items[] — type single | multiple (Select/Dropdown language).",
+    importLine: 'import { Accordion } from "@softglass/ui";',
+    example: `<Accordion
+  type="single"
+  defaultValue="a"
+  look="soft"
+  items={[
+    { value: "a", trigger: "What is Softglass?", content: "A soft-glass kit." },
+    { value: "b", trigger: "Is it free?", content: "MIT." },
+  ]}
+/>`,
+    props: [
+      {
+        name: "items",
+        type: "{ value, trigger, content, disabled? }[]",
+        description: "Panel definitions (items API first).",
+      },
+      {
+        name: "type",
+        type: '"single" | "multiple"',
+        default: '"single"',
+        description: "One open panel vs many.",
+      },
+      {
+        name: "value / defaultValue / onValueChange",
+        type: "string | string[]",
+        description: "Controlled or uncontrolled open values.",
+      },
+      {
+        name: "collapsible",
+        type: "boolean",
+        default: "true",
+        description: "When type=single, allow closing the open item.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "outline" | "ghost"',
+        default: '"soft"',
+        description: "Surface language.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "height"',
+        default: '"height"',
+        description: "Panel open motion.",
+      },
+    ],
+  },
+  {
+    id: "breadcrumb",
+    name: "Breadcrumb",
+    layer: "molecule",
+    summary:
+      "Path trail. Navigable crumbs reuse Link; last item is current page.",
+    importLine: 'import { Breadcrumb } from "@softglass/ui";',
+    example: `<Breadcrumb
+  look="soft"
+  items={[
+    { label: "Home", href: "/" },
+    { label: "Docs", href: "/docs" },
+    { label: "Accordion" },
+  ]}
+/>
+<Breadcrumb look="pill" items={…} />`,
+    props: [
+      {
+        name: "items",
+        type: "{ label, href? }[]",
+        description: "Crumbs. Omit href on current page.",
+      },
+      {
+        name: "look",
+        type: '"plain" | "soft" | "pill"',
+        default: '"plain"',
+        description: "plain path · soft tray · pill chips.",
+      },
+      {
+        name: "separator",
+        type: "ReactNode",
+        default: '"/"',
+        description: "Between crumbs (pill defaults to · when /).",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        default: '"md"',
+        description: "Type scale.",
+      },
+    ],
+  },
+  {
+    id: "pagination",
+    name: "Pagination",
+    layer: "molecule",
+    summary:
+      "Known total pages — page / pageCount / onPageChange (compact or numbered).",
+    importLine: 'import { Pagination } from "@softglass/ui";',
+    example: `<Pagination
+  page={page}
+  pageCount={12}
+  onPageChange={setPage}
+  look="soft"
+/>
+<Pagination page={page} pageCount={12} onPageChange={setPage} look="glass" compact />`,
+    props: [
+      {
+        name: "page",
+        type: "number",
+        description: "1-based current page.",
+      },
+      {
+        name: "pageCount",
+        type: "number",
+        description: "Total pages.",
+      },
+      {
+        name: "onPageChange",
+        type: "(page: number) => void",
+        description: "Fires when user picks a page.",
+      },
+      {
+        name: "compact",
+        type: "boolean",
+        default: "false",
+        description: "Prev/next + status only.",
+      },
+      {
+        name: "siblingCount",
+        type: "number",
+        default: "1",
+        description: "Pages around current in full mode.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "ghost" | "glass"',
+        default: '"soft"',
+        description: "soft/glass = pill tray; solid = loose buttons.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        default: '"md"',
+        description: "Control density.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Locks all controls.",
+      },
+    ],
+  },
+  {
+    id: "empty-state",
+    name: "EmptyState",
+    layer: "molecule",
+    summary:
+      "Zero-data surface — icon / title / description / actions. Solid default for readable copy.",
+    importLine: 'import { EmptyState, Button } from "@softglass/ui";',
+    example: `<EmptyState
+  icon={<span>📁</span>}
+  title="Henüz proje yok"
+  description="İlk projeni oluşturarak başla."
+  actions={<Button>Create project</Button>}
+  look="solid"
+/>`,
+    props: [
+      {
+        name: "icon",
+        type: "ReactNode",
+        description: "Optional leading mark.",
+      },
+      {
+        name: "title",
+        type: "ReactNode",
+        description: "Primary empty message.",
+      },
+      {
+        name: "description",
+        type: "ReactNode",
+        description: "Supporting copy.",
+      },
+      {
+        name: "actions",
+        type: "ReactNode",
+        description: "CTA row (usually Button).",
+      },
+      {
+        name: "look",
+        type: '"solid" | "soft" | "outline"',
+        default: '"solid"',
+        description: "Surface language.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Padding / type scale.",
+      },
+    ],
+  },
+  {
+    id: "sheet",
+    name: "Sheet",
+    layer: "molecule",
+    summary:
+      "Edge panel (Drawer alias in docs) — portal + usePresence + focus trap.",
+    importLine: 'import { Sheet, Button } from "@softglass/ui";',
+    example: `<Sheet
+  open={open}
+  onOpenChange={setOpen}
+  title="Settings"
+  side="right"
+  description="Account preferences"
+>
+  …
+</Sheet>`,
+    props: [
+      {
+        name: "open / onOpenChange",
+        type: "boolean / (open: boolean) => void",
+        description: "Controlled open state.",
+      },
+      {
+        name: "title",
+        type: "ReactNode",
+        description: "Dialog title (required for a11y).",
+      },
+      {
+        name: "side",
+        type: '"left" | "right" | "bottom"',
+        default: '"right"',
+        description: "Edge placement.",
+      },
+      {
+        name: "motion",
+        type: '"none" | "slide" | "fade"',
+        default: '"slide"',
+        description: "Enter / exit recipe.",
+      },
+      {
+        name: "description / footer / children",
+        type: "ReactNode",
+        description: "Optional regions.",
+      },
+      {
+        name: "closeOnBackdrop / closeOnEscape",
+        type: "boolean",
+        default: "true",
+        description: "Dismiss behavior.",
+      },
+    ],
+  },
+  {
+    id: "hover-card",
+    name: "HoverCard",
+    layer: "molecule",
+    summary:
+      "Delayed preview (Popover family) — openDelay / closeDelay + body portal.",
+    importLine: 'import { HoverCard, Avatar } from "@softglass/ui";',
+    example: `<HoverCard
+  trigger={<a href="#u">@ada</a>}
+  openDelay={280}
+  closeDelay={160}
+>
+  <strong>Ada Lovelace</strong>
+  <p>Mathematician</p>
+</HoverCard>`,
+    props: [
+      {
+        name: "trigger",
+        type: "ReactNode",
+        description: "Hover / focus target.",
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "Preview body.",
+      },
+      {
+        name: "openDelay / closeDelay",
+        type: "number",
+        default: "280 / 160",
+        description: "Milliseconds.",
+      },
+      {
+        name: "placement / align",
+        type: "auto|top|bottom / start|center|end",
+        description: "Floating placement (portal).",
+      },
+      {
+        name: "motion",
+        type: '"none" | "fade" | "scale" | "slide-down"',
+        default: '"scale"',
+        description: "Panel enter recipe.",
+      },
+    ],
+  },
+  {
+    id: "stepper",
+    name: "Stepper",
+    layer: "molecule",
+    summary:
+      "Wizard step indicator — steps[] + activeStep (0-based). Optional interactive jump.",
+    importLine: 'import { Stepper } from "@softglass/ui";',
+    example: `<Stepper
+  activeStep={step}
+  onActiveStepChange={setStep}
+  interactive
+  steps={[
+    { label: "Details", description: "Name & plan" },
+    { label: "Team" },
+    { label: "Review" },
+  ]}
+/>`,
+    props: [
+      {
+        name: "steps",
+        type: "{ label, description?, value?, disabled? }[]",
+        description: "Step definitions.",
+      },
+      {
+        name: "activeStep / defaultActiveStep / onActiveStepChange",
+        type: "number",
+        description: "0-based active index.",
+      },
+      {
+        name: "orientation",
+        type: '"horizontal" | "vertical"',
+        default: '"horizontal"',
+        description: "Layout axis.",
+      },
+      {
+        name: "interactive",
+        type: "boolean",
+        default: "false",
+        description: "Click completed/current to jump.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "outline" | "dots" | "pills"',
+        default: '"soft"',
+        description: "Structural recipe (not tint-only).",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        default: '"md"',
+        description: "Indicator density.",
+      },
+    ],
+  },
+  {
+    id: "toolbar",
+    name: "Toolbar",
+    layer: "molecule",
+    summary: "Action strip — compose SearchInput, Button, Badge. Look recipes include accent rail.",
+    importLine: 'import { Toolbar, ToolbarGroup, ToolbarSpacer, ToolbarSeparator } from "@softglass/ui";',
+    example: `<Toolbar look="accent">
+  <ToolbarGroup inset>
+    <SearchInput placeholder="Search…" />
+  </ToolbarGroup>
+  <ToolbarSpacer />
+  <ToolbarGroup>
+    <Badge>3</Badge>
+    <ToolbarSeparator />
+    <Button size="sm">New</Button>
+  </ToolbarGroup>
+</Toolbar>`,
+    props: [
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "ghost" | "accent"',
+        default: '"soft"',
+        description: "Strip chrome recipe.",
+      },
+      {
+        name: "align",
+        type: '"start" | "between" | "end"',
+        default: '"between"',
+        description: "Main cluster justification.",
+      },
+      {
+        name: "ToolbarGroup / Spacer / Separator",
+        type: "subcomponents",
+        description: "inset group, flex spacer, vertical rule.",
+      },
+    ],
+  },
+  {
+    id: "list",
+    name: "List",
+    layer: "molecule",
+    summary: "Host for ListItem atoms — density / dividers / looks. Does not re-skin rows.",
+    importLine: 'import { List, ListItem } from "@softglass/ui";',
+    example: `<List look="inset" dividers>
+  <ListItem title="Alpha" selected />
+  <ListItem title="Beta" />
+</List>`,
+    props: [
+      {
+        name: "look",
+        type: '"soft" | "solid" | "outline" | "ghost" | "inset"',
+        default: '"soft"',
+        description: "Host surface recipe.",
+      },
+      {
+        name: "density",
+        type: '"comfortable" | "compact" | "relaxed"',
+        default: '"comfortable"',
+        description: "Row padding.",
+      },
+      {
+        name: "dividers",
+        type: "boolean",
+        default: "false",
+        description: "Hairlines between children.",
+      },
+      {
+        name: "as",
+        type: '"div" | "ul" | "ol"',
+        default: '"div"',
+        description: "Default div for ListItem rows.",
+      },
+    ],
+  },
+  {
+    id: "stat",
+    name: "Stat",
+    layer: "molecule",
+    summary: "KPI metric tile — label / value / hint / trend; accent rail look.",
+    importLine: 'import { Stat } from "@softglass/ui";',
+    example: `<Stat
+  look="accent"
+  icon={<span>◎</span>}
+  label="Revenue"
+  value="$12.4k"
+  hint="Last 30 days"
+  trend="up"
+  trendLabel="+8%"
+/>`,
+    props: [
+      {
+        name: "label / value",
+        type: "ReactNode",
+        description: "Primary metric.",
+      },
+      {
+        name: "icon / hint",
+        type: "ReactNode",
+        description: "Optional mark and secondary line.",
+      },
+      {
+        name: "trend / trendLabel",
+        type: '"up"|"down"|"flat" / ReactNode',
+        description: "Optional trend chip.",
+      },
+      {
+        name: "look",
+        type: '"solid" | "soft" | "glass" | "outline" | "accent"',
+        default: '"solid"',
+        description: "Tile surface recipe.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Type / padding scale.",
       },
     ],
   },

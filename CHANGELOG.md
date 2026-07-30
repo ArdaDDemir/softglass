@@ -7,6 +7,97 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.4.0] — 2026-07-30
+
+Minor release: **molecule set** — disclosure/nav, surface, structure, form/overlay polish.
+
+**Ship:** npm `@softglass/tokens@1.4.0` + `@softglass/ui@1.4.0`, GitHub tag `v1.4.0`  
+**Accounts:** gh **ArdaDDemir** · npm **ardaddemir** only (not work/Feedemy).
+
+### Added (1.4a — Disclosure & nav)
+
+- **`Collapsible`** — single panel; controlled/uncontrolled; looks soft/solid/glass/outline/ghost
+- **`Accordion`** — `items[]` API; type single | multiple; same looks
+- **`Breadcrumb`** — path trail; reuses `Link`; looks plain/soft/pill
+- **`Pagination`** — page / pageCount; compact + numbered; looks soft/solid/ghost/glass
+
+### Added (1.4b — Surface)
+
+- **`EmptyState`** — icon / title / description / actions; solid default
+- **`Sheet`** — edge panel (Drawer alias in docs); side left | right | bottom; portal + presence + focus trap
+- **`HoverCard`** — delayed preview (Popover family); openDelay / closeDelay; body portal
+
+### Added (1.4c — Structure)
+
+- **`Stepper`** — steps[] + activeStep; looks soft/solid/outline/**dots**/**pills**
+- **`Toolbar`** — composition shell + Group / Spacer / Separator; looks soft/solid/glass/ghost/accent
+- **`List`** — ListItem host; density; dividers; looks soft/solid/outline/ghost/inset
+- **`Stat`** — KPI tile; label/value/hint/trend; looks solid/soft/glass/outline/accent
+
+### Changed (1.4d — Form polish)
+
+- **`DatePicker`** — panel **body-portaled** with flip/clamp (Select language; no longer absolute to field only)
+- **`MultiSelect`** — **filter-in-menu** (default on)
+- **`Combobox`** — async skeleton: `onSearch` + `loading` / `loadingMessage`
+
+### Docs / quality
+
+- Playground sections: 1.4a Disclosure & nav · 1.4b Surface · 1.4c Structure · 1.4d Form polish
+- `docs/API.md` + `LIMITATIONS.md` updated (portal shipped; range still deferred)
+- Registry expanded (~79 items); Vitest smokes for new molecules + polish paths
+- `@softglass/ui` peer: `@softglass/tokens` **^1.4.0**
+
+### Deferred / not in 1.4.0
+
+- DataTable, full Command palette, Menubar, nested modals
+- Date **range**, creatable Combobox chaos, Calendar/Month/Year extract
+- Framer Motion, theme builder SaaS, Storybook farm
+
+## [1.3.0] — 2026-07-30
+
+Minor release: atom layer close-out — feedback, form, chrome, Should + Nice atoms.
+
+**Target ship:** npm `@softglass/tokens@1.3.0` + `@softglass/ui@1.3.0`, GitHub tag `v1.3.0` (account: **ArdaDDemir** / npm **ardaddemir** only).
+
+### Added (Must — 1.3a–c)
+
+- **`Progress`** — linear value / indeterminate; sizes; looks soft/solid/glass/accent/striped; semantic variants
+- **`StatusDot`** — online/busy/offline/away + custom color; looks soft/solid/outline/glow
+- **`Slider`** — single value; min/max/step; field meta; looks
+- **`NumberInput`** — steppers; empty → `null`; soft pill shell + looks
+- **`FileField`** — solid/soft/dashed/ghost pickers; local file list (no upload)
+- **`Link`**, **`Chip`** (selectable/removable + filter/check variants), **`CloseButton`**
+- **`PasswordInput`**, **`SearchInput`**, **`VisuallyHidden`**
+
+### Added (Should — 1.3d)
+
+- **`CircularProgress`**, **`SegmentedControl`**, **`Kbd`**, **`Code`**, **`SkipLink`**
+- **`PinInput`**, **`NavLink`**, **`ListItem`**, **`CharacterCount`**, **`Fieldset`**
+- **`Icon`** (wrapper only), **`Image`** (fallback), **`Meter`**, **`CopyButton`**
+- **`TimeInput`** — custom Softglass HH:mm (not OS picker)
+- **`ClientOnly`**, **`ScrollArea`**, **`Rating`** (SVG stars + shell), **`AspectRatio`**
+
+### Added (Nice — 1.3e)
+
+- **`RangeSlider`**, **`ToggleGroup`**, **`CountBadge`**
+- **`ColorSwatch`**, **`ColorInput`**
+- **`Highlight`**, **`Truncate`**, **`LiveRegion`** (visible Softglass banner)
+- **`NativeDateInput`** — custom day/month/year steppers (YYYY-MM-DD; not OS date chrome)
+- **`Text`**, **`Heading`** (lightweight; not a full typography kit)
+
+### Changed
+
+- Playground sections for 1.3a–e; expanded `docs/API.md` + `LIMITATIONS.md`
+- Registry generator includes new atoms (`registry.json` ~68 items)
+- Vitest smokes expanded for new controls
+- `@softglass/ui` peer: `@softglass/tokens` **^1.3.0**
+
+### Deferred / not in 1.3.0
+
+- DatePicker extract (Calendar / Month / Year) — refactor-only; still on DatePicker
+- Date **range** suite, Storybook/docs marketing site, theme builder, DataTable
+- Icon pack, full typography system
+
 ## [1.2.0] — 2026-07-29
 
 Minor release: ContextMenu, DatePicker, Vitest smoke suite, overlay portals.

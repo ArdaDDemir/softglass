@@ -2,7 +2,8 @@
 
 Three steps to use Softglass in a **Next.js App Router** app.
 
-> Packages are designed for npm. Until you publish, link from this monorepo or `npm pack` tarballs.
+> Published packages: `@softglass/tokens` + `@softglass/ui` (current **1.4.0**).  
+> Local monorepo: `npm run build:ui` then `npm run dev`. Dry-run tarballs: `npm run pack:check`.
 
 ---
 
@@ -12,7 +13,7 @@ Three steps to use Softglass in a **Next.js App Router** app.
 npm install @softglass/tokens @softglass/ui
 ```
 
-Peer deps: `react` and `react-dom` ≥ 18.
+Peer deps: `react` and `react-dom` ≥ 18. UI also peers `@softglass/tokens` **^1.4.0** (import styles from tokens).
 
 ### Local monorepo (this repo)
 

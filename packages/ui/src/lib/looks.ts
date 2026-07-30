@@ -21,3 +21,63 @@ export type AvatarLook = "circle" | "rounded" | "soft";
 export type TooltipLook = "frost" | "solid" | "accent";
 
 export type CardLook = "flat" | "raised" | "outline" | "glow";
+
+/** NumberInput shell + stepper language */
+export type NumberInputLook = "soft" | "solid" | "outline" | "ghost";
+
+/** Slider track / thumb language */
+export type SliderLook = "soft" | "solid" | "glass" | "accent";
+
+/** FileField trigger surface */
+export type FileFieldLook = "solid" | "soft" | "dashed" | "ghost";
+
+/** Progress track / fill language */
+export type ProgressLook = "soft" | "solid" | "glass" | "accent" | "striped";
+
+/** StatusDot chrome language (color still from status / color) */
+export type StatusDotLook = "soft" | "solid" | "outline" | "glow";
+
+/** Chip surface language */
+export type ChipLook = "soft" | "solid" | "outline" | "glass" | "glow";
+
+/** CloseButton chrome */
+export type CloseButtonLook = "ghost" | "soft" | "solid" | "danger";
+
+/**
+ * Collapsible / Accordion disclosure surface
+ * soft = frost card · solid = long content · glass = chrome · outline = border only · ghost = flush list
+ */
+export type CollapsibleLook = "soft" | "solid" | "glass" | "outline" | "ghost";
+
+export type AccordionLook = CollapsibleLook;
+
+/** Breadcrumb chrome: plain path · soft tray · pill chips */
+export type BreadcrumbLook = "plain" | "soft" | "pill";
+
+/** Pagination control chrome */
+export type PaginationLook = "soft" | "solid" | "ghost" | "glass";
+
+/** EmptyState surface */
+export type EmptyStateLook = "solid" | "soft" | "outline";
+
+/**
+ * Stepper language
+ * soft = frost track · solid = solid rail · outline = line only
+ * dots = progress line + large dots · pills = segmented chip row
+ */
+export type StepperLook = "soft" | "solid" | "outline" | "dots" | "pills";
+
+/**
+ * Toolbar strip
+ * soft | solid | glass | ghost | accent (accent edge rail)
+ */
+export type ToolbarLook = "soft" | "solid" | "glass" | "ghost" | "accent";
+
+/** List host surface */
+export type ListLook = "soft" | "solid" | "outline" | "ghost" | "inset";
+
+/**
+ * Stat metric tile
+ * solid | soft | glass | outline | accent (left rail)
+ */
+export type StatLook = "solid" | "soft" | "glass" | "outline" | "accent";

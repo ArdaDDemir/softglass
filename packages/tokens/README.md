@@ -8,7 +8,9 @@ CSS design tokens for [Softglass](https://github.com/ArdaDDemir/softglass).
 npm install @softglass/tokens
 ```
 
-**Status:** published **`1.0.0`** on [npm](https://www.npmjs.com/package/@softglass/tokens).
+**Version:** **`1.3.0`** — [npm](https://www.npmjs.com/package/@softglass/tokens) (pair with `@softglass/ui@1.3`).
+
+**Publish account:** npm org `softglass` via personal **`ardaddemir` only** (never work/Feedemy).
 
 ## Usage
 

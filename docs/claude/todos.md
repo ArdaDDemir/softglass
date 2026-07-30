@@ -1,9 +1,9 @@
 # Softglass — TODO
 
-> **v1.0–v1.2:** shipped · **v1.2.0** (2026-07-29) — npm `@softglass/tokens@1.2.0` + `@softglass/ui@1.2.0`, tag `v1.2.0`, PR #2 merged.  
+> **v1.0–v1.2:** shipped · **v1.3.0** — atom layer complete in worktree `softglass-v1.3a-progress` / branch `feat/v1.3-progress` (publish checklist).  
 > **Plan detay:** [v1.3-plan.md](./v1.3-plan.md) · arşiv [v1.2-plan.md](./v1.2-plan.md) · [v1.1-plan.md](./v1.1-plan.md)  
-> Bu dosya checkbox özeti. **Yeni session:** `main` + `ArdaDDemir/softglass` + kişisel npm/gh.  
-> **Kural:** 1.3 Must atomlar bitmeden 1.4 molecule’e geçilmez.
+> Bu dosya checkbox özeti. **Hesap:** gh **ArdaDDemir** · npm **ardaddemir** · work/Feedemy **YASAK**.  
+> **Kural:** 1.3 Must atomlar bitmeden 1.4 molecule’e geçilmez (Must bitti).
 
 ---
 
@@ -12,8 +12,8 @@
 | Sürüm | Durum |
 |-------|--------|
 | 1.0.0 – 1.2.0 | **shipped** |
-| **1.3.0** | **sıradaki** — atom katmanı kapanışı (plan yazıldı, kod yok) |
-| 1.4.0 | molecule seti (1.3 Must sonrası) |
+| **1.3.0** | **kod + docs hazır** — publish tokens→ui + tag (kişisel hesap) |
+| 1.4.0 | molecule seti (Must bitti → açılabilir) |
 | 1.5.0 | organism + product patterns |
 | 1.6+ | docs site / visual / theme builder |
 
@@ -50,78 +50,86 @@
 
 ### Sprint 1.3a — Feedback atoms
 
-- [ ] `Progress` — linear; value + indeterminate; sizes; softglass surface  
-- [ ] `StatusDot` — semantic statuses  
-- [ ] Playground + API.md + LIMITATIONS  
-- [ ] registry generate/build  
-- [ ] typecheck + test smoke (Progress)  
+- [x] `Progress` — linear; value + indeterminate; sizes; softglass surface  
+- [x] `StatusDot` — semantic statuses  
+- [x] Playground + API.md + LIMITATIONS  
+- [x] registry generate/build  
+- [x] typecheck + test smoke (Progress)  
 
-**Yapma:** charts, KPI dashboard.
+**Yapma:** charts, KPI dashboard.  
+**Branch:** `feat/v1.3-progress` (worktree `softglass-v1.3a-progress`) — push/PR kullanıcı onayı.  
+**Not:** CircularProgress 1.3d Should’a bırakıldı (plan opsiyonu).
 
 ### Sprint 1.3b — Form controls
 
-- [ ] `Slider` — controlled value; min/max/step; label/hint/error  
-- [ ] `NumberInput` — steppers; min/max/step  
-- [ ] `FileField` — solid field; basic file name list (no upload backend)  
-- [ ] Playground + docs + registry  
-- [ ] Keyboard basics (Slider arrows)  
+- [x] `Slider` — controlled value; min/max/step; label/hint/error  
+- [x] `NumberInput` — steppers; min/max/step  
+- [x] `FileField` — solid field; basic file name list (no upload backend)  
+- [x] Playground + docs + registry  
+- [x] Keyboard basics (Slider arrows)  
 
-**Yapma:** multi-file cloud dropzone, range product.
+**Yapma:** multi-file cloud dropzone, range product.  
+**Playground:** sidebar → **Slider · Number · File**
 
 ### Sprint 1.3c — Chrome atoms
 
-- [ ] `Link` — href; external optional; softglass text link  
-- [ ] `Chip` — selectable + removable  
-- [ ] `CloseButton` — shared dismiss control  
-- [ ] `PasswordInput` **veya** Input reveal pattern  
-- [ ] `SearchInput` — free text + clear (not Combobox)  
-- [ ] `VisuallyHidden`  
-- [ ] Playground + docs + registry  
+- [x] `Link` — href; external optional; softglass text link  
+- [x] `Chip` — selectable + removable  
+- [x] `CloseButton` — shared dismiss control  
+- [x] `PasswordInput` **veya** Input reveal pattern  
+- [x] `SearchInput` — free text + clear (not Combobox)  
+- [x] `VisuallyHidden`  
+- [x] Playground + docs + registry  
 
-**Yapma:** icon pack, typography kit.
+**Yapma:** icon pack, typography kit.  
+**Playground:** sidebar → **Link · Chip · Fields**
 
 ### Sprint 1.3d — Should (1.3.x)
 
-- [ ] `SegmentedControl`  
-- [ ] `PinInput` (OTP)  
-- [ ] `Kbd` + inline `Code`  
-- [ ] `CircularProgress` (1.3a’da yoksa)  
-- [ ] `NavLink`  
-- [ ] `ListItem`  
-- [ ] `SkipLink`  
-- [ ] `CharacterCount`  
-- [ ] `Fieldset`  
-- [ ] `Icon` wrapper (set yok)  
-- [ ] `Image` framed + fallback  
-- [ ] `Meter`  
-- [ ] `CopyButton`  
-- [ ] `TimeInput` (HH:mm; no TZ)  
-- [ ] `ClientOnly`  
-- [ ] `ScrollArea` (hafif)  
-- [ ] `Rating`  
-- [ ] `AspectRatio`  
+- [x] `SegmentedControl`  
+- [x] `PinInput` (OTP)  
+- [x] `Kbd` + inline `Code`  
+- [x] `CircularProgress` (1.3a’da yoksa)  
+- [x] `NavLink`  
+- [x] `ListItem`  
+- [x] `SkipLink`  
+- [x] `CharacterCount`  
+- [x] `Fieldset`  
+- [x] `Icon` wrapper (set yok)  
+- [x] `Image` framed + fallback  
+- [x] `Meter`  
+- [x] `CopyButton`  
+- [x] `TimeInput` (HH:mm; no TZ)  
+- [x] `ClientOnly`  
+- [x] `ScrollArea` (hafif)  
+- [x] `Rating`  
+- [x] `AspectRatio`  
+
+**Playground:** sidebar → **Should · 1.3d** (1.3d Should set complete)  
 
 ### Sprint 1.3e — Nice
 
-- [ ] `RangeSlider`  
-- [ ] `ColorSwatch` / basit ColorInput  
-- [ ] `ToggleGroup`  
-- [ ] Chip variants: filter/check (veya Chip API)  
-- [ ] `CountBadge` (veya Badge)  
-- [ ] `Highlight`, `Truncate`  
-- [ ] `LiveRegion`  
-- [ ] DatePicker extract: Calendar / Month / Year (refactor)  
-- [ ] `NativeDateInput` skin  
-- [ ] `Text` / `Heading` (hafif; kit iddiası yok)  
+- [x] `RangeSlider`  
+- [x] `ColorSwatch` / basit ColorInput  
+- [x] `ToggleGroup`  
+- [x] Chip variants: filter/check (veya Chip API)  
+- [x] `CountBadge` (veya Badge)  
+- [x] `Highlight`, `Truncate`  
+- [x] `LiveRegion`  
+- [ ] DatePicker extract: Calendar / Month / Year (refactor) — **bilinçli erteleme** (refactor risk; 1.4d/ayrı task)  
+- [x] `NativeDateInput` skin  
+- [x] `Text` / `Heading` (hafif; kit iddiası yok)  
+
+**Playground:** sidebar → **Nice · 1.3e**  
 
 ### 1.3.0 publish checklist
 
-1. [ ] Version `1.3.0` (tokens + ui)  
-2. [ ] CHANGELOG `[1.3.0]`  
-3. [ ] typecheck + test + build + pack:check  
-4. [ ] npm/gh kişisel hesap  
-5. [ ] publish tokens → ui  
-6. [ ] tag `v1.3.0` + push  
+1. [x] Version `1.3.0` (tokens + ui + root + web)  
+2. [x] CHANGELOG `[1.3.0]`  
+3. [x] typecheck + test (39) + build:ui + pack:check (1.3.0 tarballs dry-run OK)  
+4. [ ] npm/gh **kişisel** — npm = **ardaddemir** ✓ · **gh ACTIVE hâlâ ArdaFeedemy** → push öncesi `gh auth switch` → **ArdaDDemir**  
+5. [ ] publish **tokens** → **ui** (sadece 4 OK ise; work hesabı YASAK)  
+6. [ ] tag `v1.3.0` + push (sadece ArdaDDemir)  
 
 ### v1.3 bilinçli YAPMA
 
@@ -223,4 +231,4 @@ Atom Must bitmeden molecule yok
 ## Arşiv
 
 v1.0–v1.2 detay → [v1.2-plan.md](./v1.2-plan.md) + [v1.1-plan.md](./v1.1-plan.md) + git history.  
-Aktif odak: **1.3 atomları**.
+Aktif odak: **1.3.0 publish** (kişisel hesap) — sonra 1.4 molecule.

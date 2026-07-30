@@ -44,6 +44,16 @@ export type ComboboxProps = {
   placement?: "auto" | "bottom" | "top";
   /** Custom filter; default = label/value substring (case-insensitive). */
   filterOption?: (option: SelectOption, query: string) => boolean;
+  /**
+   * Async search hook. When set, called (debounced) as the query changes.
+   * Parent typically updates `options` + `loading`.
+   */
+  onSearch?: (query: string) => void;
+  /** Show loading empty state while remote search runs. */
+  loading?: boolean;
+  loadingMessage?: string;
+  /** Debounce for `onSearch` in ms. Default 200. */
+  searchDebounceMs?: number;
 };
 
 const sizeClass: Record<SelectSize, string> = {
@@ -99,6 +109,10 @@ export function Combobox({
   className,
   placement = "auto",
   filterOption = defaultFilter,
+  onSearch,
+  loading = false,
+  loadingMessage = "Loading…",
+  searchDebounceMs = 200,
 }: ComboboxProps) {
   const reactId = useId();
   const comboId = id ?? `sg-combo-${reactId}`;
@@ -141,10 +155,11 @@ export function Combobox({
     setQuery(next?.label ?? "");
   }, [current, options, open]);
 
-  const filtered = useMemo(
-    () => options.filter((opt) => filterOption(opt, query)),
-    [filterOption, options, query],
-  );
+  // Async mode: parent filters via `onSearch` + `options`. Local filter otherwise.
+  const filtered = useMemo(() => {
+    if (onSearch) return options;
+    return options.filter((opt) => filterOption(opt, query));
+  }, [filterOption, onSearch, options, query]);
 
   const enabledIndexes = useMemo(
     () =>
@@ -154,6 +169,14 @@ export function Combobox({
         .map(({ index }) => index),
     [filtered],
   );
+
+  useEffect(() => {
+    if (!onSearch) return;
+    const id = window.setTimeout(() => {
+      onSearch(query);
+    }, searchDebounceMs);
+    return () => window.clearTimeout(id);
+  }, [onSearch, query, searchDebounceMs]);
 
   const commit = useCallback(
     (next: string) => {
@@ -328,7 +351,15 @@ export function Combobox({
               style={floatingStyle}
               tabIndex={-1}
             >
-              {filtered.length === 0 ? (
+              {loading ? (
+                <li
+                  className="sg-combobox-empty sg-combobox-loading"
+                  role="presentation"
+                  data-loading="true"
+                >
+                  {loadingMessage}
+                </li>
+              ) : filtered.length === 0 ? (
                 <li className="sg-combobox-empty" role="presentation">
                   {emptyMessage}
                 </li>
