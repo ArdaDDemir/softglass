@@ -7,6 +7,52 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.4.0] — 2026-07-30
+
+Minor release: **molecule set** — disclosure/nav, surface, structure, form/overlay polish.
+
+**Ship:** npm `@softglass/tokens@1.4.0` + `@softglass/ui@1.4.0`, GitHub tag `v1.4.0`  
+**Accounts:** gh **ArdaDDemir** · npm **ardaddemir** only (not work/Feedemy).
+
+### Added (1.4a — Disclosure & nav)
+
+- **`Collapsible`** — single panel; controlled/uncontrolled; looks soft/solid/glass/outline/ghost
+- **`Accordion`** — `items[]` API; type single | multiple; same looks
+- **`Breadcrumb`** — path trail; reuses `Link`; looks plain/soft/pill
+- **`Pagination`** — page / pageCount; compact + numbered; looks soft/solid/ghost/glass
+
+### Added (1.4b — Surface)
+
+- **`EmptyState`** — icon / title / description / actions; solid default
+- **`Sheet`** — edge panel (Drawer alias in docs); side left | right | bottom; portal + presence + focus trap
+- **`HoverCard`** — delayed preview (Popover family); openDelay / closeDelay; body portal
+
+### Added (1.4c — Structure)
+
+- **`Stepper`** — steps[] + activeStep; looks soft/solid/outline/**dots**/**pills**
+- **`Toolbar`** — composition shell + Group / Spacer / Separator; looks soft/solid/glass/ghost/accent
+- **`List`** — ListItem host; density; dividers; looks soft/solid/outline/ghost/inset
+- **`Stat`** — KPI tile; label/value/hint/trend; looks solid/soft/glass/outline/accent
+
+### Changed (1.4d — Form polish)
+
+- **`DatePicker`** — panel **body-portaled** with flip/clamp (Select language; no longer absolute to field only)
+- **`MultiSelect`** — **filter-in-menu** (default on)
+- **`Combobox`** — async skeleton: `onSearch` + `loading` / `loadingMessage`
+
+### Docs / quality
+
+- Playground sections: 1.4a Disclosure & nav · 1.4b Surface · 1.4c Structure · 1.4d Form polish
+- `docs/API.md` + `LIMITATIONS.md` updated (portal shipped; range still deferred)
+- Registry expanded (~79 items); Vitest smokes for new molecules + polish paths
+- `@softglass/ui` peer: `@softglass/tokens` **^1.4.0**
+
+### Deferred / not in 1.4.0
+
+- DataTable, full Command palette, Menubar, nested modals
+- Date **range**, creatable Combobox chaos, Calendar/Month/Year extract
+- Framer Motion, theme builder SaaS, Storybook farm
+
 ## [1.3.0] — 2026-07-30
 
 Minor release: atom layer close-out — feedback, form, chrome, Should + Nice atoms.

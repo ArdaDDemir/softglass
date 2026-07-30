@@ -1,4 +1,4 @@
-# Limitations (v1.3.0)
+# Limitations (v1.4.0)
 
 Honest scope notes for Softglass. Read this before treating the kit like Radix / Chakra / MUI.
 
@@ -78,7 +78,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 | Path | Status |
 | --- | --- |
-| npm `@softglass/tokens` + `@softglass/ui` | **1.3.0** ready (publish via **ardaddemir** only — not work) |
+| npm `@softglass/tokens` + `@softglass/ui` | **1.4.0** (publish via **ardaddemir** only — not work) |
 | shadcn-style registry CLI | Root `registry.json` + `shadcn build` → `apps/web/public/r`; GitHub install after push — see [REGISTRY.md](./REGISTRY.md) |
 | Docs marketing site | Playground app in-repo; separate docs site later |
 
@@ -86,10 +86,10 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 - Brand: **Softglass**
 - Scoped packages live on npm:
-  - [`@softglass/tokens@1.3.0`](https://www.npmjs.com/package/@softglass/tokens)
-  - [`@softglass/ui@1.3.0`](https://www.npmjs.com/package/@softglass/ui)
+  - [`@softglass/tokens@1.4.0`](https://www.npmjs.com/package/@softglass/tokens)
+  - [`@softglass/ui@1.4.0`](https://www.npmjs.com/package/@softglass/ui)
 - Org: **`softglass`** — owner: personal npm **`ardaddemir`** (**not** work/Feedemy)
-- Source: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.3.0`
+- Source: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.4.0`
 - Prefer scoped packages; unscoped `softglass` is intentionally unused
 
 ## Known non-goals (still)

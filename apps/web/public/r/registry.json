@@ -441,7 +441,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "Date Picker",
-      "description": "Single ISO date calendar — solid trigger + frost month panel.",
+      "description": "Single ISO date calendar — body portal + flip/clamp panel.",
       "registryDependencies": [
         "tokens"
       ],
@@ -470,6 +470,16 @@
           "path": "packages/ui/src/lib/presence.ts",
           "type": "registry:lib",
           "target": "components/softglass/lib/presence.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/floating.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/floating.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/use-floating-portal.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/use-floating-portal.ts"
         }
       ]
     },

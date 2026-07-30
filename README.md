@@ -58,7 +58,7 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 **Live packages**
 
 - [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
-- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.3.0`
+- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.4.0`
 
 ### Brand override (colors only)
 
@@ -86,7 +86,7 @@ So you do not rebuild UI per project. You pick a language and recolor.
 - **npm packages today** — `@softglass/tokens` + `@softglass/ui` with dual CJS/ESM `dist`  
 - **Not a locked theme kit** — CSS variables you can edit  
 
-## Components (`@softglass/ui` v1.3)
+## Components (`@softglass/ui` v1.4)
 
 | Layer | Component | Role |
 | --- | --- | --- |
@@ -94,8 +94,8 @@ So you do not rebuild UI per project. You pick a language and recolor.
 | Atom | `Input` / `Textarea` / `PasswordInput` / `SearchInput` | field meta + chrome |
 | Atom | `Badge` / `CountBadge` / `Avatar` | status + identity + counts |
 | Atom | `Switch` / `Checkbox` / `Radio` | soft controls |
-| Atom | `Select` / `Combobox` / `MultiSelect` | lists + filter + chips |
-| Atom | `DatePicker` / `NativeDateInput` / `TimeInput` | date/time (ISO strings) |
+| Atom | `Select` / `Combobox` / `MultiSelect` | lists + filter-in-menu + async search skeleton |
+| Atom | `DatePicker` / `NativeDateInput` / `TimeInput` | date/time (ISO; DatePicker **body portal**) |
 | Atom | `Slider` / `RangeSlider` / `NumberInput` / `PinInput` | numeric / range / OTP |
 | Atom | `FileField` / `ColorInput` / `ColorSwatch` | files + color |
 | Atom | `Progress` / `CircularProgress` / `Meter` / `Spinner` / `Skeleton` | feedback |
@@ -106,7 +106,10 @@ So you do not rebuild UI per project. You pick a language and recolor.
 | Atom | `Label` / `FormField` / `Fieldset` / `CharacterCount` | form composition |
 | Atom | `ListItem` / `Icon` / `Image` / `AspectRatio` / `ScrollArea` | layout bricks |
 | Atom | `Tooltip` / `Separator` / `VisuallyHidden` / `SkipLink` / `LiveRegion` / `ClientOnly` | a11y & misc |
-| Molecule | `Card` / `Modal` / `Popover` / `DropdownMenu` / `ContextMenu` / `Toast` / `Tabs` | composites |
+| Molecule | `Card` / `Modal` / `Popover` / `DropdownMenu` / `ContextMenu` / `Toast` / `Tabs` | overlays & chrome |
+| Molecule | `Collapsible` / `Accordion` / `Breadcrumb` / `Pagination` | disclosure & nav (1.4a) |
+| Molecule | `EmptyState` / `Sheet` / `HoverCard` | surface (1.4b) |
+| Molecule | `Stepper` / `Toolbar` / `List` / `Stat` | structure (1.4c) |
 | Organism | `AppShell` | header + optional sidebar |
 
 Full prop map: [docs/API.md](./docs/API.md). Honest limits: [docs/LIMITATIONS.md](./docs/LIMITATIONS.md).
