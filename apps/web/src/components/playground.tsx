@@ -177,7 +177,7 @@ export function Playground() {
                   fontSize: "var(--sg-text-xs)",
                 }}
               >
-                v1.0 · soft glass · prop-friendly
+                v1.4 · soft glass · molecules
               </div>
             </div>
             <ThemeSwitcher />
@@ -266,20 +266,20 @@ function OverviewSection({ onGoStart }: { onGoStart: () => void }) {
       <Card surface="glass" as="section" hoverable>
         <CardHeader>
           <Badge variant="solid" size="sm">
-            v1.0
+            v1.4.0
           </Badge>
           <CardTitle
             style={{
               fontSize: "var(--sg-text-4xl)",
-              maxWidth: "16ch",
+              maxWidth: "18ch",
               marginTop: "0.75rem",
             }}
           >
-            Soft glass kit. Props first.
+            Soft glass kit. Molecules shipped.
           </CardTitle>
           <CardDescription style={{ fontSize: "var(--sg-text-lg)", maxWidth: "52ch" }}>
-            Install tokens + UI, set a language, pass props. Frost surfaces stay
-            readable without stacking expensive backdrop blurs.
+            Install tokens + UI, set a language, pass props. v1.4 adds Accordion,
+            Sheet, Stepper, DatePicker portal, and more — sidebar sections 1.4a–d.
           </CardDescription>
         </CardHeader>
         <CardFooter>

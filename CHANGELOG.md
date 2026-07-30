@@ -57,7 +57,7 @@ Minor release: **molecule set** — disclosure/nav, surface, structure, form/ove
 
 Minor release: atom layer close-out — feedback, form, chrome, Should + Nice atoms.
 
-**Target ship:** npm `@softglass/tokens@1.3.0` + `@softglass/ui@1.3.0`, GitHub tag `v1.3.0` (account: **ArdaDDemir** / npm **ardaddemir** only).
+**Shipped:** npm `@softglass/tokens@1.3.0` + `@softglass/ui@1.3.0`, GitHub tag `v1.3.0` (account: **ArdaDDemir** / npm **ardaddemir** only).
 
 ### Added (Must — 1.3a–c)
 
