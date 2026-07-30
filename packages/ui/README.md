@@ -8,9 +8,9 @@ React components for [Softglass](https://github.com/ArdaDDemir/softglass) — so
 npm install @softglass/ui @softglass/tokens
 ```
 
-**Version:** **`1.3.0`** — atom layer close-out ([CHANGELOG](../../CHANGELOG.md)).
+**Version:** **`1.4.0`** — molecule set + form polish ([CHANGELOG](../../CHANGELOG.md)).
 
-**Peers:** `react` + `react-dom` ^18 || ^19, and `@softglass/tokens` **^1.3.0** (styles).
+**Peers:** `react` + `react-dom` ^18 || ^19, and `@softglass/tokens` **^1.4.0** (styles).
 
 **Publish account:** npm org `softglass` via personal **`ardaddemir` only** (never work/Feedemy).
 
@@ -18,12 +18,22 @@ npm install @softglass/ui @softglass/tokens
 
 ```tsx
 import "@softglass/tokens"; // or "@softglass/tokens/styles.css"
-import { Button, Card, Input } from "@softglass/ui";
+import {
+  Button,
+  Card,
+  Accordion,
+  EmptyState,
+  Pagination,
+} from "@softglass/ui";
 
 <html data-softglass-theme="aurora">
   <Card surface="glass">
-    <Input label="Email" />
-    <Button>Save</Button>
+    <EmptyState title="No items" actions={<Button>Create</Button>} />
+    <Accordion
+      type="single"
+      items={[{ value: "a", trigger: "FAQ", content: "Answer" }]}
+    />
+    <Pagination page={1} pageCount={5} onPageChange={() => {}} />
   </Card>
 </html>
 ```

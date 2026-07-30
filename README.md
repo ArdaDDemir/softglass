@@ -174,19 +174,22 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.3.0 — ready to ship** (atom layer closed; publish checklist)
+**v1.4.0 — shipped** (molecule set: disclosure/nav · surface · structure · form polish)
 
 - [x] Four languages as CSS tokens  
 - [x] Core UI kit + look + motion  
 - [x] Dual `dist` for `@softglass/ui` (ESM `.mjs` + CJS `.js`, `.d.mts`/`.d.ts`)  
-- [x] Publish-oriented `package.json` (conditional exports, files, peerDeps+Meta, LICENSE)  
 - [x] Consumer getting-started + limitations + changelog  
 - [x] CI workflow (typecheck + **test** + build + pack dry-run)  
 - [x] npm org **`softglass`** (owner: personal **ardaddemir** — not work/Feedemy)  
-- [x] GitHub [ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass)  
-- [x] v1.1–1.2 kit shipped (overlays, ContextMenu, DatePicker, portals, Vitest)  
-- [x] **v1.3 atom layer** — Must (1.3a–c) + Should (1.3d) + Nice (1.3e, DatePicker extract deferred)  
-- [ ] Publish **`@softglass/tokens@1.3.0`** → **`@softglass/ui@1.3.0`** + tag **`v1.3.0`**  
+- [x] GitHub [ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · `main` includes 1.3 + 1.4  
+- [x] v1.1–1.2 kit (overlays, ContextMenu, DatePicker, portals, Vitest)  
+- [x] **v1.3 atom layer** — feedback / form / chrome atoms  
+- [x] **v1.4 molecule set** — Accordion, Sheet, Stepper, List, Stat, … + DatePicker body portal  
+- [x] Publish **`@softglass/tokens@1.4.0`** → **`@softglass/ui@1.4.0`** + tag **`v1.4.0`**  
+
+**Next (when ready):** v1.5 organism & product patterns (shell depth, PageHeader, CommandPalette minimal).  
+See [docs/claude/todos.md](./docs/claude/todos.md) when present on a plan branch.
 
 **Account rule:** `gh` = **ArdaDDemir**, `npm whoami` = **ardaddemir**. Never publish or push Softglass from work/Feedemy.
 
@@ -194,8 +197,8 @@ CONTRIBUTING.md           PR rules
 
 | Package | npm | Notes |
 | --- | --- | --- |
-| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.3.0** | CSS engine + 4 languages |
-| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.3.0** | React components (peer: react, tokens ^1.3) |
+| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.4.0** | CSS engine + 4 languages + molecule chrome |
+| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.4.0** | React components (peer: react, tokens **^1.4**) |
 | `softglass` (unscoped) | unused | we ship **scoped** packages only |
 
 Install:

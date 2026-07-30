@@ -20,14 +20,16 @@ npm run dev
 
 ## What you get
 
-- Live component demos (atoms / molecules / 1.3 sections)
+- Live component demos (atoms / molecules / 1.4 sections)
 - Theme switcher (Aurora / Obsidian / Mist / Pearl)
 - Docs prop tables (`src/lib/docs.ts`)
 - Built registry JSON under `public/r/` (`npm run registry:build` from root)
+
+Sidebar highlights: **1.4a Disclosure & nav** · **1.4b Surface** · **1.4c Structure** · **1.4d Form polish**
 
 ## Docs
 
 - Root [README](../../README.md)
 - [Getting started](../../docs/GETTING-STARTED.md)
 - [API](../../docs/API.md) · [Limitations](../../docs/LIMITATIONS.md)
-- [CHANGELOG](../../CHANGELOG.md) — current target **v1.3.0**
+- [CHANGELOG](../../CHANGELOG.md) — current **v1.4.0**
