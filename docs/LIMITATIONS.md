@@ -37,6 +37,10 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **EmptyState** | Icon / title / description / actions; solid default | Full empty-template pack / illustrations library |
 | **Sheet** | left \| right \| bottom; portal + presence + focus trap | Nested sheet stack; full mobile OS bottom-sheet physics |
 | **HoverCard** | openDelay / closeDelay; portal + flip | Touch-first long-press parity; arrow pointer |
+| **Stepper** | steps[] + active index; optional interactive jump | Full wizard router / async step validation |
+| **Toolbar** | Composition shell (flex + looks) | Dense data-grid toolbar presets |
+| **List** | ListItem host; density / dividers | Virtualization / infinite scroll |
+| **Stat** | label / value / hint / trend chip | Charts / sparklines |
 | **Toast** | Stack + variants + auto-dismiss + leave + bottom stack reflow | Swipe-to-dismiss; action buttons API |
 | **FormField** | Layout only (label/hint/error) | Schema validation; RHF/Formik adapters |
 | **Progress** | Linear; looks + variants; indeterminate CSS | Buffered/secondary value |

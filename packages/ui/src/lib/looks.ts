@@ -60,3 +60,24 @@ export type PaginationLook = "soft" | "solid" | "ghost" | "glass";
 /** EmptyState surface */
 export type EmptyStateLook = "solid" | "soft" | "outline";
 
+/**
+ * Stepper language
+ * soft = frost track · solid = solid rail · outline = line only
+ * dots = progress line + large dots · pills = segmented chip row
+ */
+export type StepperLook = "soft" | "solid" | "outline" | "dots" | "pills";
+
+/**
+ * Toolbar strip
+ * soft | solid | glass | ghost | accent (accent edge rail)
+ */
+export type ToolbarLook = "soft" | "solid" | "glass" | "ghost" | "accent";
+
+/** List host surface */
+export type ListLook = "soft" | "solid" | "outline" | "ghost" | "inset";
+
+/**
+ * Stat metric tile
+ * solid | soft | glass | outline | accent (left rail)
+ */
+export type StatLook = "solid" | "soft" | "glass" | "outline" | "accent";

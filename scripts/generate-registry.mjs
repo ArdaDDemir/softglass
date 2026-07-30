@@ -288,6 +288,31 @@ const registry = {
       "packages/ui/src/molecules/hover-card.tsx",
       { extra: [PRESENCE, FLOATING, FLOATING_HOOK] },
     ),
+    ui(
+      "stepper",
+      "Stepper",
+      "Wizard step indicator — steps[] + activeStep.",
+      "packages/ui/src/molecules/stepper.tsx",
+    ),
+    ui(
+      "toolbar",
+      "Toolbar",
+      "Action strip shell — compose Search / Button / Badge.",
+      "packages/ui/src/molecules/toolbar.tsx",
+    ),
+    ui(
+      "list",
+      "List",
+      "ListItem host — density / dividers / looks.",
+      "packages/ui/src/molecules/list.tsx",
+      { deps: ["list-item"] },
+    ),
+    ui(
+      "stat",
+      "Stat",
+      "Metric tile — label / value / hint / trend.",
+      "packages/ui/src/molecules/stat.tsx",
+    ),
     ui("modal", "Modal", "Portaled dialog, focus trap, enter/exit motion.", "packages/ui/src/molecules/modal.tsx", {
       deps: ["button"],
       extra: [PRESENCE],

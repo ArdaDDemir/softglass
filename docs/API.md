@@ -44,6 +44,10 @@ Most components accept a **`look`** prop — visual language independent of sema
 | Breadcrumb | `plain` `soft` `pill` |
 | Pagination | `soft` `solid` `ghost` `glass` |
 | EmptyState | `solid` `soft` `outline` |
+| Stepper | `soft` `solid` `outline` `dots` `pills` |
+| Toolbar | `soft` `solid` `glass` `ghost` `accent` |
+| List | `soft` `solid` `outline` `ghost` `inset` |
+| Stat | `solid` `soft` `glass` `outline` `accent` |
 | Avatar | `circle` `rounded` `soft` |
 | Tooltip | `frost` `solid` `accent` |
 | Card | `flat` `raised` `outline` `glow` |
@@ -135,6 +139,10 @@ See the live **Docs** tab in the playground for prop tables.
 | `EmptyState` | `icon` `title` `description` `actions` `look` `size` |
 | `Sheet` | `open` `onOpenChange` `title` `side` `motion` `footer` |
 | `HoverCard` | `trigger` `children` `openDelay` `closeDelay` `placement` |
+| `Stepper` | `steps[]` `activeStep` `orientation` `interactive` `look` |
+| `Toolbar` | `look` `align` + `ToolbarGroup` / `ToolbarSpacer` |
+| `List` | `look` `density` `dividers` `as` (hosts ListItem) |
+| `Stat` | `label` `value` `hint` `trend` `trendLabel` `look` |
 | `Avatar` | `src` `fallback` `size` |
 | `Checkbox` | `checked` `onCheckedChange` `label` `hint` |
 | `Radio` / `RadioGroup` | `value` `onValueChange` `name` + child `value` |

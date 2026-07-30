@@ -2091,4 +2091,177 @@ toast({ title: "Saved", variant: "success", description: "All good." });`,
       },
     ],
   },
+  {
+    id: "stepper",
+    name: "Stepper",
+    layer: "molecule",
+    summary:
+      "Wizard step indicator — steps[] + activeStep (0-based). Optional interactive jump.",
+    importLine: 'import { Stepper } from "@softglass/ui";',
+    example: `<Stepper
+  activeStep={step}
+  onActiveStepChange={setStep}
+  interactive
+  steps={[
+    { label: "Details", description: "Name & plan" },
+    { label: "Team" },
+    { label: "Review" },
+  ]}
+/>`,
+    props: [
+      {
+        name: "steps",
+        type: "{ label, description?, value?, disabled? }[]",
+        description: "Step definitions.",
+      },
+      {
+        name: "activeStep / defaultActiveStep / onActiveStepChange",
+        type: "number",
+        description: "0-based active index.",
+      },
+      {
+        name: "orientation",
+        type: '"horizontal" | "vertical"',
+        default: '"horizontal"',
+        description: "Layout axis.",
+      },
+      {
+        name: "interactive",
+        type: "boolean",
+        default: "false",
+        description: "Click completed/current to jump.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "outline" | "dots" | "pills"',
+        default: '"soft"',
+        description: "Structural recipe (not tint-only).",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        default: '"md"',
+        description: "Indicator density.",
+      },
+    ],
+  },
+  {
+    id: "toolbar",
+    name: "Toolbar",
+    layer: "molecule",
+    summary: "Action strip — compose SearchInput, Button, Badge. Look recipes include accent rail.",
+    importLine: 'import { Toolbar, ToolbarGroup, ToolbarSpacer, ToolbarSeparator } from "@softglass/ui";',
+    example: `<Toolbar look="accent">
+  <ToolbarGroup inset>
+    <SearchInput placeholder="Search…" />
+  </ToolbarGroup>
+  <ToolbarSpacer />
+  <ToolbarGroup>
+    <Badge>3</Badge>
+    <ToolbarSeparator />
+    <Button size="sm">New</Button>
+  </ToolbarGroup>
+</Toolbar>`,
+    props: [
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "ghost" | "accent"',
+        default: '"soft"',
+        description: "Strip chrome recipe.",
+      },
+      {
+        name: "align",
+        type: '"start" | "between" | "end"',
+        default: '"between"',
+        description: "Main cluster justification.",
+      },
+      {
+        name: "ToolbarGroup / Spacer / Separator",
+        type: "subcomponents",
+        description: "inset group, flex spacer, vertical rule.",
+      },
+    ],
+  },
+  {
+    id: "list",
+    name: "List",
+    layer: "molecule",
+    summary: "Host for ListItem atoms — density / dividers / looks. Does not re-skin rows.",
+    importLine: 'import { List, ListItem } from "@softglass/ui";',
+    example: `<List look="inset" dividers>
+  <ListItem title="Alpha" selected />
+  <ListItem title="Beta" />
+</List>`,
+    props: [
+      {
+        name: "look",
+        type: '"soft" | "solid" | "outline" | "ghost" | "inset"',
+        default: '"soft"',
+        description: "Host surface recipe.",
+      },
+      {
+        name: "density",
+        type: '"comfortable" | "compact" | "relaxed"',
+        default: '"comfortable"',
+        description: "Row padding.",
+      },
+      {
+        name: "dividers",
+        type: "boolean",
+        default: "false",
+        description: "Hairlines between children.",
+      },
+      {
+        name: "as",
+        type: '"div" | "ul" | "ol"',
+        default: '"div"',
+        description: "Default div for ListItem rows.",
+      },
+    ],
+  },
+  {
+    id: "stat",
+    name: "Stat",
+    layer: "molecule",
+    summary: "KPI metric tile — label / value / hint / trend; accent rail look.",
+    importLine: 'import { Stat } from "@softglass/ui";',
+    example: `<Stat
+  look="accent"
+  icon={<span>◎</span>}
+  label="Revenue"
+  value="$12.4k"
+  hint="Last 30 days"
+  trend="up"
+  trendLabel="+8%"
+/>`,
+    props: [
+      {
+        name: "label / value",
+        type: "ReactNode",
+        description: "Primary metric.",
+      },
+      {
+        name: "icon / hint",
+        type: "ReactNode",
+        description: "Optional mark and secondary line.",
+      },
+      {
+        name: "trend / trendLabel",
+        type: '"up"|"down"|"flat" / ReactNode',
+        description: "Optional trend chip.",
+      },
+      {
+        name: "look",
+        type: '"solid" | "soft" | "glass" | "outline" | "accent"',
+        default: '"solid"',
+        description: "Tile surface recipe.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Type / padding scale.",
+      },
+    ],
+  },
 ];

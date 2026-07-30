@@ -2234,6 +2234,131 @@
       ]
     },
     {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Wizard step indicator — steps[] + activeStep.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/stepper.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/stepper.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "title": "Toolbar",
+      "description": "Action strip shell — compose Search / Button / Badge.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/toolbar.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/toolbar.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "list",
+      "type": "registry:ui",
+      "title": "List",
+      "description": "ListItem host — density / dividers / looks.",
+      "registryDependencies": [
+        "tokens",
+        "list-item"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/list.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/list.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "stat",
+      "type": "registry:ui",
+      "title": "Stat",
+      "description": "Metric tile — label / value / hint / trend.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/stat.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/stat.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
       "name": "modal",
       "type": "registry:ui",
       "title": "Modal",

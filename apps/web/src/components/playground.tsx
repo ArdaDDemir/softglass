@@ -38,6 +38,7 @@ import {
   Input,
   Kbd,
   Link,
+  List,
   ListItem,
   Meter,
   NavLink,
@@ -58,9 +59,15 @@ import {
   SkipLink,
   Slider,
   Spinner,
+  Stat,
   StatusDot,
+  Stepper,
   TimeInput,
   ToggleGroup,
+  Toolbar,
+  ToolbarGroup,
+  ToolbarSeparator,
+  ToolbarSpacer,
   Truncate,
   VisuallyHidden,
   ColorInput,
@@ -87,6 +94,7 @@ type SectionId =
   | "nice"
   | "disclosure-nav"
   | "surface"
+  | "structure"
   | "docs"
   | "overlays"
   | "controls";
@@ -103,6 +111,7 @@ const SECTIONS: { id: SectionId; label: string }[] = [
   { id: "nice", label: "Nice · 1.3e" },
   { id: "disclosure-nav", label: "1.4a · Disclosure & nav" },
   { id: "surface", label: "1.4b · Surface" },
+  { id: "structure", label: "1.4c · Structure" },
   { id: "docs", label: "Docs / API" },
   { id: "overlays", label: "Modal · Menu · Toast" },
   { id: "controls", label: "Controls" },
@@ -217,6 +226,7 @@ export function Playground() {
           {section === "nice" ? <NiceAtomsSection /> : null}
           {section === "disclosure-nav" ? <DisclosureNavSection /> : null}
           {section === "surface" ? <SurfaceSection /> : null}
+          {section === "structure" ? <StructureSection /> : null}
           {section === "docs" ? (
             <DocsSection
               docId={docId}
@@ -1802,6 +1812,237 @@ const LOOK_CHIP: CSSProperties = {
   fontSize: "var(--sg-text-xs)",
   color: "var(--sg-fg-muted)",
 };
+
+/** v1.4c — Stepper + Toolbar + List + Stat (look switchers, structural recipes). */
+function StructureSection() {
+  const [step, setStep] = useState(1);
+  const [selected, setSelected] = useState("alpha");
+  const [query, setQuery] = useState("");
+  const [stepLook, setStepLook] = useState<
+    "soft" | "solid" | "outline" | "dots" | "pills"
+  >("dots");
+  const [toolLook, setToolLook] = useState<
+    "soft" | "solid" | "glass" | "ghost" | "accent"
+  >("soft");
+  const [listLook, setListLook] = useState<
+    "soft" | "solid" | "outline" | "ghost" | "inset"
+  >("soft");
+  const [statLook, setStatLook] = useState<
+    "solid" | "soft" | "glass" | "outline" | "accent"
+  >("accent");
+
+  const steps = [
+    { label: "Details", description: "Name & plan" },
+    { label: "Team", description: "Invite" },
+    { label: "Review", description: "Confirm" },
+  ];
+
+  const lookBtn = (
+    looks: readonly string[],
+    current: string,
+    set: (v: string) => void,
+  ) => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+      {looks.map((look) => (
+        <Button
+          key={look}
+          size="sm"
+          variant={current === look ? "primary" : "secondary"}
+          onClick={() => set(look)}
+        >
+          {look}
+        </Button>
+      ))}
+    </div>
+  );
+
+  return (
+    <>
+      <Card surface="solid" as="section" id="section-stepper">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4c
+          </Badge>
+          <CardTitle>Stepper</CardTitle>
+          <CardDescription>
+            Looks are recipes: soft rail · solid card · outline · dots progress ·
+            pills chips
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem" }}>
+          {lookBtn(
+            ["soft", "solid", "outline", "dots", "pills"],
+            stepLook,
+            (v) => setStepLook(v as typeof stepLook),
+          )}
+          <div style={LOOK_CHIP}>look = {stepLook}</div>
+          <Stepper
+            key={stepLook}
+            steps={steps}
+            activeStep={step}
+            onActiveStepChange={setStep}
+            interactive
+            look={stepLook}
+          />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            <Button
+              size="sm"
+              variant="secondary"
+              disabled={step <= 0}
+              onClick={() => setStep((s) => Math.max(0, s - 1))}
+            >
+              Back
+            </Button>
+            <Button
+              size="sm"
+              disabled={step >= steps.length - 1}
+              onClick={() => setStep((s) => Math.min(steps.length - 1, s + 1))}
+            >
+              Next
+            </Button>
+            <span style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+              {step + 1}/{steps.length} · {steps[step]?.label}
+            </span>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-toolbar">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4c
+          </Badge>
+          <CardTitle>Toolbar</CardTitle>
+          <CardDescription>
+            soft · solid · glass · ghost · accent (left rail)
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          {lookBtn(
+            ["soft", "solid", "glass", "ghost", "accent"],
+            toolLook,
+            (v) => setToolLook(v as typeof toolLook),
+          )}
+          <Toolbar look={toolLook}>
+            <ToolbarGroup inset={toolLook === "soft" || toolLook === "glass"}>
+              <SearchInput
+                value={query}
+                onValueChange={setQuery}
+                placeholder="Search projects…"
+                aria-label="Search projects"
+              />
+            </ToolbarGroup>
+            <ToolbarSpacer />
+            <ToolbarGroup>
+              <Badge variant="accent" size="sm">
+                3
+              </Badge>
+              <ToolbarSeparator />
+              <Button size="sm" variant="secondary">
+                Export
+              </Button>
+              <Button size="sm">New</Button>
+            </ToolbarGroup>
+          </Toolbar>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-list">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4c
+          </Badge>
+          <CardTitle>List</CardTitle>
+          <CardDescription>
+            Host looks: soft · solid · outline · ghost · inset — ListItem atom.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          {lookBtn(
+            ["soft", "solid", "outline", "ghost", "inset"],
+            listLook,
+            (v) => setListLook(v as typeof listLook),
+          )}
+          <List look={listLook} dividers={listLook !== "ghost"}>
+            {(
+              [
+                ["alpha", "Alpha", "Primary workspace"],
+                ["beta", "Beta", "Staging"],
+                ["gamma", "Gamma", "Archive"],
+              ] as const
+            ).map(([id, title, description]) => (
+              <ListItem
+                key={id}
+                title={title}
+                description={description}
+                selected={selected === id}
+                onClick={() => setSelected(id)}
+                trailing={
+                  selected === id ? <Badge size="sm">active</Badge> : null
+                }
+              />
+            ))}
+          </List>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-stat">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.4c
+          </Badge>
+          <CardTitle>Stat</CardTitle>
+          <CardDescription>
+            solid · soft · glass · outline · accent rail — switch applies to all
+            tiles
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.85rem" }}>
+          {lookBtn(
+            ["solid", "soft", "glass", "outline", "accent"],
+            statLook,
+            (v) => setStatLook(v as typeof statLook),
+          )}
+          <div
+            style={{
+              display: "grid",
+              gap: "0.75rem",
+              gridTemplateColumns: "repeat(auto-fit, minmax(11rem, 1fr))",
+            }}
+          >
+            <Stat
+              look={statLook}
+              icon={<span>◎</span>}
+              label="Revenue"
+              value="$12.4k"
+              hint="Last 30 days"
+              trend="up"
+              trendLabel="+8%"
+            />
+            <Stat
+              look={statLook}
+              icon={<span>◉</span>}
+              label="Active users"
+              value="1,284"
+              hint="Weekly active"
+              trend="flat"
+              trendLabel="0%"
+            />
+            <Stat
+              look={statLook}
+              icon={<span>◌</span>}
+              label="Churn"
+              value="2.1%"
+              hint="Month over month"
+              trend="down"
+              trendLabel="-0.4%"
+            />
+          </div>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
 
 /** v1.4b — EmptyState + Sheet + HoverCard (single live instances). */
 function SurfaceSection() {
