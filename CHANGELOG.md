@@ -7,6 +7,51 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-07-30
+
+Minor release: atom layer close-out — feedback, form, chrome, Should + Nice atoms.
+
+**Target ship:** npm `@softglass/tokens@1.3.0` + `@softglass/ui@1.3.0`, GitHub tag `v1.3.0` (account: **ArdaDDemir** / npm **ardaddemir** only).
+
+### Added (Must — 1.3a–c)
+
+- **`Progress`** — linear value / indeterminate; sizes; looks soft/solid/glass/accent/striped; semantic variants
+- **`StatusDot`** — online/busy/offline/away + custom color; looks soft/solid/outline/glow
+- **`Slider`** — single value; min/max/step; field meta; looks
+- **`NumberInput`** — steppers; empty → `null`; soft pill shell + looks
+- **`FileField`** — solid/soft/dashed/ghost pickers; local file list (no upload)
+- **`Link`**, **`Chip`** (selectable/removable + filter/check variants), **`CloseButton`**
+- **`PasswordInput`**, **`SearchInput`**, **`VisuallyHidden`**
+
+### Added (Should — 1.3d)
+
+- **`CircularProgress`**, **`SegmentedControl`**, **`Kbd`**, **`Code`**, **`SkipLink`**
+- **`PinInput`**, **`NavLink`**, **`ListItem`**, **`CharacterCount`**, **`Fieldset`**
+- **`Icon`** (wrapper only), **`Image`** (fallback), **`Meter`**, **`CopyButton`**
+- **`TimeInput`** — custom Softglass HH:mm (not OS picker)
+- **`ClientOnly`**, **`ScrollArea`**, **`Rating`** (SVG stars + shell), **`AspectRatio`**
+
+### Added (Nice — 1.3e)
+
+- **`RangeSlider`**, **`ToggleGroup`**, **`CountBadge`**
+- **`ColorSwatch`**, **`ColorInput`**
+- **`Highlight`**, **`Truncate`**, **`LiveRegion`** (visible Softglass banner)
+- **`NativeDateInput`** — custom day/month/year steppers (YYYY-MM-DD; not OS date chrome)
+- **`Text`**, **`Heading`** (lightweight; not a full typography kit)
+
+### Changed
+
+- Playground sections for 1.3a–e; expanded `docs/API.md` + `LIMITATIONS.md`
+- Registry generator includes new atoms (`registry.json` ~68 items)
+- Vitest smokes expanded for new controls
+- `@softglass/ui` peer: `@softglass/tokens` **^1.3.0**
+
+### Deferred / not in 1.3.0
+
+- DatePicker extract (Calendar / Month / Year) — refactor-only; still on DatePicker
+- Date **range** suite, Storybook/docs marketing site, theme builder, DataTable
+- Icon pack, full typography system
+
 ## [1.2.0] — 2026-07-29
 
 Minor release: ContextMenu, DatePicker, Vitest smoke suite, overlay portals.

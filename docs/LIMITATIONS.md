@@ -1,4 +1,4 @@
-# Limitations (v1.2.0)
+# Limitations (v1.3.0)
 
 Honest scope notes for Softglass. Read this before treating the kit like Radix / Chakra / MUI.
 
@@ -32,7 +32,22 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Tabs** | Roving tabindex + arrow/Home/End keys + sliding indicator | Directional content slide; vertical orientation API polish |
 | **Toast** | Stack + variants + auto-dismiss + leave + bottom stack reflow | Swipe-to-dismiss; action buttons API |
 | **FormField** | Layout only (label/hint/error) | Schema validation; RHF/Formik adapters |
-| **Glass surfaces** | Frost-first (cheap); optional blur | Guaranteed WCAG contrast on every glass+text combo without solid surfaces |
+| **Progress** | Linear; looks + variants; indeterminate CSS | Buffered/secondary value |
+| **CircularProgress** | Ring value / spin | Half-ring; determinate path animation suite |
+| **StatusDot** | Semantic statuses + custom color + looks | Avatar corner compose helper |
+| **Slider** | Single value; native range + skin; field meta | Vertical; marks / ticks API |
+| **RangeSlider** | Dual thumb | Vertical; snap marks |
+| **NumberInput** | Steppers; empty → `null`; looks | Locale formatting; currency mask |
+| **FileField** | Local pick + name list; looks | Upload backend; full dropzone product |
+| **Link** / **NavLink** | Plain `<a>` (+ active on NavLink) | Next router auto-active (wrap yourself) |
+| **Chip** | Select / remove / filter / check | Multi-select store; avatar chips |
+| **PasswordInput** | Show/hide | Strength meter; generator |
+| **SearchInput** | Free text + clear | Command palette; async suggestions |
+| **TimeInput** | Custom HH:mm Softglass UI | Timezone / seconds / range |
+| **NativeDateInput** | Custom day/month/year steppers (YYYY-MM-DD) | Full calendar suite (use DatePicker) |
+| **DatePicker** | Day/month/year grids; field meta | Portal body; range; locale packs |
+| **Rating** | SVG stars + shell | Half-stars; custom icon sets |
+| **Glass surfaces** | Frost-first (cheap); optional blur | Guaranteed WCAG on every glass+text combo |
 
 ## Accessibility & contrast
 
@@ -52,7 +67,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 | Path | Status |
 | --- | --- |
-| npm `@softglass/tokens` + `@softglass/ui` | **Published 1.2.0** |
+| npm `@softglass/tokens` + `@softglass/ui` | **1.3.0** ready (publish via **ardaddemir** only — not work) |
 | shadcn-style registry CLI | Root `registry.json` + `shadcn build` → `apps/web/public/r`; GitHub install after push — see [REGISTRY.md](./REGISTRY.md) |
 | Docs marketing site | Playground app in-repo; separate docs site later |
 
@@ -60,15 +75,15 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 - Brand: **Softglass**
 - Scoped packages live on npm:
-  - [`@softglass/tokens@1.2.0`](https://www.npmjs.com/package/@softglass/tokens)
-  - [`@softglass/ui@1.2.0`](https://www.npmjs.com/package/@softglass/ui)
-- Org: **`softglass`** (owner: personal npm account)
-- Source: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.2.0`
+  - [`@softglass/tokens@1.3.0`](https://www.npmjs.com/package/@softglass/tokens)
+  - [`@softglass/ui@1.3.0`](https://www.npmjs.com/package/@softglass/ui)
+- Org: **`softglass`** — owner: personal npm **`ardaddemir`** (**not** work/Feedemy)
+- Source: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.3.0`
 - Prefer scoped packages; unscoped `softglass` is intentionally unused
 
 ## Known non-goals (still)
 
-- Date **range** / time picker / timezone engine
+- Date **range** suite / full timezone engine
 - DataTable
 - Nested ContextMenu / DropdownMenu submenus
 - Perfect Select parity with Radix Select

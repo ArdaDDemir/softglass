@@ -691,6 +691,1248 @@
       ]
     },
     {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Linear progress — determinate value or indeterminate.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/progress.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/progress.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "status-dot",
+      "type": "registry:ui",
+      "title": "Status Dot",
+      "description": "Presence indicator — online / busy / offline / away + custom color.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/status-dot.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/status-dot.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Single-value range with label / hint / error.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/slider.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "Number Input",
+      "description": "Numeric field with steppers + field meta.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/number-input.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/number-input.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "file-field",
+      "type": "registry:ui",
+      "title": "File Field",
+      "description": "Solid file picker with basic name list (no upload).",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/file-field.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/file-field.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "visually-hidden",
+      "type": "registry:ui",
+      "title": "Visually Hidden",
+      "description": "A11y helper — hide visually, keep for screen readers.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/visually-hidden.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/visually-hidden.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "close-button",
+      "type": "registry:ui",
+      "title": "Close Button",
+      "description": "Shared dismiss control for chips and chrome.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/close-button.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/close-button.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "Text link — href + optional external.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/link.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/link.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "chip",
+      "type": "registry:ui",
+      "title": "Chip",
+      "description": "Selectable / removable pill (uses CloseButton).",
+      "registryDependencies": [
+        "tokens",
+        "close-button"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/chip.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/chip.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "Password Input",
+      "description": "Password field with show / hide toggle.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/password-input.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/password-input.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "search-input",
+      "type": "registry:ui",
+      "title": "Search Input",
+      "description": "Free-text search with clear (not Combobox).",
+      "registryDependencies": [
+        "tokens",
+        "close-button"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/search-input.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/search-input.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "circular-progress",
+      "type": "registry:ui",
+      "title": "Circular Progress",
+      "description": "Ring progress — determinate or indeterminate.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/circular-progress.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/circular-progress.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "description": "Single-select segmented buttons (radiogroup).",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/segmented-control.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/segmented-control.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Keyboard key glyph.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/kbd.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/kbd.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "code",
+      "type": "registry:ui",
+      "title": "Code",
+      "description": "Inline or block monospace code.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/code.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/code.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "skip-link",
+      "type": "registry:ui",
+      "title": "Skip Link",
+      "description": "Skip to content — visible on focus.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/skip-link.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/skip-link.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "pin-input",
+      "type": "registry:ui",
+      "title": "Pin Input",
+      "description": "OTP / PIN cells with paste + keyboard.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/pin-input.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/pin-input.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "nav-link",
+      "type": "registry:ui",
+      "title": "Nav Link",
+      "description": "Navigation link with active state.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/nav-link.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/nav-link.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "list-item",
+      "type": "registry:ui",
+      "title": "List Item",
+      "description": "Leading / title / trailing row.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/list-item.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/list-item.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "copy-button",
+      "type": "registry:ui",
+      "title": "Copy Button",
+      "description": "Copy to clipboard with brief feedback.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/copy-button.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/copy-button.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "character-count",
+      "type": "registry:ui",
+      "title": "Character Count",
+      "description": "Field helper value or value/max.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/character-count.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/character-count.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "fieldset",
+      "type": "registry:ui",
+      "title": "Fieldset",
+      "description": "Group related controls with legend.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/fieldset.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/fieldset.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "icon",
+      "type": "registry:ui",
+      "title": "Icon",
+      "description": "Icon wrapper only — no icon pack.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/icon.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/icon.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "image",
+      "type": "registry:ui",
+      "title": "Image",
+      "description": "Framed image with fallback.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/image.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/image.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "Read-only scalar bar.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/meter.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/meter.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "time-input",
+      "type": "registry:ui",
+      "title": "Time Input",
+      "description": "HH:mm native time skin (no TZ).",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/time-input.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/time-input.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "client-only",
+      "type": "registry:ui",
+      "title": "Client Only",
+      "description": "Render children after client mount.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/client-only.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/client-only.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Light overflow region.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/scroll-area.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/scroll-area.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "Star rating control.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/rating.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/rating.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "title": "Aspect Ratio",
+      "description": "Lock child to aspect box.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/aspect-ratio.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/aspect-ratio.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "range-slider",
+      "type": "registry:ui",
+      "title": "Range Slider",
+      "description": "Dual-thumb range control.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/range-slider.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/range-slider.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "Single or multi select button group.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/toggle-group.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/toggle-group.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "count-badge",
+      "type": "registry:ui",
+      "title": "Count Badge",
+      "description": "Compact numeric pill.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/count-badge.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/count-badge.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "color-swatch",
+      "type": "registry:ui",
+      "title": "Color Swatch",
+      "description": "Clickable color chip.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/color-swatch.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/color-swatch.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "color-input",
+      "type": "registry:ui",
+      "title": "Color Input",
+      "description": "Simple color picker + hex text.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/color-input.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/color-input.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "highlight",
+      "type": "registry:ui",
+      "title": "Highlight",
+      "description": "Inline mark for emphasis.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/highlight.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "truncate",
+      "type": "registry:ui",
+      "title": "Truncate",
+      "description": "Ellipsis overflow text.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/truncate.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/truncate.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "live-region",
+      "type": "registry:ui",
+      "title": "Live Region",
+      "description": "aria-live status container.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/live-region.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/live-region.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "native-date-input",
+      "type": "registry:ui",
+      "title": "Native Date Input",
+      "description": "Skinned native date field.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/native-date-input.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/native-date-input.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "text",
+      "type": "registry:ui",
+      "title": "Text / Heading",
+      "description": "Lightweight text helpers.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/text.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/text.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",

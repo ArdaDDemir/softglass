@@ -1,4 +1,4 @@
-# Softglass API reference (v1.2.0)
+# Softglass API reference (v1.3.0)
 
 Import once in your app root:
 
@@ -43,6 +43,25 @@ Most components accept a **`look`** prop — visual language independent of sema
 | Avatar | `circle` `rounded` `soft` |
 | Tooltip | `frost` `solid` `accent` |
 | Card | `flat` `raised` `outline` `glow` |
+| Slider | `soft` `solid` `glass` `accent` |
+| NumberInput | `soft` `solid` `outline` `ghost` |
+| FileField | `solid` `soft` `dashed` `ghost` |
+| Progress | `soft` `solid` `glass` `accent` `striped` |
+| StatusDot | `soft` `solid` `outline` `glow` |
+| Link | `accent` `muted` `subtle` `underline` |
+| Chip | `soft` `solid` `outline` `glass` `glow` |
+| CloseButton | `ghost` `soft` `solid` `danger` |
+| PasswordInput / SearchInput | `soft` `solid` `glass` `outline` `ghost` |
+| CircularProgress | `soft` `solid` `glass` `accent` |
+| SegmentedControl | `soft` `solid` `outline` `glass` |
+| Kbd | `soft` `solid` `outline` `glass` |
+| Code | `soft` `solid` `accent` `muted` |
+| SkipLink | `solid` `soft` `outline` `glass` |
+| PinInput | `solid` `soft` `outline` `glass` |
+| NavLink | `soft` `solid` `underline` `pill` |
+| ListItem | `soft` `solid` `outline` `ghost` |
+| CopyButton | `soft` `solid` `outline` `ghost` |
+| CharacterCount | `soft` `solid` `muted` `danger` |
 
 ## `motion` prop (interaction recipes)
 
@@ -110,6 +129,46 @@ See the live **Docs** tab in the playground for prop tables.
 | `Alert` | `variant` `title` `icon` `children` |
 | `Skeleton` | `width` `height` `circle` `rounded` |
 | `Spinner` | `size` `label` |
+| `Progress` | `value` `max` `size` `look` `variant` `label` |
+| `StatusDot` | `status` `look` `color` `size` `pulse` `label` |
+| `Slider` | `value` `onValueChange` `min` `max` `step` `look` `label` `hint` `error` |
+| `NumberInput` | `value` `onValueChange` `min` `max` `step` `look` `label` `hint` `error` |
+| `FileField` | `files` `onFilesChange` `multiple` `look` `label` `hint` `error` |
+| `Link` | `href` `external` `look` |
+| `Chip` | `selected` `onSelectedChange` `removable` `onRemove` `look` |
+| `CloseButton` | `size` `label` |
+| `PasswordInput` | `revealed` `onRevealedChange` `label` `hint` `error` |
+| `SearchInput` | `value` `onValueChange` `clearable` `label` `hint` `error` |
+| `VisuallyHidden` | `children` `as` |
+| `CircularProgress` | `value` `max` `size` `look` `variant` `showValue` `label` |
+| `SegmentedControl` | `options` `value` `onValueChange` `look` `size` |
+| `Kbd` | `children` `size` `look` |
+| `Code` | `children` `block` `look` |
+| `SkipLink` | `href` `look` `placement` `alwaysVisible` |
+| `PinInput` | `length` `value` `onValueChange` `onComplete` `look` `mask` |
+| `NavLink` | `href` `active` `look` `leading` |
+| `ListItem` | `title` `description` `leading` `trailing` `look` `selected` |
+| `CopyButton` | `value` `look` `copiedLabel` `onCopied` |
+| `CharacterCount` | `value` `max` `look` |
+| `Fieldset` | `legend` `look` `density` |
+| `Icon` | `children` `size` `look` `label` |
+| `Image` | `src` `fallback` `look` `fit` `aspectRatio` |
+| `Meter` | `value` `min` `max` `look` `variant` `label` |
+| `TimeInput` | `value` `onValueChange` `look` `hourCycle` `minuteStep` `label` |
+| `ClientOnly` | `children` `fallback` |
+| `ScrollArea` | `maxHeight` `look` `orientation` |
+| `Rating` | `value` `onValueChange` `look` `color` `showValue` `caption` `clearable` |
+| `AspectRatio` | `ratio` `children` |
+| `RangeSlider` | `value: [min,max]` `onValueChange` `look` |
+| `ToggleGroup` | `options` `type` `value` `onValueChange` `look` |
+| `CountBadge` | `count` `max` `look` `hideZero` |
+| `ColorSwatch` | `color` `selected` `look` |
+| `ColorInput` | `value` `onValueChange` `look` |
+| `Highlight` | `look` `children` |
+| `Truncate` | `lines` `children` |
+| `LiveRegion` | `look` `title` `politeness` `visuallyHidden` `hideWhenEmpty` |
+| `NativeDateInput` | `value` `onValueChange` `look` `min` `max` (custom DD/Mon/YYYY UI) |
+| `Text` / `Heading` | `tone` `size` `level` |
 | `Separator` | `orientation` `decorative` |
 | `Label` | `requiredMark` `htmlFor` |
 | `FormField` | `label` `hint` `error` `htmlFor` `requiredMark` |

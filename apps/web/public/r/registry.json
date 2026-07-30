@@ -691,6 +691,161 @@
       ]
     },
     {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Linear progress — determinate value or indeterminate.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/progress.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/progress.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "status-dot",
+      "type": "registry:ui",
+      "title": "Status Dot",
+      "description": "Presence indicator — online / busy / offline / away + custom color.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/status-dot.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/status-dot.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Single-value range with label / hint / error.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/slider.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "Number Input",
+      "description": "Numeric field with steppers + field meta.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/number-input.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/number-input.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "file-field",
+      "type": "registry:ui",
+      "title": "File Field",
+      "description": "Solid file picker with basic name list (no upload).",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/file-field.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/file-field.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",

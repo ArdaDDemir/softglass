@@ -58,7 +58,7 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 **Live packages**
 
 - [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
-- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.2.0`
+- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.3.0`
 
 ### Brand override (colors only)
 
@@ -86,28 +86,30 @@ So you do not rebuild UI per project. You pick a language and recolor.
 - **npm packages today** — `@softglass/tokens` + `@softglass/ui` with dual CJS/ESM `dist`  
 - **Not a locked theme kit** — CSS variables you can edit  
 
-## Components (`@softglass/ui` v1)
+## Components (`@softglass/ui` v1.3)
 
 | Layer | Component | Role |
 | --- | --- | --- |
 | Atom | `Button` | variant, size, rounded, look, motion, loading |
-| Atom | `Input` / `Textarea` | label, hint, error, addons, look |
-| Atom | `Badge` / `Avatar` | status + identity |
+| Atom | `Input` / `Textarea` / `PasswordInput` / `SearchInput` | field meta + chrome |
+| Atom | `Badge` / `CountBadge` / `Avatar` | status + identity + counts |
 | Atom | `Switch` / `Checkbox` / `Radio` | soft controls |
-| Atom | `Select` | custom glass dropdown |
-| Atom | `Combobox` | type-to-filter single select — *1.1 Sprint D* |
-| Atom | `MultiSelect` | multi value + chips — *1.1 Sprint D* |
-| Atom | `Tooltip` | frost/solid/accent looks |
-| Atom | `Spinner` / `Skeleton` / `Separator` | status & layout |
-| Atom | `Alert` | info / success / warning / danger callout |
-| Atom | `Label` / `FormField` | form composition |
-| Molecule | `Card` | solid / glass / elevated |
-| Molecule | `Modal` | portal, Escape, focus trap |
-| Molecule | `DropdownMenu` | action menu (items API) — *1.1 Sprint A* |
-| Molecule | `Popover` | anchored content panel — *1.1 Sprint A* |
-| Molecule | `Toast` | provider + hook |
-| Molecule | `Tabs` | pill / underline / segmented + keyboard |
+| Atom | `Select` / `Combobox` / `MultiSelect` | lists + filter + chips |
+| Atom | `DatePicker` / `NativeDateInput` / `TimeInput` | date/time (ISO strings) |
+| Atom | `Slider` / `RangeSlider` / `NumberInput` / `PinInput` | numeric / range / OTP |
+| Atom | `FileField` / `ColorInput` / `ColorSwatch` | files + color |
+| Atom | `Progress` / `CircularProgress` / `Meter` / `Spinner` / `Skeleton` | feedback |
+| Atom | `StatusDot` / `Rating` / `Alert` | presence + callouts |
+| Atom | `Link` / `NavLink` / `Chip` / `CloseButton` / `CopyButton` | chrome |
+| Atom | `SegmentedControl` / `ToggleGroup` | exclusive / multi toggles |
+| Atom | `Kbd` / `Code` / `Text` / `Heading` / `Highlight` / `Truncate` | docs text |
+| Atom | `Label` / `FormField` / `Fieldset` / `CharacterCount` | form composition |
+| Atom | `ListItem` / `Icon` / `Image` / `AspectRatio` / `ScrollArea` | layout bricks |
+| Atom | `Tooltip` / `Separator` / `VisuallyHidden` / `SkipLink` / `LiveRegion` / `ClientOnly` | a11y & misc |
+| Molecule | `Card` / `Modal` / `Popover` / `DropdownMenu` / `ContextMenu` / `Toast` / `Tabs` | composites |
 | Organism | `AppShell` | header + optional sidebar |
+
+Full prop map: [docs/API.md](./docs/API.md). Honest limits: [docs/LIMITATIONS.md](./docs/LIMITATIONS.md).
 
 ```tsx
 import { Button, Card, Input, AppShell } from "@softglass/ui";
@@ -135,6 +137,7 @@ npm run dev        # http://localhost:3000
 | `npm run dev` | Build UI then start playground |
 | `npm run build` | UI + Next production build |
 | `npm run typecheck` | UI TypeScript |
+| `npm run test` | Vitest smokes (`packages/ui`) |
 | `npm run pack:check` | `npm pack --dry-run` for both packages |
 | `npm run registry:validate` | Generate + validate `registry.json` |
 | `npm run registry:build` | Emit `apps/web/public/r/*.json` |
@@ -168,7 +171,7 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.2.0 — shipped** (npm + GitHub tag)
+**v1.3.0 — ready to ship** (atom layer closed; publish checklist)
 
 - [x] Four languages as CSS tokens  
 - [x] Core UI kit + look + motion  
@@ -176,20 +179,20 @@ CONTRIBUTING.md           PR rules
 - [x] Publish-oriented `package.json` (conditional exports, files, peerDeps+Meta, LICENSE)  
 - [x] Consumer getting-started + limitations + changelog  
 - [x] CI workflow (typecheck + **test** + build + pack dry-run)  
-- [x] npm org **`softglass`**  
-- [x] Published **`@softglass/tokens@1.2.0`** + **`@softglass/ui@1.2.0`**  
-- [x] GitHub public repo + tag **`v1.2.0`** ([ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass))  
-- [x] README hero visual  
-- [x] shadcn registry path — root `registry.json` + `npm run registry:build` + [docs/REGISTRY.md](./docs/REGISTRY.md)  
-- [x] v1.1 kit: Popover, DropdownMenu, Combobox, MultiSelect, exit motion  
-- [x] v1.2 kit: ContextMenu, DatePicker (day/month/year), Vitest smokes, overlay body portals  
+- [x] npm org **`softglass`** (owner: personal **ardaddemir** — not work/Feedemy)  
+- [x] GitHub [ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass)  
+- [x] v1.1–1.2 kit shipped (overlays, ContextMenu, DatePicker, portals, Vitest)  
+- [x] **v1.3 atom layer** — Must (1.3a–c) + Should (1.3d) + Nice (1.3e, DatePicker extract deferred)  
+- [ ] Publish **`@softglass/tokens@1.3.0`** → **`@softglass/ui@1.3.0`** + tag **`v1.3.0`**  
+
+**Account rule:** `gh` = **ArdaDDemir**, `npm whoami` = **ardaddemir**. Never publish or push Softglass from work/Feedemy.
 
 ## Package naming
 
 | Package | npm | Notes |
 | --- | --- | --- |
-| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.2.0** public | CSS engine + 4 languages |
-| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.2.0** public | React components (peer: react, tokens ^1.2) |
+| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.3.0** | CSS engine + 4 languages |
+| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.3.0** | React components (peer: react, tokens ^1.3) |
 | `softglass` (unscoped) | unused | we ship **scoped** packages only |
 
 Install:

@@ -9,6 +9,8 @@ import { SOFTGLASS_THEMES } from "@/lib/themes";
 import {
   Alert,
   AppShell,
+  AspectRatio,
+  Avatar,
   Badge,
   Button,
   Card,
@@ -17,12 +19,52 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  CharacterCount,
+  Chip,
+  CircularProgress,
+  ClientOnly,
+  CloseButton,
+  Code,
+  CopyButton,
+  Fieldset,
+  FileField,
+  Icon,
+  Image,
   Input,
+  Kbd,
+  Link,
+  ListItem,
+  Meter,
+  NavLink,
+  NumberInput,
+  PasswordInput,
+  PinInput,
+  Progress,
+  Rating,
+  ScrollArea,
+  SearchInput,
+  SegmentedControl,
   Separator,
   ShellNav,
   ShellNavItem,
   Skeleton,
+  SkipLink,
+  Slider,
   Spinner,
+  StatusDot,
+  TimeInput,
+  ToggleGroup,
+  Truncate,
+  VisuallyHidden,
+  ColorInput,
+  ColorSwatch,
+  CountBadge,
+  Heading,
+  Highlight,
+  LiveRegion,
+  NativeDateInput,
+  RangeSlider,
+  Text,
 } from "@softglass/ui";
 import { useMemo, useState } from "react";
 
@@ -31,6 +73,11 @@ type SectionId =
   | "start"
   | "looks"
   | "buttons"
+  | "feedback"
+  | "form-atoms"
+  | "chrome"
+  | "should"
+  | "nice"
   | "docs"
   | "overlays"
   | "controls";
@@ -40,6 +87,11 @@ const SECTIONS: { id: SectionId; label: string }[] = [
   { id: "start", label: "Get started" },
   { id: "looks", label: "Looks · motion" },
   { id: "buttons", label: "Button props" },
+  { id: "feedback", label: "Progress · StatusDot" },
+  { id: "form-atoms", label: "Slider · Number · File" },
+  { id: "chrome", label: "Link · Chip · Fields" },
+  { id: "should", label: "Should · 1.3d" },
+  { id: "nice", label: "Nice · 1.3e" },
   { id: "docs", label: "Docs / API" },
   { id: "overlays", label: "Modal · Menu · Toast" },
   { id: "controls", label: "Controls" },
@@ -147,6 +199,11 @@ export function Playground() {
           {section === "start" ? <GetStartedSection /> : null}
           {section === "looks" ? <LooksDemo /> : null}
           {section === "buttons" ? <ButtonPropsSection /> : null}
+          {section === "feedback" ? <FeedbackSection /> : null}
+          {section === "form-atoms" ? <FormAtomsSection /> : null}
+          {section === "chrome" ? <ChromeAtomsSection /> : null}
+          {section === "should" ? <ShouldAtomsSection /> : null}
+          {section === "nice" ? <NiceAtomsSection /> : null}
           {section === "docs" ? (
             <DocsSection
               docId={docId}
@@ -399,7 +456,8 @@ npm run build:ui`,
         <CardHeader>
           <CardTitle>Status helpers (v1)</CardTitle>
           <CardDescription>
-            Alert, Skeleton, Spinner, Separator — for empty/loading/status UI.
+            Alert, Skeleton, Spinner, Separator — empty / loading / status UI.
+            Progress + StatusDot → sidebar “Progress · StatusDot”.
           </CardDescription>
         </CardHeader>
         <CardContent style={{ display: "grid", gap: "0.75rem" }}>
@@ -422,6 +480,1208 @@ npm run build:ui`,
             <Skeleton width={120} height={14} />
             <Skeleton circle width={40} height={40} />
           </div>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+/** v1.3a — dedicated playground for Progress + StatusDot (not buried in Overview). */
+function FeedbackSection() {
+  const [value, setValue] = useState(42);
+
+  return (
+    <>
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3a
+          </Badge>
+          <CardTitle>Progress</CardTitle>
+          <CardDescription>
+            <code>look</code>: soft · solid · glass · accent · striped ·{" "}
+            <code>variant</code>: accent · success · warning · danger · muted
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <div style={{ display: "grid", gap: "0.5rem" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "var(--sg-text-sm)",
+                color: "var(--sg-fg-muted)",
+              }}
+            >
+              <span>Interactive value</span>
+              <span>{value}%</span>
+            </div>
+            <Progress value={value} label="Demo progress" look="soft" />
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={value}
+              onChange={(e) => setValue(Number(e.target.value))}
+              aria-label="Progress value"
+              style={{ width: "100%" }}
+            />
+          </div>
+
+          <div style={{ display: "grid", gap: "0.75rem" }}>
+            <div style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+              Looks
+            </div>
+            <Progress value={72} look="soft" label="soft" />
+            <Progress value={48} look="solid" label="solid" />
+            <Progress value={64} look="glass" label="glass" />
+            <Progress value={80} look="accent" label="accent" />
+            <Progress value={55} look="striped" label="striped" />
+          </div>
+
+          <div style={{ display: "grid", gap: "0.75rem" }}>
+            <div style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+              Variants (fill color)
+            </div>
+            <Progress value={70} variant="accent" label="accent" />
+            <Progress value={70} variant="success" label="success" />
+            <Progress value={70} variant="warning" label="warning" />
+            <Progress value={70} variant="danger" label="danger" />
+            <Progress value={70} variant="muted" label="muted" />
+          </div>
+
+          <div style={{ display: "grid", gap: "0.5rem" }}>
+            <div style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+              Indeterminate
+            </div>
+            <Progress label="Loading…" look="glass" />
+            <Progress label="Striped load" look="striped" variant="success" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3a
+          </Badge>
+          <CardTitle>StatusDot</CardTitle>
+          <CardDescription>
+            <code>look</code>: soft · solid · outline · glow (+ status / pulse /
+            color)
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "1.25rem",
+              alignItems: "center",
+            }}
+          >
+            {(
+              [
+                ["online", "Online"],
+                ["busy", "Busy"],
+                ["away", "Away"],
+                ["offline", "Offline"],
+              ] as const
+            ).map(([status, label]) => (
+              <span
+                key={status}
+                style={{
+                  display: "inline-flex",
+                  gap: "0.45rem",
+                  alignItems: "center",
+                  fontSize: "var(--sg-text-sm)",
+                }}
+              >
+                <StatusDot status={status} />
+                {label}
+              </span>
+            ))}
+          </div>
+
+          <Separator />
+
+          <div style={{ display: "grid", gap: "0.65rem" }}>
+            <div style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+              Looks (online)
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "1.25rem",
+                alignItems: "center",
+              }}
+            >
+              {(
+                [
+                  ["soft", "soft"],
+                  ["solid", "solid"],
+                  ["outline", "outline"],
+                  ["glow", "glow"],
+                ] as const
+              ).map(([look, label]) => (
+                <span
+                  key={look}
+                  style={{
+                    display: "inline-flex",
+                    gap: "0.45rem",
+                    alignItems: "center",
+                    fontSize: "var(--sg-text-sm)",
+                  }}
+                >
+                  <StatusDot status="online" look={look} pulse={look === "glow"} />
+                  {label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gap: "0.65rem" }}>
+            <div style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+              Busy × looks
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem" }}>
+              <StatusDot status="busy" look="soft" pulse={false} label="soft busy" />
+              <StatusDot status="busy" look="solid" pulse={false} label="solid busy" />
+              <StatusDot status="busy" look="outline" pulse={false} label="outline busy" />
+              <StatusDot status="busy" look="glow" pulse={false} label="glow busy" />
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.75rem",
+              alignItems: "center",
+              padding: "0.75rem 1rem",
+              borderRadius: "var(--sg-radius-md)",
+              background: "var(--sg-surface-solid)",
+              border: "1px solid var(--sg-border-subtle)",
+            }}
+          >
+            <StatusDot status="online" look="glow" />
+            <span style={{ fontSize: "var(--sg-text-sm)" }}>
+              Ada Yılmaz · product design
+            </span>
+            <Badge size="sm" variant="success">
+              live
+            </Badge>
+          </div>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+/** v1.3e — Nice atoms */
+function NiceAtomsSection() {
+  const [range, setRange] = useState<[number, number]>([25, 75]);
+  const [view, setView] = useState<string | string[]>("grid");
+  const [tags, setTags] = useState({ design: true, eng: false, ops: true });
+  const [color, setColor] = useState("#7c3aed");
+  const [swatch, setSwatch] = useState("#0ea5e9");
+  const [date, setDate] = useState("2026-07-29");
+  const [liveMsg, setLiveMsg] = useState("");
+
+  return (
+    <>
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3e
+          </Badge>
+          <CardTitle>RangeSlider · ToggleGroup · CountBadge</CardTitle>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <RangeSlider
+            label="Price range"
+            value={range}
+            onValueChange={setRange}
+            look="accent"
+            hint={`${range[0]} – ${range[1]}`}
+          />
+          <ToggleGroup
+            label="Layout"
+            type="single"
+            value={view as string}
+            onValueChange={setView}
+            options={[
+              { value: "grid", label: "Grid" },
+              { value: "list", label: "List" },
+              { value: "board", label: "Board" },
+            ]}
+          />
+          <ToggleGroup
+            label="Filters multi"
+            type="multiple"
+            look="outline"
+            defaultValue={["a", "c"]}
+            options={[
+              { value: "a", label: "A" },
+              { value: "b", label: "B" },
+              { value: "c", label: "C" },
+            ]}
+          />
+          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            <Button variant="secondary" size="sm">
+              Inbox <CountBadge count={3} look="solid" />
+            </Button>
+            <Button variant="secondary" size="sm">
+              Alerts <CountBadge count={120} max={99} look="danger" />
+            </Button>
+            <CountBadge count={0} hideZero />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3e
+          </Badge>
+          <CardTitle>Color · Chip variants · Text</CardTitle>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+            {["#7c3aed", "#0ea5e9", "#22c55e", "#f59e0b", "#f43f5e"].map((c) => (
+              <ColorSwatch
+                key={c}
+                color={c}
+                selected={swatch === c}
+                onClick={() => setSwatch(c)}
+              />
+            ))}
+            <span style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+              {swatch}
+            </span>
+          </div>
+          <ColorInput label="Brand" value={color} onValueChange={setColor} look="soft" />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            {Object.entries(tags).map(([k, on]) => (
+              <Chip
+                key={k}
+                variant="filter"
+                selected={on}
+                onSelectedChange={(v) => setTags((t) => ({ ...t, [k]: v }))}
+              >
+                {k}
+              </Chip>
+            ))}
+            <Chip variant="check" defaultSelected>
+              check chip
+            </Chip>
+          </div>
+          <div style={{ display: "grid", gap: "0.5rem", maxWidth: 420 }}>
+            <Heading level={3} size="lg">
+              Softglass text
+            </Heading>
+            <Text tone="muted" size="sm">
+              Search hit: <Highlight look="accent">glass</Highlight> morphism
+            </Text>
+            <Truncate lines={2} style={{ maxWidth: 280, fontSize: "var(--sg-text-sm)" }}>
+              Long copy that will clamp after two lines so the layout stays tidy in dense cards and lists without wrapping forever.
+            </Truncate>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3e
+          </Badge>
+          <CardTitle>NativeDateInput · LiveRegion</CardTitle>
+          <CardDescription>
+            Date = Softglass day/month/year steppers (not OS picker). LiveRegion =
+            visible status banner + aria-live.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "flex-end" }}>
+            <NativeDateInput
+              label="soft"
+              look="soft"
+              value={date}
+              onValueChange={(v) => {
+                setDate(v);
+                setLiveMsg(`Date set to ${v}`);
+              }}
+            />
+            <NativeDateInput label="solid" look="solid" defaultValue="2026-01-15" />
+            <NativeDateInput label="outline" look="outline" defaultValue="2026-03-01" />
+            <NativeDateInput label="glass" look="glass" defaultValue="2026-12-24" />
+          </div>
+          <Text size="sm" tone="muted">
+            ISO value: <Code look="accent">{date}</Code>
+          </Text>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => setLiveMsg(`Saved at ${new Date().toLocaleTimeString()}`)}
+            >
+              Soft status
+            </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => setLiveMsg("Project published successfully.")}
+            >
+              Success
+            </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => setLiveMsg("Check contrast on glass surfaces.")}
+            >
+              Warning
+            </Button>
+            <Button size="sm" variant="ghost" onClick={() => setLiveMsg("")}>
+              Clear
+            </Button>
+          </div>
+          <LiveRegion
+            look={
+              liveMsg.includes("success")
+                ? "success"
+                : liveMsg.includes("contrast")
+                  ? "warning"
+                  : "info"
+            }
+            title={liveMsg ? "Live update" : undefined}
+          >
+            {liveMsg}
+          </LiveRegion>
+          <div style={{ display: "grid", gap: "0.5rem" }}>
+            <LiveRegion look="success" title="Success" hideWhenEmpty={false}>
+              Changes are stored.
+            </LiveRegion>
+            <LiveRegion look="glass" title="Glass" hideWhenEmpty={false}>
+              Soft status on frost chrome.
+            </LiveRegion>
+          </div>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+/** v1.3d — Should atoms */
+function ShouldAtomsSection() {
+  const [range, setRange] = useState("week");
+  const [pct, setPct] = useState(62);
+  const [pin, setPin] = useState("");
+  const [bio, setBio] = useState("Softglass is soft.");
+  const [nav, setNav] = useState("home");
+  const [selectedRow, setSelectedRow] = useState("a");
+  const [time, setTime] = useState("09:30");
+  const [stars, setStars] = useState(4);
+  const [storage] = useState(68);
+
+  return (
+    <>
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>Fieldset · Icon · Image · Meter</CardTitle>
+          <CardDescription>
+            Grouping + media + read-only bar. Icon is a wrapper only (no pack).
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <Fieldset legend="Account" look="soft">
+            <Input label="Name" defaultValue="Ada" />
+          </Fieldset>
+
+          <div style={{ display: "grid", gap: "1rem" }}>
+            <div
+              style={{
+                fontSize: "var(--sg-text-sm)",
+                color: "var(--sg-fg-muted)",
+              }}
+            >
+              TimeInput — Softglass HH:mm (not native OS picker). Value:{" "}
+              <Code look="accent">{time}</Code>
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "flex-end" }}>
+              <TimeInput
+                label="soft 24h"
+                look="soft"
+                value={time}
+                onValueChange={setTime}
+              />
+              <TimeInput label="solid" look="solid" defaultValue="14:00" />
+              <TimeInput label="outline" look="outline" defaultValue="08:45" />
+              <TimeInput label="glass" look="glass" defaultValue="18:20" />
+              <TimeInput
+                label="12h + AM/PM"
+                look="soft"
+                hourCycle={12}
+                minuteStep={5}
+                defaultValue="09:30"
+              />
+            </div>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem", alignItems: "center" }}>
+            <Icon look="soft" label="Soft">✦</Icon>
+            <Icon look="solid" label="Solid">✦</Icon>
+            <Icon look="outline" label="Outline">✦</Icon>
+            <Icon look="ghost" size="lg" label="Ghost">
+              ✦
+            </Icon>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", maxWidth: 420 }}>
+            <Image
+              look="soft"
+              aspectRatio="16 / 10"
+              src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&q=80"
+              alt="Abstract soft"
+            />
+            <Image look="outline" aspectRatio="16 / 10" alt="Broken" fallback="?" />
+          </div>
+          <Meter label="Storage" value={storage} look="soft" variant="accent" />
+          <Meter label="Health" value={82} look="striped" variant="success" />
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>Rating · ScrollArea · AspectRatio · ClientOnly</CardTitle>
+          <CardDescription>
+            Rating: SVG stars in a soft shell · looks soft/solid/outline/glass/glow ·
+            colors gold/accent/rose
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.85rem", alignItems: "center" }}>
+            <Rating
+              value={stars}
+              onValueChange={setStars}
+              look="soft"
+              color="gold"
+              showValue
+              caption="Rate"
+              label="Product rating"
+            />
+            <Rating value={4} look="solid" color="accent" showValue label="Accent solid" />
+            <Rating value={5} look="glow" color="rose" label="Rose glow" />
+            <Rating value={3} readOnly look="outline" label="Read only outline" />
+            <Rating value={2} look="glass" size="lg" showValue label="Glass large" />
+          </div>
+          <ScrollArea maxHeight={120} look="soft">
+            {Array.from({ length: 12 }, (_, i) => (
+              <div key={i} style={{ padding: "0.35rem 0.25rem", fontSize: "var(--sg-text-sm)" }}>
+                Scroll row {i + 1}
+              </div>
+            ))}
+          </ScrollArea>
+          <AspectRatio ratio="21 / 9" style={{ maxWidth: 420, borderRadius: 12, overflow: "hidden" }}>
+            <Image
+              src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&q=80"
+              alt="Gradient"
+              rounded="none"
+            />
+          </AspectRatio>
+          <ClientOnly fallback={<Badge size="sm">SSR fallback…</Badge>}>
+            <Badge variant="success" size="sm">
+              Client mounted
+            </Badge>
+          </ClientOnly>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>PinInput</CardTitle>
+          <CardDescription>
+            OTP cells — paste + arrows. Looks: solid · soft · outline · glass.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <PinInput
+            label="Code"
+            length={6}
+            value={pin}
+            onValueChange={setPin}
+            look="solid"
+            hint={pin.length === 6 ? `Complete: ${pin}` : "Type or paste 6 digits."}
+          />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "flex-end" }}>
+            <PinInput length={4} look="soft" defaultValue="12" label="soft" />
+            <PinInput length={4} look="outline" label="outline" />
+            <PinInput length={4} look="glass" label="glass" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>NavLink · ListItem</CardTitle>
+          <CardDescription>
+            Nav looks: soft · solid · underline · pill · List: soft · solid · outline · ghost
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+            {(
+              [
+                ["home", "Home", "soft"],
+                ["docs", "Docs", "solid"],
+                ["api", "API", "underline"],
+                ["blog", "Blog", "pill"],
+              ] as const
+            ).map(([id, label, look]) => (
+              <NavLink
+                key={id}
+                href={`#${id}`}
+                look={look}
+                active={nav === id}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setNav(id);
+                }}
+              >
+                {label}
+              </NavLink>
+            ))}
+          </div>
+          <div style={{ display: "grid", gap: "0.5rem", maxWidth: 480 }}>
+            <ListItem
+              look="soft"
+              interactive
+              selected={selectedRow === "a"}
+              onClick={() => setSelectedRow("a")}
+              leading={<Avatar fallback="AY" size="sm" />}
+              title="Ada Yılmaz"
+              description="Product design · online"
+              trailing={<StatusDot status="online" />}
+            />
+            <ListItem
+              look="solid"
+              interactive
+              selected={selectedRow === "b"}
+              onClick={() => setSelectedRow("b")}
+              leading={<Avatar fallback="MK" size="sm" />}
+              title="Mert Kaya"
+              description="Engineering"
+              trailing={<Badge size="sm">Pro</Badge>}
+            />
+            <ListItem
+              look="outline"
+              title="Outline row"
+              description="Not interactive"
+              trailing={<CharacterCount value={12} max={100} />}
+            />
+            <ListItem look="ghost" title="Ghost row" description="Minimal chrome" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>CopyButton · CharacterCount</CardTitle>
+          <CardDescription>
+            Copy looks: soft · solid · outline · ghost · Count: muted / solid / danger over max
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem", maxWidth: 480 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            <CopyButton value="npm i @softglass/ui" look="soft" />
+            <CopyButton value="hello" look="solid">
+              Copy hello
+            </CopyButton>
+            <CopyButton value="outline" look="outline" />
+            <CopyButton value="ghost" look="ghost" />
+          </div>
+          <div className="sg-field">
+            <label className="sg-field-label" htmlFor="bio-demo">
+              Bio
+            </label>
+            <textarea
+              id="bio-demo"
+              className="sg-textarea"
+              value={bio}
+              maxLength={undefined}
+              onChange={(e) => setBio(e.target.value)}
+              rows={3}
+            />
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <CharacterCount value={bio.length} max={40} />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>CircularProgress</CardTitle>
+          <CardDescription>
+            <code>look</code>: soft · solid · glass · accent ·{" "}
+            <code>variant</code>: accent · success · warning · danger · muted
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", alignItems: "center" }}>
+            <CircularProgress value={pct} look="soft" label="soft" />
+            <CircularProgress value={pct} look="solid" label="solid" />
+            <CircularProgress value={pct} look="glass" label="glass" />
+            <CircularProgress value={pct} look="accent" variant="success" label="accent+success" />
+            <CircularProgress label="indeterminate" look="glass" />
+          </div>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={pct}
+            onChange={(e) => setPct(Number(e.target.value))}
+            aria-label="Circular progress value"
+            style={{ width: "100%", maxWidth: 320 }}
+          />
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>SegmentedControl</CardTitle>
+          <CardDescription>
+            Radiogroup + ok tuşları. Looks: soft · solid · outline · glass.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem" }}>
+          <SegmentedControl
+            label="soft"
+            look="soft"
+            value={range}
+            onValueChange={setRange}
+            options={[
+              { value: "day", label: "Day" },
+              { value: "week", label: "Week" },
+              { value: "month", label: "Month" },
+            ]}
+          />
+          <SegmentedControl
+            label="solid"
+            look="solid"
+            defaultValue="comfy"
+            options={[
+              { value: "compact", label: "Compact" },
+              { value: "comfy", label: "Comfy" },
+              { value: "spacious", label: "Spacious" },
+            ]}
+          />
+          <SegmentedControl
+            label="outline"
+            look="outline"
+            size="sm"
+            defaultValue="pro"
+            options={[
+              { value: "free", label: "Free" },
+              { value: "pro", label: "Pro" },
+              { value: "team", label: "Team", disabled: true },
+            ]}
+          />
+          <SegmentedControl
+            label="glass"
+            look="glass"
+            defaultValue="a"
+            options={[
+              { value: "a", label: "Aurora" },
+              { value: "o", label: "Obsidian" },
+              { value: "m", label: "Mist" },
+            ]}
+          />
+          <div style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+            Selected range: <Code look="accent">{range}</Code>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>Kbd · Code</CardTitle>
+          <CardDescription>
+            Kbd looks: soft · solid · outline · glass · Code: soft · solid · accent · muted
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+            <Kbd look="soft">⌘</Kbd>
+            <Kbd look="soft">K</Kbd>
+            <Kbd look="solid">Shift</Kbd>
+            <Kbd look="outline">Esc</Kbd>
+            <Kbd look="glass" size="lg">
+              Enter
+            </Kbd>
+          </div>
+          <p style={{ margin: 0, fontSize: "var(--sg-text-sm)" }}>
+            soft <Code look="soft">npm i</Code> · solid{" "}
+            <Code look="solid">@softglass/ui</Code> · accent{" "}
+            <Code look="accent">Button</Code> · muted{" "}
+            <Code look="muted">optional</Code>
+          </p>
+          <Code block look="solid">{`import { SkipLink } from "@softglass/ui";`}</Code>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3d
+          </Badge>
+          <CardTitle>SkipLink</CardTitle>
+          <CardDescription>
+            Prod: sadece focus’ta görünür. Demo: <code>alwaysVisible</code> + looks /
+            placement. Clip-hide (overflow yutmaz).
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.65rem",
+              alignItems: "center",
+            }}
+          >
+            <SkipLink
+              href="#playground-main"
+              alwaysVisible
+              look="solid"
+              style={{ position: "static", transform: "none" }}
+            >
+              solid
+            </SkipLink>
+            <SkipLink
+              href="#playground-main"
+              alwaysVisible
+              look="soft"
+              style={{ position: "static", transform: "none" }}
+            >
+              soft
+            </SkipLink>
+            <SkipLink
+              href="#playground-main"
+              alwaysVisible
+              look="outline"
+              style={{ position: "static", transform: "none" }}
+            >
+              outline
+            </SkipLink>
+            <SkipLink
+              href="#playground-main"
+              alwaysVisible
+              look="glass"
+              style={{ position: "static", transform: "none" }}
+            >
+              glass
+            </SkipLink>
+          </div>
+          <p style={{ margin: 0, fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+            Placement demos are fixed to the viewport — use Tab to find the hidden one
+            below (no alwaysVisible).
+          </p>
+          <SkipLink href="#playground-main" look="solid" placement="start">
+            Skip to playground main (focus-only)
+          </SkipLink>
+          <div
+            id="playground-main"
+            tabIndex={-1}
+            style={{
+              marginTop: "0.25rem",
+              padding: "0.75rem 1rem",
+              borderRadius: "var(--sg-radius-sm)",
+              border: "1px dashed var(--sg-border-subtle)",
+              fontSize: "var(--sg-text-sm)",
+            }}
+          >
+            #playground-main landing spot
+          </div>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+/** v1.3c — Link, Chip, CloseButton, Password, Search, VisuallyHidden */
+function ChromeAtomsSection() {
+  const [tags, setTags] = useState(["Aurora", "Mist", "Pearl"]);
+  const [filters, setFilters] = useState<Record<string, boolean>>({
+    open: true,
+    draft: false,
+    archived: false,
+  });
+  const [query, setQuery] = useState("soft glass");
+  const [password, setPassword] = useState("hunter2");
+
+  return (
+    <>
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3c
+          </Badge>
+          <CardTitle>Link</CardTitle>
+          <CardDescription>
+            Plain <code>&lt;a href&gt;</code> — Next apps can wrap with{" "}
+            <code>next/link</code>. Looks: accent · muted · subtle · underline.
+          </CardDescription>
+        </CardHeader>
+        <CardContent
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "1rem 1.5rem",
+            alignItems: "center",
+          }}
+        >
+          <Link href="#chrome">In-app anchor</Link>
+          <Link href="https://github.com/ArdaDDemir/softglass" external>
+            External repo
+          </Link>
+          <Link href="#docs" look="muted">
+            muted
+          </Link>
+          <Link href="#docs" look="subtle">
+            subtle
+          </Link>
+          <Link href="#docs" look="underline">
+            underline
+          </Link>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3c
+          </Badge>
+          <CardTitle>Chip</CardTitle>
+          <CardDescription>
+            Tıkla = seç. × = sil. Looks: soft · solid · outline · glass · glow.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <div>
+            <div
+              style={{
+                fontSize: "var(--sg-text-sm)",
+                color: "var(--sg-fg-muted)",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Selectable filters (toggle works)
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+              {Object.entries(filters).map(([key, on]) => (
+                <Chip
+                  key={key}
+                  selected={on}
+                  onSelectedChange={(next) =>
+                    setFilters((f) => ({ ...f, [key]: next }))
+                  }
+                >
+                  {key}
+                </Chip>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "var(--sg-text-sm)",
+                color: "var(--sg-fg-muted)",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Removable tags (× works)
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+              {tags.map((tag) => (
+                <Chip
+                  key={tag}
+                  interactive={false}
+                  removable
+                  look="outline"
+                  onRemove={() => setTags((t) => t.filter((x) => x !== tag))}
+                  removeLabel={`Remove ${tag}`}
+                >
+                  {tag}
+                </Chip>
+              ))}
+              {tags.length === 0 ? (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => setTags(["Aurora", "Mist", "Pearl"])}
+                >
+                  Reset tags
+                </Button>
+              ) : null}
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "var(--sg-text-sm)",
+                color: "var(--sg-fg-muted)",
+                marginBottom: "0.5rem",
+              }}
+            >
+              Looks (same height, × aligned)
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+              {(
+                ["soft", "solid", "outline", "glass", "glow"] as const
+              ).map((look) => (
+                <Chip key={look} look={look} removable onRemove={() => undefined}>
+                  {look}
+                </Chip>
+              ))}
+            </div>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
+            <span style={{ fontSize: "var(--sg-text-sm)", color: "var(--sg-fg-muted)" }}>
+              CloseButton
+            </span>
+            <CloseButton look="ghost" label="ghost" />
+            <CloseButton look="soft" label="soft" />
+            <CloseButton look="solid" label="solid" />
+            <CloseButton look="danger" label="danger" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3c
+          </Badge>
+          <CardTitle>PasswordInput · SearchInput</CardTitle>
+          <CardDescription>
+            Gerçek Input shell. Show/Hide + Clear çalışır. Looks: solid · soft ·
+            glass · underline · filled · ghost.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem", maxWidth: 480 }}>
+          <PasswordInput
+            label="Password (solid)"
+            look="solid"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            hint="Show → characters; Hide → dots."
+            requiredMark
+          />
+          <PasswordInput label="soft" look="soft" defaultValue="demo-pass" />
+          <PasswordInput label="glass" look="glass" defaultValue="demo-pass" />
+          <PasswordInput label="underline" look="underline" defaultValue="demo-pass" />
+          <PasswordInput label="ghost" look="ghost" defaultValue="demo-pass" />
+          <Separator />
+          <SearchInput
+            label="Search (solid)"
+            look="solid"
+            value={query}
+            onValueChange={setQuery}
+            placeholder="Type then Clear…"
+            hint={`Live value: “${query || "empty"}”`}
+          />
+          <SearchInput label="soft" look="soft" defaultValue="soft query" />
+          <SearchInput label="glass" look="glass" defaultValue="glass query" />
+          <SearchInput label="filled" look="filled" defaultValue="filled query" />
+          <SearchInput label="ghost" look="ghost" defaultValue="ghost query" />
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <CardTitle>VisuallyHidden</CardTitle>
+          <CardDescription>
+            Screen-reader only label — visual UI can stay icon-only.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button variant="ghost" iconOnly aria-label={undefined}>
+            <VisuallyHidden>Dismiss notification</VisuallyHidden>
+            <span aria-hidden="true">×</span>
+          </Button>
+          <p
+            style={{
+              margin: "0.75rem 0 0",
+              fontSize: "var(--sg-text-sm)",
+              color: "var(--sg-fg-muted)",
+            }}
+          >
+            Inspect with a screen reader / a11y tree — visible label is hidden.
+          </p>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+/** v1.3b — Slider + NumberInput + FileField */
+function FormAtomsSection() {
+  const [opacity, setOpacity] = useState(42);
+  const [qty, setQty] = useState<number | null>(3);
+  const [files, setFiles] = useState<File[]>([]);
+  const [filesDashed, setFilesDashed] = useState<File[]>([]);
+
+  return (
+    <>
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3b
+          </Badge>
+          <CardTitle>Slider</CardTitle>
+          <CardDescription>
+            <code>look</code>: soft · solid · glass · accent (+ size / error).
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem" }}>
+          <Slider
+            label="soft (default)"
+            value={opacity}
+            onValueChange={setOpacity}
+            min={0}
+            max={100}
+            look="soft"
+          />
+          <Slider label="solid" defaultValue={55} look="solid" />
+          <Slider label="glass" defaultValue={40} look="glass" size="lg" />
+          <Slider label="accent" defaultValue={72} look="accent" />
+          <Slider
+            label="error state"
+            defaultValue={10}
+            min={0}
+            max={50}
+            look="soft"
+            error="Must be at least 15 for this demo."
+          />
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3b
+          </Badge>
+          <CardTitle>NumberInput</CardTitle>
+          <CardDescription>
+            <code>look</code>: soft · solid · outline · ghost.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.25rem", maxWidth: 440 }}>
+          <NumberInput
+            label="soft (default)"
+            value={qty}
+            onValueChange={setQty}
+            min={0}
+            max={12}
+            look="soft"
+            hint="Frost shell + accent circles."
+          />
+          <NumberInput
+            label="solid"
+            defaultValue={4}
+            min={0}
+            max={20}
+            look="solid"
+          />
+          <NumberInput
+            label="outline"
+            defaultValue={2}
+            min={0}
+            max={9}
+            look="outline"
+          />
+          <NumberInput
+            label="ghost"
+            defaultValue={1}
+            min={0}
+            max={9}
+            look="ghost"
+          />
+          <NumberInput
+            label="No steppers"
+            defaultValue={8}
+            hideSteppers
+            hint="Plain solid field (look ignored on plain)."
+          />
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.3b
+          </Badge>
+          <CardTitle>FileField</CardTitle>
+          <CardDescription>
+            <code>look</code>: solid · soft · dashed · ghost — still no upload.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1.5rem", maxWidth: 520 }}>
+          <FileField
+            label="solid (default)"
+            files={files}
+            onFilesChange={setFiles}
+            multiple
+            look="solid"
+            accept="image/*,.pdf,.txt"
+            buttonLabel="Browse"
+            hint="Row trigger + list."
+          />
+          <FileField
+            label="soft"
+            look="soft"
+            accept="image/*"
+            buttonLabel="Pick image"
+            emptyLabel="Frost surface"
+          />
+          <FileField
+            label="dashed"
+            files={filesDashed}
+            onFilesChange={setFilesDashed}
+            multiple
+            look="dashed"
+            buttonLabel="Drop or browse"
+            emptyLabel="Click to choose files (visual dropzone chrome only)"
+          />
+          <FileField
+            label="ghost"
+            look="ghost"
+            buttonLabel="Attach file"
+            emptyLabel="Link-style picker"
+          />
         </CardContent>
       </Card>
     </>
