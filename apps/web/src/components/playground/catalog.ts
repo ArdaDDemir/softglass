@@ -80,8 +80,9 @@ export const GALLERY_PAGES: GalleryPage[] = [
     id: "app",
     label: "App",
     title: "Product shell & patterns",
-    summary: "AppShell, PageHeader, settings sections, command palette.",
-    takeaway: "How a real product chrome is assembled.",
+    summary:
+      "Inventory list recipe (PageHeader + DataTable + Pagination), AppShell, settings, command palette.",
+    takeaway: "How a real product list and chrome are assembled.",
   },
   {
     id: "library",

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { atomPlaygrounds } from "@/components/playground/library/pages/atoms";
 import { buttonPlayground } from "@/components/playground/library/pages/button";
+import { dataTablePlayground } from "@/components/playground/library/pages/datatable";
 import { fieldPlaygrounds } from "@/components/playground/library/pages/fields";
 import { moleculePlaygrounds } from "@/components/playground/library/pages/molecules";
 import { overlayPlaygrounds } from "@/components/playground/library/pages/overlays";
@@ -57,6 +58,7 @@ export type ComponentPlayground = {
 /** All Component Studio playgrounds (1.6 — full docs coverage). */
 export const PLAYGROUNDS: ComponentPlayground[] = [
   buttonPlayground,
+  dataTablePlayground,
   ...atomPlaygrounds,
   ...fieldPlaygrounds,
   ...moleculePlaygrounds,

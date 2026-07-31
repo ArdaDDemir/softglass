@@ -2348,6 +2348,39 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "Product-list table — sort, selection, sticky header, density, looks.",
+      "registryDependencies": [
+        "tokens",
+        "checkbox",
+        "empty-state"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/data-table.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/data-table.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
       "name": "stat",
       "type": "registry:ui",
       "title": "Stat",

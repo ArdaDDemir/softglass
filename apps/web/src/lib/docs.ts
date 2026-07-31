@@ -2473,11 +2473,153 @@ toast({ title: "Saved", variant: "success", description: "All good." });`,
     ],
   },
   {
+    id: "datatable",
+    name: "DataTable",
+    layer: "molecule",
+    summary:
+      "Table for product lists: sort, selection, sticky header, density, looks, loading/empty, optional virtualization.",
+    importLine: 'import { DataTable } from "@softglass/ui";',
+    example: `const columns = [
+  { id: "name", header: "Name", accessor: "name", sortable: true },
+  { id: "stock", header: "Stock", accessor: "stock", sortable: true },
+];
+
+<DataTable
+  data={products}
+  columns={columns}
+  look="soft"
+  density="comfortable"
+  stickyHeader
+  selectionMode="multiple"
+  selectedIds={selected}
+  onSelectionChange={setSelected}
+  sort={sort}
+  onSortChange={setSort}
+/>
+
+// Long lists — native row windowing
+<DataTable
+  data={thousandRows}
+  columns={columns}
+  virtualized
+  maxHeight={320}
+  estimateRowHeight={40}
+/>
+
+// Empty
+<DataTable data={[]} columns={columns} emptyTitle="No products" />
+
+// Compounds (layout primitives)
+// Table, TableHeader, TableBody, TableRow, TableHead, TableCell`,
+    props: [
+      {
+        name: "data",
+        type: "T[]",
+        description: "Row data. Client-sorted when sort is active (clientSort).",
+      },
+      {
+        name: "columns",
+        type: "DataTableColumn<T>[]",
+        description: "Column defs: id, header, accessor/cell, sortable, align, width.",
+      },
+      {
+        name: "getRowId",
+        type: "(row, index) => string",
+        default: "row.id or index",
+        description: "Stable row id for selection keys.",
+      },
+      {
+        name: "getRowLabel",
+        type: "(row, index) => string",
+        default: "row id",
+        description: "Accessible name for row selection checkbox.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "outline" | "ghost"',
+        default: '"soft"',
+        description: "Surface language.",
+      },
+      {
+        name: "density",
+        type: '"comfortable" | "compact"',
+        default: '"comfortable"',
+        description: "Row padding scale (skeletons match).",
+      },
+      {
+        name: "stickyHeader",
+        type: "boolean",
+        default: "true",
+        description: "Pin thead while scrolling the table body.",
+      },
+      {
+        name: "loading",
+        type: "boolean",
+        default: "false",
+        description: "Skeleton rows (loadingRowCount); aria-busy on table.",
+      },
+      {
+        name: "empty / emptyTitle / emptyDescription",
+        type: "ReactNode",
+        description: "Empty override or default EmptyState copy.",
+      },
+      {
+        name: "selectionMode",
+        type: '"none" | "single" | "multiple"',
+        default: '"none"',
+        description:
+          "Row selection via Checkbox. multiple: header select-all with indeterminate.",
+      },
+      {
+        name: "selectedIds / defaultSelectedIds / onSelectionChange",
+        type: "string[] / (ids) => void",
+        description: "Controlled or uncontrolled selection.",
+      },
+      {
+        name: "sort / defaultSort / onSortChange",
+        type: "DataTableSortState / (sort) => void",
+        description: "Column sort state (null = unsorted). Keyboard: Enter/Space.",
+      },
+      {
+        name: "clientSort",
+        type: "boolean",
+        default: "true",
+        description: "false = server owns order; UI still shows sort controls.",
+      },
+      {
+        name: "virtualized",
+        type: "boolean",
+        default: "false",
+        description:
+          "Native spacer windowing for long lists. Pair with maxHeight (default 320).",
+      },
+      {
+        name: "estimateRowHeight",
+        type: "number",
+        default: "44 / 36",
+        description: "Fixed row height (px) for window math. Density defaults.",
+      },
+      {
+        name: "maxHeight",
+        type: "number | string",
+        default: "320 when virtualized",
+        description: "Scroll viewport max height (px or CSS length).",
+      },
+      {
+        name: "overscan",
+        type: "number",
+        default: "6",
+        description: "Extra rows rendered above/below the viewport.",
+      },
+    ],
+  },
+  {
     id: "stat",
     name: "Stat",
     layer: "molecule",
     summary: "KPI metric tile — label / value / hint / trend; accent rail look.",
     importLine: 'import { Stat } from "@softglass/ui";',
+
     example: `<Stat
   look="accent"
   icon={<span>◎</span>}

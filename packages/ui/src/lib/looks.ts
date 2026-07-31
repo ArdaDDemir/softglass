@@ -87,3 +87,9 @@ export type PageHeaderLook = "plain" | "soft" | "solid" | "glass";
 
 /** SettingsSection panel chrome */
 export type SettingsSectionLook = "soft" | "solid" | "glass" | "plain";
+
+/**
+ * DataTable surface language
+ * soft = frost · solid = panel · glass = chrome · outline = border · ghost = flush
+ */
+export type DataTableLook = "soft" | "solid" | "glass" | "outline" | "ghost";

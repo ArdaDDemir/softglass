@@ -60,7 +60,7 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 **Live packages**
 
 - [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
-- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.5.0`
+- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.7.0`
 
 ### Brand override (colors only)
 
@@ -176,7 +176,7 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.5.0 — shipped** (shell · patterns · date range · 6 languages · gallery)
+**v1.7.0 — shipped** (DataTable · virtualization · Component Studio · product list recipe)
 
 - [x] Six languages as CSS tokens (obsidian · noir · ember dark family)  
 - [x] Core UI kit + look + motion  
@@ -184,14 +184,14 @@ CONTRIBUTING.md           PR rules
 - [x] Consumer getting-started + limitations + changelog  
 - [x] CI workflow (typecheck + **test** + build + pack dry-run)  
 - [x] npm org **`softglass`** (owner: personal **ardaddemir** — not work/Feedemy)  
-- [x] GitHub [ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · `main` includes 1.3 + 1.4  
-- [x] v1.1–1.2 kit (overlays, ContextMenu, DatePicker, portals, Vitest)  
-- [x] **v1.3 atom layer** — feedback / form / chrome atoms  
-- [x] **v1.4 molecule set** — Accordion, Sheet, Stepper, List, Stat, … + DatePicker body portal  
-- [x] Publish **`@softglass/tokens@1.5.0`** → **`@softglass/ui@1.5.0`** + tag **`v1.5.0`**  
+- [x] GitHub [ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass)  
+- [x] **v1.5** shell · patterns · date range · gallery tour  
+- [x] **Component Studio** — per-component playgrounds (`#library/<id>`)  
+- [x] **DataTable** — sort · selection · sticky · density · looks · `virtualized`  
+- [x] Publish **`@softglass/tokens@1.7.0`** → **`@softglass/ui@1.7.0`** + tag **`v1.7.0`**  
 
-**Next (when ready):** v1.5 organism & product patterns (shell depth, PageHeader, CommandPalette minimal).  
-See [docs/claude/todos.md](./docs/claude/todos.md) when present on a plan branch.
+**Next (when ready):** theme builder / marketing site / Storybook (1.8+).  
+See [docs/claude/todos.md](./docs/claude/todos.md).
 
 **Account rule:** `gh` = **ArdaDDemir**, `npm whoami` = **ardaddemir**. Never publish or push Softglass from work/Feedemy.
 
@@ -199,8 +199,8 @@ See [docs/claude/todos.md](./docs/claude/todos.md) when present on a plan branch
 
 | Package | npm | Notes |
 | --- | --- | --- |
-| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.5.0** | CSS engine + 6 languages + shell chrome |
-| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.5.0** | React components (peer: react, tokens **^1.5**) |
+| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.7.0** | CSS engine + 6 languages + shell + DataTable chrome |
+| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.7.0** | React components (peer: react, tokens **^1.7**) |
 | `softglass` (unscoped) | unused | we ship **scoped** packages only |
 
 Install:

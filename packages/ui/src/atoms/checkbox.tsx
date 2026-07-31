@@ -4,7 +4,9 @@ import { cn } from "../lib/cn";
 import type { CheckboxLook } from "../lib/looks";
 import { MOTION_DEFAULTS, type CheckboxMotion } from "../lib/motion";
 import {
+  useEffect,
   useId,
+  useRef,
   useState,
   type InputHTMLAttributes,
   type ReactNode,
@@ -21,6 +23,12 @@ export type CheckboxProps = Omit<
   checked?: boolean;
   defaultChecked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
+  /**
+   * Mixed state (e.g. select-all header).
+   * Native `indeterminate` on the input; not a third controlled value —
+   * click still fires `onCheckedChange` with a boolean.
+   */
+  indeterminate?: boolean;
   /** Design: box | card | pill */
   look?: CheckboxLook;
   /** Check feedback: none | pop | draw | fade-in | bounce */
@@ -41,6 +49,24 @@ function CheckIcon() {
   );
 }
 
+function IndeterminateIcon() {
+  return (
+    <svg
+      className="sg-check-mark sg-check-mark-indeterminate"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden
+    >
+      <path
+        d="M3.5 8h9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function Checkbox({
   className,
   label,
@@ -49,6 +75,7 @@ export function Checkbox({
   checked,
   defaultChecked = false,
   onCheckedChange,
+  indeterminate = false,
   disabled,
   onChange,
   look = "box",
@@ -57,9 +84,17 @@ export function Checkbox({
 }: CheckboxProps) {
   const reactId = useId();
   const checkId = id ?? `sg-check-${reactId}`;
+  const inputRef = useRef<HTMLInputElement>(null);
   const isControlled = checked !== undefined;
   const [uncontrolled, setUncontrolled] = useState(defaultChecked);
   const on = isControlled ? Boolean(checked) : uncontrolled;
+  const mixed = Boolean(indeterminate) && !on;
+
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.indeterminate = mixed;
+  }, [mixed]);
 
   return (
     <label
@@ -68,20 +103,24 @@ export function Checkbox({
       data-look={look === "box" ? undefined : look}
       data-motion={motion}
       data-checked={on || undefined}
+      data-indeterminate={mixed || undefined}
       htmlFor={checkId}
     >
       <span
         className="sg-check-control"
         data-kind="checkbox"
         data-checked={on || undefined}
+        data-indeterminate={mixed || undefined}
       >
         <input
+          ref={inputRef}
           id={checkId}
           type="checkbox"
           className="sg-check-input"
           checked={isControlled ? checked : undefined}
           defaultChecked={isControlled ? undefined : defaultChecked}
           disabled={disabled}
+          aria-checked={mixed ? "mixed" : on}
           onChange={(e) => {
             if (!isControlled) setUncontrolled(e.target.checked);
             onChange?.(e);
@@ -90,7 +129,7 @@ export function Checkbox({
           {...props}
         />
         <span className="sg-check-face" aria-hidden>
-          <CheckIcon />
+          {mixed ? <IndeterminateIcon /> : <CheckIcon />}
         </span>
       </span>
       {label || hint ? (

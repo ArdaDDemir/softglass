@@ -8,9 +8,9 @@ React components for [Softglass](https://github.com/ArdaDDemir/softglass) — so
 npm install @softglass/ui @softglass/tokens
 ```
 
-**Version:** **`1.5.0`** — shell · patterns · date range · 6 languages ([CHANGELOG](../../CHANGELOG.md)).
+**Version:** **`1.7.0`** — DataTable · virtualization · shell · 6 languages ([CHANGELOG](../../CHANGELOG.md)).
 
-**Peers:** `react` + `react-dom` ^18 || ^19, and `@softglass/tokens` **^1.5.0** (styles).
+**Peers:** `react` + `react-dom` ^18 || ^19, and `@softglass/tokens` **^1.7.0** (styles).
 
 **Publish account:** npm org `softglass` via personal **`ardaddemir` only** (never work/Feedemy).
 

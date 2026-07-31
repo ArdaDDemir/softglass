@@ -1,6 +1,6 @@
 {
   "name": "@softglass/root",
-  "version": "1.5.0",
+  "version": "1.7.0",
   "private": true,
   "description": "Open soft-glass design system for Next.js — 4 visual languages, shadcn-style ownership.",
   "license": "MIT",
