@@ -14,6 +14,7 @@ Versioning follows [SemVer](https://semver.org/).
 - Brand controls: accent family + success / warning / danger
 - **Copy CSS** export for `[data-softglass-theme="…"]` overrides
 - Reset · Apply to gallery · draft autosave (`localStorage`)
+- Welcome CTA card + hero button → `#theme`
 - Web-only — no package version bump required for this work
 
 ## [1.7.0] — 2026-07-31

@@ -313,6 +313,14 @@ body {
   align-items: center;
 }
 
+/* Welcome → Theme Builder CTA */
+.sg-welcome-theme-cta {
+  border-color: color-mix(in srgb, var(--sg-accent) 28%, var(--sg-border-frost));
+  box-shadow:
+    inset 0 1px 0 var(--sg-gloss-highlight),
+    0 0 0 1px color-mix(in srgb, var(--sg-accent) 12%, transparent);
+}
+
 /* Theme Builder (#theme) */
 .sg-theme-builder-grid {
   display: grid;

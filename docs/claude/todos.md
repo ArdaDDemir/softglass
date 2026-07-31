@@ -48,9 +48,9 @@
 - [x] Persist draft in localStorage  
 - [ ] Shareable hash/query (optional)  
 
-### 1.8b — Marketing glue (optional)
+### 1.8b — Marketing glue (optional) *(done)*
 
-- [ ] Welcome CTA → Theme Builder  
+- [x] Welcome CTA → Theme Builder (hero + card)
 
 ### 1.8 YAPMA
 

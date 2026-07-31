@@ -112,12 +112,15 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
             MIT, shadcn-style ownership.
           </CardDescription>
         </CardHeader>
-        <CardFooter>
+        <CardFooter className="sg-gallery-chip-row">
           <Button variant="primary" onClick={() => onGo("install")}>
             Start with install
           </Button>
           <Button variant="secondary" onClick={() => onGo("languages")}>
             See languages
+          </Button>
+          <Button variant="secondary" look="soft" onClick={() => onGo("theme")}>
+            Theme Builder
           </Button>
         </CardFooter>
       </Card>
@@ -137,6 +140,27 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
           </Card>
         ))}
       </div>
+
+      <Card surface="solid" as="section" className="sg-welcome-theme-cta">
+        <CardHeader>
+          <Badge size="sm" variant="accent" look="soft">
+            new · 1.8
+          </Badge>
+          <CardTitle>Theme Builder</CardTitle>
+          <CardDescription>
+            Language is the Softglass dialect. Brand is your accent. Recolor live,
+            preview components, copy the CSS override — no Storybook, no SaaS.
+          </CardDescription>
+        </CardHeader>
+        <CardFooter className="sg-gallery-chip-row">
+          <Button variant="primary" onClick={() => onGo("theme")}>
+            Open Theme Builder
+          </Button>
+          <Button variant="secondary" size="sm" onClick={() => onGo("languages")}>
+            Pick a language first
+          </Button>
+        </CardFooter>
+      </Card>
 
       <Card surface="solid" as="section">
         <CardHeader>
