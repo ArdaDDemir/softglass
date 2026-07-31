@@ -10,6 +10,8 @@ import {
   Accordion,
   Alert,
   AppShell,
+  AppShellCollapseButton,
+  AppShellMenuButton,
   AspectRatio,
   Avatar,
   Badge,
@@ -46,6 +48,7 @@ import {
   MultiSelect,
   NavLink,
   NumberInput,
+  PageHeader,
   Pagination,
   PasswordInput,
   PinInput,
@@ -75,15 +78,18 @@ import {
   VisuallyHidden,
   ColorInput,
   ColorSwatch,
+  CommandPalette,
   CountBadge,
   Heading,
   Highlight,
   LiveRegion,
   NativeDateInput,
   RangeSlider,
+  SettingsSection,
+  Switch,
   Text,
 } from "@softglass/ui";
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
 type SectionId =
   | "overview"
@@ -93,38 +99,96 @@ type SectionId =
   | "feedback"
   | "form-atoms"
   | "chrome"
-  | "should"
-  | "nice"
+  | "extras"
   | "disclosure-nav"
   | "surface"
   | "structure"
   | "form-polish"
+  | "shell"
+  | "patterns"
+  | "quality"
   | "docs"
   | "overlays"
   | "controls";
 
-const SECTIONS: { id: SectionId; label: string }[] = [
-  { id: "overview", label: "Overview" },
-  { id: "start", label: "Get started" },
-  { id: "looks", label: "Looks · motion" },
-  { id: "buttons", label: "Button props" },
-  { id: "feedback", label: "Progress · StatusDot" },
-  { id: "form-atoms", label: "Slider · Number · File" },
-  { id: "chrome", label: "Link · Chip · Fields" },
-  { id: "should", label: "Should · 1.3d" },
-  { id: "nice", label: "Nice · 1.3e" },
-  { id: "disclosure-nav", label: "1.4a · Disclosure & nav" },
-  { id: "surface", label: "1.4b · Surface" },
-  { id: "structure", label: "1.4c · Structure" },
-  { id: "form-polish", label: "1.4d · Form polish" },
-  { id: "docs", label: "Docs / API" },
-  { id: "overlays", label: "Modal · Menu · Toast" },
-  { id: "controls", label: "Controls" },
+type NavItem = {
+  id: SectionId;
+  label: string;
+  icon: string;
+  blurb: string;
+};
+
+type NavGroup = {
+  label: string;
+  items: NavItem[];
+};
+
+/** Product-oriented nav (not sprint IDs). One section mounts at a time. */
+const NAV_GROUPS: NavGroup[] = [
+  {
+    label: "Start",
+    items: [
+      { id: "overview", label: "Overview", icon: "◆", blurb: "Pitch & kit map" },
+      { id: "start", label: "Install", icon: "↓", blurb: "Tokens + UI in 3 steps" },
+      { id: "looks", label: "Looks & motion", icon: "◌", blurb: "Design props language" },
+    ],
+  },
+  {
+    label: "Atoms",
+    items: [
+      { id: "buttons", label: "Button", icon: "▢", blurb: "Variants, looks, motion" },
+      { id: "feedback", label: "Feedback", icon: "●", blurb: "Progress, status, alerts" },
+      { id: "form-atoms", label: "Form controls", icon: "▭", blurb: "Slider, number, file…" },
+      { id: "chrome", label: "Chrome", icon: "◇", blurb: "Link, chip, search fields" },
+      { id: "extras", label: "More atoms", icon: "…", blurb: "Pin, rating, color, text…" },
+    ],
+  },
+  {
+    label: "Molecules",
+    items: [
+      {
+        id: "disclosure-nav",
+        label: "Disclosure & nav",
+        icon: "≡",
+        blurb: "Accordion, breadcrumb, pagination",
+      },
+      { id: "surface", label: "Surface", icon: "▣", blurb: "Empty, sheet, hover card" },
+      { id: "structure", label: "Structure", icon: "▦", blurb: "Stepper, toolbar, list, stat" },
+      {
+        id: "form-polish",
+        label: "Pickers & select",
+        icon: "◷",
+        blurb: "Date, multi, combobox async",
+      },
+      { id: "overlays", label: "Overlays", icon: "◫", blurb: "Modal, menu, toast" },
+    ],
+  },
+  {
+    label: "App",
+    items: [
+      { id: "shell", label: "App shell", icon: "⌂", blurb: "Collapse rail + mobile nav" },
+      { id: "patterns", label: "Patterns", icon: "⌘", blurb: "Settings, command, auth" },
+      { id: "quality", label: "Date range", icon: "◐", blurb: "DatePicker range mode" },
+    ],
+  },
+  {
+    label: "Reference",
+    items: [
+      { id: "docs", label: "API docs", icon: "☰", blurb: "Prop tables + examples" },
+      { id: "controls", label: "Controls lab", icon: "⚙", blurb: "Dense control playground" },
+    ],
+  },
 ];
+
+const ALL_NAV_ITEMS = NAV_GROUPS.flatMap((g) => g.items);
+
+function findNavItem(id: SectionId): NavItem {
+  return ALL_NAV_ITEMS.find((i) => i.id === id) ?? ALL_NAV_ITEMS[0]!;
+}
 
 /**
  * Single-section playground — only one heavy demo tree mounts at a time.
- * Huge win vs rendering every glass card on one endless page.
+ * Nav is product-grouped (Start / Atoms / Molecules / App / Reference).
  */
 export function Playground() {
   const [section, setSection] = useState<SectionId>("overview");
@@ -133,6 +197,21 @@ export function Playground() {
     () => COMPONENT_DOCS.find((d) => d.id === docId) ?? COMPONENT_DOCS[0]!,
     [docId],
   );
+  const activeNav = findNavItem(section);
+
+  const go = (id: SectionId) => {
+    setSection(id);
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `#${id}`);
+    }
+  };
+
+  useEffect(() => {
+    const raw = window.location.hash.replace(/^#/, "");
+    if (ALL_NAV_ITEMS.some((i) => i.id === raw)) {
+      setSection(raw as SectionId);
+    }
+  }, []);
 
   return (
     <div style={{ position: "relative", overflow: "hidden" }}>
@@ -159,67 +238,129 @@ export function Playground() {
       />
 
       <AppShell
+        mobileNavTitle="Playground"
         header={
           <>
-            <div>
-              <div
-                style={{
-                  fontWeight: 700,
-                  letterSpacing: "var(--sg-tracking-tight)",
-                  fontSize: "var(--sg-text-lg)",
-                }}
-              >
-                Softglass
-              </div>
-              <div
-                style={{
-                  color: "var(--sg-fg-muted)",
-                  fontSize: "var(--sg-text-xs)",
-                }}
-              >
-                v1.4 · soft glass · molecules
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <AppShellMenuButton />
+              <div>
+                <div
+                  style={{
+                    fontWeight: 700,
+                    letterSpacing: "var(--sg-tracking-tight)",
+                    fontSize: "var(--sg-text-lg)",
+                  }}
+                >
+                  Softglass
+                </div>
+                <div
+                  style={{
+                    color: "var(--sg-fg-muted)",
+                    fontSize: "var(--sg-text-xs)",
+                  }}
+                >
+                  Playground · v1.5
+                </div>
               </div>
             </div>
-            <ThemeSwitcher />
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => go("patterns")}
+              >
+                Patterns
+              </Button>
+              <ThemeSwitcher />
+            </div>
           </>
         }
         sidebar={
           <>
-            <div>
-              <Badge variant="accent" size="sm">
-                playground
-              </Badge>
-              <p
-                style={{
-                  margin: "0.75rem 0 0",
-                  fontSize: "var(--sg-text-sm)",
-                  color: "var(--sg-fg-muted)",
-                }}
-              >
-                One section at a time keeps scroll smooth. Switch themes above.
-              </p>
-            </div>
-            <ShellNav aria-label="Playground sections">
-              {SECTIONS.map((item) => (
-                <ShellNavItem
-                  key={item.id}
-                  href={`#${item.id}`}
-                  active={section === item.id}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSection(item.id);
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                gap: "0.5rem",
+              }}
+            >
+              <div className="sg-shell-sidebar-collapse-hide">
+                <Badge variant="accent" size="sm">
+                  playground
+                </Badge>
+                <p
+                  style={{
+                    margin: "0.75rem 0 0",
+                    fontSize: "var(--sg-text-sm)",
+                    color: "var(--sg-fg-muted)",
                   }}
                 >
-                  {item.label}
-                </ShellNavItem>
+                  Grouped by layer. One section at a time.
+                </p>
+              </div>
+              <AppShellCollapseButton />
+            </div>
+            <div className="sg-playground-nav">
+              {NAV_GROUPS.map((group) => (
+                <div key={group.label} className="sg-playground-nav-group">
+                  <p className="sg-playground-nav-label">{group.label}</p>
+                  <ShellNav aria-label={group.label}>
+                    {group.items.map((item) => (
+                      <ShellNavItem
+                        key={item.id}
+                        href={`#${item.id}`}
+                        icon={item.icon}
+                        active={section === item.id}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          go(item.id);
+                        }}
+                      >
+                        {item.label}
+                      </ShellNavItem>
+                    ))}
+                  </ShellNav>
+                </div>
               ))}
-            </ShellNav>
+            </div>
           </>
         }
       >
-        <div style={{ display: "grid", gap: "1.25rem" }}>
+        <div className="sg-playground-main">
+          {section !== "overview" ? (
+            <div className="sg-playground-section-bar">
+              <div className="sg-playground-section-bar-meta">
+                <Badge size="sm" variant="default">
+                  {activeNav.icon} {NAV_GROUPS.find((g) =>
+                    g.items.some((i) => i.id === section),
+                  )?.label}
+                </Badge>
+                <div>
+                  <p className="sg-playground-section-bar-title">
+                    {activeNav.label}
+                  </p>
+                  <p className="sg-playground-section-bar-desc">
+                    {activeNav.blurb}
+                  </p>
+                </div>
+              </div>
+              <div className="sg-playground-quick">
+                <Button size="sm" variant="ghost" onClick={() => go("overview")}>
+                  Overview
+                </Button>
+                <Button size="sm" variant="ghost" onClick={() => go("docs")}>
+                  API
+                </Button>
+              </div>
+            </div>
+          ) : null}
+
           {section === "overview" ? (
-            <OverviewSection onGoStart={() => setSection("start")} />
+            <OverviewSection
+              onGoStart={() => go("start")}
+              onGo={(id) => go(id)}
+            />
           ) : null}
           {section === "start" ? <GetStartedSection /> : null}
           {section === "looks" ? <LooksDemo /> : null}
@@ -227,12 +368,19 @@ export function Playground() {
           {section === "feedback" ? <FeedbackSection /> : null}
           {section === "form-atoms" ? <FormAtomsSection /> : null}
           {section === "chrome" ? <ChromeAtomsSection /> : null}
-          {section === "should" ? <ShouldAtomsSection /> : null}
-          {section === "nice" ? <NiceAtomsSection /> : null}
+          {section === "extras" ? (
+            <>
+              <ShouldAtomsSection />
+              <NiceAtomsSection />
+            </>
+          ) : null}
           {section === "disclosure-nav" ? <DisclosureNavSection /> : null}
           {section === "surface" ? <SurfaceSection /> : null}
           {section === "structure" ? <StructureSection /> : null}
           {section === "form-polish" ? <FormPolishSection /> : null}
+          {section === "shell" ? <ShellSection /> : null}
+          {section === "patterns" ? <PatternsSection /> : null}
+          {section === "quality" ? <QualitySection /> : null}
           {section === "docs" ? (
             <DocsSection
               docId={docId}
@@ -243,9 +391,9 @@ export function Playground() {
           {section === "overlays" ? (
             <Card surface="glass" as="section">
               <CardHeader>
-                <CardTitle>Modal + Toast</CardTitle>
+                <CardTitle>Overlays</CardTitle>
                 <CardDescription>
-                  Only this section mounts — fewer glass trees = smoother UI.
+                  Modal, menus, toast — only this section mounts.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -260,34 +408,44 @@ export function Playground() {
   );
 }
 
-function OverviewSection({ onGoStart }: { onGoStart: () => void }) {
+function OverviewSection({
+  onGoStart,
+  onGo,
+}: {
+  onGoStart: () => void;
+  onGo: (id: SectionId) => void;
+}) {
   return (
     <>
       <Card surface="glass" as="section" hoverable>
         <CardHeader>
           <Badge variant="solid" size="sm">
-            v1.4.0
+            v1.5 · branch
           </Badge>
           <CardTitle
             style={{
               fontSize: "var(--sg-text-4xl)",
-              maxWidth: "18ch",
+              maxWidth: "20ch",
               marginTop: "0.75rem",
             }}
           >
-            Soft glass kit. Molecules shipped.
+            Soft glass kit. Product shell included.
           </CardTitle>
           <CardDescription style={{ fontSize: "var(--sg-text-lg)", maxWidth: "52ch" }}>
-            Install tokens + UI, set a language, pass props. v1.4 adds Accordion,
-            Sheet, Stepper, DatePicker portal, and more — sidebar sections 1.4a–d.
+            Four languages, one engine. v1.5 adds collapsible AppShell, PageHeader,
+            SettingsSection, CommandPalette, and DatePicker range — browse by layer
+            in the sidebar.
           </CardDescription>
         </CardHeader>
         <CardFooter>
           <Button variant="primary" onClick={onGoStart}>
-            Get started
+            Install
           </Button>
-          <Button variant="ghost" onClick={onGoStart}>
-            Install steps
+          <Button variant="secondary" onClick={() => onGo("shell")}>
+            App shell
+          </Button>
+          <Button variant="ghost" onClick={() => onGo("patterns")}>
+            Patterns
           </Button>
         </CardFooter>
       </Card>
@@ -302,8 +460,8 @@ function OverviewSection({ onGoStart }: { onGoStart: () => void }) {
         {[
           { label: "Languages", value: "4" },
           { label: "Components", value: String(COMPONENT_DOCS.length) },
-          { label: "Surfaces", value: "Frost-first" },
-          { label: "Perf", value: "Sectioned" },
+          { label: "Nav groups", value: String(NAV_GROUPS.length) },
+          { label: "Perf", value: "1 section" },
         ].map((stat) => (
           <Card key={stat.label} surface="glass" padding="sm">
             <CardContent>
@@ -328,6 +486,36 @@ function OverviewSection({ onGoStart }: { onGoStart: () => void }) {
           </Card>
         ))}
       </div>
+
+      <Card surface="solid" as="section">
+        <CardHeader>
+          <CardTitle>Jump in</CardTitle>
+          <CardDescription>
+            Product paths — not sprint labels. Pick a layer.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="sg-playground-quick">
+          {(
+            [
+              ["shell", "App shell"],
+              ["patterns", "Patterns"],
+              ["quality", "Date range"],
+              ["disclosure-nav", "Disclosure"],
+              ["overlays", "Overlays"],
+              ["docs", "API docs"],
+            ] as const
+          ).map(([id, label]) => (
+            <Button
+              key={id}
+              size="sm"
+              variant="secondary"
+              onClick={() => onGo(id)}
+            >
+              {label}
+            </Button>
+          ))}
+        </CardContent>
+      </Card>
 
       <div
         style={{
@@ -1938,6 +2126,535 @@ function FormPolishSection() {
               }, 400);
             }}
           />
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+/** v1.5a — AppShell depth + PageHeader */
+function ShellSection() {
+  const [headerLook, setHeaderLook] = useState<
+    "plain" | "soft" | "solid" | "glass"
+  >("soft");
+  const [demoCollapsed, setDemoCollapsed] = useState(false);
+  const [demoMobile, setDemoMobile] = useState(false);
+
+  const lookHint: Record<typeof headerLook, string> = {
+    plain: "Flush — no pad, no border, no fill",
+    soft: "Frost tray + inset gloss",
+    solid: "Opaque panel + drop shadow",
+    glass: "Translucent blur + accent rim (see stage)",
+  };
+
+  return (
+    <>
+      <Card surface="solid" as="section" id="section-appshell-15a">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.5a
+          </Badge>
+          <CardTitle>AppShell · collapse + mobile drawer</CardTitle>
+          <CardDescription>
+            Mini frame below is a <strong>second</strong> AppShell — toggle
+            collapse and watch the rail + main width change. Outer playground
+            shell also supports « collapse and mobile hamburger.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.75rem" }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.5rem",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              size="sm"
+              variant={demoCollapsed ? "primary" : "secondary"}
+              onClick={() => setDemoCollapsed((v) => !v)}
+            >
+              {demoCollapsed ? "Expand rail" : "Collapse rail"}
+            </Button>
+            <Button
+              size="sm"
+              variant={demoMobile ? "primary" : "secondary"}
+              onClick={() => setDemoMobile((v) => !v)}
+            >
+              {demoMobile ? "Close mobile nav" : "Open mobile nav"}
+            </Button>
+            <Badge variant={demoCollapsed ? "accent" : "default"} size="sm">
+              collapsed: {demoCollapsed ? "true" : "false"}
+            </Badge>
+            <Badge variant={demoMobile ? "accent" : "default"} size="sm">
+              mobileOpen: {demoMobile ? "true" : "false"}
+            </Badge>
+          </div>
+
+          <AppShell
+            className="sg-shell-demo"
+            collapsed={demoCollapsed}
+            onCollapsedChange={setDemoCollapsed}
+            mobileNavOpen={demoMobile}
+            onMobileNavOpenChange={setDemoMobile}
+            mobileNavTitle="Demo menu"
+            header={
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <AppShellMenuButton />
+                  <strong style={{ fontSize: "var(--sg-text-sm)" }}>
+                    Mini app
+                  </strong>
+                </div>
+                <Badge size="sm" variant="default">
+                  main grows when rail collapses
+                </Badge>
+              </>
+            }
+            sidebar={
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <AppShellCollapseButton />
+                </div>
+                <ShellNav aria-label="Demo nav">
+                  <ShellNavItem href="#d-home" active icon="⌂">
+                    Home
+                  </ShellNavItem>
+                  <ShellNavItem href="#d-projects" icon="◆">
+                    Projects
+                  </ShellNavItem>
+                  <ShellNavItem href="#d-settings" icon="◎">
+                    Settings
+                  </ShellNavItem>
+                </ShellNav>
+              </>
+            }
+          >
+            <div
+              style={{
+                padding: "0.75rem 1rem",
+                borderRadius: "var(--sg-radius-md)",
+                border: "1px dashed var(--sg-border-frost)",
+                background: "var(--sg-accent-soft)",
+                fontSize: "var(--sg-text-sm)",
+              }}
+            >
+              Content pane. Collapse → sidebar becomes icon rail, this area
+              widens.
+            </div>
+          </AppShell>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-pageheader">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.5a
+          </Badge>
+          <CardTitle>PageHeader · looks</CardTitle>
+          <CardDescription>
+            Switch looks — each recipe is a different chrome (flush / frost /
+            solid lift / glass blur). Stage behind helps glass read.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            {(["plain", "soft", "solid", "glass"] as const).map((look) => (
+              <Button
+                key={look}
+                size="sm"
+                variant={headerLook === look ? "primary" : "secondary"}
+                onClick={() => setHeaderLook(look)}
+              >
+                {look}
+              </Button>
+            ))}
+            <Badge variant="accent" size="sm">
+              look: {headerLook}
+            </Badge>
+          </div>
+          <Text tone="muted" size="sm">
+            {lookHint[headerLook]}
+          </Text>
+
+          {/* Colorful stage so glass/soft contrast is obvious */}
+          <div
+            style={{
+              position: "relative",
+              padding: "1.25rem",
+              borderRadius: "var(--sg-radius-lg)",
+              border: "1px solid var(--sg-border-frost)",
+              overflow: "hidden",
+              background:
+                "linear-gradient(135deg, color-mix(in srgb, var(--sg-accent) 28%, transparent), color-mix(in srgb, var(--sg-ring) 22%, transparent) 45%, color-mix(in srgb, var(--sg-success) 18%, transparent))",
+            }}
+          >
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                inset: "auto -20% -30% auto",
+                width: 180,
+                height: 180,
+                borderRadius: "50%",
+                background: "color-mix(in srgb, var(--sg-accent) 40%, transparent)",
+                filter: "blur(2px)",
+                pointerEvents: "none",
+              }}
+            />
+            <PageHeader
+              look={headerLook}
+              title="Projects"
+              description="Manage workspaces and invites for your team."
+              breadcrumbs={[
+                { label: "Home", href: "#" },
+                { label: "Workspace", href: "#" },
+                { label: "Projects" },
+              ]}
+              actions={
+                <>
+                  <Button size="sm" variant="secondary">
+                    Export
+                  </Button>
+                  <Button size="sm" variant="primary">
+                    New project
+                  </Button>
+                </>
+              }
+              style={{ marginBottom: 0, position: "relative" }}
+            />
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+              gap: "0.5rem",
+            }}
+          >
+            {(["plain", "soft", "solid", "glass"] as const).map((look) => (
+              <button
+                key={look}
+                type="button"
+                onClick={() => setHeaderLook(look)}
+                style={{
+                  textAlign: "left",
+                  cursor: "pointer",
+                  padding: 0,
+                  border:
+                    headerLook === look
+                      ? "2px solid var(--sg-accent)"
+                      : "1px solid var(--sg-border-frost)",
+                  borderRadius: "var(--sg-radius-md)",
+                  background: "transparent",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    padding: "0.5rem",
+                    background:
+                      "linear-gradient(135deg, color-mix(in srgb, var(--sg-accent) 18%, transparent), color-mix(in srgb, var(--sg-ring) 14%, transparent))",
+                    minHeight: 72,
+                  }}
+                >
+                  <PageHeader
+                    size="sm"
+                    look={look}
+                    title={look}
+                    style={{ marginBottom: 0 }}
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+/** v1.5b — SettingsSection + CommandPalette + recipes */
+function PatternsSection() {
+  const [cmdOpen, setCmdOpen] = useState(false);
+  const [lastCmd, setLastCmd] = useState<string>("—");
+  const [emailNotif, setEmailNotif] = useState(true);
+  const [marketing, setMarketing] = useState(false);
+  const [displayName, setDisplayName] = useState("Arda");
+  const [authEmail, setAuthEmail] = useState("");
+  const [sectionLook, setSectionLook] = useState<
+    "soft" | "solid" | "glass" | "plain"
+  >("soft");
+
+  const commands = [
+    {
+      id: "nav-home",
+      label: "Go to Home",
+      description: "Dashboard overview",
+      group: "Navigation",
+      icon: "⌂",
+      keywords: "dashboard",
+    },
+    {
+      id: "nav-settings",
+      label: "Open Settings",
+      description: "Profile & preferences",
+      group: "Navigation",
+      icon: "◎",
+      keywords: "prefs profile",
+    },
+    {
+      id: "theme-toggle",
+      label: "Toggle theme",
+      description: "Cycle Aurora / Obsidian",
+      group: "Appearance",
+      icon: "◐",
+    },
+    {
+      id: "new-project",
+      label: "New project",
+      description: "Create a workspace",
+      group: "Actions",
+      icon: "+",
+      keywords: "create",
+    },
+    {
+      id: "copy-id",
+      label: "Copy workspace ID",
+      group: "Actions",
+      icon: "⎘",
+      keywords: "clipboard",
+    },
+  ];
+
+  return (
+    <>
+      <Card surface="solid" as="section" id="section-command-palette">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.5b
+          </Badge>
+          <CardTitle>CommandPalette · minimal</CardTitle>
+          <CardDescription>
+            Search + list + ↑↓ Enter. No fuzzy ranking library — substring
+            filter only.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.75rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+            <Button variant="primary" onClick={() => setCmdOpen(true)}>
+              Open command palette
+            </Button>
+            <Kbd>⌘</Kbd>
+            <span style={{ color: "var(--sg-fg-muted)", fontSize: "var(--sg-text-sm)" }}>
+              + K (wire yourself)
+            </span>
+            <Badge variant="default" size="sm">
+              last: {lastCmd}
+            </Badge>
+          </div>
+          <CommandPalette
+            open={cmdOpen}
+            onOpenChange={setCmdOpen}
+            items={commands}
+            onSelect={(item) => setLastCmd(item.label)}
+          />
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section" id="section-settings">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.5b
+          </Badge>
+          <CardTitle>SettingsSection</CardTitle>
+          <CardDescription>
+            Title + description + actions + form body. Look strip for chrome.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            {(["soft", "solid", "glass", "plain"] as const).map((look) => (
+              <Button
+                key={look}
+                size="sm"
+                variant={sectionLook === look ? "primary" : "secondary"}
+                onClick={() => setSectionLook(look)}
+              >
+                {look}
+              </Button>
+            ))}
+          </div>
+
+          <div
+            style={{
+              padding: sectionLook === "glass" || sectionLook === "plain" ? "1rem" : 0,
+              borderRadius: "var(--sg-radius-lg)",
+              background:
+                sectionLook === "glass" || sectionLook === "plain"
+                  ? "linear-gradient(135deg, color-mix(in srgb, var(--sg-accent) 22%, transparent), color-mix(in srgb, var(--sg-ring) 16%, transparent))"
+                  : "transparent",
+            }}
+          >
+            <SettingsSection
+              look={sectionLook}
+              title="Profile"
+              description="How your name appears across Softglass workspaces."
+              actions={
+                <Button size="sm" variant="primary">
+                  Save
+                </Button>
+              }
+            >
+              <Input
+                label="Display name"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+              />
+              <Input label="Handle" defaultValue="@arda" hint="Public username" />
+            </SettingsSection>
+          </div>
+
+          <SettingsSection
+            look="solid"
+            title="Notifications"
+            description="Email and product updates."
+            density="compact"
+          >
+            <Switch
+              label="Email digests"
+              checked={emailNotif}
+              onCheckedChange={setEmailNotif}
+            />
+            <Switch
+              label="Marketing"
+              checked={marketing}
+              onCheckedChange={setMarketing}
+              hint="Occasional tips — optional."
+            />
+          </SettingsSection>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section" id="section-auth-recipe">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            recipe
+          </Badge>
+          <CardTitle>Auth recipe (compose only)</CardTitle>
+          <CardDescription>
+            Not a new component — PageHeader + Card + fields. Copy the pattern.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem", maxWidth: 420 }}>
+          <PageHeader
+            size="sm"
+            look="plain"
+            title="Sign in"
+            description="Welcome back to Softglass."
+            style={{ marginBottom: 0 }}
+          />
+          <Card surface="solid">
+            <CardContent style={{ display: "grid", gap: "0.85rem", paddingTop: "1.1rem" }}>
+              <Input
+                label="Email"
+                type="email"
+                value={authEmail}
+                onChange={(e) => setAuthEmail(e.target.value)}
+                placeholder="you@studio.dev"
+              />
+              <PasswordInput label="Password" autoComplete="current-password" />
+              <Button variant="primary" fullWidth>
+                Continue
+              </Button>
+              <Text tone="muted" size="sm" style={{ textAlign: "center" }}>
+                No account? <Link href="#">Create one</Link>
+              </Text>
+            </CardContent>
+          </Card>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+/** v1.5c — Date range + quality notes */
+function QualitySection() {
+  const [range, setRange] = useState<{ start: string; end: string }>({
+    start: "",
+    end: "",
+  });
+  const [single, setSingle] = useState("2026-07-15");
+
+  return (
+    <>
+      <Card surface="solid" as="section" id="section-date-range">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            v1.5c
+          </Badge>
+          <CardTitle>DatePicker · range</CardTitle>
+          <CardDescription>
+            Click start, then end. If end is before start, values swap. Span
+            highlights on the grid; single mode unchanged.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "1rem", maxWidth: 360 }}>
+          <DatePicker
+            mode="range"
+            label="Trip dates"
+            rangeValue={range}
+            onRangeValueChange={setRange}
+            hint={
+              range.start && range.end
+                ? `ISO ${range.start} → ${range.end}`
+                : "Pick two days"
+            }
+          />
+          <DatePicker
+            label="Single (control)"
+            value={single}
+            onValueChange={setSingle}
+            hint="mode=single default — still works"
+          />
+          <Alert variant="info" title="Not in 1.5c">
+            Time range, multi-month dual calendar, locale packs, and typing into
+            the field stay deferred.
+          </Alert>
+        </CardContent>
+      </Card>
+
+      <Card surface="glass" as="section" id="section-quality-notes">
+        <CardHeader>
+          <Badge variant="accent" size="sm">
+            quality
+          </Badge>
+          <CardTitle>1.5 checklist</CardTitle>
+          <CardDescription>
+            Shell · patterns · date range shipped on branch. Publish = separate
+            1.5.0 checklist.
+          </CardDescription>
+        </CardHeader>
+        <CardContent style={{ display: "grid", gap: "0.5rem" }}>
+          <Text size="sm">✓ AppShell collapse + mobile Sheet</Text>
+          <Text size="sm">✓ PageHeader looks</Text>
+          <Text size="sm">✓ SettingsSection + CommandPalette</Text>
+          <Text size="sm">✓ DatePicker range mode</Text>
+          <Text size="sm" tone="muted">
+            Next session: version bump · CHANGELOG final · npm publish · tag
+          </Text>
         </CardContent>
       </Card>
     </>

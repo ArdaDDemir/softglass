@@ -81,3 +81,9 @@ export type ListLook = "soft" | "solid" | "outline" | "ghost" | "inset";
  * solid | soft | glass | outline | accent (left rail)
  */
 export type StatLook = "solid" | "soft" | "glass" | "outline" | "accent";
+
+/** PageHeader chrome: plain flush · soft frost · solid panel · glass chrome */
+export type PageHeaderLook = "plain" | "soft" | "solid" | "glass";
+
+/** SettingsSection panel chrome */
+export type SettingsSectionLook = "soft" | "solid" | "glass" | "plain";

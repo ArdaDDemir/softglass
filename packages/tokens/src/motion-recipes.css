@@ -453,6 +453,45 @@
   animation: none !important;
 }
 
+/* —— Command palette (same motion language as Modal) —— */
+.sg-command-root[data-motion="none"] .sg-command-panel,
+.sg-command-root[data-motion="none"] .sg-command-backdrop {
+  animation: none !important;
+}
+
+.sg-command-root[data-motion="scale"] .sg-command-panel {
+  animation: sg-scale-in var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-command-root[data-motion="fade"] .sg-command-panel {
+  animation: sg-fade-in var(--sg-motion-med) var(--sg-ease-smooth);
+}
+
+.sg-command-root[data-motion="slide-up"] .sg-command-panel {
+  animation: sg-slide-up-in var(--sg-motion-med) var(--sg-ease-spring);
+}
+
+.sg-command-root[data-state="closed"] .sg-command-backdrop {
+  animation: sg-fade-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-command-root[data-state="closed"][data-motion="scale"] .sg-command-panel {
+  animation: sg-scale-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-command-root[data-state="closed"][data-motion="fade"] .sg-command-panel {
+  animation: sg-fade-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-command-root[data-state="closed"][data-motion="slide-up"] .sg-command-panel {
+  animation: sg-slide-up-out var(--sg-duration-normal) var(--sg-ease-out) forwards;
+}
+
+.sg-command-root[data-state="closed"][data-motion="none"] .sg-command-panel,
+.sg-command-root[data-state="closed"][data-motion="none"] .sg-command-backdrop {
+  animation: none !important;
+}
+
 /* Overlay menus / popover / datepicker exit */
 .sg-select-menu[data-state="closed"],
 .sg-popover-content[data-state="closed"],

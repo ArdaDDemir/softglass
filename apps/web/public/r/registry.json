@@ -2575,9 +2575,11 @@
       "name": "app-shell",
       "type": "registry:ui",
       "title": "AppShell",
-      "description": "Header + optional sidebar layout.",
+      "description": "Header + collapsible sidebar + mobile Sheet nav.",
       "registryDependencies": [
-        "tokens"
+        "tokens",
+        "button",
+        "sheet"
       ],
       "files": [
         {
@@ -2599,6 +2601,105 @@
           "path": "packages/ui/src/lib/motion.ts",
           "type": "registry:lib",
           "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "Page chrome: breadcrumbs, title, description, actions.",
+      "registryDependencies": [
+        "tokens",
+        "breadcrumb"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/page-header.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/page-header.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "settings-section",
+      "type": "registry:ui",
+      "title": "Settings Section",
+      "description": "Settings group: title, description, actions, form body.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/settings-section.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/settings-section.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "Command Palette",
+      "description": "Minimal command palette: search + list + keyboard select.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/molecules/command-palette.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/molecules/command-palette.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/presence.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/presence.ts"
         }
       ]
     }

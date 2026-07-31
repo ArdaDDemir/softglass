@@ -428,24 +428,46 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: "DatePicker",
     layer: "atom",
     summary:
-      "Single ISO date. Day/month/year grids. Panel is body-portaled with flip/clamp (Select language).",
+      "Single or range ISO dates. Day/month/year grids. Body portal + flip/clamp.",
     importLine: 'import { DatePicker } from "@softglass/ui";',
     example: `<DatePicker
   label="Launch date"
   value={date}
   onValueChange={setDate}
-  placement="auto"
+/>
+{/* range */}
+<DatePicker
+  mode="range"
+  label="Trip"
+  rangeValue={range}
+  onRangeValueChange={setRange}
 />`,
     props: [
       {
+        name: "mode",
+        type: '"single" | "range"',
+        default: '"single"',
+        description: "Single day or start/end range.",
+      },
+      {
         name: "value / defaultValue",
         type: "string (YYYY-MM-DD)",
-        description: "Controlled or uncontrolled ISO date.",
+        description: "Single mode: controlled or uncontrolled ISO date.",
       },
       {
         name: "onValueChange",
         type: "(value: string) => void",
-        description: "Fires with ISO date on pick.",
+        description: "Single mode: fires with ISO date on pick.",
+      },
+      {
+        name: "rangeValue / defaultRangeValue",
+        type: "{ start: string; end: string }",
+        description: "Range mode: ISO start/end (empty string = unset).",
+      },
+      {
+        name: "onRangeValueChange",
+        type: "(value: DateRangeValue) => void",
+        description: "Range mode: fires when both ends are chosen.",
       },
       {
         name: "label / hint / error",
@@ -870,11 +892,22 @@ toast({ title: "Saved", variant: "success", description: "All good." });`,
     id: "appshell",
     name: "AppShell",
     layer: "organism",
-    summary: "Responsive header + optional sidebar + main content.",
-    importLine: 'import { AppShell, ShellNav, ShellNavItem } from "@softglass/ui";',
+    summary:
+      "Responsive header + collapsible desktop rail + mobile Sheet nav (same sidebar slot).",
+    importLine:
+      'import { AppShell, AppShellMenuButton, AppShellCollapseButton, ShellNav, ShellNavItem } from "@softglass/ui";',
     example: `<AppShell
-  header={<>Logo</>}
-  sidebar={<ShellNav><ShellNavItem active href="#">Home</ShellNavItem></ShellNav>}
+  header={<><AppShellMenuButton /> Logo</>}
+  sidebar={
+    <>
+      <AppShellCollapseButton />
+      <ShellNav>
+        <ShellNavItem active href="#" icon="⌂">Home</ShellNavItem>
+      </ShellNav>
+    </>
+  }
+  defaultCollapsed={false}
+  mobileNavTitle="Menu"
 >
   {children}
 </AppShell>`,
@@ -887,12 +920,213 @@ toast({ title: "Saved", variant: "success", description: "All good." });`,
       {
         name: "sidebar",
         type: "ReactNode",
-        description: "Desktop sidebar (≥900px).",
+        description: "Desktop rail (≥900px) and mobile Sheet body.",
+      },
+      {
+        name: "collapsed",
+        type: "boolean",
+        description: "Controlled desktop collapse (icon rail).",
+      },
+      {
+        name: "defaultCollapsed",
+        type: "boolean",
+        default: "false",
+        description: "Uncontrolled initial collapse.",
+      },
+      {
+        name: "onCollapsedChange",
+        type: "(collapsed: boolean) => void",
+        description: "Collapse change callback.",
+      },
+      {
+        name: "mobileNavOpen",
+        type: "boolean",
+        description: "Controlled mobile drawer open state.",
+      },
+      {
+        name: "defaultMobileNavOpen",
+        type: "boolean",
+        default: "false",
+        description: "Uncontrolled initial mobile drawer.",
+      },
+      {
+        name: "onMobileNavOpenChange",
+        type: "(open: boolean) => void",
+        description: "Mobile drawer change callback.",
+      },
+      {
+        name: "mobileNavTitle",
+        type: "ReactNode",
+        default: '"Navigation"',
+        description: "Title for the mobile Sheet.",
       },
       {
         name: "children",
         type: "ReactNode",
         description: "Main content.",
+      },
+    ],
+  },
+  {
+    id: "pageheader",
+    name: "PageHeader",
+    layer: "molecule",
+    summary: "Page chrome: optional breadcrumbs, title, description, actions.",
+    importLine: 'import { PageHeader, Button } from "@softglass/ui";',
+    example: `<PageHeader
+  title="Projects"
+  description="Your workspace"
+  breadcrumbs={[
+    { label: "Home", href: "#" },
+    { label: "Projects" },
+  ]}
+  actions={<Button size="sm">New</Button>}
+  look="soft"
+/>`,
+    props: [
+      {
+        name: "title",
+        type: "ReactNode",
+        description: "Primary page heading (h1).",
+      },
+      {
+        name: "description",
+        type: "ReactNode",
+        description: "Supporting line under the title.",
+      },
+      {
+        name: "breadcrumbs",
+        type: "BreadcrumbItem[]",
+        description: "Optional path trail via Breadcrumb.",
+      },
+      {
+        name: "actions",
+        type: "ReactNode",
+        description: "Trailing actions (usually buttons).",
+      },
+      {
+        name: "look",
+        type: '"plain" | "soft" | "solid" | "glass"',
+        default: '"plain"',
+        description: "Chrome surface.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        default: '"md"',
+        description: "Title scale.",
+      },
+      {
+        name: "breadcrumbLook",
+        type: '"plain" | "soft" | "pill"',
+        default: '"plain"',
+        description: "Breadcrumb chrome when crumbs are set.",
+      },
+    ],
+  },
+  {
+    id: "settingssection",
+    name: "SettingsSection",
+    layer: "molecule",
+    summary: "Settings group panel: title, description, actions, form body.",
+    importLine: 'import { SettingsSection, Input, Button } from "@softglass/ui";',
+    example: `<SettingsSection
+  title="Profile"
+  description="Public identity"
+  actions={<Button size="sm">Save</Button>}
+  look="soft"
+>
+  <Input label="Display name" />
+</SettingsSection>`,
+    props: [
+      {
+        name: "title",
+        type: "ReactNode",
+        description: "Section heading (h2).",
+      },
+      {
+        name: "description",
+        type: "ReactNode",
+        description: "Helper copy under the title.",
+      },
+      {
+        name: "actions",
+        type: "ReactNode",
+        description: "Trailing header actions.",
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "Form body / controls.",
+      },
+      {
+        name: "look",
+        type: '"soft" | "solid" | "glass" | "plain"',
+        default: '"soft"',
+        description: "Panel chrome.",
+      },
+      {
+        name: "density",
+        type: '"comfortable" | "compact"',
+        default: '"comfortable"',
+        description: "Spacing density.",
+      },
+    ],
+  },
+  {
+    id: "commandpalette",
+    name: "CommandPalette",
+    layer: "molecule",
+    summary:
+      "Minimal command palette: search, list, keyboard select (substring filter).",
+    importLine: 'import { CommandPalette } from "@softglass/ui";',
+    example: `<CommandPalette
+  open={open}
+  onOpenChange={setOpen}
+  items={[
+    { id: "home", label: "Go home", group: "Nav" },
+    { id: "settings", label: "Settings", keywords: "prefs" },
+  ]}
+  onSelect={(item) => console.log(item.id)}
+/>`,
+    props: [
+      {
+        name: "open",
+        type: "boolean",
+        description: "Controlled open state.",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Open change callback.",
+      },
+      {
+        name: "items",
+        type: "CommandItem[]",
+        description: "id, label, description?, keywords?, group?, icon?, disabled?",
+      },
+      {
+        name: "onSelect",
+        type: "(item: CommandItem) => void",
+        description: "Fired when an item is chosen (palette closes).",
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        default: '"Type a command or search…"',
+        description: "Search field placeholder.",
+      },
+      {
+        name: "emptyMessage",
+        type: "string",
+        default: '"No results"',
+        description: "Empty filter state copy.",
+      },
+      {
+        name: "label",
+        type: "string",
+        default: '"Command palette"',
+        description: "Accessible dialog name.",
       },
     ],
   },

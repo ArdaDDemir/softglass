@@ -7,6 +7,26 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added (1.5a — Shell · branch)
+
+- **`AppShell`** — desktop collapsible rail (`collapsed` / `defaultCollapsed` / `onCollapsedChange`); mobile left **Sheet** (`mobileNavOpen` / `mobileNavTitle`); context helpers
+- **`AppShellMenuButton`** · **`AppShellCollapseButton`** · **`useAppShell`**
+- **`ShellNavItem`** — optional `icon`; collapsed glyph fallback
+- **`PageHeader`** — title / description / breadcrumbs / actions; looks plain|soft|solid|glass
+- Tokens: `--sg-sidebar-width-collapsed`, page-header chrome, collapsed rail styles
+
+### Added (1.5b — Patterns · branch)
+
+- **`SettingsSection`** — title / description / actions / form body; looks soft|solid|glass|plain
+- **`CommandPalette`** — minimal search + list + keyboard select (substring filter; groups); modal shell
+- Playground: `1.5b · Patterns` (settings, command, auth recipe)
+
+### Added (1.5c — Quality · branch)
+
+- **`DatePicker` `mode="range"`** — start/end ISO; swap if inverted; in-range highlight; single mode unchanged
+- Playground: `1.5c · Quality`
+- API + LIMITATIONS refresh for shell / patterns / range
+
 ## [1.4.0] — 2026-07-30
 
 Minor release: **molecule set** — disclosure/nav, surface, structure, form/overlay polish.

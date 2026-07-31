@@ -124,7 +124,7 @@ See the live **Docs** tab in the playground for prop tables.
 | `Select` | `options` `value` `onValueChange` `placeholder` `size` `label` `hint` `error` |
 | `Combobox` | `options` `onSearch` `loading` `filterOption` `emptyMessage` |
 | `MultiSelect` | `options` `value[]` `filterable` `filterPlaceholder` `maxSelected` |
-| `DatePicker` | `value` `onValueChange` (ISO) `min` `max` `placement` — **body portal** |
+| `DatePicker` | `mode` single\|range · single: `value` `onValueChange` · range: `rangeValue` `onRangeValueChange` · `min` `max` `placement` — **body portal** |
 | `Switch` | `checked` `onCheckedChange` `label` `hint` |
 | `Modal` | `open` `onOpenChange` `title` `description` `footer` `size` |
 | `DropdownMenu` | `trigger` `items` `placement` `align` `motion` `open` `onOpenChange` |
@@ -194,6 +194,12 @@ See the live **Docs** tab in the playground for prop tables.
 | `Separator` | `orientation` `decorative` |
 | `Label` | `requiredMark` `htmlFor` |
 | `FormField` | `label` `hint` `error` `htmlFor` `requiredMark` |
-| `AppShell` | `header` `sidebar` `children` |
+| `AppShell` | `header` `sidebar` `children` `collapsed` `defaultCollapsed` `onCollapsedChange` `mobileNavOpen` `defaultMobileNavOpen` `onMobileNavOpenChange` `mobileNavTitle` |
+| `AppShellMenuButton` | mobile hamburger (context; desktop hidden) |
+| `AppShellCollapseButton` | desktop rail toggle (context; mobile hidden) |
+| `ShellNavItem` | `href` `active` `icon` `children` |
+| `PageHeader` | `title` `description` `breadcrumbs` `actions` `look` `size` `breadcrumbLook` |
+| `SettingsSection` | `title` `description` `actions` `children` `look` `density` |
+| `CommandPalette` | `open` `onOpenChange` `items` `onSelect` `placeholder` `emptyMessage` `label` |
 
 Full prop lists live in `apps/web/src/lib/docs.ts` and the Docs UI.

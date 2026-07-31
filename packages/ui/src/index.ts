@@ -88,8 +88,10 @@ export type { MultiSelectProps } from "./atoms/multi-select";
 
 export { DatePicker } from "./atoms/date-picker";
 export type {
+  DatePickerMode,
   DatePickerProps,
   DatePickerSize,
+  DateRangeValue,
 } from "./atoms/date-picker";
 
 export { Checkbox } from "./atoms/checkbox";
@@ -224,8 +226,39 @@ export type { ListDensity, ListProps } from "./molecules/list";
 export { Stat } from "./molecules/stat";
 export type { StatProps, StatTrend } from "./molecules/stat";
 
-export { AppShell, ShellNav, ShellNavItem } from "./organisms/app-shell";
-export type { AppShellProps, ShellNavItemProps } from "./organisms/app-shell";
+export {
+  AppShell,
+  AppShellCollapseButton,
+  AppShellMenuButton,
+  ShellNav,
+  ShellNavItem,
+  useAppShell,
+} from "./organisms/app-shell";
+export type {
+  AppShellCollapseButtonProps,
+  AppShellMenuButtonProps,
+  AppShellProps,
+  ShellNavItemProps,
+} from "./organisms/app-shell";
+
+export { PageHeader } from "./molecules/page-header";
+export type {
+  PageHeaderLook,
+  PageHeaderProps,
+  PageHeaderSize,
+} from "./molecules/page-header";
+
+export { SettingsSection } from "./molecules/settings-section";
+export type {
+  SettingsSectionLook,
+  SettingsSectionProps,
+} from "./molecules/settings-section";
+
+export { CommandPalette } from "./molecules/command-palette";
+export type {
+  CommandItem,
+  CommandPaletteProps,
+} from "./molecules/command-palette";
 
 export { Spinner } from "./atoms/spinner";
 export type { SpinnerProps, SpinnerSize } from "./atoms/spinner";
