@@ -15,6 +15,7 @@ Versioning follows [SemVer](https://semver.org/).
 - **`getRowLabel`** for selection accessibility
 - **`virtualized`** — native spacer windowing (`estimateRowHeight` · `maxHeight` · `overscan`); no extra deps
 - Studio: `#library/datatable` + 1k-row virtualized showcase
+- Gallery **App** page: product list recipe (PageHeader + filter + DataTable + Pagination)
 - Tokens: `sg-data-table*` / `sg-table*` / spacer rows
 - Not yet: npm release (`1.7.0` when ready)
 

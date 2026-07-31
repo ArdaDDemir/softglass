@@ -14,7 +14,7 @@
 |-------|--------|
 | 1.0.0 – 1.5.0 | **shipped** (npm + tag) |
 | **1.6.0** | Component Studio — 56 playgrounds on **main** (web-only) |
-| **1.7** | DataTable — branch `feat/v1.7-datatable` · **1.7-0 + 1.7a + 1.7b done** · next **1.7c optional / ship** |
+| **1.7** | DataTable — branch `feat/v1.7-datatable` · **1.7-0…1.7c done** · next **1.7.0 ship** |
 | 1.8+ | Theme builder / marketing / Storybook |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
@@ -72,9 +72,9 @@
 - [x] 1k-row Studio showcase  
 - [x] Sticky + selection regression  
 
-### 1.7c — Gallery App (optional)
+### 1.7c — Gallery App (optional) *(done)*
 
-- [ ] Product list recipe demo (PageHeader + DataTable + Pagination)  
+- [x] Product list recipe demo (PageHeader + DataTable + Pagination) · `#app`
 
 ### 1.7 YAPMA
 
@@ -108,10 +108,9 @@
 ## Yeni session
 
 ```text
-Softglass v1.7 DataTable — 1.7b virtualized done
-Branch: feat/v1.7-datatable (WIP uncommitted until commit)
-#library/datatable · virtualized + 1k showcase
-Next: 1.7c optional Gallery App demo OR 1.7.0 ship
-UI API → 1.7.0 version bump on ship; no auto publish
+Softglass v1.7 DataTable — 1.7-0…1.7c done
+Branch: feat/v1.7-datatable
+#library/datatable · #app product list recipe
+Next: 1.7.0 ship (version bump + npm + tag) on onay
 work hesabına push yok
 ```

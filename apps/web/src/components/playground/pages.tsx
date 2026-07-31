@@ -31,6 +31,7 @@ import {
   CardTitle,
   Combobox,
   CommandPalette,
+  DataTable,
   DatePicker,
   EmptyState,
   Input,
@@ -49,8 +50,10 @@ import {
   Stepper,
   Switch,
   Text,
+  type DataTableColumn,
+  type DataTableSortState,
 } from "@softglass/ui";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 export function GalleryPageBody({
   pageId,
@@ -630,6 +633,199 @@ function ComposePage() {
   );
 }
 
+type InventoryRow = {
+  id: string;
+  name: string;
+  sku: string;
+  stock: number;
+  status: "in_stock" | "low" | "out";
+};
+
+const INVENTORY_SEED: InventoryRow[] = Array.from({ length: 48 }, (_, i) => {
+  const statuses: InventoryRow["status"][] = ["in_stock", "low", "out"];
+  const status = statuses[i % 3]!;
+  return {
+    id: `inv-${i + 1}`,
+    name: `Softglass SKU ${String(i + 1).padStart(2, "0")}`,
+    sku: `SG-${String(1000 + i)}`,
+    stock: status === "out" ? 0 : status === "low" ? 2 + (i % 5) : 12 + (i % 40),
+    status,
+  };
+});
+
+function inventoryStatusBadge(status: InventoryRow["status"]): ReactNode {
+  if (status === "in_stock") {
+    return (
+      <Badge size="sm" variant="success" look="soft">
+        In stock
+      </Badge>
+    );
+  }
+  if (status === "low") {
+    return (
+      <Badge size="sm" variant="warning" look="soft">
+        Low
+      </Badge>
+    );
+  }
+  return (
+    <Badge size="sm" variant="danger" look="soft">
+      Out
+    </Badge>
+  );
+}
+
+const INVENTORY_COLUMNS: DataTableColumn<InventoryRow>[] = [
+  { id: "name", header: "Product", accessor: "name", sortable: true },
+  { id: "sku", header: "SKU", accessor: "sku", sortable: true, width: 110 },
+  {
+    id: "stock",
+    header: "Stock",
+    accessor: "stock",
+    sortable: true,
+    align: "end",
+    width: 80,
+  },
+  {
+    id: "status",
+    header: "Status",
+    sortable: true,
+    sortValue: (row) => row.status,
+    cell: (row) => inventoryStatusBadge(row.status),
+    width: 100,
+  },
+];
+
+/** 1.7c — product list recipe: PageHeader + filter + DataTable + Pagination */
+function ProductListRecipe() {
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [sort, setSort] = useState<DataTableSortState>({
+    columnId: "name",
+    direction: "asc",
+  });
+  const pageSize = 8;
+
+  const filtered = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    if (!needle) return INVENTORY_SEED;
+    return INVENTORY_SEED.filter(
+      (row) =>
+        row.name.toLowerCase().includes(needle) ||
+        row.sku.toLowerCase().includes(needle) ||
+        row.status.includes(needle),
+    );
+  }, [query]);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const safePage = Math.min(page, pageCount);
+  const pageRows = useMemo(
+    () =>
+      filtered.slice((safePage - 1) * pageSize, safePage * pageSize),
+    [filtered, safePage, pageSize],
+  );
+
+  useEffect(() => {
+    setPage(1);
+  }, [query]);
+
+  return (
+    <Card surface="solid" as="section">
+      <CardHeader>
+        <CardTitle>Product list recipe</CardTitle>
+        <CardDescription>
+          How inventory screens compose Softglass:{" "}
+          <strong>PageHeader</strong> · filter · <strong>DataTable</strong> ·{" "}
+          <strong>Pagination</strong>. Sort and multi-select stay on the
+          current page of rows.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="sg-gallery-stack-tight">
+        <PageHeader
+          size="sm"
+          look="soft"
+          title="Inventory"
+          description={`${filtered.length} products · ${selectedIds.length} selected`}
+          breadcrumbs={[
+            { label: "App", href: "#app" },
+            { label: "Inventory" },
+          ]}
+          actions={
+            <>
+              <Button size="sm" variant="secondary">
+                Export
+              </Button>
+              <Button size="sm" variant="primary">
+                New product
+              </Button>
+            </>
+          }
+        />
+
+        <div className="sg-gallery-chip-row" style={{ alignItems: "flex-end" }}>
+          <div style={{ flex: "1 1 12rem", minWidth: 0, maxWidth: 280 }}>
+            <SearchInput
+              label="Filter"
+              placeholder="Name, SKU, status…"
+              value={query}
+              onValueChange={setQuery}
+            />
+          </div>
+          <Badge size="sm">
+            page {safePage}/{pageCount}
+          </Badge>
+          {selectedIds.length > 0 ? (
+            <Badge size="sm" variant="solid">
+              {selectedIds.length} selected
+            </Badge>
+          ) : null}
+        </div>
+
+        <DataTable
+          data={pageRows}
+          columns={INVENTORY_COLUMNS}
+          look="soft"
+          density="comfortable"
+          stickyHeader
+          selectionMode="multiple"
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
+          getRowLabel={(row) => row.name}
+          sort={sort}
+          onSortChange={setSort}
+          clientSort
+          emptyTitle="No products match"
+          emptyDescription="Try another filter or clear the search."
+          aria-label="Inventory products"
+          maxHeight={360}
+        />
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "0.75rem",
+          }}
+        >
+          <Text size="sm" tone="muted">
+            Showing {(safePage - 1) * pageSize + (pageRows.length ? 1 : 0)}–
+            {(safePage - 1) * pageSize + pageRows.length} of {filtered.length}
+          </Text>
+          <Pagination
+            page={safePage}
+            pageCount={pageCount}
+            onPageChange={setPage}
+            size="sm"
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 function AppPage() {
   const [collapsed, setCollapsed] = useState(false);
   const [cmd, setCmd] = useState(false);
@@ -647,6 +843,8 @@ function AppPage() {
 
   return (
     <div className="sg-gallery-stack">
+      <ProductListRecipe />
+
       <Card surface="solid" as="section">
         <CardHeader>
           <CardTitle>AppShell (live mini)</CardTitle>
@@ -718,7 +916,8 @@ function AppPage() {
               style={{ marginBottom: "0.75rem" }}
             />
             <Text size="sm" tone="muted">
-              Main content grows when the rail collapses.
+              Main content grows when the rail collapses. Pair with the product
+              list recipe above for full inventory screens.
             </Text>
           </AppShell>
         </CardContent>
