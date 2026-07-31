@@ -7,6 +7,13 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.8.0] — 2026-07-31
+
+Minor release: **Theme Builder** brand lab + complete mini product App shell in Softglass Gallery.
+
+**Ship:** npm `@softglass/tokens@1.8.0` + `@softglass/ui@1.8.0`, GitHub tag `v1.8.0`  
+**Accounts:** gh **ArdaDDemir** · npm **ardaddemir** only (not work/Feedemy).
+
 ### Added (gallery — Theme Builder)
 
 - Gallery page **`#theme`** — brand lab on top of Softglass languages
@@ -15,12 +22,17 @@ Versioning follows [SemVer](https://semver.org/).
 - **Copy CSS** export for `[data-softglass-theme="…"]` overrides
 - Reset · Apply to gallery · draft autosave (`localStorage`)
 - Welcome CTA card + hero button → `#theme`
-- Web-only — no package version bump required for this work
+- Brand color grid layout that fits the gallery width (no overflow)
 
-### Fixed (gallery — App mini product)
+### Fixed / polished (gallery — App mini product)
 
-- **`#app`** is a single live product shell (not loose demos): working nav · inventory inside AppShell · settings · command palette
-- Taller embed (`.sg-shell-demo-app`) so DataTable + pagination fit
+- **`#app`** single live product shell: working nav · inventory inside AppShell · settings · command palette
+- Contained demo shell height (`.sg-shell-demo-app`); bottom pager padding for long pages
+
+### Docs / quality
+
+- `@softglass/ui` peer: `@softglass/tokens` **^1.8.0**
+- Plan/todos for v1.8 Theme Builder
 
 ## [1.7.0] — 2026-07-31
 

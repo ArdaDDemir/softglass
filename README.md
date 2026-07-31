@@ -60,7 +60,7 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 **Live packages**
 
 - [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
-- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.7.0`
+- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.8.0`
 
 ### Brand override (colors only)
 
@@ -176,7 +176,7 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.7.0 — shipped** (DataTable · virtualization · Component Studio · product list recipe)
+**v1.8.0 — shipped** (Theme Builder · mini product App shell · DataTable)
 
 - [x] Six languages as CSS tokens (obsidian · noir · ember dark family)  
 - [x] Core UI kit + look + motion  
@@ -185,12 +185,12 @@ CONTRIBUTING.md           PR rules
 - [x] CI workflow (typecheck + **test** + build + pack dry-run)  
 - [x] npm org **`softglass`** (owner: personal **ardaddemir** — not work/Feedemy)  
 - [x] GitHub [ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass)  
-- [x] **v1.5** shell · patterns · date range · gallery tour  
-- [x] **Component Studio** — per-component playgrounds (`#library/<id>`)  
-- [x] **DataTable** — sort · selection · sticky · density · looks · `virtualized`  
-- [x] Publish **`@softglass/tokens@1.7.0`** → **`@softglass/ui@1.7.0`** + tag **`v1.7.0`**  
+- [x] **v1.7** DataTable · virtualization · Component Studio  
+- [x] **Theme Builder** — `#theme` brand lab · export CSS  
+- [x] **App** mini product shell — inventory + settings + palette  
+- [x] Publish **`@softglass/tokens@1.8.0`** → **`@softglass/ui@1.8.0`** + tag **`v1.8.0`**  
 
-**Next (when ready):** theme builder / marketing site / Storybook (1.8+).  
+**Next (when ready):** marketing polish / visual regression / token JSON (1.9+).  
 See [docs/claude/todos.md](./docs/claude/todos.md).
 
 **Account rule:** `gh` = **ArdaDDemir**, `npm whoami` = **ardaddemir**. Never publish or push Softglass from work/Feedemy.
@@ -199,8 +199,8 @@ See [docs/claude/todos.md](./docs/claude/todos.md).
 
 | Package | npm | Notes |
 | --- | --- | --- |
-| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.7.0** | CSS engine + 6 languages + shell + DataTable chrome |
-| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.7.0** | React components (peer: react, tokens **^1.7**) |
+| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.8.0** | CSS engine + 6 languages + shell + DataTable chrome |
+| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.8.0** | React components (peer: react, tokens **^1.8**) |
 | `softglass` (unscoped) | unused | we ship **scoped** packages only |
 
 Install:
