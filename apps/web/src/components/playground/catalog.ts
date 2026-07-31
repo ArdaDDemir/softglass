@@ -89,8 +89,8 @@ export const GALLERY_PAGES: GalleryPage[] = [
     label: "App",
     title: "Product shell & patterns",
     summary:
-      "Inventory list recipe (PageHeader + DataTable + Pagination), AppShell, settings, command palette.",
-    takeaway: "How a real product list and chrome are assembled.",
+      "Full mini product: AppShell nav · inventory DataTable · settings · command palette.",
+    takeaway: "One shell, working sections — not loose demos stacked.",
   },
   {
     id: "library",

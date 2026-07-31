@@ -17,6 +17,11 @@ Versioning follows [SemVer](https://semver.org/).
 - Welcome CTA card + hero button → `#theme`
 - Web-only — no package version bump required for this work
 
+### Fixed (gallery — App mini product)
+
+- **`#app`** is a single live product shell (not loose demos): working nav · inventory inside AppShell · settings · command palette
+- Taller embed (`.sg-shell-demo-app`) so DataTable + pagination fit
+
 ## [1.7.0] — 2026-07-31
 
 Minor release: **DataTable** (sort · selection · virtualization), Component Studio gallery, product list recipe.
