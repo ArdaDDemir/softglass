@@ -2790,24 +2790,51 @@
   background: var(--sg-surface-solid);
 }
 
-.sg-shell.sg-shell-demo .sg-shell-sidebar {
+/* Full mini-product embed (inventory + settings).
+   Contain layout — override base .sg-shell min-height: 100dvh. */
+.sg-shell.sg-shell-demo-app {
+  min-height: 0;
+  height: min(34rem, 70vh);
+  max-height: 70vh;
+  border-radius: var(--sg-radius-lg);
+  border: var(--sg-border-width) solid var(--sg-border-frost);
+  overflow: hidden;
+  background: var(--sg-surface-solid);
+}
+
+.sg-shell.sg-shell-demo .sg-shell-sidebar,
+.sg-shell.sg-shell-demo-app .sg-shell-sidebar {
   height: 100%;
   position: relative;
   top: auto;
 }
 
-.sg-shell.sg-shell-demo .sg-shell-header {
+.sg-shell.sg-shell-demo .sg-shell-header,
+.sg-shell.sg-shell-demo-app .sg-shell-header {
   position: relative;
   top: auto;
   padding: var(--sg-space-2) var(--sg-space-3);
 }
 
-.sg-shell.sg-shell-demo .sg-shell-header-inner {
+.sg-shell.sg-shell-demo .sg-shell-header-inner,
+.sg-shell.sg-shell-demo-app .sg-shell-header-inner {
   padding: 0.45rem 0.65rem;
 }
 
 .sg-shell.sg-shell-demo .sg-shell-main-inner {
   padding: var(--sg-space-4);
+}
+
+.sg-shell.sg-shell-demo-app .sg-shell-main {
+  min-height: 0;
+  overflow: auto;
+}
+
+.sg-shell.sg-shell-demo-app .sg-shell-main-inner {
+  padding: var(--sg-space-4);
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
 }
 
 /* Stronger collapse read: wider gap + rail tint */

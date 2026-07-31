@@ -240,7 +240,8 @@ body {
   width: 100%;
   max-width: 52rem;
   margin: 0 auto;
-  padding: 1rem 0.85rem 7.5rem;
+  /* Bottom pager is fixed ~100–120px — leave room so long pages (App/Theme) aren't clipped */
+  padding: 1rem 0.85rem 9.5rem;
   min-width: 0;
 }
 
@@ -311,6 +312,102 @@ body {
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
+}
+
+/* Welcome → Theme Builder CTA */
+.sg-welcome-theme-cta {
+  border-color: color-mix(in srgb, var(--sg-accent) 28%, var(--sg-border-frost));
+  box-shadow:
+    inset 0 1px 0 var(--sg-gloss-highlight),
+    0 0 0 1px color-mix(in srgb, var(--sg-accent) 12%, transparent);
+}
+
+/* Theme Builder (#theme)
+   Gallery max-width ~52rem — side-by-side brand+preview made color fields overflow.
+   Stack sections; fields use a safe 2-col grid only when the card is wide enough. */
+.sg-theme-builder-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.sg-theme-builder-grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Brand colors card body */
+.sg-theme-builder-fields {
+  display: grid;
+  gap: 0.85rem 0.75rem;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Full-width brand card → two equal columns that cannot overflow */
+@media (min-width: 560px) {
+  .sg-theme-builder-fields {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.sg-theme-builder-fields > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ColorInput field wrappers */
+.sg-theme-builder-fields .sg-field {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.sg-theme-builder-fields .sg-color-input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.sg-theme-builder-soft {
+  display: grid;
+  gap: 0.35rem;
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.sg-theme-builder-soft-code {
+  display: block;
+  font-size: var(--sg-text-xs);
+  font-family: var(--sg-font-mono, ui-monospace, monospace);
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--sg-radius-md);
+  background: color-mix(in srgb, var(--sg-fg) 5%, transparent);
+  border: var(--sg-border-width) solid var(--sg-border-subtle);
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.sg-theme-builder-preview {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0.85rem;
+  border-radius: var(--sg-radius-lg);
+  border: var(--sg-border-width) solid var(--sg-border-frost);
+  background: color-mix(in srgb, var(--sg-fg) 3%, transparent);
+  min-width: 0;
+}
+
+.sg-theme-builder-export {
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .sg-gallery-stat-grid {

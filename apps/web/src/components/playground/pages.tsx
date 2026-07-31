@@ -15,12 +15,14 @@ import {
   type SoftglassThemeId,
 } from "@/lib/themes";
 import type { GalleryPageId } from "@/components/playground/catalog";
+import { ThemeBuilderPage } from "@/components/playground/theme-builder";
 import {
   Accordion,
   Alert,
   AppShell,
   AppShellCollapseButton,
   AppShellMenuButton,
+  useAppShell,
   Badge,
   Button,
   Card,
@@ -53,7 +55,13 @@ import {
   type DataTableColumn,
   type DataTableSortState,
 } from "@softglass/ui";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 export function GalleryPageBody({
   pageId,
@@ -73,6 +81,8 @@ export function GalleryPageBody({
       return <InstallPage />;
     case "languages":
       return <LanguagesPage />;
+    case "theme":
+      return <ThemeBuilderPage />;
     case "looks":
       return <LooksPage />;
     case "essentials":
@@ -109,12 +119,15 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
             MIT, shadcn-style ownership.
           </CardDescription>
         </CardHeader>
-        <CardFooter>
+        <CardFooter className="sg-gallery-chip-row">
           <Button variant="primary" onClick={() => onGo("install")}>
             Start with install
           </Button>
           <Button variant="secondary" onClick={() => onGo("languages")}>
             See languages
+          </Button>
+          <Button variant="secondary" look="soft" onClick={() => onGo("theme")}>
+            Theme Builder
           </Button>
         </CardFooter>
       </Card>
@@ -124,7 +137,7 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
           { k: "6", v: "Languages" },
           { k: String(COMPONENT_DOCS.length), v: "Documented parts" },
           { k: "MIT", v: "License" },
-          { k: "9", v: "Tour pages" },
+          { k: "10", v: "Tour pages" },
         ].map((s) => (
           <Card key={s.v} surface="solid" padding="sm">
             <CardContent>
@@ -134,6 +147,27 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
           </Card>
         ))}
       </div>
+
+      <Card surface="solid" as="section" className="sg-welcome-theme-cta">
+        <CardHeader>
+          <Badge size="sm" variant="accent" look="soft">
+            new · 1.8
+          </Badge>
+          <CardTitle>Theme Builder</CardTitle>
+          <CardDescription>
+            Language is the Softglass dialect. Brand is your accent. Recolor live,
+            preview components, copy the CSS override — no Storybook, no SaaS.
+          </CardDescription>
+        </CardHeader>
+        <CardFooter className="sg-gallery-chip-row">
+          <Button variant="primary" onClick={() => onGo("theme")}>
+            Open Theme Builder
+          </Button>
+          <Button variant="secondary" size="sm" onClick={() => onGo("languages")}>
+            Pick a language first
+          </Button>
+        </CardFooter>
+      </Card>
 
       <Card surface="solid" as="section">
         <CardHeader>
@@ -148,9 +182,10 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
             [
               ["install", "1 · Install"],
               ["languages", "2 · Languages"],
-              ["essentials", "3 · Essentials"],
-              ["app", "4 · App shell"],
-              ["library", "5 · Library"],
+              ["theme", "3 · Theme"],
+              ["essentials", "4 · Essentials"],
+              ["app", "5 · App shell"],
+              ["library", "6 · Library"],
             ] as const
           ).map(([id, label]) => (
             <Button
@@ -696,8 +731,14 @@ const INVENTORY_COLUMNS: DataTableColumn<InventoryRow>[] = [
   },
 ];
 
-/** 1.7c — product list recipe: PageHeader + filter + DataTable + Pagination */
-function ProductListRecipe() {
+type AppSection = "inventory" | "settings";
+
+/** Inventory main — lives inside AppShell (PageHeader + filter + DataTable + Pagination) */
+function InventoryPanel({
+  onToast,
+}: {
+  onToast?: (message: string) => void;
+}) {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -721,8 +762,7 @@ function ProductListRecipe() {
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
   const safePage = Math.min(page, pageCount);
   const pageRows = useMemo(
-    () =>
-      filtered.slice((safePage - 1) * pageSize, safePage * pageSize),
+    () => filtered.slice((safePage - 1) * pageSize, safePage * pageSize),
     [filtered, safePage, pageSize],
   );
 
@@ -731,126 +771,293 @@ function ProductListRecipe() {
   }, [query]);
 
   return (
-    <Card surface="solid" as="section">
-      <CardHeader>
-        <CardTitle>Product list recipe</CardTitle>
-        <CardDescription>
-          How inventory screens compose Softglass:{" "}
-          <strong>PageHeader</strong> · filter · <strong>DataTable</strong> ·{" "}
-          <strong>Pagination</strong>. Sort and multi-select stay on the
-          current page of rows.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="sg-gallery-stack-tight">
-        <PageHeader
-          size="sm"
-          look="soft"
-          title="Inventory"
-          description={`${filtered.length} products · ${selectedIds.length} selected`}
-          breadcrumbs={[
-            { label: "App", href: "#app" },
-            { label: "Inventory" },
-          ]}
-          actions={
-            <>
-              <Button size="sm" variant="secondary">
-                Export
-              </Button>
-              <Button size="sm" variant="primary">
-                New product
-              </Button>
-            </>
-          }
-        />
+    <>
+      <PageHeader
+        size="sm"
+        look="soft"
+        title="Inventory"
+        description={`${filtered.length} products · ${selectedIds.length} selected`}
+        breadcrumbs={[
+          { label: "App", href: "#app" },
+          { label: "Inventory" },
+        ]}
+        actions={
+          <>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() =>
+                onToast?.(
+                  selectedIds.length
+                    ? `Export ${selectedIds.length} selected (demo)`
+                    : "Export all (demo)",
+                )
+              }
+            >
+              Export
+            </Button>
+            <Button
+              size="sm"
+              variant="primary"
+              onClick={() => onToast?.("New product (demo)")}
+            >
+              New product
+            </Button>
+          </>
+        }
+      />
 
-        <div className="sg-gallery-chip-row" style={{ alignItems: "flex-end" }}>
-          <div style={{ flex: "1 1 12rem", minWidth: 0, maxWidth: 280 }}>
-            <SearchInput
-              label="Filter"
-              placeholder="Name, SKU, status…"
-              value={query}
-              onValueChange={setQuery}
-            />
-          </div>
-          <Badge size="sm">
-            page {safePage}/{pageCount}
-          </Badge>
-          {selectedIds.length > 0 ? (
-            <Badge size="sm" variant="solid">
-              {selectedIds.length} selected
-            </Badge>
-          ) : null}
-        </div>
-
-        <DataTable
-          data={pageRows}
-          columns={INVENTORY_COLUMNS}
-          look="soft"
-          density="comfortable"
-          stickyHeader
-          selectionMode="multiple"
-          selectedIds={selectedIds}
-          onSelectionChange={setSelectedIds}
-          getRowLabel={(row) => row.name}
-          sort={sort}
-          onSortChange={setSort}
-          clientSort
-          emptyTitle="No products match"
-          emptyDescription="Try another filter or clear the search."
-          aria-label="Inventory products"
-          maxHeight={360}
-        />
-
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "0.75rem",
-          }}
-        >
-          <Text size="sm" tone="muted">
-            Showing {(safePage - 1) * pageSize + (pageRows.length ? 1 : 0)}–
-            {(safePage - 1) * pageSize + pageRows.length} of {filtered.length}
-          </Text>
-          <Pagination
-            page={safePage}
-            pageCount={pageCount}
-            onPageChange={setPage}
-            size="sm"
+      <div className="sg-gallery-chip-row" style={{ alignItems: "flex-end" }}>
+        <div style={{ flex: "1 1 12rem", minWidth: 0, maxWidth: 280 }}>
+          <SearchInput
+            label="Filter"
+            placeholder="Name, SKU, status…"
+            value={query}
+            onValueChange={setQuery}
           />
         </div>
-      </CardContent>
-    </Card>
+        <Badge size="sm">
+          page {safePage}/{pageCount}
+        </Badge>
+        {selectedIds.length > 0 ? (
+          <Badge size="sm" variant="solid">
+            {selectedIds.length} selected
+          </Badge>
+        ) : null}
+      </div>
+
+      <DataTable
+        data={pageRows}
+        columns={INVENTORY_COLUMNS}
+        look="soft"
+        density="comfortable"
+        stickyHeader
+        selectionMode="multiple"
+        selectedIds={selectedIds}
+        onSelectionChange={setSelectedIds}
+        getRowLabel={(row) => row.name}
+        sort={sort}
+        onSortChange={setSort}
+        clientSort
+        emptyTitle="No products match"
+        emptyDescription="Try another filter or clear the search."
+        aria-label="Inventory products"
+        maxHeight={280}
+      />
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "0.75rem",
+        }}
+      >
+        <Text size="sm" tone="muted">
+          Showing {(safePage - 1) * pageSize + (pageRows.length ? 1 : 0)}–
+          {(safePage - 1) * pageSize + pageRows.length} of {filtered.length}
+        </Text>
+        <Pagination
+          page={safePage}
+          pageCount={pageCount}
+          onPageChange={setPage}
+          size="sm"
+        />
+      </div>
+    </>
   );
 }
 
+function SettingsPanel({
+  name,
+  onNameChange,
+  onSave,
+  saved,
+}: {
+  name: string;
+  onNameChange: (value: string) => void;
+  onSave: () => void;
+  saved: boolean;
+}) {
+  return (
+    <>
+      <PageHeader
+        size="sm"
+        look="soft"
+        title="Settings"
+        description="Workspace preferences for this mini product."
+        breadcrumbs={[
+          { label: "App", href: "#app" },
+          { label: "Settings" },
+        ]}
+      />
+      <SettingsSection
+        title="Workspace"
+        description="SettingsSection groups form fields under a clear title."
+        actions={
+          <Button size="sm" variant="primary" onClick={onSave}>
+            {saved ? "Saved" : "Save"}
+          </Button>
+        }
+        look="soft"
+      >
+        <Input
+          label="Workspace name"
+          value={name}
+          onChange={(e) => onNameChange(e.target.value)}
+        />
+        <Text size="sm" tone="muted">
+          Changes stay in this session only (gallery demo).
+        </Text>
+      </SettingsSection>
+    </>
+  );
+}
+
+/** Closes mobile Sheet when a nav item is chosen (must render under AppShell). */
+function AppNav({
+  section,
+  onSection,
+}: {
+  section: AppSection;
+  onSection: (next: AppSection) => void;
+}) {
+  const { setMobileNavOpen } = useAppShell();
+
+  function go(next: AppSection) {
+    onSection(next);
+    setMobileNavOpen(false);
+  }
+
+  return (
+    <>
+      <div
+        className="sg-shell-sidebar-collapse-hide"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "0.5rem",
+          marginBottom: "0.65rem",
+        }}
+      >
+        <Text size="sm" style={{ fontWeight: 600 }}>
+          Softglass
+        </Text>
+        <AppShellCollapseButton />
+      </div>
+      <ShellNav aria-label="Product sections">
+        <ShellNavItem
+          href="#app-inventory"
+          active={section === "inventory"}
+          icon="◆"
+          onClick={(e) => {
+            e.preventDefault();
+            go("inventory");
+          }}
+        >
+          Inventory
+        </ShellNavItem>
+        <ShellNavItem
+          href="#app-settings"
+          active={section === "settings"}
+          icon="◎"
+          onClick={(e) => {
+            e.preventDefault();
+            go("settings");
+          }}
+        >
+          Settings
+        </ShellNavItem>
+      </ShellNav>
+    </>
+  );
+}
+
+/**
+ * 1.7c + completion — full mini product app:
+ * AppShell · working nav · inventory DataTable · settings · command palette.
+ */
 function AppPage() {
   const [collapsed, setCollapsed] = useState(false);
+  const [section, setSection] = useState<AppSection>("inventory");
   const [cmd, setCmd] = useState(false);
   const [last, setLast] = useState("—");
-  const [name, setName] = useState("Studio");
+  const [workspaceName, setWorkspaceName] = useState("Softglass Studio");
+  const [saved, setSaved] = useState(false);
+  const [flash, setFlash] = useState<string | null>(null);
 
-  const items = useMemo(
+  const notify = useCallback((message: string) => {
+    setFlash(message);
+    setLast(message);
+    window.setTimeout(() => setFlash(null), 2200);
+  }, []);
+
+  const paletteItems = useMemo(
     () => [
-      { id: "home", label: "Go home", group: "Nav", icon: "⌂" },
-      { id: "settings", label: "Open settings", group: "Nav", icon: "◎" },
-      { id: "theme", label: "Toggle theme", group: "Appearance", icon: "◐" },
+      {
+        id: "inventory",
+        label: "Go to inventory",
+        group: "Nav",
+        icon: "◆",
+      },
+      {
+        id: "settings",
+        label: "Open settings",
+        group: "Nav",
+        icon: "◎",
+      },
+      {
+        id: "new",
+        label: "New product",
+        group: "Actions",
+        icon: "+",
+      },
+      {
+        id: "export",
+        label: "Export inventory",
+        group: "Actions",
+        icon: "↓",
+      },
     ],
     [],
   );
 
+  function onPaletteSelect(id: string, label: string) {
+    setLast(label);
+    if (id === "inventory") setSection("inventory");
+    else if (id === "settings") setSection("settings");
+    else if (id === "new") {
+      setSection("inventory");
+      notify("New product (demo)");
+    } else if (id === "export") {
+      setSection("inventory");
+      notify("Export all (demo)");
+    }
+  }
+
   return (
     <div className="sg-gallery-stack">
-      <ProductListRecipe />
-
-      <Card surface="solid" as="section">
+      <Card surface="solid" as="section" className="sg-app-live-card">
         <CardHeader>
-          <CardTitle>AppShell (live mini)</CardTitle>
+          <div className="sg-gallery-chip-row">
+            <Badge size="sm" variant="accent" look="soft">
+              live product
+            </Badge>
+            <Badge size="sm">
+              {section === "inventory" ? "Inventory" : "Settings"}
+            </Badge>
+            {flash ? (
+              <Badge size="sm" variant="success" look="soft">
+                {flash}
+              </Badge>
+            ) : null}
+          </div>
+          <CardTitle>Mini product · AppShell</CardTitle>
           <CardDescription>
-            Collapse the rail on desktop. On a narrow screen use the menu
-            button — same nav in a left Sheet.
+            Working nav · inventory table · settings · command palette. Collapse
+            the rail or open the menu on a narrow screen.
           </CardDescription>
         </CardHeader>
         <CardContent className="sg-gallery-stack-tight">
@@ -860,106 +1067,87 @@ function AppPage() {
               variant={collapsed ? "primary" : "secondary"}
               onClick={() => setCollapsed((v) => !v)}
             >
-              {collapsed ? "Expand" : "Collapse"}
+              {collapsed ? "Expand rail" : "Collapse rail"}
             </Button>
-            <Badge size="sm">collapsed: {String(collapsed)}</Badge>
+            <Button
+              size="sm"
+              variant={section === "inventory" ? "primary" : "secondary"}
+              onClick={() => setSection("inventory")}
+            >
+              Inventory
+            </Button>
+            <Button
+              size="sm"
+              variant={section === "settings" ? "primary" : "secondary"}
+              onClick={() => setSection("settings")}
+            >
+              Settings
+            </Button>
+            <Button size="sm" variant="secondary" onClick={() => setCmd(true)}>
+              ⌘K palette
+            </Button>
           </div>
+
           <AppShell
-            className="sg-shell-demo"
+            className="sg-shell-demo-app"
             collapsed={collapsed}
             onCollapsedChange={setCollapsed}
-            mobileNavTitle="Demo"
+            mobileNavTitle={workspaceName}
             header={
               <>
                 <div className="sg-gallery-chip-row">
                   <AppShellMenuButton />
-                  <strong>Mini product</strong>
+                  <strong>{workspaceName}</strong>
                 </div>
-                <Badge size="sm" variant="default">
-                  Softglass
-                </Badge>
+                <div className="sg-gallery-chip-row">
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    look="soft"
+                    onClick={() => setCmd(true)}
+                  >
+                    Search…
+                  </Button>
+                  <Badge size="sm" variant="default">
+                    Softglass
+                  </Badge>
+                </div>
               </>
             }
-            sidebar={
-              <>
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <AppShellCollapseButton />
-                </div>
-                <ShellNav>
-                  <ShellNavItem href="#h" active icon="⌂">
-                    Home
-                  </ShellNavItem>
-                  <ShellNavItem href="#p" icon="◆">
-                    Projects
-                  </ShellNavItem>
-                  <ShellNavItem href="#s" icon="◎">
-                    Settings
-                  </ShellNavItem>
-                </ShellNav>
-              </>
-            }
+            sidebar={<AppNav section={section} onSection={setSection} />}
           >
-            <PageHeader
-              size="sm"
-              look="soft"
-              title="Projects"
-              description="PageHeader sits in main — not in the shell chrome."
-              breadcrumbs={[
-                { label: "Home", href: "#" },
-                { label: "Projects" },
-              ]}
-              actions={
-                <Button size="sm" variant="primary">
-                  New
-                </Button>
-              }
-              style={{ marginBottom: "0.75rem" }}
-            />
-            <Text size="sm" tone="muted">
-              Main content grows when the rail collapses. Pair with the product
-              list recipe above for full inventory screens.
-            </Text>
+            {section === "inventory" ? (
+              <InventoryPanel onToast={notify} />
+            ) : (
+              <SettingsPanel
+                name={workspaceName}
+                onNameChange={(v) => {
+                  setWorkspaceName(v);
+                  setSaved(false);
+                }}
+                onSave={() => {
+                  setSaved(true);
+                  notify(`Saved “${workspaceName}”`);
+                }}
+                saved={saved}
+              />
+            )}
           </AppShell>
-        </CardContent>
-      </Card>
 
-      <SettingsSection
-        title="Workspace"
-        description="SettingsSection groups form fields under a clear title."
-        actions={
-          <Button size="sm" variant="primary">
-            Save
-          </Button>
-        }
-        look="soft"
-      >
-        <Input
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </SettingsSection>
-
-      <Card surface="solid" as="section">
-        <CardHeader>
-          <CardTitle>Command palette</CardTitle>
-          <CardDescription>
-            Minimal: search + list + keyboard. Wire ⌘K yourself.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="sg-gallery-chip-row">
-          <Button variant="primary" onClick={() => setCmd(true)}>
-            Open palette
-          </Button>
-          <Badge size="sm">last: {last}</Badge>
           <CommandPalette
             open={cmd}
             onOpenChange={setCmd}
-            items={items}
-            onSelect={(i) => setLast(i.label)}
+            items={paletteItems}
+            onSelect={(item) => onPaletteSelect(item.id, item.label)}
           />
         </CardContent>
       </Card>
+
+      <Text size="sm" tone="muted">
+        Studio deep-dive:{" "}
+        <a href="#library/datatable">#library/datatable</a> · brand lab:{" "}
+        <a href="#theme">#theme</a>
+      </Text>
     </div>
   );
 }
