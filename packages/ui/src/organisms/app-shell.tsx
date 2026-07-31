@@ -43,6 +43,8 @@ type AppShellContextValue = {
   setMobileNavOpen: (next: boolean) => void;
   toggleMobileNav: () => void;
   isDesktop: boolean;
+  /** False until matchMedia has run on the client (avoids SSR/hydration split). */
+  layoutReady: boolean;
   hasSidebar: boolean;
 };
 
@@ -57,23 +59,25 @@ export function useAppShell(): AppShellContextValue {
   return ctx;
 }
 
-function useDesktopMedia(): boolean {
-  // Avoid mobile-first flash on desktop: read matchMedia on first client render.
-  // SSR defaults to desktop so the rail is present in HTML for wide layouts.
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia(DESKTOP_MQ).matches;
-  });
+/**
+ * Desktop breakpoint via matchMedia.
+ * SSR + first client paint: layoutReady=false so we do not mount rail vs Sheet
+ * until after hydration (avoids Next.js structural mismatch on mobile).
+ */
+function useDesktopMedia(): { isDesktop: boolean; layoutReady: boolean } {
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [layoutReady, setLayoutReady] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia(DESKTOP_MQ);
     const sync = () => setIsDesktop(mq.matches);
     sync();
+    setLayoutReady(true);
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
   }, []);
 
-  return isDesktop;
+  return { isDesktop, layoutReady };
 }
 
 /**
@@ -95,7 +99,7 @@ export function AppShell({
   mobileNavTitle = "Navigation",
   ...props
 }: AppShellProps) {
-  const isDesktop = useDesktopMedia();
+  const { isDesktop, layoutReady } = useDesktopMedia();
   const hasSidebar = sidebar != null;
 
   const [collapsedUncontrolled, setCollapsedUncontrolled] =
@@ -144,8 +148,13 @@ export function AppShell({
     setMobileNavOpen,
     toggleMobileNav,
     isDesktop,
+    layoutReady,
     hasSidebar,
   };
+
+  // Only mount rail/Sheet after client media query — SSR + first paint match.
+  const showDesktopRail = hasSidebar && layoutReady && isDesktop;
+  const showMobileSheet = hasSidebar && layoutReady && !isDesktop;
 
   return (
     <AppShellContext.Provider value={ctx}>
@@ -156,9 +165,10 @@ export function AppShell({
           className,
         )}
         data-collapsed={hasSidebar && collapsed ? "true" : undefined}
+        data-layout-ready={layoutReady ? "true" : undefined}
         {...props}
       >
-        {hasSidebar && isDesktop ? (
+        {showDesktopRail ? (
           <aside
             className={cn("sg-shell-sidebar", "sg-surface-glass")}
             data-collapsed={collapsed ? "true" : undefined}
@@ -180,7 +190,7 @@ export function AppShell({
         </main>
       </div>
 
-      {hasSidebar && !isDesktop ? (
+      {showMobileSheet ? (
         <Sheet
           open={mobileNavOpen}
           onOpenChange={setMobileNavOpen}
@@ -208,10 +218,10 @@ export function AppShellMenuButton({
   onClick,
   ...props
 }: AppShellMenuButtonProps) {
-  const { toggleMobileNav, isDesktop, hasSidebar, mobileNavOpen } =
+  const { toggleMobileNav, isDesktop, layoutReady, hasSidebar, mobileNavOpen } =
     useAppShell();
 
-  if (!hasSidebar || isDesktop) return null;
+  if (!hasSidebar || !layoutReady || isDesktop) return null;
 
   return (
     <Button
@@ -254,9 +264,10 @@ export function AppShellCollapseButton({
   onClick,
   ...props
 }: AppShellCollapseButtonProps) {
-  const { collapsed, toggleCollapsed, isDesktop, hasSidebar } = useAppShell();
+  const { collapsed, toggleCollapsed, isDesktop, layoutReady, hasSidebar } =
+    useAppShell();
 
-  if (!hasSidebar || !isDesktop) return null;
+  if (!hasSidebar || !layoutReady || !isDesktop) return null;
 
   return (
     <Button

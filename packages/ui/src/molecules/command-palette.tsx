@@ -119,7 +119,11 @@ export function CommandPalette({
 
   const filtered = useMemo(() => filterItems(items, query), [items, query]);
   const groups = useMemo(() => groupItems(filtered), [filtered]);
-  const flatIds = useMemo(() => filtered.map((i) => i.id), [filtered]);
+  /** Same order as rendered options (ungrouped first, then group order). */
+  const flatItems = useMemo(
+    () => groups.flatMap((g) => g.items),
+    [groups],
+  );
 
   useEffect(() => {
     setPortalReady(true);
@@ -157,10 +161,10 @@ export function CommandPalette({
 
   // Clamp active index when filter shrinks.
   useEffect(() => {
-    if (activeIndex >= filtered.length) {
-      setActiveIndex(Math.max(0, filtered.length - 1));
+    if (activeIndex >= flatItems.length) {
+      setActiveIndex(Math.max(0, flatItems.length - 1));
     }
-  }, [filtered.length, activeIndex]);
+  }, [flatItems.length, activeIndex]);
 
   function selectItem(item: CommandItem) {
     if (item.disabled || exiting) return;
@@ -181,12 +185,12 @@ export function CommandPalette({
 
       if (event.key === "ArrowDown") {
         event.preventDefault();
-        if (filtered.length === 0) return;
+        if (flatItems.length === 0) return;
         setActiveIndex((i) => {
           let next = i;
-          for (let step = 0; step < filtered.length; step++) {
-            next = (next + 1) % filtered.length;
-            if (!filtered[next]?.disabled) return next;
+          for (let step = 0; step < flatItems.length; step++) {
+            next = (next + 1) % flatItems.length;
+            if (!flatItems[next]?.disabled) return next;
           }
           return i;
         });
@@ -195,12 +199,12 @@ export function CommandPalette({
 
       if (event.key === "ArrowUp") {
         event.preventDefault();
-        if (filtered.length === 0) return;
+        if (flatItems.length === 0) return;
         setActiveIndex((i) => {
           let next = i;
-          for (let step = 0; step < filtered.length; step++) {
-            next = (next - 1 + filtered.length) % filtered.length;
-            if (!filtered[next]?.disabled) return next;
+          for (let step = 0; step < flatItems.length; step++) {
+            next = (next - 1 + flatItems.length) % flatItems.length;
+            if (!flatItems[next]?.disabled) return next;
           }
           return i;
         });
@@ -209,7 +213,7 @@ export function CommandPalette({
 
       if (event.key === "Enter") {
         event.preventDefault();
-        const item = filtered[activeIndex];
+        const item = flatItems[activeIndex];
         if (item) selectItem(item);
         return;
       }
@@ -242,21 +246,21 @@ export function CommandPalette({
 
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open, exiting, closeOnEscape, onOpenChange, filtered, activeIndex]);
+  }, [open, exiting, closeOnEscape, onOpenChange, flatItems, activeIndex]);
 
   // Scroll active option into view.
   useEffect(() => {
     if (!open) return;
-    const id = flatIds[activeIndex];
+    const id = flatItems[activeIndex]?.id;
     if (!id) return;
     document
       .getElementById(`${listId}-opt-${id}`)
       ?.scrollIntoView({ block: "nearest" });
-  }, [activeIndex, flatIds, listId, open]);
+  }, [activeIndex, flatItems, listId, open]);
 
   if (!mounted || !portalReady) return null;
 
-  const activeItem = filtered[activeIndex];
+  const activeItem = flatItems[activeIndex];
   const activeDescendant = activeItem
     ? `${listId}-opt-${activeItem.id}`
     : undefined;
@@ -328,7 +332,7 @@ export function CommandPalette({
           aria-label={label}
           className="sg-command-list"
         >
-          {filtered.length === 0 ? (
+          {flatItems.length === 0 ? (
             <div className="sg-command-empty" role="presentation">
               {emptyMessage}
             </div>

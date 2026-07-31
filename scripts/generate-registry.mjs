@@ -53,13 +53,15 @@ const registry = {
       type: "registry:style",
       title: "Softglass Tokens",
       description:
-        "CSS engine + 4 languages (Aurora, Obsidian, Mist, Pearl), looks and motion recipes.",
+        "CSS engine + 6 languages (Aurora, Mist, Pearl, Obsidian, Noir, Ember), looks and motion recipes.",
       files: [
         file("packages/tokens/src/base.css", "registry:style"),
         file("packages/tokens/src/themes/aurora.css", "registry:style"),
         file("packages/tokens/src/themes/obsidian.css", "registry:style"),
         file("packages/tokens/src/themes/mist.css", "registry:style"),
         file("packages/tokens/src/themes/pearl.css", "registry:style"),
+        file("packages/tokens/src/themes/noir.css", "registry:style"),
+        file("packages/tokens/src/themes/ember.css", "registry:style"),
         file("packages/tokens/src/looks-and-motion.css", "registry:style"),
         file("packages/tokens/src/motion-recipes.css", "registry:style"),
         file("packages/tokens/src/index.css", "registry:style"),

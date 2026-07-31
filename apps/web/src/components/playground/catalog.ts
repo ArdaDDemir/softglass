@@ -31,7 +31,7 @@ export const GALLERY_PAGES: GalleryPage[] = [
     id: "welcome",
     label: "Welcome",
     title: "Softglass",
-    summary: "Open soft-glass UI kit for Next.js — four languages, one engine.",
+    summary: "Open soft-glass UI kit for Next.js — six languages, one engine.",
     takeaway: "What Softglass is, and who it is for.",
   },
   {
@@ -44,8 +44,8 @@ export const GALLERY_PAGES: GalleryPage[] = [
   {
     id: "languages",
     label: "Languages",
-    title: "Four visual languages",
-    summary: "Aurora, Obsidian, Mist, Pearl — same components, different mood.",
+    title: "Six visual languages",
+    summary: "3 light + 3 dark (Obsidian, Noir, Ember) — same components, different mood.",
     takeaway: "Theme is data-softglass-theme; brand is CSS variables.",
   },
   {

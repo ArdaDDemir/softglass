@@ -27,6 +27,12 @@ Versioning follows [SemVer](https://semver.org/).
 - Playground: `1.5c · Quality`
 - API + LIMITATIONS refresh for shell / patterns / range
 
+### Added (languages)
+
+- **`noir`** — Noir Velvet (dark · rose accent)
+- **`ember`** — Ember Dusk (dark · amber accent)
+- Dark family is now **obsidian · noir · ember** (6 languages total)
+
 ## [1.4.0] — 2026-07-30
 
 Minor release: **molecule set** — disclosure/nav, surface, structure, form/overlay polish.

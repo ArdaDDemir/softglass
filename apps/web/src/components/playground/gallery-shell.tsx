@@ -8,14 +8,7 @@ import {
   pageIndex,
   type GalleryPageId,
 } from "@/components/playground/catalog";
-import {
-  Badge,
-  Button,
-  Pagination,
-  Sheet,
-  ShellNav,
-  ShellNavItem,
-} from "@softglass/ui";
+import { Button, Sheet, ShellNav, ShellNavItem } from "@softglass/ui";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 
 type GalleryShellProps = {
@@ -101,7 +94,8 @@ export function GalleryShell({ pageId, onPageId, children }: GalleryShellProps) 
             >
               Pages
             </Button>
-            <ThemeSwitcher />
+            {/* compact only — full names wrap the header (Pearl Soft falls down) */}
+            <ThemeSwitcher density="compact" className="sg-gallery-theme" />
           </div>
         </div>
       </header>
@@ -109,9 +103,6 @@ export function GalleryShell({ pageId, onPageId, children }: GalleryShellProps) 
       <main className="sg-gallery-body" id="gallery-main">
         <div className="sg-gallery-page-head">
           <div className="sg-gallery-kicker">
-            <Badge size="sm" variant="accent">
-              {pageNumber} / {pageCount}
-            </Badge>
             <span className="sg-gallery-kicker-label">{page.label}</span>
           </div>
           <h1 className="sg-gallery-title">{page.title}</h1>
@@ -135,17 +126,9 @@ export function GalleryShell({ pageId, onPageId, children }: GalleryShellProps) 
             ← Prev
           </Button>
 
-          <div className="sg-gallery-pager">
-            <Pagination
-              page={pageNumber}
-              pageCount={pageCount}
-              onPageChange={goNumber}
-              compact
-              size="sm"
-              look="soft"
-              aria-label="Gallery pages"
-            />
-          </div>
+          <p className="sg-gallery-page-status" aria-live="polite">
+            {pageNumber} / {pageCount}
+          </p>
 
           <Button
             size="sm"
@@ -156,18 +139,23 @@ export function GalleryShell({ pageId, onPageId, children }: GalleryShellProps) 
             Next →
           </Button>
         </div>
-        <div className="sg-gallery-dots" aria-hidden>
+
+        <nav className="sg-gallery-steps" aria-label="Jump to section">
           {GALLERY_PAGES.map((p, i) => (
             <button
               key={p.id}
               type="button"
-              className="sg-gallery-dot"
+              className="sg-gallery-step"
               data-active={i === index || undefined}
               onClick={() => goNumber(i + 1)}
-              title={p.label}
-            />
+              aria-current={i === index ? "page" : undefined}
+              title={p.summary}
+            >
+              <span className="sg-gallery-step-dot" aria-hidden />
+              <span className="sg-gallery-step-label">{p.label}</span>
+            </button>
           ))}
-        </div>
+        </nav>
       </footer>
 
       <Sheet

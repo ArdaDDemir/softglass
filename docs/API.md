@@ -4,7 +4,7 @@ Import once in your app root:
 
 ```tsx
 import "@softglass/tokens";
-// <html data-softglass-theme="aurora|obsidian|mist|pearl">
+// <html data-softglass-theme="aurora|mist|pearl|obsidian|noir|ember">
 import { Button, Card, Input } from "@softglass/ui";
 ```
 
@@ -12,7 +12,7 @@ import { Button, Card, Input } from "@softglass/ui";
 
 | Step | What |
 | --- | --- |
-| 1 | Import `@softglass/tokens` (CSS engine + 4 languages) |
+| 1 | Import `@softglass/tokens` (CSS engine + 6 languages) |
 | 2 | Set `data-softglass-theme` on `<html>` |
 | 3 | Import components from `@softglass/ui` |
 | 4 | For toast: wrap with `<ToastProvider>` |

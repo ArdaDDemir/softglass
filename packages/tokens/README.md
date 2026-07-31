@@ -24,7 +24,8 @@ npm install @softglass/tokens
 <html data-softglass-theme="aurora">
 ```
 
-Languages: `aurora` | `obsidian` | `mist` | `pearl`
+Languages: `aurora` | `mist` | `pearl` | `obsidian` | `noir` | `ember`  
+Dark family: `obsidian` · `noir` · `ember`
 
 Subpath exports:
 
@@ -32,6 +33,6 @@ Subpath exports:
 - `@softglass/tokens/base`
 - `@softglass/tokens/looks`
 - `@softglass/tokens/motion`
-- `@softglass/tokens/aurora` (and `obsidian` / `mist` / `pearl`)
+- `@softglass/tokens/aurora` (and `mist` / `pearl` / `obsidian` / `noir` / `ember`)
 
 See `docs/LANGUAGES.md` and `docs/GETTING-STARTED.md` in the monorepo.

@@ -1,9 +1,14 @@
 "use client";
 
-import { LooksDemo } from "@/components/looks-demo";
 import { OverlayDemo } from "@/components/overlay-demo";
 import { COMPONENT_DOCS } from "@/lib/docs";
-import { SOFTGLASS_THEMES } from "@/lib/themes";
+import {
+  applySoftglassTheme,
+  readStoredSoftglassTheme,
+  SOFTGLASS_THEMES,
+  THEME_CHANGE_EVENT,
+  type SoftglassThemeId,
+} from "@/lib/themes";
 import type { GalleryPageId } from "@/components/playground/catalog";
 import {
   Accordion,
@@ -19,16 +24,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Combobox,
   CommandPalette,
   DatePicker,
   EmptyState,
   Input,
   List,
   ListItem,
+  MultiSelect,
   PageHeader,
   Pagination,
   PasswordInput,
   SearchInput,
+  Select,
   SettingsSection,
   ShellNav,
   ShellNavItem,
@@ -37,7 +45,7 @@ import {
   Switch,
   Text,
 } from "@softglass/ui";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function GalleryPageBody({
   pageId,
@@ -82,9 +90,9 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
             Soft glass UI. You own the code.
           </CardTitle>
           <CardDescription className="sg-gallery-hero-desc">
-            Softglass is a kit of tokens + React components for Next.js. Pick a
-            visual language, recolor the brand, compose product screens — MIT,
-            shadcn-style ownership.
+            Softglass is a kit of tokens + React components for Next.js. Six
+            languages (three dark), recolor the brand, compose product screens —
+            MIT, shadcn-style ownership.
           </CardDescription>
         </CardHeader>
         <CardFooter>
@@ -99,7 +107,7 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
 
       <div className="sg-gallery-stat-grid">
         {[
-          { k: "4", v: "Languages" },
+          { k: "6", v: "Languages" },
           { k: String(COMPONENT_DOCS.length), v: "Documented parts" },
           { k: "MIT", v: "License" },
           { k: "9", v: "Tour pages" },
@@ -201,32 +209,69 @@ function InstallPage() {
 }
 
 function LanguagesPage() {
+  const [active, setActive] = useState<SoftglassThemeId>("aurora");
+
+  useEffect(() => {
+    setActive(readStoredSoftglassTheme());
+    function onExternal(e: Event) {
+      const id = (e as CustomEvent<SoftglassThemeId>).detail;
+      if (id) setActive(id);
+    }
+    window.addEventListener(THEME_CHANGE_EVENT, onExternal);
+    return () => window.removeEventListener(THEME_CHANGE_EVENT, onExternal);
+  }, []);
+
+  function pick(id: SoftglassThemeId) {
+    setActive(id);
+    applySoftglassTheme(id);
+  }
+
   return (
     <div className="sg-gallery-stack">
       <Text tone="muted" size="sm">
-        Use the theme chips in the top bar (or below). Every page updates live —
-        same components, different surface recipes.
+        Tap a language card (or the chips in the header). Same components —
+        different surface recipes. Active:{" "}
+        <strong>{SOFTGLASS_THEMES.find((t) => t.id === active)?.name}</strong>
       </Text>
-      <div className="sg-gallery-lang-grid">
-        {SOFTGLASS_THEMES.map((theme) => (
-          <Card key={theme.id} surface="glass" as="article">
-            <CardHeader>
-              <Badge size="sm">{theme.id}</Badge>
-              <CardTitle>{theme.name}</CardTitle>
-              <CardDescription>{theme.tagline}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Text size="sm" tone="muted">
+      <div className="sg-gallery-lang-grid" role="listbox" aria-label="Languages">
+        {SOFTGLASS_THEMES.map((theme) => {
+          const selected = active === theme.id;
+          return (
+            <button
+              key={theme.id}
+              type="button"
+              role="option"
+              aria-selected={selected}
+              className="sg-gallery-lang-card"
+              data-active={selected || undefined}
+              onClick={() => pick(theme.id)}
+            >
+              <div className="sg-gallery-lang-card-head">
+                <Badge size="sm" variant={selected ? "accent" : "default"}>
+                  {theme.id}
+                </Badge>
+                <Badge size="sm" variant="default">
+                  {theme.scheme}
+                </Badge>
+                {selected ? (
+                  <Badge size="sm" variant="success">
+                    active
+                  </Badge>
+                ) : null}
+              </div>
+              <strong className="sg-gallery-lang-card-title">{theme.name}</strong>
+              <span className="sg-gallery-lang-card-tagline">{theme.tagline}</span>
+              <span className="sg-gallery-lang-card-best">
                 Best for: {theme.bestFor}
-              </Text>
+              </span>
               <div className="sg-gallery-swatches" aria-hidden>
                 <span className="sg-gallery-swatch" data-slot="accent" />
                 <span className="sg-gallery-swatch" data-slot="soft" />
                 <span className="sg-gallery-swatch" data-slot="solid" />
               </div>
-            </CardContent>
-          </Card>
-        ))}
+            </button>
+          );
+        })}
       </div>
       <pre className="sg-gallery-code">{`[data-softglass-theme="aurora"] {
   --sg-accent: #0ea5e9; /* brand override */
@@ -236,13 +281,106 @@ function LanguagesPage() {
 }
 
 function LooksPage() {
+  const [look, setLook] = useState<"solid" | "soft" | "glass" | "gradient" | "neon">(
+    "soft",
+  );
+  const [motion, setMotion] = useState<"none" | "lift" | "press" | "sheen">(
+    "lift",
+  );
+
   return (
     <div className="sg-gallery-stack">
       <Alert variant="info" title="Design props">
-        Prefer <code>look</code> and <code>motion</code> props over one-off CSS.
-        Glass = chrome; solid = long readable content.
+        Prefer <code>look</code> and <code>motion</code> over one-off CSS. Glass
+        = chrome; solid = long readable content.
       </Alert>
-      <LooksDemo />
+
+      <Card surface="solid" as="section">
+        <CardHeader>
+          <CardTitle>Button · look</CardTitle>
+          <CardDescription>
+            Same variant, different chrome recipes.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="sg-gallery-stack-tight">
+          <div className="sg-gallery-chip-row">
+            {(["solid", "soft", "glass", "gradient", "neon"] as const).map(
+              (l) => (
+                <Button
+                  key={l}
+                  size="sm"
+                  variant={look === l ? "primary" : "secondary"}
+                  onClick={() => setLook(l)}
+                >
+                  {l}
+                </Button>
+              ),
+            )}
+          </div>
+          <div className="sg-gallery-chip-row">
+            <Button variant="primary" look={look}>
+              Primary · {look}
+            </Button>
+            <Button variant="secondary" look={look}>
+              Secondary
+            </Button>
+            <Button variant="outline" look={look}>
+              Outline
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section">
+        <CardHeader>
+          <CardTitle>Button · motion</CardTitle>
+          <CardDescription>Hover / press recipes (try on desktop).</CardDescription>
+        </CardHeader>
+        <CardContent className="sg-gallery-stack-tight">
+          <div className="sg-gallery-chip-row">
+            {(["none", "lift", "press", "sheen"] as const).map((m) => (
+              <Button
+                key={m}
+                size="sm"
+                variant={motion === m ? "primary" : "secondary"}
+                onClick={() => setMotion(m)}
+              >
+                {m}
+              </Button>
+            ))}
+          </div>
+          <Button variant="primary" look="soft" motion={motion}>
+            motion=&quot;{motion}&quot;
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section">
+        <CardHeader>
+          <CardTitle>Surfaces</CardTitle>
+          <CardDescription>
+            Card surface prop — glass for chrome, solid for copy.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="sg-gallery-surface-row">
+            <Card surface="glass" padding="sm">
+              <CardContent>
+                <Text size="sm">
+                  <strong>glass</strong> — frosted chrome
+                </Text>
+              </CardContent>
+            </Card>
+            <Card surface="solid" padding="sm">
+              <CardContent>
+                <Text size="sm">
+                  <strong>solid</strong> — readable body
+                </Text>
+              </CardContent>
+            </Card>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
@@ -309,22 +447,75 @@ function FormsPage() {
   const [date, setDate] = useState("");
   const [range, setRange] = useState({ start: "", end: "" });
   const [on, setOn] = useState(true);
+  const [framework, setFramework] = useState("next");
+  const [city, setCity] = useState("");
+  const [tags, setTags] = useState<string[]>(["react"]);
+
+  const cityOptions = [
+    { value: "ist", label: "Istanbul" },
+    { value: "ank", label: "Ankara" },
+    { value: "izm", label: "Izmir" },
+    { value: "ber", label: "Berlin" },
+    { value: "ams", label: "Amsterdam" },
+  ];
+
+  const tagOptions = [
+    { value: "react", label: "react" },
+    { value: "next", label: "next" },
+    { value: "tokens", label: "tokens" },
+    { value: "a11y", label: "a11y" },
+    { value: "glass", label: "glass" },
+    { value: "forms", label: "forms" },
+  ];
 
   return (
     <div className="sg-gallery-stack">
       <Card surface="solid" as="section">
         <CardHeader>
-          <CardTitle>Date — single & range</CardTitle>
+          <CardTitle>Select · Combobox · MultiSelect</CardTitle>
           <CardDescription>
-            Range: pick start, then end. Callback fires when both are set.
+            Portaled menus. MultiSelect filters inside the list.
           </CardDescription>
         </CardHeader>
         <CardContent className="sg-gallery-stack-tight">
-          <DatePicker
-            label="Due date"
-            value={date}
-            onValueChange={setDate}
+          <Select
+            label="Framework"
+            value={framework}
+            onValueChange={setFramework}
+            options={[
+              { value: "next", label: "Next.js" },
+              { value: "remix", label: "Remix" },
+              { value: "vite", label: "Vite SPA" },
+            ]}
           />
+          <Combobox
+            label="City"
+            options={cityOptions}
+            value={city}
+            onValueChange={setCity}
+            placeholder="Type to filter…"
+          />
+          <MultiSelect
+            label="Tags"
+            options={tagOptions}
+            value={tags}
+            onValueChange={setTags}
+            filterable
+            filterPlaceholder="Filter tags…"
+          />
+          <Switch label="Email digests" checked={on} onCheckedChange={setOn} />
+        </CardContent>
+      </Card>
+
+      <Card surface="solid" as="section">
+        <CardHeader>
+          <CardTitle>Date — single & range</CardTitle>
+          <CardDescription>
+            Range: start then end. <code>onRangeValueChange</code> when both set.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="sg-gallery-stack-tight">
+          <DatePicker label="Due date" value={date} onValueChange={setDate} />
           <DatePicker
             mode="range"
             label="Trip"
@@ -336,9 +527,9 @@ function FormsPage() {
                 : "Two clicks"
             }
           />
-          <Switch label="Email digests" checked={on} onCheckedChange={setOn} />
         </CardContent>
       </Card>
+
       <Card surface="glass" as="section">
         <CardHeader>
           <CardTitle>Search field</CardTitle>

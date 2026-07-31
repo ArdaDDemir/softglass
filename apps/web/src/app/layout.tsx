@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Softglass — Soft glass design system",
   description:
-    "Open soft-glass design system for Next.js. Four visual languages, atomic tokens, shadcn-style ownership.",
+    "Open soft-glass design system for Next.js. Six visual languages (3 light · 3 dark), atomic tokens, shadcn-style ownership.",
 };
 
 export default function RootLayout({

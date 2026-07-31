@@ -5,7 +5,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 ## What Softglass is
 
 - Soft-glass **UI kit** for Next.js (tokens + React atoms/molecules)
-- Four visual languages + brand accent overrides
+- Six visual languages (3 light · 3 dark) + brand accent overrides
 - Copy-friendly / open MIT — not a locked black-box theme
 
 ## What Softglass is **not**

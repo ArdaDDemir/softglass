@@ -15,7 +15,7 @@ Softglass is designed to be **open to everyone**, in the same spirit as [shadcn/
 ### Phase 0 — Foundation
 
 - Token package (`packages/tokens`)
-- Four languages
+- Six languages (3 light · 3 dark)
 - Playground app
 - Registry sketch
 

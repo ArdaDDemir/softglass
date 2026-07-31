@@ -1,0 +1,68 @@
+/**
+ * Language 6 — Ember Dusk
+ * Warm charcoal glass, amber accent — cozy night dashboards.
+ * Dark family (with Obsidian + Noir).
+ */
+[data-softglass-theme="ember"] {
+  color-scheme: dark;
+
+  --sg-bg: #0c0907;
+  --sg-bg-image: radial-gradient(
+      920px 500px at 18% -5%,
+      rgba(251, 146, 60, 0.16),
+      transparent 55%
+    ),
+    radial-gradient(
+      760px 440px at 95% 25%,
+      rgba(239, 68, 68, 0.1),
+      transparent 50%
+    ),
+    radial-gradient(
+      680px 400px at 40% 100%,
+      rgba(234, 179, 8, 0.08),
+      transparent 55%
+    ),
+    linear-gradient(170deg, #0c0907 0%, #14100c 45%, #0f0c09 100%);
+
+  --sg-fg: #f5efe8;
+  --sg-fg-muted: #b5a89a;
+  --sg-fg-subtle: #7d7268;
+
+  --sg-surface-solid: rgba(28, 22, 18, 0.94);
+  --sg-surface-glass: rgba(255, 240, 220, 0.05);
+  --sg-surface-glass-elevated: rgba(255, 240, 220, 0.09);
+  --sg-surface-frost: rgba(28, 22, 18, 0.92);
+  --sg-surface-frost-strong: rgba(18, 14, 12, 0.97);
+  --sg-border-frost: rgba(251, 191, 36, 0.16);
+
+  --sg-border-subtle: rgba(255, 237, 213, 0.1);
+  --sg-border-glass: rgba(255, 237, 213, 0.12);
+
+  --sg-accent: #f59e0b;
+  --sg-accent-hover: #fbbf24;
+  --sg-accent-fg: #1c1002;
+  --sg-accent-soft: rgba(245, 158, 11, 0.16);
+
+  --sg-ring: #fb923c;
+  --sg-ring-soft: rgba(251, 146, 60, 0.3);
+
+  --sg-gloss-highlight: rgba(255, 248, 235, 0.12);
+
+  --sg-shadow-soft: 0 10px 32px rgba(0, 0, 0, 0.42);
+  --sg-shadow-glass: 0 14px 44px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 237, 213, 0.08);
+  --sg-shadow-elevated: 0 24px 64px rgba(0, 0, 0, 0.52),
+    0 0 0 1px rgba(255, 237, 213, 0.04),
+    inset 0 1px 0 rgba(255, 237, 213, 0.1);
+  --sg-shadow-toast: 0 4px 18px rgba(0, 0, 0, 0.48),
+    0 1px 3px rgba(0, 0, 0, 0.32);
+
+  --sg-glass-blur: 18px;
+  --sg-glass-blur-mobile: 11px;
+  --sg-glass-saturate: 1.4;
+  --sg-blob-opacity: 0.6;
+
+  --sg-success: #4ade80;
+  --sg-warning: #fbbf24;
+  --sg-danger: #f87171;
+}

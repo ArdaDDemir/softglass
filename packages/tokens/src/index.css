@@ -3,7 +3,8 @@
  * Import once in your app root.
  * Set language with: <html data-softglass-theme="aurora">
  *
- * Languages: aurora | obsidian | mist | pearl
+ * Languages: aurora | obsidian | mist | pearl | noir | ember
+ * Dark family: obsidian · noir · ember
  */
 
 @import "./base.css";
@@ -11,5 +12,7 @@
 @import "./themes/obsidian.css";
 @import "./themes/mist.css";
 @import "./themes/pearl.css";
+@import "./themes/noir.css";
+@import "./themes/ember.css";
 @import "./looks-and-motion.css";
 @import "./motion-recipes.css";

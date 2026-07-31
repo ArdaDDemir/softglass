@@ -57,4 +57,41 @@ describe("CommandPalette (smoke)", () => {
     await user.keyboard("{Escape}");
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
+
+  it("keyboard index matches render order with mixed groups", async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const onOpenChange = vi.fn();
+
+    // Ungrouped is rendered first by groupItems; source array has it last.
+    const mixed = [
+      { id: "home", label: "Go home", group: "Nav" },
+      { id: "help", label: "Help docs", group: "Nav" },
+      { id: "ungrouped", label: "Quick action" },
+    ];
+
+    render(
+      <CommandPalette
+        open
+        onOpenChange={onOpenChange}
+        items={mixed}
+        onSelect={onSelect}
+        motion="none"
+      />,
+    );
+
+    // First option in DOM order is ungrouped "Quick action"
+    const options = screen.getAllByRole("option");
+    expect(options[0]).toHaveTextContent("Quick action");
+    expect(options[0]).toHaveAttribute("data-active", "true");
+
+    // One ArrowDown → second visual row (Go home), not raw filtered[1]
+    await user.keyboard("{ArrowDown}");
+    expect(options[1]).toHaveAttribute("data-active", "true");
+
+    await user.keyboard("{Enter}");
+    expect(onSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "home" }),
+    );
+  });
 });

@@ -1,0 +1,68 @@
+/**
+ * Language 5 — Noir Velvet
+ * Deep black glass, rose accent — cinema / fashion night UI.
+ * Dark family (with Obsidian + Ember).
+ */
+[data-softglass-theme="noir"] {
+  color-scheme: dark;
+
+  --sg-bg: #050508;
+  --sg-bg-image: radial-gradient(
+      900px 480px at 12% 0%,
+      rgba(244, 63, 94, 0.14),
+      transparent 55%
+    ),
+    radial-gradient(
+      780px 460px at 92% 18%,
+      rgba(168, 85, 247, 0.12),
+      transparent 52%
+    ),
+    radial-gradient(
+      640px 400px at 50% 100%,
+      rgba(255, 255, 255, 0.04),
+      transparent 55%
+    ),
+    linear-gradient(168deg, #050508 0%, #0c0a10 48%, #08060c 100%);
+
+  --sg-fg: #f4f0f5;
+  --sg-fg-muted: #a39eab;
+  --sg-fg-subtle: #6f6a76;
+
+  --sg-surface-solid: rgba(18, 14, 22, 0.94);
+  --sg-surface-glass: rgba(255, 255, 255, 0.05);
+  --sg-surface-glass-elevated: rgba(255, 255, 255, 0.09);
+  --sg-surface-frost: rgba(18, 14, 22, 0.92);
+  --sg-surface-frost-strong: rgba(12, 10, 16, 0.97);
+  --sg-border-frost: rgba(244, 200, 220, 0.14);
+
+  --sg-border-subtle: rgba(255, 255, 255, 0.08);
+  --sg-border-glass: rgba(255, 255, 255, 0.12);
+
+  --sg-accent: #fb7185;
+  --sg-accent-hover: #fda4af;
+  --sg-accent-fg: #1f0510;
+  --sg-accent-soft: rgba(251, 113, 133, 0.16);
+
+  --sg-ring: #f472b6;
+  --sg-ring-soft: rgba(244, 114, 182, 0.28);
+
+  --sg-gloss-highlight: rgba(255, 255, 255, 0.12);
+
+  --sg-shadow-soft: 0 10px 32px rgba(0, 0, 0, 0.45);
+  --sg-shadow-glass: 0 14px 44px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --sg-shadow-elevated: 0 24px 64px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  --sg-shadow-toast: 0 4px 18px rgba(0, 0, 0, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.35);
+
+  --sg-glass-blur: 20px;
+  --sg-glass-blur-mobile: 12px;
+  --sg-glass-saturate: 1.45;
+  --sg-blob-opacity: 0.55;
+
+  --sg-success: #4ade80;
+  --sg-warning: #fbbf24;
+  --sg-danger: #fb7185;
+}
