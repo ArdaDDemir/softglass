@@ -19,9 +19,14 @@
     "pack:check": "npm run pack:check -w @softglass/tokens && npm run pack:check -w @softglass/ui",
     "registry:generate": "node ./scripts/generate-registry.mjs",
     "registry:validate": "npm run registry:generate && npx --yes shadcn@latest registry validate ./registry.json",
-    "registry:build": "npm run registry:generate && npx --yes shadcn@latest build ./registry.json -o apps/web/public/r"
+    "registry:build": "npm run registry:generate && npx --yes shadcn@latest build ./registry.json -o apps/web/public/r",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1"
   }
 }

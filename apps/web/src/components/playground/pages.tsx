@@ -108,15 +108,15 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
       <Card surface="glass" as="section" hoverable>
         <CardHeader>
           <Badge variant="solid" size="sm">
-            open design system
+            open design system · v1.8
           </Badge>
           <CardTitle className="sg-gallery-hero-title">
             Soft glass UI. You own the code.
           </CardTitle>
           <CardDescription className="sg-gallery-hero-desc">
             Softglass is a kit of tokens + React components for Next.js. Six
-            languages (three dark), recolor the brand, compose product screens —
-            MIT, shadcn-style ownership.
+            languages, live Theme Builder, product App shell, and a Component
+            Studio for every export — MIT, shadcn-style ownership.
           </CardDescription>
         </CardHeader>
         <CardFooter className="sg-gallery-chip-row">
@@ -148,26 +148,51 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
         ))}
       </div>
 
-      <Card surface="solid" as="section" className="sg-welcome-theme-cta">
-        <CardHeader>
-          <Badge size="sm" variant="accent" look="soft">
-            new · 1.8
-          </Badge>
-          <CardTitle>Theme Builder</CardTitle>
-          <CardDescription>
-            Language is the Softglass dialect. Brand is your accent. Recolor live,
-            preview components, copy the CSS override — no Storybook, no SaaS.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="sg-gallery-chip-row">
-          <Button variant="primary" onClick={() => onGo("theme")}>
-            Open Theme Builder
-          </Button>
-          <Button variant="secondary" size="sm" onClick={() => onGo("languages")}>
-            Pick a language first
-          </Button>
-        </CardFooter>
-      </Card>
+      <div className="sg-welcome-feature-grid">
+        <Card surface="solid" as="section" className="sg-welcome-theme-cta">
+          <CardHeader>
+            <Badge size="sm" variant="accent" look="soft">
+              brand
+            </Badge>
+            <CardTitle>Theme Builder</CardTitle>
+            <CardDescription>
+              Language is the dialect. Brand is your accent. Recolor live, copy
+              CSS, or share a{" "}
+              <code style={{ fontSize: "0.9em" }}>#theme?…</code> link.
+            </CardDescription>
+          </CardHeader>
+          <CardFooter className="sg-gallery-chip-row">
+            <Button variant="primary" size="sm" onClick={() => onGo("theme")}>
+              Open Theme Builder
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <Card surface="solid" as="section">
+          <CardHeader>
+            <Badge size="sm" variant="solid" look="soft">
+              product
+            </Badge>
+            <CardTitle>App shell</CardTitle>
+            <CardDescription>
+              Mini inventory product: AppShell · DataTable · settings · command
+              palette — one working screen, not loose demos.
+            </CardDescription>
+          </CardHeader>
+          <CardFooter className="sg-gallery-chip-row">
+            <Button variant="primary" size="sm" onClick={() => onGo("app")}>
+              Open App
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => onGo("library")}
+            >
+              Component Studio
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
 
       <Card surface="solid" as="section">
         <CardHeader>
@@ -201,8 +226,8 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
       </Card>
 
       <Alert variant="info" title="Not a Storybook farm">
-        This is a product-facing tour of Softglass — real components, one page at
-        a time, so the kit stays fast on phones.
+        Product-facing Softglass tour — real components, one page at a time,
+        phone-friendly. Install from npm when you are ready to ship.
       </Alert>
     </div>
   );

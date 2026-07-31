@@ -314,7 +314,23 @@ body {
   align-items: center;
 }
 
-/* Welcome → Theme Builder CTA */
+/* Welcome feature cards */
+.sg-welcome-feature-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 720px) {
+  .sg-welcome-feature-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.sg-welcome-feature-grid > * {
+  min-width: 0;
+}
+
 .sg-welcome-theme-cta {
   border-color: color-mix(in srgb, var(--sg-accent) 28%, var(--sg-border-frost));
   box-shadow:

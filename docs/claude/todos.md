@@ -1,9 +1,8 @@
 # Softglass — TODO
 
-> **v1.0–v1.8.0:** shipped (npm + tag) · plan: [v1.8-plan.md](./v1.8-plan.md)  
-> Arşiv: [v1.7-plan.md](./v1.7-plan.md) · [v1.6-plan.md](./v1.6-plan.md)  
-> **Hesap:** gh **ArdaDDemir** · npm **ardaddemir** · work/Feedemy **YASAK**.  
-> **Kural:** Aynı anda tek sprint · otomatik push yok.
+> **v1.0–v1.8.0:** shipped · **Sıradaki:** visual + marketing (1.9 prep)  
+> Plan arşiv: [v1.8-plan.md](./v1.8-plan.md) · [v1.7-plan.md](./v1.7-plan.md)  
+> **Hesap:** gh **ArdaDDemir** · npm **ardaddemir** · work/Feedemy **YASAK**.
 
 ---
 
@@ -11,52 +10,35 @@
 
 | Sürüm | Durum |
 |-------|--------|
-| 1.0.0 – 1.8.0 | **shipped** (npm + tag) |
-| 1.9+ | Marketing polish / visual / token JSON |
+| 1.0.0 – 1.8.0 | **shipped** |
+| **1.9 prep** | share URL done · visual regression · marketing polish |
 
-**Repo:** https://github.com/ArdaDDemir/softglass  
-**npm:** `@softglass/tokens@1.8.0` · `@softglass/ui@1.8.0`  
-**Tag:** `v1.8.0`
+**npm:** `@softglass/tokens@1.8.0` · `@softglass/ui@1.8.0` · tag `v1.8.0`
 
 ---
 
-## v1.7 — bitti
+## Done recently
 
-- [x] DataTable + virtualization + Studio + App recipe  
-- [x] 1.7.0 publish + tag + PR #9 → main  
-
----
-
-## v1.8 — Theme Builder — bitti
-
-- [x] `#theme` brand lab · export CSS · Apply / Reset · draft  
-- [x] Welcome CTA  
-- [x] `#app` mini product shell (inventory · settings · palette)  
-- [x] Layout polish (brand colors fit)  
-- [x] 1.8.0 publish + tag + PR → main  
-
-### Optional leftover
-
-- [x] Shareable hash/query for brand draft (`#theme?lang=…&a=…` + Copy share link)
+- [x] Theme share URL (`#theme?…`) — PR #12  
+- [x] Visual regression (Playwright gallery snapshots + CI)  
+- [x] Marketing polish (Welcome cards · README gallery · GETTING-STARTED)  
 
 ---
 
-## v1.9+ backlog
+## v1.9+ backlog (kalan)
 
-- [ ] Docs marketing site polish  
-- [ ] Visual regression  
 - [ ] Token JSON / Figma bridge  
 - [ ] i18n / RTL  
 - [ ] Full calendar / TimePicker suite  
 - [ ] DatePicker Calendar extract  
+- [ ] (optional) expand visual baselines / mobile project  
 
 ---
 
 ## Yeni session
 
 ```text
-Softglass v1.8.0 shipped — Theme Builder + App shell
-npm @softglass/tokens@1.8.0 · @softglass/ui@1.8.0 · tag v1.8.0
-Next: 1.9+ backlog
+Softglass — after 1.9 visual+marketing
+Next: calendar/TimePicker or token JSON
 work hesabına push yok
 ```

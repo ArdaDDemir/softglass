@@ -62,6 +62,22 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 - [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
 - Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.8.0`
 
+### Softglass Gallery (local tour)
+
+```bash
+npm run dev
+# open http://localhost:3000
+```
+
+| Hash | What you get |
+| --- | --- |
+| `#welcome` | Pitch + shortcuts |
+| `#install` | Consumer install steps |
+| `#languages` | Six dialects |
+| `#theme` | **Theme Builder** — brand lab · share URL · copy CSS |
+| `#app` | Mini product shell · DataTable inventory |
+| `#library` / `#library/button` | Component Studio (every export) |
+
 ### Brand override (colors only)
 
 ```css
@@ -70,6 +86,8 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
   --sg-accent-hover: #0284c7;
 }
 ```
+
+Or use the gallery **Theme Builder** and paste the exported CSS.
 
 ## Why Softglass exists
 
