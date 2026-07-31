@@ -2,7 +2,7 @@
 
 Three steps to use Softglass in a **Next.js App Router** app.
 
-> Published packages: `@softglass/tokens` + `@softglass/ui` (current **1.4.0**).  
+> Published packages: `@softglass/tokens` + `@softglass/ui` (current **1.8.0**).  
 > Local monorepo: `npm run build:ui` then `npm run dev`. Dry-run tarballs: `npm run pack:check`.
 
 ---
@@ -13,15 +13,25 @@ Three steps to use Softglass in a **Next.js App Router** app.
 npm install @softglass/tokens @softglass/ui
 ```
 
-Peer deps: `react` and `react-dom` ≥ 18. UI also peers `@softglass/tokens` **^1.4.0** (import styles from tokens).
+Peer deps: `react` and `react-dom` ≥ 18. UI also peers `@softglass/tokens` **^1.8.0** (import styles from tokens).
 
 ### Local monorepo (this repo)
 
 ```bash
 npm install
 npm run build:ui   # builds packages/ui → dist
-npm run dev        # playground at http://localhost:3000
+npm run dev        # Softglass Gallery at http://localhost:3000
 ```
+
+Gallery highlights:
+
+| Hash | Page |
+| --- | --- |
+| `#theme` | Theme Builder (brand lab + share URL) |
+| `#app` | Mini product shell + DataTable |
+| `#library/button` | Component Studio |
+
+Visual regression (after build): `npm run test:visual` · update baselines: `npm run test:visual:update`
 
 ### Local tarball dry-run (before npm publish)
 
@@ -54,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-Languages: `aurora` | `obsidian` | `mist` | `pearl`
+Languages: `aurora` | `mist` | `pearl` | `obsidian` | `noir` | `ember`
 
 ### Brand colors only
 

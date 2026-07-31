@@ -32,5 +32,11 @@ next-env.d.ts
 # local QA / scratch
 .tmp-shots
 
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 # registry generated (optional later)
 # registry/dist

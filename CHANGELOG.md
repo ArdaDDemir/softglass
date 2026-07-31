@@ -10,6 +10,9 @@ Versioning follows [SemVer](https://semver.org/).
 ### Added
 
 - Theme Builder **shareable URL**: `#theme?lang=aurora&a=7c3aed&…` + **Copy share link**
+- **Visual regression** — Playwright gallery screenshots (`npm run test:visual`) + CI step
+- Gallery **Welcome** feature cards (Theme Builder + App shell) · README gallery map
+- GETTING-STARTED refresh for v1.8 languages + gallery hashes
 
 ## [1.8.0] — 2026-07-31
 
