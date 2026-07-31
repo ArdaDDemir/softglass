@@ -87,8 +87,8 @@ export const GALLERY_PAGES: GalleryPage[] = [
     id: "library",
     label: "Library",
     title: "Component library",
-    summary: "Every documented export — search and page through the API.",
-    takeaway: "Where to look when you need a prop list.",
+    summary: "Every documented export — open a card for live Component Studio.",
+    takeaway: "Click a component for controls, showcases, and prop docs (#library/id).",
   },
 ];
 
