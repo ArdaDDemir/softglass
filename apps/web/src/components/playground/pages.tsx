@@ -1,6 +1,11 @@
 "use client";
 
 import { OverlayDemo } from "@/components/overlay-demo";
+import { ComponentStudio } from "@/components/playground/library/ComponentStudio";
+import {
+  getPlayground,
+  hasPlayground,
+} from "@/components/playground/library/manifest";
 import { COMPONENT_DOCS } from "@/lib/docs";
 import {
   applySoftglassTheme,
@@ -50,9 +55,13 @@ import { useEffect, useMemo, useState } from "react";
 export function GalleryPageBody({
   pageId,
   onGo,
+  studioId = null,
+  onStudioId,
 }: {
   pageId: GalleryPageId;
   onGo: (id: GalleryPageId) => void;
+  studioId?: string | null;
+  onStudioId?: (id: string | null) => void;
 }) {
   switch (pageId) {
     case "welcome":
@@ -72,7 +81,9 @@ export function GalleryPageBody({
     case "app":
       return <AppPage />;
     case "library":
-      return <LibraryPage />;
+      return (
+        <LibraryPage studioId={studioId} onStudioId={onStudioId ?? (() => {})} />
+      );
     default:
       return null;
   }
@@ -754,10 +765,24 @@ function AppPage() {
   );
 }
 
-function LibraryPage() {
+function LibraryPage({
+  studioId,
+  onStudioId,
+}: {
+  studioId: string | null;
+  onStudioId: (id: string | null) => void;
+}) {
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
   const pageSize = 8;
+
+  const activeDoc = useMemo(
+    () =>
+      studioId
+        ? COMPONENT_DOCS.find((d) => d.id === studioId) ?? null
+        : null,
+    [studioId],
+  );
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -766,9 +791,36 @@ function LibraryPage() {
       (d) =>
         d.name.toLowerCase().includes(needle) ||
         d.summary.toLowerCase().includes(needle) ||
-        d.layer.includes(needle),
+        d.layer.includes(needle) ||
+        d.id.includes(needle),
     );
   }, [q]);
+
+  if (studioId) {
+    if (!activeDoc) {
+      return (
+        <div className="sg-gallery-stack">
+          <EmptyState
+            title="Unknown component"
+            description={`No docs entry for “${studioId}”.`}
+            actions={
+              <Button size="sm" variant="secondary" onClick={() => onStudioId(null)}>
+                ← Library
+              </Button>
+            }
+          />
+        </div>
+      );
+    }
+    return (
+      <ComponentStudio
+        key={studioId}
+        doc={activeDoc}
+        playground={getPlayground(studioId)}
+        onBack={() => onStudioId(null)}
+      />
+    );
+  }
 
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
   const safePage = Math.min(page, pageCount);
@@ -787,28 +839,43 @@ function LibraryPage() {
       />
       <Text size="sm" tone="muted">
         {filtered.length} match{filtered.length === 1 ? "" : "es"} · page{" "}
-        {safePage} of {pageCount}
+        {safePage} of {pageCount} · open a card for Component Studio
       </Text>
 
       <div className="sg-gallery-lib-grid">
-        {slice.map((doc) => (
-          <Card key={doc.id} surface="solid" as="article" padding="sm">
-            <CardHeader>
-              <div className="sg-gallery-chip-row">
-                <Badge size="sm" variant="default">
-                  {doc.layer}
-                </Badge>
-              </div>
-              <CardTitle style={{ fontSize: "var(--sg-text-lg)" }}>
-                {doc.name}
-              </CardTitle>
-              <CardDescription>{doc.summary}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <code className="sg-gallery-import">{doc.importLine}</code>
-            </CardContent>
-          </Card>
-        ))}
+        {slice.map((doc) => {
+          const live = hasPlayground(doc.id);
+          return (
+            <button
+              key={doc.id}
+              type="button"
+              className="sg-gallery-lib-card"
+              onClick={() => onStudioId(doc.id)}
+            >
+              <Card surface="solid" as="article" padding="sm">
+                <CardHeader>
+                  <div className="sg-gallery-chip-row">
+                    <Badge size="sm" variant="default">
+                      {doc.layer}
+                    </Badge>
+                    {live ? (
+                      <Badge size="sm" variant="solid">
+                        studio
+                      </Badge>
+                    ) : null}
+                  </div>
+                  <CardTitle style={{ fontSize: "var(--sg-text-lg)" }}>
+                    {doc.name}
+                  </CardTitle>
+                  <CardDescription>{doc.summary}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <code className="sg-gallery-import">{doc.importLine}</code>
+                </CardContent>
+              </Card>
+            </button>
+          );
+        })}
       </div>
 
       {filtered.length === 0 ? (

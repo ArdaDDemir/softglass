@@ -7,6 +7,14 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added (gallery — Component Studio)
+
+- **Component Studio** inside Softglass Gallery Library (`#library/<id>`)
+- Shared **ComponentStudio** chrome: back · live stage · controls · showcase strips · docs prop table
+- Hash routing: `#library` list · `#library/button` (etc.) detail; `hashchange` supported
+- Live playgrounds for **all 56** `COMPONENT_DOCS` exports (atoms, fields, molecules, overlays, shell)
+- Web-only — no `@softglass/ui` / tokens API change; npm publish not required for this work
+
 ## [1.5.0] — 2026-07-31
 
 Minor release: **organism shell, product patterns, date range, six languages, Softglass Gallery.**
