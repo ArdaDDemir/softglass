@@ -1,7 +1,8 @@
 # Softglass — TODO
 
-> **v1.0–v1.5.0:** shipped (npm + tag) · **Sıradaki:** 1.6 Component Studio ship  
-> Plan: [v1.6-plan.md](./v1.6-plan.md) · arşiv: [v1.5-plan.md](./v1.5-plan.md)  
+> **v1.0–v1.5.0:** shipped (npm + tag) · **1.6:** Component Studio on main (web-only)  
+> **Sıradaki:** 1.7 DataTable — plan: [v1.7-plan.md](./v1.7-plan.md)  
+> Arşiv: [v1.6-plan.md](./v1.6-plan.md) · [v1.5-plan.md](./v1.5-plan.md)  
 > **Hesap:** gh **ArdaDDemir** · npm **ardaddemir** · work/Feedemy **YASAK**.  
 > **Kural:** Aynı anda tek sprint · otomatik push yok.
 
@@ -12,8 +13,9 @@
 | Sürüm | Durum |
 |-------|--------|
 | 1.0.0 – 1.5.0 | **shipped** (npm + tag) |
-| **1.6.0** | Component Studio — 56 playgrounds (branch `feat/v1.6-0-component-studio`) |
-| 1.7+ | DataTable / theme builder / marketing site |
+| **1.6.0** | Component Studio — 56 playgrounds on **main** (web-only) |
+| **1.7** | DataTable — branch `feat/v1.7-datatable` · **1.7-0 + 1.7a + 1.7b done** · next **1.7c optional / ship** |
+| 1.8+ | Theme builder / marketing / Storybook |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
 **npm:** `@softglass/tokens@1.5.0` · `@softglass/ui@1.5.0`  
@@ -30,42 +32,69 @@
 
 ---
 
-## v1.6 — Component Studio (Library)
-
-> Library listesi tık → **her component’e custom sayfa**: live controls + tüm seçenek strip’leri + prop table.
-
-### 1.6-0 — Shell + Button proof
+## v1.6 — Component Studio (Library) — bitti (main)
 
 - [x] Hash `#library` / `#library/<id>`  
-- [x] `ComponentStudio` chrome (geri, stage, controls, docs)  
-- [x] **Button** full matrix (variant · size · look · motion · loading · fullWidth · iconOnly)  
-- [x] Library kartı tıklanınca detay  
-
-### 1.6a–d — Full coverage (docs.ts 56)
-
-- [x] Core atoms + display (Badge, Avatar, Alert, Spinner, …)  
-- [x] Form pickers (Input, Select, Combobox, DatePicker, Slider, …)  
-- [x] Molecules (Card, Tabs, Accordion, Pagination, …)  
-- [x] Overlays (Modal, Sheet, menus, Toast, Tooltip, …)  
-- [x] App shell (AppShell, PageHeader, SettingsSection, CommandPalette)  
-- [x] Coverage = all `COMPONENT_DOCS.id`  
-
-### 1.6 YAPMA
-
-- Storybook farm, DataTable, Theme builder SaaS, auto prop codegen  
-
-### 1.6.0 ship
-
-- [x] Must sayfalar (56)  
-- [ ] Manual mobile pass in browser  
+- [x] ComponentStudio chrome  
+- [x] 56 playgrounds = all `COMPONENT_DOCS.id`  
 - [x] CHANGELOG Unreleased  
-- [ ] PR merge → main (web-only; no npm unless packages change)  
+- [x] PR #8 merge → main  
+- [ ] Manual mobile pass in browser *(nice)*  
 
 ---
 
-## v1.7+ backlog
+## v1.7 — DataTable (+ virtualization)
 
-- [ ] DataTable / virtualization  
+> Ürün listeleri: sort · selection · sticky header · density · loading/empty · Softglass looks.  
+> Virtualization: planda karar 1.7-0 · ship **1.7b**.
+
+### 1.7-0 — Plan + skeleton + Studio *(done)*
+
+- [x] Plan + todos  
+- [x] `DataTable` + `Table*` compounds  
+- [x] Tokens CSS  
+- [x] Studio `#library/datatable`  
+- [x] Tests: sort · select · empty · loading  
+- [x] Registry `data-table`  
+
+### 1.7a — Polish *(done)*
+
+- [x] `Checkbox.indeterminate`  
+- [x] Select-all mixed state  
+- [x] `getRowLabel`  
+- [x] Sort `aria-label`  
+- [x] Skeleton density  
+- [x] Docs (API / LIMITATIONS / CHANGELOG)  
+
+### 1.7b — Virtualization *(done)*
+
+- [x] `virtualized` API + implementation  
+- [x] 1k-row Studio showcase  
+- [x] Sticky + selection regression  
+
+### 1.7c — Gallery App (optional)
+
+- [ ] Product list recipe demo (PageHeader + DataTable + Pagination)  
+
+### 1.7 YAPMA
+
+- Storybook, theme builder, marketing site  
+- Excel-grid (edit cell, pivot, freeze N)  
+- work hesabı push  
+
+### 1.7.0 ship
+
+- [ ] version bump `@softglass/ui` (+ tokens if CSS) → **1.7.0**  
+- [ ] CHANGELOG `[1.7.0]`  
+- [ ] registry build  
+- [ ] npm publish **ardaddemir** only  
+- [ ] tag `v1.7.0`  
+- [ ] PR merge → main  
+
+---
+
+## v1.8+ backlog
+
 - [ ] Theme builder  
 - [ ] Docs marketing site / Storybook  
 - [ ] Visual regression  
@@ -79,9 +108,10 @@
 ## Yeni session
 
 ```text
-Softglass v1.6 Component Studio — 56 playgrounds
-Branch: feat/v1.6-0-component-studio
-#library/button
-web-only; npm yok unless UI touch
+Softglass v1.7 DataTable — 1.7b virtualized done
+Branch: feat/v1.7-datatable (WIP uncommitted until commit)
+#library/datatable · virtualized + 1k showcase
+Next: 1.7c optional Gallery App demo OR 1.7.0 ship
+UI API → 1.7.0 version bump on ship; no auto publish
 work hesabına push yok
 ```

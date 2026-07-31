@@ -40,6 +40,8 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Stepper** | steps[] + active index; optional interactive jump | Full wizard router / async step validation |
 | **Toolbar** | Composition shell (flex + looks) | Dense data-grid toolbar presets |
 | **List** | ListItem host; density / dividers | Virtualization / infinite scroll |
+| **DataTable** | Sort, selection (incl. select-all + indeterminate), sticky header, density, looks, empty/loading, native `virtualized` windowing | Variable row height; cell edit; column resize; click-row-to-select |
+| **Checkbox** | Looks + motion; `indeterminate` | Form library adapters |
 | **Stat** | label / value / hint / trend chip | Charts / sparklines |
 | **AppShell** | Desktop collapsible rail + mobile left **Sheet** (same sidebar slot); context buttons | Nested app router; multi-level sidebar tree; resizable drag rail |
 | **PageHeader** | title / description / breadcrumbs / actions / looks | Sticky pin helper; tabs-in-header composite |

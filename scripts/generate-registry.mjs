@@ -310,6 +310,13 @@ const registry = {
       { deps: ["list-item"] },
     ),
     ui(
+      "data-table",
+      "Data Table",
+      "Product-list table — sort, selection, sticky header, density, looks.",
+      "packages/ui/src/molecules/data-table.tsx",
+      { deps: ["checkbox", "empty-state"] },
+    ),
+    ui(
       "stat",
       "Stat",
       "Metric tile — label / value / hint / trend.",

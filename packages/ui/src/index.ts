@@ -13,6 +13,7 @@ export type {
   ChipLook,
   CloseButtonLook,
   FileFieldLook,
+  DataTableLook,
   ListLook,
   NumberInputLook,
   PaginationLook,
@@ -222,6 +223,31 @@ export type {
 
 export { List } from "./molecules/list";
 export type { ListDensity, ListProps } from "./molecules/list";
+
+export {
+  DataTable,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./molecules/data-table";
+export type {
+  DataTableColumn,
+  DataTableColumnAlign,
+  DataTableDensity,
+  DataTableProps,
+  DataTableSelectionMode,
+  DataTableSortDirection,
+  DataTableSortState,
+  TableBodyProps,
+  TableCellProps,
+  TableHeadProps,
+  TableHeaderProps,
+  TableProps,
+  TableRowProps,
+} from "./molecules/data-table";
 
 export { Stat } from "./molecules/stat";
 export type { StatProps, StatTrend } from "./molecules/stat";

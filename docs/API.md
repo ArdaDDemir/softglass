@@ -47,6 +47,7 @@ Most components accept a **`look`** prop — visual language independent of sema
 | Stepper | `soft` `solid` `outline` `dots` `pills` |
 | Toolbar | `soft` `solid` `glass` `ghost` `accent` |
 | List | `soft` `solid` `outline` `ghost` `inset` |
+| DataTable | `soft` `solid` `glass` `outline` `ghost` |
 | Stat | `solid` `soft` `glass` `outline` `accent` |
 | Avatar | `circle` `rounded` `soft` |
 | Tooltip | `frost` `solid` `accent` |
@@ -142,9 +143,10 @@ See the live **Docs** tab in the playground for prop tables.
 | `Stepper` | `steps[]` `activeStep` `orientation` `interactive` `look` |
 | `Toolbar` | `look` `align` + `ToolbarGroup` / `ToolbarSpacer` |
 | `List` | `look` `density` `dividers` `as` (hosts ListItem) |
+| `DataTable` | `data` `columns` `look` `density` `stickyHeader` `loading` `empty*` `selectionMode` `selectedIds` `getRowLabel` `sort` `clientSort` `virtualized` `maxHeight` `estimateRowHeight` `overscan` + `Table*` |
 | `Stat` | `label` `value` `hint` `trend` `trendLabel` `look` |
 | `Avatar` | `src` `fallback` `size` |
-| `Checkbox` | `checked` `onCheckedChange` `label` `hint` |
+| `Checkbox` | `checked` `onCheckedChange` `indeterminate` `label` `hint` `look` `motion` |
 | `Radio` / `RadioGroup` | `value` `onValueChange` `name` + child `value` |
 | `Textarea` | `label` `hint` `error` `size` `autoSize` |
 | `Tooltip` | `content` `placement` `delayMs` `children` |

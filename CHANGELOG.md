@@ -7,6 +7,17 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added (1.7 — DataTable, not published yet)
+
+- **`DataTable`** — sort, row selection (`none` / `single` / `multiple`), sticky header, density, looks, loading skeletons, empty state
+- Compounds: `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`
+- **`Checkbox` `indeterminate`** (select-all mixed state)
+- **`getRowLabel`** for selection accessibility
+- **`virtualized`** — native spacer windowing (`estimateRowHeight` · `maxHeight` · `overscan`); no extra deps
+- Studio: `#library/datatable` + 1k-row virtualized showcase
+- Tokens: `sg-data-table*` / `sg-table*` / spacer rows
+- Not yet: npm release (`1.7.0` when ready)
+
 ### Added (gallery — Component Studio)
 
 - **Component Studio** inside Softglass Gallery Library (`#library/<id>`)
