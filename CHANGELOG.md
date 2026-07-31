@@ -7,25 +7,41 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
-### Added (1.7 — DataTable, not published yet)
+## [1.7.0] — 2026-07-31
+
+Minor release: **DataTable** (sort · selection · virtualization), Component Studio gallery, product list recipe.
+
+**Ship:** npm `@softglass/tokens@1.7.0` + `@softglass/ui@1.7.0`, GitHub tag `v1.7.0`  
+**Accounts:** gh **ArdaDDemir** · npm **ardaddemir** only (not work/Feedemy).
+
+### Added (DataTable)
 
 - **`DataTable`** — sort, row selection (`none` / `single` / `multiple`), sticky header, density, looks, loading skeletons, empty state
 - Compounds: `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`
 - **`Checkbox` `indeterminate`** (select-all mixed state)
 - **`getRowLabel`** for selection accessibility
 - **`virtualized`** — native spacer windowing (`estimateRowHeight` · `maxHeight` · `overscan`); no extra deps
+- Tokens: `sg-data-table*` / `sg-table*` / spacer rows
 - Studio: `#library/datatable` + 1k-row virtualized showcase
 - Gallery **App** page: product list recipe (PageHeader + filter + DataTable + Pagination)
-- Tokens: `sg-data-table*` / `sg-table*` / spacer rows
-- Not yet: npm release (`1.7.0` when ready)
 
 ### Added (gallery — Component Studio)
 
 - **Component Studio** inside Softglass Gallery Library (`#library/<id>`)
 - Shared **ComponentStudio** chrome: back · live stage · controls · showcase strips · docs prop table
 - Hash routing: `#library` list · `#library/button` (etc.) detail; `hashchange` supported
-- Live playgrounds for **all 56** `COMPONENT_DOCS` exports (atoms, fields, molecules, overlays, shell)
-- Web-only — no `@softglass/ui` / tokens API change; npm publish not required for this work
+- Live playgrounds for **all** `COMPONENT_DOCS` exports (atoms, fields, molecules, overlays, shell, DataTable)
+
+### Docs / quality
+
+- API + LIMITATIONS for DataTable virtualization bounds
+- Registry entry `data-table`
+- `@softglass/ui` peer: `@softglass/tokens` **^1.7.0**
+
+### Deferred / not in 1.7.0
+
+- Variable row height virtualization; cell edit; column resize
+- Theme builder SaaS, Storybook farm, marketing site
 
 ## [1.5.0] — 2026-07-31
 

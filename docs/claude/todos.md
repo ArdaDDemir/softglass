@@ -1,7 +1,6 @@
 # Softglass — TODO
 
-> **v1.0–v1.5.0:** shipped (npm + tag) · **1.6:** Component Studio on main (web-only)  
-> **Sıradaki:** 1.7 DataTable — plan: [v1.7-plan.md](./v1.7-plan.md)  
+> **v1.0–v1.7.0:** shipped (npm + tag) · plan: [v1.7-plan.md](./v1.7-plan.md)  
 > Arşiv: [v1.6-plan.md](./v1.6-plan.md) · [v1.5-plan.md](./v1.5-plan.md)  
 > **Hesap:** gh **ArdaDDemir** · npm **ardaddemir** · work/Feedemy **YASAK**.  
 > **Kural:** Aynı anda tek sprint · otomatik push yok.
@@ -13,13 +12,13 @@
 | Sürüm | Durum |
 |-------|--------|
 | 1.0.0 – 1.5.0 | **shipped** (npm + tag) |
-| **1.6.0** | Component Studio — 56 playgrounds on **main** (web-only) |
-| **1.7** | DataTable — branch `feat/v1.7-datatable` · **1.7-0…1.7c done** · next **1.7.0 ship** |
+| **1.6** | Component Studio (gallery; shipped with 1.7.0 packages) |
+| **1.7.0** | DataTable + virtualization + Studio + App recipe — **shipped** |
 | 1.8+ | Theme builder / marketing / Storybook |
 
 **Repo:** https://github.com/ArdaDDemir/softglass  
-**npm:** `@softglass/tokens@1.5.0` · `@softglass/ui@1.5.0`  
-**Tag:** `v1.5.0`
+**npm:** `@softglass/tokens@1.7.0` · `@softglass/ui@1.7.0`  
+**Tag:** `v1.7.0`
 
 ---
 
@@ -84,12 +83,12 @@
 
 ### 1.7.0 ship
 
-- [ ] version bump `@softglass/ui` (+ tokens if CSS) → **1.7.0**  
-- [ ] CHANGELOG `[1.7.0]`  
-- [ ] registry build  
-- [ ] npm publish **ardaddemir** only  
-- [ ] tag `v1.7.0`  
-- [ ] PR merge → main  
+- [x] version bump `@softglass/ui` (+ tokens) → **1.7.0**  
+- [x] CHANGELOG `[1.7.0]`  
+- [x] registry build  
+- [x] npm publish **ardaddemir** only  
+- [x] tag `v1.7.0`  
+- [ ] PR merge → main *(open PR; merge when green)*  
 
 ---
 
@@ -108,9 +107,9 @@
 ## Yeni session
 
 ```text
-Softglass v1.7 DataTable — 1.7-0…1.7c done
-Branch: feat/v1.7-datatable
-#library/datatable · #app product list recipe
-Next: 1.7.0 ship (version bump + npm + tag) on onay
+Softglass v1.7.0 shipped — DataTable + Component Studio
+npm @softglass/tokens@1.7.0 · @softglass/ui@1.7.0 · tag v1.7.0
+Branch feat/v1.7-datatable → PR → main
+Next: 1.8+ backlog
 work hesabına push yok
 ```
