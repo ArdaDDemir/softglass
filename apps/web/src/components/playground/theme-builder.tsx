@@ -232,26 +232,129 @@ function saveDraft(brand: BrandColors) {
   }
 }
 
+function stripHash(color: string): string {
+  return color.trim().replace(/^#/, "");
+}
+
+function withHash(hex: string): string {
+  const bare = stripHash(hex);
+  return bare.startsWith("#") ? bare : `#${bare}`;
+}
+
+/** Encode brand + language into hash query: #theme?lang=aurora&a=7c3aed&… */
+export function buildThemeShareHash(
+  themeId: SoftglassThemeId,
+  brand: BrandColors,
+): string {
+  const p = new URLSearchParams();
+  p.set("lang", themeId);
+  p.set("a", stripHash(brand.accent));
+  p.set("h", stripHash(brand.accentHover));
+  p.set("fg", stripHash(brand.accentFg));
+  p.set("r", stripHash(brand.ring));
+  p.set("s", stripHash(brand.success));
+  p.set("w", stripHash(brand.warning));
+  p.set("d", stripHash(brand.danger));
+  return `#theme?${p.toString()}`;
+}
+
+export function parseThemeShareHash(rawHash: string): {
+  themeId: SoftglassThemeId | null;
+  brand: Partial<BrandColors> | null;
+} {
+  const hash = rawHash.replace(/^#/, "").trim();
+  if (!hash.startsWith("theme")) {
+    return { themeId: null, brand: null };
+  }
+  const qIndex = hash.indexOf("?");
+  if (qIndex < 0) return { themeId: null, brand: null };
+  const params = new URLSearchParams(hash.slice(qIndex + 1));
+  const lang = params.get("lang");
+  const themeId =
+    lang && SOFTGLASS_THEMES.some((t) => t.id === lang)
+      ? (lang as SoftglassThemeId)
+      : null;
+
+  const pick = (key: string): string | undefined => {
+    const v = params.get(key);
+    if (!v) return undefined;
+    // Accept 6-digit hex (with or without #)
+    if (/^#?[0-9a-fA-F]{6}$/.test(v)) return withHash(v);
+    return undefined;
+  };
+
+  const accent = pick("a");
+  const brand: Partial<BrandColors> = {};
+  if (accent) {
+    brand.accent = accent;
+    brand.accentSoft = softRgba(accent);
+  }
+  const hover = pick("h");
+  if (hover) brand.accentHover = hover;
+  const fg = pick("fg");
+  if (fg) brand.accentFg = fg;
+  const ring = pick("r");
+  if (ring) brand.ring = ring;
+  const success = pick("s");
+  if (success) brand.success = success;
+  const warning = pick("w");
+  if (warning) brand.warning = warning;
+  const danger = pick("d");
+  if (danger) brand.danger = danger;
+
+  const hasBrand = Object.keys(brand).length > 0;
+  return { themeId, brand: hasBrand ? brand : null };
+}
+
+function writeThemeShareHash(themeId: SoftglassThemeId, brand: BrandColors) {
+  if (typeof window === "undefined") return;
+  const next = buildThemeShareHash(themeId, brand);
+  if (window.location.hash === next) return;
+  window.history.replaceState(null, "", next);
+}
+
 /**
  * Softglass Theme Builder — brand lab (language + accent overrides).
- * Gallery page body for #theme.
+ * Gallery page body for #theme · share: #theme?lang=…&a=…
  */
 export function ThemeBuilderPage() {
   const [themeId, setThemeId] = useState<SoftglassThemeId>("aurora");
   const [brand, setBrand] = useState<BrandColors>(DEFAULT_BRAND);
   const [galleryApplied, setGalleryApplied] = useState(false);
   const [copyState, setCopyState] = useState<"idle" | "ok" | "err">("idle");
+  const [linkState, setLinkState] = useState<"idle" | "ok" | "err">("idle");
   const [hydrated, setHydrated] = useState(false);
 
-  // Hydrate from storage + current language defaults
+  // Hydrate: share URL → localStorage draft → document defaults
   useEffect(() => {
+    const shared = parseThemeShareHash(window.location.hash);
     const storedTheme = readStoredSoftglassTheme();
-    setThemeId(storedTheme);
-    const draft = loadDraft();
-    // Wait a frame so language CSS is applied, then sample defaults
+    const nextTheme = shared.themeId ?? storedTheme;
+    setThemeId(nextTheme);
+    if (shared.themeId) {
+      applySoftglassTheme(shared.themeId);
+    }
+
     requestAnimationFrame(() => {
       const fromDoc = readBrandFromDocument();
-      setBrand(draft ?? fromDoc);
+      const draft = loadDraft();
+      if (shared.brand) {
+        const accent = shared.brand.accent ?? fromDoc.accent;
+        setBrand({
+          ...fromDoc,
+          ...shared.brand,
+          accentHover:
+            shared.brand.accentHover ??
+            (shared.brand.accent ? darkenHex(shared.brand.accent) : fromDoc.accentHover),
+          accentSoft:
+            shared.brand.accentSoft ??
+            (shared.brand.accent ? softRgba(shared.brand.accent) : fromDoc.accentSoft),
+          ring: shared.brand.ring ?? shared.brand.accent ?? fromDoc.ring,
+          accent,
+        });
+      } else {
+        setBrand(draft ?? fromDoc);
+      }
       setHydrated(true);
     });
   }, []);
@@ -261,12 +364,13 @@ export function ThemeBuilderPage() {
       const id = (e as CustomEvent<SoftglassThemeId>).detail;
       if (!id) return;
       setThemeId(id);
-      // Sample language defaults after theme paint (keep draft accents optional)
       requestAnimationFrame(() => {
         if (!galleryApplied) {
           const next = readBrandFromDocument();
-          // Only replace if no localStorage draft — user may want to keep brand
           const draft = loadDraft();
+          // Shared URL brand wins over empty re-sample
+          const shared = parseThemeShareHash(window.location.hash);
+          if (shared.brand && shared.themeId === id) return;
           if (!draft) setBrand(next);
         }
       });
@@ -278,21 +382,18 @@ export function ThemeBuilderPage() {
   useEffect(() => {
     if (!hydrated) return;
     saveDraft(brand);
-  }, [brand, hydrated]);
-
-  // Clear document overrides when leaving the page if applied
-  useEffect(() => {
-    return () => {
-      // Keep applied brand if user chose Apply; only clear on explicit reset.
-      // No-op cleanup to avoid surprising flash when navigating.
-    };
-  }, []);
+    writeThemeShareHash(themeId, brand);
+  }, [brand, themeId, hydrated]);
 
   const exportCss = useMemo(
     () => brandToExportCss(themeId, brand),
     [brand, themeId],
   );
   const previewStyle = useMemo(() => brandToCssVars(brand), [brand]);
+  const shareUrl = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    return `${window.location.origin}${window.location.pathname}${buildThemeShareHash(themeId, brand)}`;
+  }, [brand, themeId]);
 
   const setField = useCallback(
     <K extends keyof BrandColors>(key: K, value: string) => {
@@ -313,7 +414,6 @@ export function ThemeBuilderPage() {
     setThemeId(id);
     applySoftglassTheme(id);
     requestAnimationFrame(() => {
-      // Resample language semantics; re-derive soft/hover from current accent
       const fromDoc = readBrandFromDocument();
       setBrand((prev) => ({
         ...fromDoc,
@@ -352,6 +452,21 @@ export function ThemeBuilderPage() {
     } catch {
       setCopyState("err");
       window.setTimeout(() => setCopyState("idle"), 2000);
+    }
+  }
+
+  async function copyShareLink() {
+    try {
+      const url =
+        typeof window !== "undefined"
+          ? `${window.location.origin}${window.location.pathname}${buildThemeShareHash(themeId, brand)}`
+          : shareUrl;
+      await navigator.clipboard.writeText(url);
+      setLinkState("ok");
+      window.setTimeout(() => setLinkState("idle"), 1600);
+    } catch {
+      setLinkState("err");
+      window.setTimeout(() => setLinkState("idle"), 2000);
     }
   }
 
@@ -455,6 +570,18 @@ export function ThemeBuilderPage() {
             <Button size="sm" variant="primary" onClick={applyToGallery}>
               Apply to gallery
             </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              look="soft"
+              onClick={() => void copyShareLink()}
+            >
+              {linkState === "ok"
+                ? "Link copied"
+                : linkState === "err"
+                  ? "Copy failed"
+                  : "Copy share link"}
+            </Button>
             {galleryApplied ? (
               <Badge size="sm" variant="success" look="soft">
                 applied
@@ -536,8 +663,20 @@ export function ThemeBuilderPage() {
                   ? "Copy failed"
                   : "Copy CSS"}
             </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => void copyShareLink()}
+            >
+              {linkState === "ok"
+                ? "Link copied"
+                : linkState === "err"
+                  ? "Copy failed"
+                  : "Copy share link"}
+            </Button>
             <Text size="sm" tone="muted">
-              Draft autosaves in this browser.
+              Draft autosaves · share via{" "}
+              <code style={{ fontSize: "0.85em" }}>#theme?lang=…&a=…</code>
             </Text>
           </div>
         </CardContent>

@@ -25,7 +25,9 @@ function parseHash(raw: string): HashState {
     return { pageId: "welcome", studioId: null };
   }
 
-  const [pagePart, ...rest] = hash.split("/");
+  // Support #theme?lang=…&a=… (query lives inside the hash for SPA share links)
+  const pathOnly = (hash.split("?")[0] ?? hash).trim();
+  const [pagePart, ...rest] = pathOnly.split("/");
   if (pagePart === "library") {
     const studioId = rest.length > 0 ? rest.join("/").trim() || null : null;
     return { pageId: "library", studioId };
@@ -39,16 +41,26 @@ function parseHash(raw: string): HashState {
 }
 
 function writeHash(pageId: GalleryPageId, studioId: string | null) {
-  const next =
-    pageId === "library" && studioId
-      ? `#library/${studioId}`
-      : `#${pageId}`;
+  // Theme Builder owns #theme?… query params — preserve them when re-writing theme hash
+  // from other callers that only know pageId.
+  let next: string;
+  if (pageId === "library" && studioId) {
+    next = `#library/${studioId}`;
+  } else if (
+    pageId === "theme" &&
+    typeof window !== "undefined" &&
+    window.location.hash.startsWith("#theme?")
+  ) {
+    next = window.location.hash;
+  } else {
+    next = `#${pageId}`;
+  }
   window.history.replaceState(null, "", next);
 }
 
 /**
  * Softglass Gallery — guided, paginated, mobile-first tour of the design system.
- * Hash: #pageId | #library/<componentId>
+ * Hash: #pageId | #library/<componentId> | #theme?lang=…&a=… (brand share)
  */
 export function Playground() {
   const [pageId, setPageId] = useState<GalleryPageId>("welcome");
