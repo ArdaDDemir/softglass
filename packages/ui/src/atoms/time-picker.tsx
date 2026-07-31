@@ -7,12 +7,7 @@ import {
   eventInside,
   useFloatingPortal,
 } from "../lib/use-floating-portal";
-import {
-  Calendar,
-  compareISODate,
-  parseISODate,
-  type DateRangeValue,
-} from "./calendar";
+import { TimeInput, type TimeInputLook, type TimeInputSize } from "./time-input";
 import {
   useCallback,
   useEffect,
@@ -24,138 +19,90 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
-export type DatePickerSize = "sm" | "md" | "lg";
-export type { DatePickerMotion };
-export type { DateRangeValue };
-export type DatePickerMode = "single" | "range";
+export type TimePickerSize = TimeInputSize;
+export type TimePickerLook = TimeInputLook;
+export type TimePickerMotion = DatePickerMotion;
 
-export type DatePickerProps = {
-  mode?: DatePickerMode;
+export type TimePickerProps = {
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
-  rangeValue?: DateRangeValue;
-  defaultRangeValue?: DateRangeValue;
-  onRangeValueChange?: (value: DateRangeValue) => void;
-  placeholder?: string;
-  size?: DatePickerSize;
-  motion?: DatePickerMotion;
+  /** Quick picks under the control (HH:mm 24h). */
+  presets?: string[];
+  size?: TimePickerSize;
+  look?: TimePickerLook;
+  motion?: TimePickerMotion;
+  hourCycle?: 24 | 12;
+  minuteStep?: number;
   label?: ReactNode;
   hint?: ReactNode;
   error?: ReactNode;
   disabled?: boolean;
-  min?: string;
-  max?: string;
+  placeholder?: string;
   name?: string;
-  nameEnd?: string;
   id?: string;
   className?: string;
   placement?: "auto" | "bottom" | "top";
   "aria-label"?: string;
 };
 
-const sizeClass: Record<DatePickerSize, string> = {
+const DEFAULT_PRESETS = ["09:00", "12:00", "13:00", "17:00", "18:00"] as const;
+
+const sizeClass: Record<TimePickerSize, string> = {
   sm: "sg-datepicker-trigger-sm",
   md: "",
   lg: "sg-datepicker-trigger-lg",
 };
 
-const EMPTY_RANGE: DateRangeValue = { start: "", end: "" };
-
-function clampISO(iso: string, min?: string, max?: string): string {
-  let next = iso;
-  if (min && compareISODate(next, min) < 0) next = min;
-  if (max && compareISODate(next, max) > 0) next = max;
-  return next;
-}
-
-function formatDisplay(iso: string): string {
-  const ymd = parseISODate(iso);
-  if (!ymd) return iso;
-  try {
-    return new Date(ymd.y, ymd.m, ymd.d).toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  } catch {
-    return iso;
-  }
-}
-
-function formatRangeDisplay(range: DateRangeValue): string | null {
-  const startOk = Boolean(range.start && parseISODate(range.start));
-  const endOk = Boolean(range.end && parseISODate(range.end));
-  if (startOk && endOk) {
-    return `${formatDisplay(range.start)} – ${formatDisplay(range.end)}`;
-  }
-  if (startOk) return `${formatDisplay(range.start)} – …`;
-  return null;
-}
-
-function CalendarIcon() {
+function ClockIcon() {
   return (
     <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <rect
-        x="3.25"
-        y="4.5"
-        width="13.5"
-        height="12.25"
-        rx="2.25"
+      <circle
+        cx="10"
+        cy="10"
+        r="6.75"
         stroke="currentColor"
         strokeWidth="1.6"
       />
       <path
-        d="M3.25 8.25h13.5"
+        d="M10 6.5V10l2.5 1.75"
         stroke="currentColor"
         strokeWidth="1.6"
         strokeLinecap="round"
-      />
-      <path
-        d="M7 3.25v2.5M13 3.25v2.5"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
 }
 
 /**
- * Atom — DatePicker
- * Solid trigger + frost panel. Panel body is the shared `Calendar` primitive.
- * Values: ISO `YYYY-MM-DD` (local; no time engine).
+ * Atom — TimePicker
+ * Trigger + portaled panel with TimeInput and optional presets.
+ * Value is always 24h `HH:mm`. No timezone engine.
  */
-export function DatePicker({
-  mode = "single",
+export function TimePicker({
   value,
-  defaultValue = "",
+  defaultValue = "09:00",
   onValueChange,
-  rangeValue,
-  defaultRangeValue = EMPTY_RANGE,
-  onRangeValueChange,
-  placeholder,
+  presets = [...DEFAULT_PRESETS],
   size = "md",
+  look = "soft",
   motion = MOTION_DEFAULTS.datePicker,
+  hourCycle = 24,
+  minuteStep = 5,
   label,
   hint,
   error,
   disabled,
-  min,
-  max,
+  placeholder = "Pick a time…",
   name,
-  nameEnd,
   id,
   className,
   placement = "auto",
   "aria-label": ariaLabel,
-}: DatePickerProps) {
-  const isRange = mode === "range";
-  const resolvedPlaceholder =
-    placeholder ?? (isRange ? "Pick a date range…" : "Pick a date…");
-
+}: TimePickerProps) {
   const reactId = useId();
-  const pickerId = id ?? `sg-datepicker-${reactId}`;
+  const pickerId = id ?? `sg-timepicker-${reactId}`;
   const panelId = `${pickerId}-panel`;
   const hintId = hint ? `${pickerId}-hint` : undefined;
   const errorId = error ? `${pickerId}-error` : undefined;
@@ -166,14 +113,8 @@ export function DatePicker({
   const [uncontrolled, setUncontrolled] = useState(defaultValue);
   const current = isControlled ? value! : uncontrolled;
 
-  const isRangeControlled = rangeValue !== undefined;
-  const [uncontrolledRange, setUncontrolledRange] =
-    useState<DateRangeValue>(defaultRangeValue);
-  const committedRange = isRangeControlled
-    ? (rangeValue ?? EMPTY_RANGE)
-    : uncontrolledRange;
-
   const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState(current);
   const { mounted: panelMounted, exiting: panelExiting, state: panelState } =
     usePresence(open, { durationMs: exitDurationForMotion(motion) });
 
@@ -189,41 +130,25 @@ export function DatePicker({
     placement,
     align: "start",
     matchWidth: false,
-    flipMinSpace: 320,
+    flipMinSpace: 240,
     gap: 6,
   });
 
   const commit = useCallback(
     (next: string) => {
-      const clamped = clampISO(next, min, max);
-      if (!isControlled) setUncontrolled(clamped);
-      onValueChange?.(clamped);
+      if (!isControlled) setUncontrolled(next);
+      onValueChange?.(next);
     },
-    [isControlled, max, min, onValueChange],
+    [isControlled, onValueChange],
   );
 
-  const commitRange = useCallback(
-    (next: DateRangeValue) => {
-      const start = next.start ? clampISO(next.start, min, max) : "";
-      const end = next.end ? clampISO(next.end, min, max) : "";
-      let range: DateRangeValue = { start, end };
-      if (start && end && compareISODate(end, start) < 0) {
-        range = { start: end, end: start };
-      }
-      if (!isRangeControlled) setUncontrolledRange(range);
-      onRangeValueChange?.(range);
-    },
-    [isRangeControlled, max, min, onRangeValueChange],
-  );
-
-  const close = useCallback(() => {
-    setOpen(false);
-  }, []);
+  const close = useCallback(() => setOpen(false), []);
 
   const openPanel = useCallback(() => {
     if (disabled) return;
+    setDraft(current);
     setOpen(true);
-  }, [disabled]);
+  }, [current, disabled]);
 
   useEffect(() => {
     if (!open || panelExiting) return;
@@ -253,7 +178,6 @@ export function DatePicker({
     if (disabled) return;
     if (
       event.key === "ArrowDown" ||
-      event.key === "ArrowUp" ||
       event.key === "Enter" ||
       event.key === " "
     ) {
@@ -262,29 +186,22 @@ export function DatePicker({
     }
   }
 
-  const display = isRange
-    ? formatRangeDisplay(committedRange)
-    : current && parseISODate(current)
-      ? formatDisplay(current)
-      : null;
+  function applyDraft() {
+    commit(draft);
+    close();
+    triggerRef.current?.focus();
+  }
+
+  function pickPreset(hhmm: string) {
+    setDraft(hhmm);
+    commit(hhmm);
+    close();
+    triggerRef.current?.focus();
+  }
 
   const control = (
-    <div
-      className="sg-datepicker-root"
-      ref={rootRef}
-      data-mode={isRange ? "range" : undefined}
-    >
-      {name ? (
-        <input
-          type="hidden"
-          name={name}
-          value={isRange ? committedRange.start : current}
-        />
-      ) : null}
-      {isRange && nameEnd ? (
-        <input type="hidden" name={nameEnd} value={committedRange.end} />
-      ) : null}
-
+    <div className="sg-timepicker-root" ref={rootRef}>
+      {name ? <input type="hidden" name={name} value={current} /> : null}
       <button
         ref={triggerRef}
         id={pickerId}
@@ -296,22 +213,19 @@ export function DatePicker({
         aria-controls={panelId}
         aria-invalid={invalid || undefined}
         aria-describedby={describedBy}
-        aria-label={
-          ariaLabel ?? (label ? undefined : isRange ? "Date range" : "Date")
-        }
+        aria-label={ariaLabel ?? (label ? undefined : "Time")}
         data-open={open || undefined}
-        data-mode={isRange ? "range" : undefined}
         onClick={() => (open ? close() : openPanel())}
         onKeyDown={onTriggerKeyDown}
       >
         <span
           className="sg-datepicker-value"
-          data-placeholder={!display || undefined}
+          data-placeholder={!current || undefined}
         >
-          {display ?? resolvedPlaceholder}
+          {current || placeholder}
         </span>
         <span className="sg-datepicker-icon" aria-hidden="true">
-          <CalendarIcon />
+          <ClockIcon />
         </span>
       </button>
 
@@ -322,28 +236,49 @@ export function DatePicker({
               id={panelId}
               role="dialog"
               aria-modal="false"
-              aria-label={isRange ? "Date range calendar" : "Date calendar"}
-              className="sg-datepicker-panel"
+              aria-label="Time picker"
+              className="sg-timepicker-panel"
               data-placement={menuPlacement}
               data-motion={motion}
               data-state={panelState}
-              data-selection={isRange ? "range" : "single"}
               data-portaled=""
               style={floatingStyle}
             >
-              <Calendar
-                mode={mode}
-                value={isRange ? undefined : current}
-                onValueChange={isRange ? undefined : commit}
-                rangeValue={isRange ? committedRange : undefined}
-                onRangeValueChange={isRange ? commitRange : undefined}
-                min={min}
-                max={max}
-                onSelectComplete={() => {
-                  close();
-                  triggerRef.current?.focus();
-                }}
+              <TimeInput
+                label="Time"
+                value={draft}
+                onValueChange={setDraft}
+                size={size}
+                look={look}
+                hourCycle={hourCycle}
+                minuteStep={minuteStep}
+                fullWidth
               />
+              {presets.length > 0 ? (
+                <div className="sg-timepicker-presets" role="list">
+                  {presets.map((p) => (
+                    <button
+                      key={p}
+                      type="button"
+                      role="listitem"
+                      className="sg-timepicker-preset"
+                      data-selected={p === draft || undefined}
+                      onClick={() => pickPreset(p)}
+                    >
+                      {p}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+              <div className="sg-timepicker-actions">
+                <button
+                  type="button"
+                  className="sg-timepicker-apply"
+                  onClick={applyDraft}
+                >
+                  Apply
+                </button>
+              </div>
             </div>,
             document.body,
           )

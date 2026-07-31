@@ -87,13 +87,25 @@ export type { ComboboxProps } from "./atoms/combobox";
 export { MultiSelect } from "./atoms/multi-select";
 export type { MultiSelectProps } from "./atoms/multi-select";
 
+export { Calendar } from "./atoms/calendar";
+export type {
+  CalendarMode,
+  CalendarProps,
+  DateRangeValue,
+} from "./atoms/calendar";
+export {
+  compareISODate,
+  parseISODate,
+  toISODate,
+} from "./atoms/calendar";
+
 export { DatePicker } from "./atoms/date-picker";
 export type {
   DatePickerMode,
   DatePickerProps,
   DatePickerSize,
-  DateRangeValue,
 } from "./atoms/date-picker";
+// DateRangeValue re-exported from calendar (shared)
 
 export { Checkbox } from "./atoms/checkbox";
 export type { CheckboxProps } from "./atoms/checkbox";
@@ -429,6 +441,14 @@ export type {
   TimeInputProps,
   TimeInputSize,
 } from "./atoms/time-input";
+
+export { TimePicker } from "./atoms/time-picker";
+export type {
+  TimePickerLook,
+  TimePickerMotion,
+  TimePickerProps,
+  TimePickerSize,
+} from "./atoms/time-picker";
 
 export { ClientOnly } from "./atoms/client-only";
 export type { ClientOnlyProps } from "./atoms/client-only";
