@@ -90,6 +90,24 @@ function softRgba(hex: string, alpha = 0.12): string {
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
 }
 
+/** Normalize computed colors (browser may return 8-digit hex) to rgba/hex for export. */
+function normalizeCssColor(value: string, fallback: string): string {
+  const v = value.trim();
+  if (!v) return fallback;
+  // #RRGGBBAA → rgba
+  const hex8 = v.match(/^#([0-9a-fA-F]{8})$/);
+  if (hex8) {
+    const h = hex8[1]!;
+    const r = Number.parseInt(h.slice(0, 2), 16);
+    const g = Number.parseInt(h.slice(2, 4), 16);
+    const b = Number.parseInt(h.slice(4, 6), 16);
+    const a = Number.parseInt(h.slice(6, 8), 16) / 255;
+    return `rgba(${r}, ${g}, ${b}, ${Math.round(a * 100) / 100})`;
+  }
+  if (parseHex(v) || v.startsWith("rgb") || v.startsWith("hsl")) return v;
+  return fallback;
+}
+
 function brandToCssVars(brand: BrandColors): CSSProperties {
   return {
     ["--sg-accent" as string]: brand.accent,
@@ -127,15 +145,40 @@ function readCssVar(name: string, fallback: string): string {
 }
 
 function readBrandFromDocument(): BrandColors {
+  const accent = normalizeCssColor(
+    readCssVar("--sg-accent", DEFAULT_BRAND.accent),
+    DEFAULT_BRAND.accent,
+  );
   return {
-    accent: readCssVar("--sg-accent", DEFAULT_BRAND.accent),
-    accentHover: readCssVar("--sg-accent-hover", DEFAULT_BRAND.accentHover),
-    accentFg: readCssVar("--sg-accent-fg", DEFAULT_BRAND.accentFg),
-    accentSoft: readCssVar("--sg-accent-soft", DEFAULT_BRAND.accentSoft),
-    ring: readCssVar("--sg-ring", DEFAULT_BRAND.ring),
-    success: readCssVar("--sg-success", DEFAULT_BRAND.success),
-    warning: readCssVar("--sg-warning", DEFAULT_BRAND.warning),
-    danger: readCssVar("--sg-danger", DEFAULT_BRAND.danger),
+    accent,
+    accentHover: normalizeCssColor(
+      readCssVar("--sg-accent-hover", DEFAULT_BRAND.accentHover),
+      DEFAULT_BRAND.accentHover,
+    ),
+    accentFg: normalizeCssColor(
+      readCssVar("--sg-accent-fg", DEFAULT_BRAND.accentFg),
+      DEFAULT_BRAND.accentFg,
+    ),
+    accentSoft: normalizeCssColor(
+      readCssVar("--sg-accent-soft", DEFAULT_BRAND.accentSoft),
+      softRgba(accent),
+    ),
+    ring: normalizeCssColor(
+      readCssVar("--sg-ring", DEFAULT_BRAND.ring),
+      DEFAULT_BRAND.ring,
+    ),
+    success: normalizeCssColor(
+      readCssVar("--sg-success", DEFAULT_BRAND.success),
+      DEFAULT_BRAND.success,
+    ),
+    warning: normalizeCssColor(
+      readCssVar("--sg-warning", DEFAULT_BRAND.warning),
+      DEFAULT_BRAND.warning,
+    ),
+    danger: normalizeCssColor(
+      readCssVar("--sg-danger", DEFAULT_BRAND.danger),
+      DEFAULT_BRAND.danger,
+    ),
   };
 }
 

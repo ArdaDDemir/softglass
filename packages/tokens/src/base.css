@@ -2790,10 +2790,12 @@
   background: var(--sg-surface-solid);
 }
 
-/* Full mini-product embed (inventory + settings) — taller than shell-demo */
+/* Full mini-product embed (inventory + settings).
+   Contain layout — override base .sg-shell min-height: 100dvh. */
 .sg-shell.sg-shell-demo-app {
-  min-height: min(36rem, 78vh);
-  height: min(40rem, 82vh);
+  min-height: 0;
+  height: min(34rem, 70vh);
+  max-height: 70vh;
   border-radius: var(--sg-radius-lg);
   border: var(--sg-border-width) solid var(--sg-border-frost);
   overflow: hidden;

@@ -240,7 +240,8 @@ body {
   width: 100%;
   max-width: 52rem;
   margin: 0 auto;
-  padding: 1rem 0.85rem 7.5rem;
+  /* Bottom pager is fixed ~100–120px — leave room so long pages (App/Theme) aren't clipped */
+  padding: 1rem 0.85rem 9.5rem;
   min-width: 0;
 }
 

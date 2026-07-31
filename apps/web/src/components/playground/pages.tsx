@@ -1039,19 +1039,25 @@ function AppPage() {
 
   return (
     <div className="sg-gallery-stack">
-      <Alert variant="info" title="Mini product app">
-        One shell, two screens: <strong>Inventory</strong> (PageHeader · filter ·
-        DataTable · Pagination) and <strong>Settings</strong>. Use the rail, the
-        menu on mobile, or the command palette.
-      </Alert>
-
-      <Card surface="solid" as="section">
+      <Card surface="solid" as="section" className="sg-app-live-card">
         <CardHeader>
-          <CardTitle>App shell · live product</CardTitle>
+          <div className="sg-gallery-chip-row">
+            <Badge size="sm" variant="accent" look="soft">
+              live product
+            </Badge>
+            <Badge size="sm">
+              {section === "inventory" ? "Inventory" : "Settings"}
+            </Badge>
+            {flash ? (
+              <Badge size="sm" variant="success" look="soft">
+                {flash}
+              </Badge>
+            ) : null}
+          </div>
+          <CardTitle>Mini product · AppShell</CardTitle>
           <CardDescription>
-            Collapse the rail on desktop. Narrow viewports use the same nav in a
-            left Sheet. Section:{" "}
-            <strong>{section === "inventory" ? "Inventory" : "Settings"}</strong>
+            Working nav · inventory table · settings · command palette. Collapse
+            the rail or open the menu on a narrow screen.
           </CardDescription>
         </CardHeader>
         <CardContent className="sg-gallery-stack-tight">
@@ -1080,13 +1086,6 @@ function AppPage() {
             <Button size="sm" variant="secondary" onClick={() => setCmd(true)}>
               ⌘K palette
             </Button>
-            {flash ? (
-              <Badge size="sm" variant="accent" look="soft">
-                {flash}
-              </Badge>
-            ) : (
-              <Badge size="sm">last: {last}</Badge>
-            )}
           </div>
 
           <AppShell
@@ -1115,9 +1114,7 @@ function AppPage() {
                 </div>
               </>
             }
-            sidebar={
-              <AppNav section={section} onSection={setSection} />
-            }
+            sidebar={<AppNav section={section} onSection={setSection} />}
           >
             {section === "inventory" ? (
               <InventoryPanel onToast={notify} />
