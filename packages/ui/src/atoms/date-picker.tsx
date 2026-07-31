@@ -25,10 +25,24 @@ export type { DatePickerMotion };
 /**
  * ISO calendar date `YYYY-MM-DD` (local calendar parts — no timezone engine).
  */
+export type DateRangeValue = {
+  start: string;
+  end: string;
+};
+
+export type DatePickerMode = "single" | "range";
+
 export type DatePickerProps = {
+  /** single (default) | range */
+  mode?: DatePickerMode;
+  /** Single mode: controlled ISO date. */
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
+  /** Range mode: controlled `{ start, end }` ISO strings (empty string = unset). */
+  rangeValue?: DateRangeValue;
+  defaultRangeValue?: DateRangeValue;
+  onRangeValueChange?: (value: DateRangeValue) => void;
   placeholder?: string;
   size?: DatePickerSize;
   /** Panel enter/exit motion (same recipes as Select). */
@@ -42,6 +56,8 @@ export type DatePickerProps = {
   /** Inclusive max date `YYYY-MM-DD`. */
   max?: string;
   name?: string;
+  /** Range mode: optional second hidden input name for end date. */
+  nameEnd?: string;
   id?: string;
   className?: string;
   placement?: "auto" | "bottom" | "top";
@@ -291,17 +307,40 @@ function ChevronRightIcon() {
   );
 }
 
+const EMPTY_RANGE: DateRangeValue = { start: "", end: "" };
+
+function formatRangeDisplay(range: DateRangeValue): string | null {
+  const startOk = Boolean(range.start && parseISO(range.start));
+  const endOk = Boolean(range.end && parseISO(range.end));
+  if (startOk && endOk) {
+    return `${formatDisplay(range.start)} – ${formatDisplay(range.end)}`;
+  }
+  if (startOk) {
+    return `${formatDisplay(range.start)} – …`;
+  }
+  return null;
+}
+
+function isInRangeISO(iso: string, start: string, end: string): boolean {
+  if (!start || !end) return false;
+  return compareISO(iso, start) >= 0 && compareISO(iso, end) <= 0;
+}
+
 /**
  * Atom — DatePicker
- * Single calendar date. Solid trigger + frost panel.
+ * Single or range calendar. Solid trigger + frost panel.
  * Day grid, plus month/year grids so you can jump without only using arrows.
- * Value is ISO `YYYY-MM-DD` (local calendar; no range/time/locale packs).
+ * Values are ISO `YYYY-MM-DD` (local calendar; no time/locale packs).
  */
 export function DatePicker({
+  mode = "single",
   value,
   defaultValue = "",
   onValueChange,
-  placeholder = "Pick a date…",
+  rangeValue,
+  defaultRangeValue = EMPTY_RANGE,
+  onRangeValueChange,
+  placeholder,
   size = "md",
   motion = MOTION_DEFAULTS.datePicker,
   label,
@@ -311,11 +350,16 @@ export function DatePicker({
   min,
   max,
   name,
+  nameEnd,
   id,
   className,
   placement = "auto",
   "aria-label": ariaLabel,
 }: DatePickerProps) {
+  const isRange = mode === "range";
+  const resolvedPlaceholder =
+    placeholder ?? (isRange ? "Pick a date range…" : "Pick a date…");
+
   const reactId = useId();
   const pickerId = id ?? `sg-datepicker-${reactId}`;
   const panelId = `${pickerId}-panel`;
@@ -327,7 +371,18 @@ export function DatePicker({
   const isControlled = value !== undefined;
   const [uncontrolled, setUncontrolled] = useState(defaultValue);
   const current = isControlled ? value : uncontrolled;
-  const selected = parseISO(current);
+
+  const isRangeControlled = rangeValue !== undefined;
+  const [uncontrolledRange, setUncontrolledRange] =
+    useState<DateRangeValue>(defaultRangeValue);
+  const committedRange = isRangeControlled
+    ? (rangeValue ?? EMPTY_RANGE)
+    : uncontrolledRange;
+  /** While picking second endpoint (range mode). */
+  const [rangeDraft, setRangeDraft] = useState<DateRangeValue | null>(null);
+  const activeRange = isRange ? (rangeDraft ?? committedRange) : EMPTY_RANGE;
+
+  const selected = parseISO(isRange ? activeRange.start || activeRange.end : current);
 
   const today = useMemo(() => {
     const now = new Date();
@@ -346,7 +401,12 @@ export function DatePicker({
     const base = selected ?? parseISO(today)!;
     return Math.floor(base.y / YEAR_PAGE) * YEAR_PAGE;
   });
-  const [focusISO, setFocusISO] = useState<string>(() => current || today);
+  const [focusISO, setFocusISO] = useState<string>(() => {
+    if (isRange) {
+      return committedRange.start || committedRange.end || today;
+    }
+    return current || today;
+  });
   const { mounted: panelMounted, exiting: panelExiting, state: panelState } =
     usePresence(open, { durationMs: exitDurationForMotion(motion) });
 
@@ -386,24 +446,55 @@ export function DatePicker({
     [isControlled, max, min, onValueChange],
   );
 
+  const commitRange = useCallback(
+    (next: DateRangeValue) => {
+      const start = next.start ? clampISO(next.start, min, max) : "";
+      const end = next.end ? clampISO(next.end, min, max) : "";
+      let range: DateRangeValue = { start, end };
+      if (start && end && compareISO(end, start) < 0) {
+        range = { start: end, end: start };
+      }
+      if (!isRangeControlled) setUncontrolledRange(range);
+      onRangeValueChange?.(range);
+      return range;
+    },
+    [isRangeControlled, max, min, onRangeValueChange],
+  );
+
   const close = useCallback(() => {
     setOpen(false);
     setPanelMode("day");
+    setRangeDraft(null);
   }, []);
 
   const openPanel = useCallback(() => {
     if (disabled) return;
 
+    const baseIso = isRange
+      ? committedRange.start ||
+        committedRange.end ||
+        clampISO(today, min, max)
+      : current || clampISO(today, min, max);
     const base =
-      parseISO(current) ??
+      parseISO(baseIso) ??
       parseISO(clampISO(today, min, max)) ??
       parseISO(today)!;
     setView({ y: base.y, m: base.m });
     setYearPageStart(Math.floor(base.y / YEAR_PAGE) * YEAR_PAGE);
     setFocusISO(toISO(base.y, base.m, base.d));
     setPanelMode("day");
+    setRangeDraft(null);
     setOpen(true);
-  }, [current, disabled, max, min, today]);
+  }, [
+    committedRange.end,
+    committedRange.start,
+    current,
+    disabled,
+    isRange,
+    max,
+    min,
+    today,
+  ]);
 
   useEffect(() => {
     if (!open || panelExiting) return;
@@ -447,7 +538,24 @@ export function DatePicker({
 
   function selectISO(iso: string) {
     if (isDisabledISO(iso, min, max)) return;
-    commit(iso);
+
+    if (!isRange) {
+      commit(iso);
+      close();
+      triggerRef.current?.focus();
+      return;
+    }
+
+    // Range: first click = start; second = end (swap if needed), then close.
+    if (!rangeDraft || !rangeDraft.start || rangeDraft.end) {
+      setRangeDraft({ start: iso, end: "" });
+      setFocusISO(iso);
+      return;
+    }
+
+    const completed = commitRange({ start: rangeDraft.start, end: iso });
+    setRangeDraft(null);
+    setFocusISO(completed.end || completed.start || iso);
     close();
     triggerRef.current?.focus();
   }
@@ -581,7 +689,11 @@ export function DatePicker({
     }
   }
 
-  const display = current && parseISO(current) ? formatDisplay(current) : null;
+  const display = isRange
+    ? formatRangeDisplay(activeRange)
+    : current && parseISO(current)
+      ? formatDisplay(current)
+      : null;
 
   const navPrevLabel =
     panelMode === "year"
@@ -604,8 +716,21 @@ export function DatePicker({
         : null;
 
   const control = (
-    <div className="sg-datepicker-root" ref={rootRef}>
-      {name ? <input type="hidden" name={name} value={current} /> : null}
+    <div
+      className="sg-datepicker-root"
+      ref={rootRef}
+      data-mode={isRange ? "range" : undefined}
+    >
+      {name ? (
+        <input
+          type="hidden"
+          name={name}
+          value={isRange ? activeRange.start : current}
+        />
+      ) : null}
+      {isRange && nameEnd ? (
+        <input type="hidden" name={nameEnd} value={activeRange.end} />
+      ) : null}
 
       <button
         ref={triggerRef}
@@ -622,8 +747,12 @@ export function DatePicker({
         aria-controls={panelId}
         aria-invalid={invalid || undefined}
         aria-describedby={describedBy}
-        aria-label={ariaLabel ?? (label ? undefined : "Date")}
+        aria-label={
+          ariaLabel ??
+          (label ? undefined : isRange ? "Date range" : "Date")
+        }
         data-open={open || undefined}
+        data-mode={isRange ? "range" : undefined}
         onClick={() => (open ? close() : openPanel())}
         onKeyDown={onTriggerKeyDown}
       >
@@ -631,7 +760,7 @@ export function DatePicker({
           className="sg-datepicker-value"
           data-placeholder={!display || undefined}
         >
-          {display ?? placeholder}
+          {display ?? resolvedPlaceholder}
         </span>
         <span className="sg-datepicker-icon" aria-hidden="true">
           <CalendarIcon />
@@ -647,7 +776,9 @@ export function DatePicker({
           aria-modal="false"
           aria-label={
             panelMode === "day"
-              ? `${formatMonthName(view.m)} ${view.y}`
+              ? isRange
+                ? `Date range · ${formatMonthName(view.m)} ${view.y}`
+                : `${formatMonthName(view.m)} ${view.y}`
               : panelMode === "month"
                 ? `Choose month · ${view.y}`
                 : `Choose year · ${yearPageStart}–${yearPageStart + YEAR_PAGE - 1}`
@@ -657,6 +788,7 @@ export function DatePicker({
           data-motion={motion}
           data-state={panelState}
           data-mode={panelMode}
+          data-selection={isRange ? "range" : "single"}
           data-portaled=""
           style={floatingStyle}
         >
@@ -719,6 +851,13 @@ export function DatePicker({
 
           {panelMode === "day" ? (
             <>
+              {isRange ? (
+                <p className="sg-datepicker-range-hint" aria-live="polite">
+                  {activeRange.start && !activeRange.end
+                    ? "Select end date"
+                    : "Select start date"}
+                </p>
+              ) : null}
               <div className="sg-datepicker-weekdays" aria-hidden="true">
                 {WEEKDAYS.map((wd) => (
                   <span key={wd} className="sg-datepicker-weekday">
@@ -731,7 +870,41 @@ export function DatePicker({
                 {Array.from({ length: cells.length / 7 }, (_, week) => (
                   <div key={week} className="sg-datepicker-row" role="row">
                     {cells.slice(week * 7, week * 7 + 7).map((cell) => {
-                      const selectedDay = cell.iso === current;
+                      const rangeStart =
+                        isRange &&
+                        Boolean(activeRange.start) &&
+                        cell.iso === activeRange.start;
+                      const rangeEnd =
+                        isRange &&
+                        Boolean(activeRange.end) &&
+                        cell.iso === activeRange.end;
+                      const inRange =
+                        isRange &&
+                        Boolean(activeRange.start && activeRange.end) &&
+                        isInRangeISO(
+                          cell.iso,
+                          activeRange.start,
+                          activeRange.end,
+                        );
+                      // Preview span while choosing end: start → focusISO
+                      const draftStart = rangeDraft?.start;
+                      const inDraftPreview =
+                        isRange &&
+                        Boolean(draftStart) &&
+                        !rangeDraft?.end &&
+                        Boolean(focusISO) &&
+                        isInRangeISO(
+                          cell.iso,
+                          compareISO(draftStart!, focusISO) <= 0
+                            ? draftStart!
+                            : focusISO,
+                          compareISO(draftStart!, focusISO) <= 0
+                            ? focusISO
+                            : draftStart!,
+                        );
+                      const selectedDay = isRange
+                        ? rangeStart || rangeEnd
+                        : cell.iso === current;
                       const isToday = cell.iso === today;
                       const focused = cell.iso === focusISO;
                       const dayDisabled = isDisabledISO(cell.iso, min, max);
@@ -748,6 +921,13 @@ export function DatePicker({
                           aria-current={isToday ? "date" : undefined}
                           aria-disabled={dayDisabled || undefined}
                           data-selected={selectedDay || undefined}
+                          data-range-start={rangeStart || undefined}
+                          data-range-end={rangeEnd || undefined}
+                          data-in-range={
+                            (inRange || inDraftPreview) && !selectedDay
+                              ? true
+                              : undefined
+                          }
                           data-today={isToday || undefined}
                           data-outside={!cell.inMonth || undefined}
                           data-focused={focused || undefined}
@@ -774,8 +954,16 @@ export function DatePicker({
             >
               {Array.from({ length: 12 }, (_, m) => {
                 const monthDisabled = isMonthDisabled(view.y, m, min, max);
-                const isSelected =
-                  selected?.y === view.y && selected?.m === m;
+                const isSelected = Boolean(
+                  isRange
+                    ? (activeRange.start &&
+                        parseISO(activeRange.start)?.y === view.y &&
+                        parseISO(activeRange.start)?.m === m) ||
+                      (activeRange.end &&
+                        parseISO(activeRange.end)?.y === view.y &&
+                        parseISO(activeRange.end)?.m === m)
+                    : selected?.y === view.y && selected?.m === m,
+                );
                 const isCurrent =
                   todayYmd.y === view.y && todayYmd.m === m;
                 return (
@@ -805,7 +993,12 @@ export function DatePicker({
             >
               {years.map((y) => {
                 const yearDisabled = isYearDisabled(y, min, max);
-                const isSelected = selected?.y === y;
+                const isSelected = Boolean(
+                  isRange
+                    ? parseISO(activeRange.start)?.y === y ||
+                      parseISO(activeRange.end)?.y === y
+                    : selected?.y === y,
+                );
                 const isCurrent = todayYmd.y === y;
                 return (
                   <button

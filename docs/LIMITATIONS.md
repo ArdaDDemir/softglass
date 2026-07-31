@@ -1,11 +1,11 @@
-# Limitations (v1.4.0)
+# Limitations (v1.5 branch · base v1.4.0 shipped)
 
 Honest scope notes for Softglass. Read this before treating the kit like Radix / Chakra / MUI.
 
 ## What Softglass is
 
 - Soft-glass **UI kit** for Next.js (tokens + React atoms/molecules)
-- Four visual languages + brand accent overrides
+- Six visual languages (3 light · 3 dark) + brand accent overrides
 - Copy-friendly / open MIT — not a locked black-box theme
 
 ## What Softglass is **not**
@@ -24,7 +24,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Select** | Custom listbox-ish menu, keyboard, placement auto, **body portal + flip/clamp**, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
 | **Combobox** | Type-to-filter; option-only; body portal; **`onSearch` + `loading` async skeleton** | Creatable free-form; full data layer / cancellation |
 | **MultiSelect** | Multi chips; body portal; **filter-in-menu** (default on) | Select-all; paste list |
-| **DatePicker** | Single ISO `YYYY-MM-DD`; day/month/year grids; **body portal + flip/clamp** (Select language); min/max | Range; time; locale packs / full i18n; typing into field |
+| **DatePicker** | Single **or range** ISO `YYYY-MM-DD`; day/month/year grids; **body portal + flip/clamp**; min/max; range span highlight. Range: first click is draft start; `onRangeValueChange` fires when **both** ends chosen | Dual-month calendar; partial range callback; time; locale packs / full i18n; typing into field |
 | **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **body portal + collision**, **enter/exit** | Submenus; checkbox/radio items |
 | **ContextMenu** | Same `items` language; right-click + long-press; fixed at pointer; Escape + outside; **enter/exit** | Nested submenu tree; full OS parity; Floating UI-level collision |
 | **Popover** | Anchored panel, Escape + outside, non-modal, **body portal + collision**, **enter/exit** | Focus trap option; arrow |
@@ -41,6 +41,10 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Toolbar** | Composition shell (flex + looks) | Dense data-grid toolbar presets |
 | **List** | ListItem host; density / dividers | Virtualization / infinite scroll |
 | **Stat** | label / value / hint / trend chip | Charts / sparklines |
+| **AppShell** | Desktop collapsible rail + mobile left **Sheet** (same sidebar slot); context buttons | Nested app router; multi-level sidebar tree; resizable drag rail |
+| **PageHeader** | title / description / breadcrumbs / actions / looks | Sticky pin helper; tabs-in-header composite |
+| **SettingsSection** | title / description / actions / body panel | Multi-page settings router / sticky section nav |
+| **CommandPalette** | Substring filter + groups + keyboard; modal shell | Fuzzy rank, recents, nested pages, global ⌘K binding |
 | **Toast** | Stack + variants + auto-dismiss + leave + bottom stack reflow | Swipe-to-dismiss; action buttons API |
 | **FormField** | Layout only (label/hint/error) | Schema validation; RHF/Formik adapters |
 | **Progress** | Linear; looks + variants; indeterminate CSS | Buffered/secondary value |
@@ -56,7 +60,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **SearchInput** | Free text + clear | Command palette; async suggestions |
 | **TimeInput** | Custom HH:mm Softglass UI | Timezone / seconds / range |
 | **NativeDateInput** | Custom day/month/year steppers (YYYY-MM-DD) | Full calendar suite (use DatePicker) |
-| **DatePicker** | Day/month/year grids; body portal | Range; locale packs; Calendar extract |
+| **DatePicker** | Day/month/year grids; body portal; **range mode** | Dual-month UI; locale packs; Calendar extract |
 | **Rating** | SVG stars + shell | Half-stars; custom icon sets |
 | **Glass surfaces** | Frost-first (cheap); optional blur | Guaranteed WCAG on every glass+text combo |
 
@@ -94,7 +98,7 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 
 ## Known non-goals (still)
 
-- Date **range** suite / full timezone engine
+- Dual-month date range UI / full timezone engine
 - DataTable
 - Nested ContextMenu / DropdownMenu submenus
 - Perfect Select parity with Radix Select

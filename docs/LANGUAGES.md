@@ -1,13 +1,15 @@
 # Softglass visual languages
 
-One engine. Four dialects. Same components, different `data-softglass-theme`.
+One engine. Six dialects (3 light · 3 dark). Same components, different `data-softglass-theme`.
 
-| Theme | Mood | Best for |
-| --- | --- | --- |
-| `aurora` | Calm pastel glass | SaaS, education, wellness, light dashboards |
-| `obsidian` | Dark glossy premium | AI tools, music, crypto, night UIs |
-| `mist` | Structural frosted chrome | Admin panels, B2B workspace, dense apps |
-| `pearl` | Warm cream soft glass | Consumer, e-commerce, lifestyle brands |
+| Theme | Scheme | Mood | Best for |
+| --- | --- | --- | --- |
+| `aurora` | light | Calm pastel glass | SaaS, education, wellness, light dashboards |
+| `mist` | light | Structural frosted chrome | Admin panels, B2B workspace, dense apps |
+| `pearl` | light | Warm cream soft glass | Consumer, e-commerce, lifestyle brands |
+| `obsidian` | dark | Dark glossy premium (cyan) | AI tools, music, crypto, night UIs |
+| `noir` | dark | Deep black + rose | Fashion, media, premium dark products |
+| `ember` | dark | Warm charcoal + amber | Night dashboards, analytics, cozy tools |
 
 ## How to switch
 

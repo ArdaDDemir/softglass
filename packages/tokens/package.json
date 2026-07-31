@@ -1,8 +1,8 @@
 {
   "name": "@softglass/tokens",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": false,
-  "description": "Design tokens for Softglass — soft glass, 4 languages.",
+  "description": "Design tokens for Softglass — soft glass, 6 languages (3 dark).",
   "license": "MIT",
   "author": "Softglass contributors",
   "homepage": "https://github.com/ArdaDDemir/softglass#readme",
@@ -36,6 +36,8 @@
     "./obsidian": "./src/themes/obsidian.css",
     "./mist": "./src/themes/mist.css",
     "./pearl": "./src/themes/pearl.css",
+    "./noir": "./src/themes/noir.css",
+    "./ember": "./src/themes/ember.css",
     "./package.json": "./package.json"
   },
   "files": [

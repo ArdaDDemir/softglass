@@ -53,13 +53,15 @@ const registry = {
       type: "registry:style",
       title: "Softglass Tokens",
       description:
-        "CSS engine + 4 languages (Aurora, Obsidian, Mist, Pearl), looks and motion recipes.",
+        "CSS engine + 6 languages (Aurora, Mist, Pearl, Obsidian, Noir, Ember), looks and motion recipes.",
       files: [
         file("packages/tokens/src/base.css", "registry:style"),
         file("packages/tokens/src/themes/aurora.css", "registry:style"),
         file("packages/tokens/src/themes/obsidian.css", "registry:style"),
         file("packages/tokens/src/themes/mist.css", "registry:style"),
         file("packages/tokens/src/themes/pearl.css", "registry:style"),
+        file("packages/tokens/src/themes/noir.css", "registry:style"),
+        file("packages/tokens/src/themes/ember.css", "registry:style"),
         file("packages/tokens/src/looks-and-motion.css", "registry:style"),
         file("packages/tokens/src/motion-recipes.css", "registry:style"),
         file("packages/tokens/src/index.css", "registry:style"),
@@ -338,7 +340,33 @@ const registry = {
       "packages/ui/src/molecules/context-menu.tsx",
       { extra: [PRESENCE] },
     ),
-    ui("app-shell", "AppShell", "Header + optional sidebar layout.", "packages/ui/src/organisms/app-shell.tsx"),
+    ui(
+      "app-shell",
+      "AppShell",
+      "Header + collapsible sidebar + mobile Sheet nav.",
+      "packages/ui/src/organisms/app-shell.tsx",
+      { deps: ["button", "sheet"] },
+    ),
+    ui(
+      "page-header",
+      "Page Header",
+      "Page chrome: breadcrumbs, title, description, actions.",
+      "packages/ui/src/molecules/page-header.tsx",
+      { deps: ["breadcrumb"] },
+    ),
+    ui(
+      "settings-section",
+      "Settings Section",
+      "Settings group: title, description, actions, form body.",
+      "packages/ui/src/molecules/settings-section.tsx",
+    ),
+    ui(
+      "command-palette",
+      "Command Palette",
+      "Minimal command palette: search + list + keyboard select.",
+      "packages/ui/src/molecules/command-palette.tsx",
+      { extra: [PRESENCE] },
+    ),
   ],
 };
 

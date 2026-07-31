@@ -2,21 +2,23 @@
 
 **Open soft-glass design system for Next.js.**
 
-One shared engine · four visual languages · you own the code (shadcn-style intent).
+One shared engine · six visual languages (3 dark) · you own the code (shadcn-style intent).
 
 ![Softglass — soft glass UI kit hero](./docs/assets/hero.svg)
 
 <!-- Hero is hand-authored SVG (docs/assets/hero.svg), not AI-generated. -->
 
 
-> **Pitch (one line):** Soft glass UI kit with four dialects — pick a language, recolor the brand, ship.
+> **Pitch (one line):** Soft glass UI kit with six dialects — pick a language, recolor the brand, ship.
 
-| Language | ID | Mood |
-| --- | --- | --- |
-| Aurora Glass | `aurora` | Calm pastel glass — default, eye-friendly |
-| Obsidian Gloss | `obsidian` | Dark premium glass |
-| Mist Panel | `mist` | Structural frosted chrome for dense apps |
-| Pearl Soft | `pearl` | Warm cream glass for consumer brands |
+| Language | ID | Scheme | Mood |
+| --- | --- | --- | --- |
+| Aurora Glass | `aurora` | light | Calm pastel glass — default |
+| Mist Panel | `mist` | light | Structural frosted chrome |
+| Pearl Soft | `pearl` | light | Warm cream consumer glass |
+| Obsidian Gloss | `obsidian` | dark | Premium cyan night glass |
+| Noir Velvet | `noir` | dark | Deep black + rose |
+| Ember Dusk | `ember` | dark | Warm charcoal + amber |
 
 ## What it is (and is not)
 
@@ -58,7 +60,7 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 **Live packages**
 
 - [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
-- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.4.0`
+- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.5.0`
 
 ### Brand override (colors only)
 
@@ -149,7 +151,7 @@ npm run dev        # http://localhost:3000
 
 ```
 apps/web/                 Playground
-packages/tokens/          CSS engine + 4 languages
+packages/tokens/          CSS engine + 6 languages
 packages/ui/              React components (src → dist)
 registry.json             GitHub / shadcn registry entry (root)
 registry/                 Synced catalog + notes
@@ -174,9 +176,9 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.4.0 — shipped** (molecule set: disclosure/nav · surface · structure · form polish)
+**v1.5.0 — shipped** (shell · patterns · date range · 6 languages · gallery)
 
-- [x] Four languages as CSS tokens  
+- [x] Six languages as CSS tokens (obsidian · noir · ember dark family)  
 - [x] Core UI kit + look + motion  
 - [x] Dual `dist` for `@softglass/ui` (ESM `.mjs` + CJS `.js`, `.d.mts`/`.d.ts`)  
 - [x] Consumer getting-started + limitations + changelog  
@@ -186,7 +188,7 @@ CONTRIBUTING.md           PR rules
 - [x] v1.1–1.2 kit (overlays, ContextMenu, DatePicker, portals, Vitest)  
 - [x] **v1.3 atom layer** — feedback / form / chrome atoms  
 - [x] **v1.4 molecule set** — Accordion, Sheet, Stepper, List, Stat, … + DatePicker body portal  
-- [x] Publish **`@softglass/tokens@1.4.0`** → **`@softglass/ui@1.4.0`** + tag **`v1.4.0`**  
+- [x] Publish **`@softglass/tokens@1.5.0`** → **`@softglass/ui@1.5.0`** + tag **`v1.5.0`**  
 
 **Next (when ready):** v1.5 organism & product patterns (shell depth, PageHeader, CommandPalette minimal).  
 See [docs/claude/todos.md](./docs/claude/todos.md) when present on a plan branch.
@@ -197,8 +199,8 @@ See [docs/claude/todos.md](./docs/claude/todos.md) when present on a plan branch
 
 | Package | npm | Notes |
 | --- | --- | --- |
-| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.4.0** | CSS engine + 4 languages + molecule chrome |
-| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.4.0** | React components (peer: react, tokens **^1.4**) |
+| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.5.0** | CSS engine + 6 languages + shell chrome |
+| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.5.0** | React components (peer: react, tokens **^1.5**) |
 | `softglass` (unscoped) | unused | we ship **scoped** packages only |
 
 Install:

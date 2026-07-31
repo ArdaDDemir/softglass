@@ -7,6 +7,49 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.5.0] — 2026-07-31
+
+Minor release: **organism shell, product patterns, date range, six languages, Softglass Gallery.**
+
+**Ship:** npm `@softglass/tokens@1.5.0` + `@softglass/ui@1.5.0`, GitHub tag `v1.5.0`  
+**Accounts:** gh **ArdaDDemir** · npm **ardaddemir** only (not work/Feedemy).
+
+### Added (1.5a — Shell)
+
+- **`AppShell`** — desktop collapsible rail; mobile left **Sheet** nav; `layoutReady` hydration-safe media
+- **`AppShellMenuButton`** · **`AppShellCollapseButton`** · **`useAppShell`**
+- **`ShellNavItem`** — optional `icon`; collapsed glyph fallback
+- **`PageHeader`** — title / description / breadcrumbs / actions; looks plain|soft|solid|glass
+- Tokens: `--sg-sidebar-width-collapsed`, page-header chrome, collapsed rail styles
+
+### Added (1.5b — Patterns)
+
+- **`SettingsSection`** — title / description / actions / form body; looks soft|solid|glass|plain
+- **`CommandPalette`** — minimal search + list + keyboard select (substring filter; groups); flat render-order index
+
+### Added (1.5c — Quality)
+
+- **`DatePicker` `mode="range"`** — start/end ISO; swap if inverted; in-range highlight
+- Softglass **Gallery** playground (paginated, mobile-first tour)
+- API + LIMITATIONS refresh
+
+### Added (languages)
+
+- **`noir`** — Noir Velvet (dark · rose)
+- **`ember`** — Ember Dusk (dark · amber)
+- Six languages total: 3 light · 3 dark (`obsidian` · `noir` · `ember`)
+
+### Docs / quality
+
+- Theme bootstrap allowlist includes all six languages
+- Registry expanded; Vitest smokes for shell, palette, range
+- `@softglass/ui` peer: `@softglass/tokens` **^1.5.0**
+
+### Deferred / not in 1.5.0
+
+- DataTable, full fuzzy command palette, dual-month calendar, TimePicker suite
+- Theme builder SaaS, Storybook farm
+
 ## [1.4.0] — 2026-07-30
 
 Minor release: **molecule set** — disclosure/nav, surface, structure, form/overlay polish.
