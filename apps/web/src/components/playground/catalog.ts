@@ -7,6 +7,7 @@ export type GalleryPageId =
   | "welcome"
   | "install"
   | "languages"
+  | "theme"
   | "looks"
   | "essentials"
   | "forms"
@@ -47,6 +48,13 @@ export const GALLERY_PAGES: GalleryPage[] = [
     title: "Six visual languages",
     summary: "3 light + 3 dark (Obsidian, Noir, Ember) — same components, different mood.",
     takeaway: "Theme is data-softglass-theme; brand is CSS variables.",
+  },
+  {
+    id: "theme",
+    label: "Theme",
+    title: "Theme Builder",
+    summary: "Brand lab: recolor accent + semantics on a language, export CSS overrides.",
+    takeaway: "Language = dialect; brand = --sg-accent* (and success/warning/danger).",
   },
   {
     id: "looks",

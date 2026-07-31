@@ -15,6 +15,7 @@ import {
   type SoftglassThemeId,
 } from "@/lib/themes";
 import type { GalleryPageId } from "@/components/playground/catalog";
+import { ThemeBuilderPage } from "@/components/playground/theme-builder";
 import {
   Accordion,
   Alert,
@@ -73,6 +74,8 @@ export function GalleryPageBody({
       return <InstallPage />;
     case "languages":
       return <LanguagesPage />;
+    case "theme":
+      return <ThemeBuilderPage />;
     case "looks":
       return <LooksPage />;
     case "essentials":
@@ -124,7 +127,7 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
           { k: "6", v: "Languages" },
           { k: String(COMPONENT_DOCS.length), v: "Documented parts" },
           { k: "MIT", v: "License" },
-          { k: "9", v: "Tour pages" },
+          { k: "10", v: "Tour pages" },
         ].map((s) => (
           <Card key={s.v} surface="solid" padding="sm">
             <CardContent>
@@ -148,9 +151,10 @@ function WelcomePage({ onGo }: { onGo: (id: GalleryPageId) => void }) {
             [
               ["install", "1 · Install"],
               ["languages", "2 · Languages"],
-              ["essentials", "3 · Essentials"],
-              ["app", "4 · App shell"],
-              ["library", "5 · Library"],
+              ["theme", "3 · Theme"],
+              ["essentials", "4 · Essentials"],
+              ["app", "5 · App shell"],
+              ["library", "6 · Library"],
             ] as const
           ).map(([id, label]) => (
             <Button
