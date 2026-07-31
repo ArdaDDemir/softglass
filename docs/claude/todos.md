@@ -37,7 +37,7 @@
 
 ### Optional leftover
 
-- [ ] Shareable hash/query for brand draft (1.8a nice-to-have)
+- [x] Shareable hash/query for brand draft (`#theme?lang=…&a=…` + Copy share link)
 
 ---
 

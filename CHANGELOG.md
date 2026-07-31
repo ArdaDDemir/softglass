@@ -7,6 +7,10 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Theme Builder **shareable URL**: `#theme?lang=aurora&a=7c3aed&…` + **Copy share link**
+
 ## [1.8.0] — 2026-07-31
 
 Minor release: **Theme Builder** brand lab + complete mini product App shell in Softglass Gallery.
