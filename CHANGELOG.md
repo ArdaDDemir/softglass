@@ -7,19 +7,35 @@ Versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
-### Added
+## [1.9.0] — 2026-07-31
 
-- Theme Builder **shareable URL**: `#theme?lang=aurora&a=7c3aed&…` + **Copy share link**
-- **Visual regression** — Playwright gallery screenshots (`npm run test:visual`) + CI step
-- Gallery **Welcome** feature cards (Theme Builder + App shell) · README gallery map
-- GETTING-STARTED refresh for v1.8 languages + gallery hashes
-- **`Calendar`** — inline day/month/year grids (single · range); shared by DatePicker
-- **`TimePicker`** — trigger + panel with TimeInput, presets, Apply
+Minor release: **Calendar** extract, **TimePicker**, Theme share URLs, gallery visual regression + marketing polish.
+
+**Ship:** npm `@softglass/tokens@1.9.0` + `@softglass/ui@1.9.0`, GitHub tag `v1.9.0`  
+**Accounts:** gh **ArdaDDemir** · npm **ardaddemir** only (not work/Feedemy).
+
+### Added (Calendar · TimePicker)
+
+- **`Calendar`** — inline day/month/year grids (single · range); ISO `YYYY-MM-DD`
+- **`TimePicker`** — trigger + panel with TimeInput, presets, Apply (HH:mm 24h)
 - Studio: `#library/calendar` · `#library/time-picker`
+- Registry entries for calendar + time-picker
 
 ### Changed
 
 - **DatePicker** panel body now composes **`Calendar`** (behavior preserved)
+
+### Added (gallery / DX)
+
+- Theme Builder **shareable URL**: `#theme?lang=aurora&a=7c3aed&…` + **Copy share link**
+- **Visual regression** — Playwright gallery screenshots (`npm run test:visual`) + CI step
+- Gallery **Welcome** feature cards (Theme Builder + App shell) · README gallery map
+- GETTING-STARTED refresh for languages + gallery hashes
+
+### Docs / quality
+
+- `@softglass/ui` peer: `@softglass/tokens` **^1.9.0**
+- LIMITATIONS for Calendar / TimePicker
 
 ## [1.8.0] — 2026-07-31
 

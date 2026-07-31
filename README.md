@@ -60,7 +60,7 @@ Full walkthrough: [docs/GETTING-STARTED.md](./docs/GETTING-STARTED.md)
 **Live packages**
 
 - [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) · [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui)
-- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.8.0`
+- Repo: [github.com/ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass) · tag `v1.9.0`
 
 ### Softglass Gallery (local tour)
 
@@ -77,6 +77,8 @@ npm run dev
 | `#theme` | **Theme Builder** — brand lab · share URL · copy CSS |
 | `#app` | Mini product shell · DataTable inventory |
 | `#library` / `#library/button` | Component Studio (every export) |
+| `#library/calendar` | Inline Calendar |
+| `#library/time-picker` | TimePicker (presets) |
 
 ### Brand override (colors only)
 
@@ -194,21 +196,21 @@ CONTRIBUTING.md           PR rules
 
 ## Status
 
-**v1.8.0 — shipped** (Theme Builder · mini product App shell · DataTable)
+**v1.9.0 — shipped** (Calendar · TimePicker · Theme share · visual smoke)
 
 - [x] Six languages as CSS tokens (obsidian · noir · ember dark family)  
 - [x] Core UI kit + look + motion  
 - [x] Dual `dist` for `@softglass/ui` (ESM `.mjs` + CJS `.js`, `.d.mts`/`.d.ts`)  
 - [x] Consumer getting-started + limitations + changelog  
-- [x] CI workflow (typecheck + **test** + build + pack dry-run)  
+- [x] CI workflow (typecheck + **test** + build + pack dry-run + visual soft)  
 - [x] npm org **`softglass`** (owner: personal **ardaddemir** — not work/Feedemy)  
 - [x] GitHub [ArdaDDemir/softglass](https://github.com/ArdaDDemir/softglass)  
-- [x] **v1.7** DataTable · virtualization · Component Studio  
-- [x] **Theme Builder** — `#theme` brand lab · export CSS  
-- [x] **App** mini product shell — inventory + settings + palette  
-- [x] Publish **`@softglass/tokens@1.8.0`** → **`@softglass/ui@1.8.0`** + tag **`v1.8.0`**  
+- [x] **v1.8** Theme Builder · App shell · DataTable  
+- [x] **Calendar** extract · **TimePicker** suite  
+- [x] Theme share URL · gallery visual regression · Welcome polish  
+- [x] Publish **`@softglass/tokens@1.9.0`** → **`@softglass/ui@1.9.0`** + tag **`v1.9.0`**  
 
-**Next (when ready):** marketing polish / visual regression / token JSON (1.9+).  
+**Next (when ready):** token JSON / Figma · i18n/RTL · dual-month calendar.  
 See [docs/claude/todos.md](./docs/claude/todos.md).
 
 **Account rule:** `gh` = **ArdaDDemir**, `npm whoami` = **ardaddemir**. Never publish or push Softglass from work/Feedemy.
@@ -217,8 +219,8 @@ See [docs/claude/todos.md](./docs/claude/todos.md).
 
 | Package | npm | Notes |
 | --- | --- | --- |
-| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.8.0** | CSS engine + 6 languages + shell + DataTable chrome |
-| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.8.0** | React components (peer: react, tokens **^1.8**) |
+| [`@softglass/tokens`](https://www.npmjs.com/package/@softglass/tokens) | **1.9.0** | CSS engine + 6 languages + shell + table/calendar chrome |
+| [`@softglass/ui`](https://www.npmjs.com/package/@softglass/ui) | **1.9.0** | React components (peer: react, tokens **^1.9**) |
 | `softglass` (unscoped) | unused | we ship **scoped** packages only |
 
 Install:

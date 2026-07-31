@@ -2,7 +2,7 @@
 
 Three steps to use Softglass in a **Next.js App Router** app.
 
-> Published packages: `@softglass/tokens` + `@softglass/ui` (current **1.8.0**).  
+> Published packages: `@softglass/tokens` + `@softglass/ui` (current **1.9.0**).  
 > Local monorepo: `npm run build:ui` then `npm run dev`. Dry-run tarballs: `npm run pack:check`.
 
 ---
@@ -13,7 +13,7 @@ Three steps to use Softglass in a **Next.js App Router** app.
 npm install @softglass/tokens @softglass/ui
 ```
 
-Peer deps: `react` and `react-dom` ≥ 18. UI also peers `@softglass/tokens` **^1.8.0** (import styles from tokens).
+Peer deps: `react` and `react-dom` ≥ 18. UI also peers `@softglass/tokens` **^1.9.0** (import styles from tokens).
 
 ### Local monorepo (this repo)
 
@@ -30,6 +30,8 @@ Gallery highlights:
 | `#theme` | Theme Builder (brand lab + share URL) |
 | `#app` | Mini product shell + DataTable |
 | `#library/button` | Component Studio |
+| `#library/calendar` | Inline Calendar |
+| `#library/time-picker` | TimePicker |
 
 Visual regression (after build): `npm run test:visual` · update baselines: `npm run test:visual:update`
 
