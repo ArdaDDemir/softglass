@@ -424,11 +424,57 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     ],
   },
   {
+    id: "calendar",
+    name: "Calendar",
+    layer: "atom",
+    summary:
+      "Inline day/month/year grids. Single or range ISO dates — shared by DatePicker.",
+    importLine: 'import { Calendar } from "@softglass/ui";',
+    example: `<Calendar
+  value={date}
+  onValueChange={setDate}
+/>
+{/* range */}
+<Calendar
+  mode="range"
+  rangeValue={range}
+  onRangeValueChange={setRange}
+/>`,
+    props: [
+      {
+        name: "mode",
+        type: '"single" | "range"',
+        default: '"single"',
+        description: "Single day or start/end range.",
+      },
+      {
+        name: "value / defaultValue",
+        type: "string (YYYY-MM-DD)",
+        description: "Single mode ISO date.",
+      },
+      {
+        name: "rangeValue / defaultRangeValue",
+        type: "{ start: string; end: string }",
+        description: "Range mode ISO start/end.",
+      },
+      {
+        name: "min / max",
+        type: "string (YYYY-MM-DD)",
+        description: "Inclusive bounds.",
+      },
+      {
+        name: "onSelectComplete",
+        type: "() => void",
+        description: "Fires when a full selection is done (DatePicker closes).",
+      },
+    ],
+  },
+  {
     id: "date-picker",
     name: "DatePicker",
     layer: "atom",
     summary:
-      "Single or range ISO dates. Day/month/year grids. Body portal + flip/clamp.",
+      "Trigger + portaled Calendar. Single or range ISO dates. Flip/clamp panel.",
     importLine: 'import { DatePicker } from "@softglass/ui";',
     example: `<DatePicker
   label="Launch date"
@@ -490,6 +536,46 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         type: '"auto" | "bottom" | "top"',
         default: '"auto"',
         description: "Panel side relative to trigger.",
+      },
+    ],
+  },
+  {
+    id: "time-picker",
+    name: "TimePicker",
+    layer: "atom",
+    summary:
+      "HH:mm trigger + panel with TimeInput, presets, and Apply. Value always 24h.",
+    importLine: 'import { TimePicker } from "@softglass/ui";',
+    example: `<TimePicker
+  label="Start"
+  value={time}
+  onValueChange={setTime}
+  hourCycle={24}
+  presets={["09:00", "12:00", "17:00"]}
+/>`,
+    props: [
+      {
+        name: "value / defaultValue",
+        type: "string (HH:mm)",
+        description: "24h clock string.",
+      },
+      {
+        name: "presets",
+        type: "string[]",
+        default: '["09:00","12:00","13:00","17:00","18:00"]',
+        description: "Quick pick chips in the panel.",
+      },
+      {
+        name: "hourCycle",
+        type: "24 | 12",
+        default: "24",
+        description: "Display cycle; stored value stays HH:mm 24h.",
+      },
+      {
+        name: "minuteStep",
+        type: "number",
+        default: "5",
+        description: "Stepper step for minutes.",
       },
     ],
   },

@@ -25,12 +25,17 @@
 
 ---
 
+## v1.9 calendar (this branch)
+
+- [x] Extract **`Calendar`** from DatePicker  
+- [x] **`TimePicker`** suite (presets + panel)  
+- [x] Studio + registry + tests  
+
 ## v1.9+ backlog (kalan)
 
 - [ ] Token JSON / Figma bridge  
 - [ ] i18n / RTL  
-- [ ] Full calendar / TimePicker suite  
-- [ ] DatePicker Calendar extract  
+- [ ] Dual-month range calendar / full suite polish  
 - [ ] (optional) expand visual baselines / mobile project  
 
 ---

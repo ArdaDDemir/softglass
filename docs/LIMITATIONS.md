@@ -24,7 +24,9 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Select** | Custom listbox-ish menu, keyboard, placement auto, **body portal + flip/clamp**, **enter/exit** | Virtualization for 500+ options; native form autofill parity |
 | **Combobox** | Type-to-filter; option-only; body portal; **`onSearch` + `loading` async skeleton** | Creatable free-form; full data layer / cancellation |
 | **MultiSelect** | Multi chips; body portal; **filter-in-menu** (default on) | Select-all; paste list |
-| **DatePicker** | Single **or range** ISO `YYYY-MM-DD`; day/month/year grids; **body portal + flip/clamp**; min/max; range span highlight. Range: first click is draft start; `onRangeValueChange` fires when **both** ends chosen | Dual-month calendar; partial range callback; time; locale packs / full i18n; typing into field |
+| **Calendar** | Inline day/month/year; single **or range** ISO `YYYY-MM-DD`; min/max | Dual-month; locale packs / full i18n |
+| **DatePicker** | Trigger + portal over **Calendar**; flip/clamp; range draft → complete | Dual-month; typing into field; partial range callback |
+| **TimePicker** | Trigger + panel with TimeInput, presets, Apply (HH:mm 24h value) | Seconds; timezone; ranges |
 | **DropdownMenu** | Items API, keyboard, Escape + outside, `Button` merge, **body portal + collision**, **enter/exit** | Submenus; checkbox/radio items |
 | **ContextMenu** | Same `items` language; right-click + long-press; fixed at pointer; Escape + outside; **enter/exit** | Nested submenu tree; full OS parity; Floating UI-level collision |
 | **Popover** | Anchored panel, Escape + outside, non-modal, **body portal + collision**, **enter/exit** | Focus trap option; arrow |
@@ -60,9 +62,8 @@ Honest scope notes for Softglass. Read this before treating the kit like Radix /
 | **Chip** | Select / remove / filter / check | Multi-select store; avatar chips |
 | **PasswordInput** | Show/hide | Strength meter; generator |
 | **SearchInput** | Free text + clear | Command palette; async suggestions |
-| **TimeInput** | Custom HH:mm Softglass UI | Timezone / seconds / range |
-| **NativeDateInput** | Custom day/month/year steppers (YYYY-MM-DD) | Full calendar suite (use DatePicker) |
-| **DatePicker** | Day/month/year grids; body portal; **range mode** | Dual-month UI; locale packs; Calendar extract |
+| **TimeInput** | Custom HH:mm Softglass UI | Timezone / seconds / range (use TimePicker for popover) |
+| **NativeDateInput** | Custom day/month/year steppers (YYYY-MM-DD) | Full calendar suite (use Calendar / DatePicker) |
 | **Rating** | SVG stars + shell | Half-stars; custom icon sets |
 | **Glass surfaces** | Frost-first (cheap); optional blur | Guaranteed WCAG on every glass+text combo |
 

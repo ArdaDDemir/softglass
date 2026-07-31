@@ -448,18 +448,97 @@
       ]
     },
     {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "Inline day/month/year grid — single or range ISO dates.",
+      "registryDependencies": [
+        "tokens"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/calendar.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/calendar.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        }
+      ]
+    },
+    {
       "name": "date-picker",
       "type": "registry:ui",
       "title": "Date Picker",
-      "description": "Single ISO date calendar — body portal + flip/clamp panel.",
+      "description": "Single or range ISO dates — portal panel over Calendar.",
       "registryDependencies": [
-        "tokens"
+        "tokens",
+        "calendar"
       ],
       "files": [
         {
           "path": "packages/ui/src/atoms/date-picker.tsx",
           "type": "registry:ui",
           "target": "components/softglass/atoms/date-picker.tsx"
+        },
+        {
+          "path": "packages/ui/src/lib/cn.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/looks.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/looks.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/motion.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/presence.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/presence.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/floating.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/floating.ts"
+        },
+        {
+          "path": "packages/ui/src/lib/use-floating-portal.ts",
+          "type": "registry:lib",
+          "target": "components/softglass/lib/use-floating-portal.ts"
+        }
+      ]
+    },
+    {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "title": "Time Picker",
+      "description": "HH:mm trigger + panel with TimeInput and presets.",
+      "registryDependencies": [
+        "tokens",
+        "time-input"
+      ],
+      "files": [
+        {
+          "path": "packages/ui/src/atoms/time-picker.tsx",
+          "type": "registry:ui",
+          "target": "components/softglass/atoms/time-picker.tsx"
         },
         {
           "path": "packages/ui/src/lib/cn.ts",

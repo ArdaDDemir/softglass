@@ -13,6 +13,13 @@ Versioning follows [SemVer](https://semver.org/).
 - **Visual regression** — Playwright gallery screenshots (`npm run test:visual`) + CI step
 - Gallery **Welcome** feature cards (Theme Builder + App shell) · README gallery map
 - GETTING-STARTED refresh for v1.8 languages + gallery hashes
+- **`Calendar`** — inline day/month/year grids (single · range); shared by DatePicker
+- **`TimePicker`** — trigger + panel with TimeInput, presets, Apply
+- Studio: `#library/calendar` · `#library/time-picker`
+
+### Changed
+
+- **DatePicker** panel body now composes **`Calendar`** (behavior preserved)
 
 ## [1.8.0] — 2026-07-31
 

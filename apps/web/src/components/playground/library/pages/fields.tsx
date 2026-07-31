@@ -17,6 +17,7 @@ import {
 import {
   Checkbox,
   Combobox,
+  Calendar,
   DatePicker,
   FileField,
   Input,
@@ -31,6 +32,7 @@ import {
   Slider,
   Switch,
   Textarea,
+  TimePicker,
   type DatePickerMode,
   type DatePickerSize,
   type FieldLook,
@@ -387,6 +389,37 @@ export const fieldPlaygrounds: ComponentPlayground[] = [
     ],
   },
   {
+    id: "calendar",
+    title: "Calendar",
+    controls: [
+      enumControl("mode", ["single", "range"], "single"),
+      boolControl("disabledMin", false, "min bound demo"),
+    ],
+    render: (p) => (
+      <div style={{ width: "100%", maxWidth: 320 }}>
+        <Calendar
+          mode={str(p, "mode") as DatePickerMode}
+          min={bool(p, "disabledMin") ? "2020-01-01" : undefined}
+        />
+      </div>
+    ),
+    showcases: [
+      showcase("Single", () => (
+        <div style={{ maxWidth: 300 }}>
+          <Calendar defaultValue="2026-07-15" />
+        </div>
+      )),
+      showcase("Range", () => (
+        <div style={{ maxWidth: 300 }}>
+          <Calendar
+            mode="range"
+            defaultRangeValue={{ start: "2026-07-10", end: "2026-07-14" }}
+          />
+        </div>
+      )),
+    ],
+  },
+  {
     id: "date-picker",
     title: "DatePicker",
     controls: [
@@ -421,6 +454,35 @@ export const fieldPlaygrounds: ComponentPlayground[] = [
           SIZES.map((size) => <DatePicker key={size} size={size} label={size} />),
         ),
       ),
+    ],
+  },
+  {
+    id: "time-picker",
+    title: "TimePicker",
+    controls: [
+      enumControl("size", SIZES, "md"),
+      enumControl("look", ["soft", "solid", "outline", "glass"], "soft"),
+      enumControl("hourCycle", ["24", "12"], "24"),
+      textControl("label", "Start time"),
+      boolControl("disabled", false),
+    ],
+    render: (p) => (
+      <TimePicker
+        size={str(p, "size") as DatePickerSize}
+        look={str(p, "look") as "soft" | "solid" | "outline" | "glass"}
+        hourCycle={str(p, "hourCycle") === "12" ? 12 : 24}
+        label={str(p, "label")}
+        disabled={bool(p, "disabled")}
+        motion="scale"
+      />
+    ),
+    showcases: [
+      showcase("Presets", () => (
+        <TimePicker label="Meeting" defaultValue="09:00" motion="none" />
+      )),
+      showcase("12h", () => (
+        <TimePicker label="Alarm" hourCycle={12} defaultValue="14:30" motion="none" />
+      )),
     ],
   },
   {
